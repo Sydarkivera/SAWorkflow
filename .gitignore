@@ -1,0 +1,12 @@
+*.egg-info
+*.pot
+*.pyc
+__pycache__
+db.sqlite3
+a.out
+paket/
+venv/
+workdir/
+log/
+.DS_Store
+*/migrations/

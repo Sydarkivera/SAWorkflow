@@ -1,0 +1,50 @@
+<template>
+    <div class="container">
+        <h1>${title}</h1>
+        <p>${description}</p>
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Valda moduler</h3>
+                <div class="card">
+                    <div class="card-header">
+                        Name
+                    </div>
+                    <div class="list-group list-group-flush" style="height:500px;">
+                        <div repeat.for="process of processes" class="list-group-item list-group-item-action ${process.process_id==selected_process ? 'active' : ''}">
+                            <p style="margin-bottom:0;" class="d-flex w-100" click.trigger="clickProcess(process)">${process.name}</p>
+                            <form if.bind="process.process_id==selected_process">
+                                <div if.bind="process.form.length>0">
+                                    <label repeat.for="input of process.form" for="${input.identifier}">${input.label}
+                                        <input type="text" if.bind="input.type=='text'" id.bind="input.identifier" value.one-way="active_process_values[input.identifier]" keyup.delegate="setProcessValue(input.identifier, $event.target.value)" change.delegate="setProcessValue(input.identifier, $event.target.value)"/>
+                                        <input type="checkbox" if.bind="input.type=='checkbox'" id.bind="input.identifier" checked.one-way="active_process_values[input.identifier]" change.delegate="setProcessValue(input.identifier, $event.target.checked)"/>
+                                    </label>
+                                    <button class="btn btn-success" click.delegate="saveProcess(input)">Save</button>
+                                </div>
+                                <button class="btn btn-success" disabled.bind="$index<=0" click.delegate="moveUp($index)">Move up</button>
+                                <button class="btn btn-success" disabled.bind="$index>=processes.length-1" click.delegate="moveDown($index)">Move down</button>
+                                <button class="btn btn-danger" click.delegate="removeProcess($index)">Remove</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6" data-query="view(Mooo)">
+                <h3>Tillgängliga moduler</h3>
+                <div class="card">
+                     <div class="card-header">
+                        Name
+                     </div>
+                     <div class="list-group list-group-flush" data-query="each(modules)" style="height:500px;">
+                         <div repeat.for="module of modules" class="list-group-item list-group-item-action ${module.module_id==selected_module ? 'active' : ''}">
+                                <p style="margin-bottom:0;" class="d-flex w-100" click.trigger="clickModule(module)">${module.name}</p>
+                                <div if.bind="module.module_id==selected_module">
+                                    <button class="btn btn-success" click.delegate="addModule(module)">Add module</button>
+                                </div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-success float-right" click.delegate="execute()">Starta</button>
+    </div>
+</template>

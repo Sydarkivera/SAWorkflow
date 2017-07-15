@@ -1,0 +1,48 @@
+<template>
+    <div class="container">
+        <h1>${title}</h1>
+        <p>${description}</p>
+        <div class="card">
+             <div class="card-header">
+                 <div class="row">
+                     <div class="col">
+                        Label
+                     </div>
+                     <div class="col">
+                        Statusbar
+                     </div>
+                     <div class="col-sm-2">
+                        Status
+                     </div>
+                     <div class="col-sm-2">
+                        Log
+                     </div>
+                     <div class="col-sm-2">
+                        Error
+                     </div>
+                 </div>
+             </div>
+             <div class="list-group list-group-flush">
+                 <div style="padding-left:0;padding-right:0;" repeat.for="process of processes" class="list-group-item list-group-item-action">
+                     <div class="col">
+                        ${process.name}
+                    </div>
+                    <div class="col">
+                       Statusbar
+                    </div>
+                    <div class="col-sm-2">
+                       ${process.status}
+                    </div>
+                    <div class="col-sm-2">
+                       <a href="/process/${process.process_id}/info_log">view log</a>
+                    </div>
+                    <div class="col-sm-2">
+                        <a href="/process/${process.process_id}/error_log">view error log</a>
+                    </div>
+                </div>
+             </div>
+        </div>
+        <label>Ta bort paketfiler i workdir: <input type="checkbox" checked.bind="removeWorkdir"/></label>
+        <button class="btn btn-success float-right" click.delegate="removePackage()">Klar (Ta bort projekt från databasen)</button>
+    </div>
+</template>
