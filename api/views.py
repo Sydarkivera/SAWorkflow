@@ -78,7 +78,7 @@ def package_list(request):
                         #set default module
                         module = Module.objects.get(pk=1)
                         if module:
-                            process1 = Process(order=0, package=package, module=module, value='{}')
+                            process1 = Process(order=0, package=package, module=module, value={})
                             process1.save()
 
                         packages.append(package)

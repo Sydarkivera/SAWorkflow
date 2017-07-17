@@ -1,8 +1,10 @@
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 import django
+
 django.setup()
 
+from django.contrib.auth.models import User
 from api.models import *
 
 # delete all old objects, if there are any.
@@ -15,21 +17,31 @@ module1 = Module(name="Setup workdir",
                  type='1',
                  form='[]',
                  python_module='tools.setupWorkDir',
-                 hidden=True,
+                 hidden=False,
+                 module_id=1,
                  )
 module1.save()
 module2 = Module(name="Untar archive",
                  type='1',
                  form='[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}]',
                  python_module='tools.untar',
+                 module_id=2,
                  )
 module2.save()
 module3 = Module(name="tar",
                  type='1',
                  form='[{"type":"text", "label":"filename2", "identifier":"filename"},{"type":"checkbox", "label":"verbose2", "identifier":"verbose"}]',
                  python_module='tools.untar.untar',
+                 module_id=3,
                  )
 module3.save()
+
+# create default admin users
+User.objects.all().delete()
+user = User.objects.create_user('admin', 'lennon@thebeatles.com', 'admin')
+user.is_superuser = True
+user.is_staff = True
+user.save()
 
 #create new package.
 # package1 = Package(name="demo paket 1", path="/Users/axenu/Sydarkivera/toolbox/paket/af268c33-5ba8-4af5-9a44-039b10126835.tar", file_name="af268c33-5ba8-4af5-9a44-039b10126835.tar", status=0)

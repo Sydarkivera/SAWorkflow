@@ -43,7 +43,7 @@ class Module(models.Model):
     module_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, default='')
     type = models.IntegerField(choices=MODULE_TYPES, default=0)
-    form = JSONField(default="[]")
+    form = JSONField(default=[])
     python_module = models.CharField(max_length=100)
     hidden = models.BooleanField(default=False)
 
@@ -74,7 +74,7 @@ class Process(models.Model):
     order = models.IntegerField(default=10000)
     package = models.ForeignKey(Package, related_name='processes', on_delete=models.CASCADE)
     module = models.ForeignKey(Module, related_name='processes', on_delete=models.PROTECT)
-    value = JSONField(default="{}")
+    value = JSONField(default={})
     status = models.IntegerField(choices=PROCESS_STATUS, default=0)
     log_path = models.CharField(max_length=100, blank=True, default='')
     err_path = models.CharField(max_length=100, blank=True, default='')

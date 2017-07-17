@@ -20,5 +20,4 @@ export class Index {
     gotoPackageConfig(archive_package) {
         window.location.href = "/package/"+archive_package+"/";
     }
-
 }

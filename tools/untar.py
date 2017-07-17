@@ -16,9 +16,8 @@ class task(pythonModuleBase):
         retval = 1
         # options: verbose, remove archive, ...
         args = ['tar' ,'-x']
-        values = json.loads(process.value)
-        if 'verbose' in values:
-            if values['verbose'] == True:
+        if 'verbose' in process.value:
+            if process.value['verbose'] == True:
                 args.append('-v')
         args = args + ['-f', os.path.join(package.workdir, package.file_name)]
         args = args + ['-C', package.workdir]
@@ -33,8 +32,8 @@ class task(pythonModuleBase):
             self.logger.error(stderr.decode('utf-8'))
             retval = -1
 
-        if 'delete_archive' in values:
-            if values['delete_archive'] == True:
+        if 'delete_archive' in process.value:
+            if process.value['delete_archive'] == True:
                 self.logger.info("Deleting .tar archive")
                 os.remove(os.path.join(package.workdir, package.file_name))
                 self.logger.info(".tar file deleted")

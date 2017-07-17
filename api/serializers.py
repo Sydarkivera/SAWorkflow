@@ -13,9 +13,9 @@ import json
 class JSONSerializerField(serializers.Field):
     """ Serializer for JSONField -- required to make field writable"""
     def to_internal_value(self, data):
-        return json.dumps(data)
+        return data
     def to_representation(self, value):
-        return json.loads(value)
+        return value
 
 class ProcessSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='module.name', read_only=True)

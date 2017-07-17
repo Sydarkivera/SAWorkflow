@@ -12,7 +12,7 @@ export class PackageAdmin {
     package = {};
     selected_module = 0;
     selected_process = 0;
-    active_process_values = {'filename':'name'};
+    active_process_values = {};
     process_has_changed = false;
     client = new HttpClient();
 
