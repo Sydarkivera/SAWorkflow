@@ -1,10 +1,12 @@
 <template>
     <div class="container">
-        <h1>${title}</h1>
+        <h1><a href="/">${title}</a></h1>
+        <img class="logga" src="static/img/logga.jpg"/>
+        <h2>Paket: ${package.name}</h2><a href="package/${package.package_id}/" class="float-right">Ändra</a>
         <p>${description}</p>
         <div class="card">
              <div class="card-header">
-                 <div class="row">
+                 <div class="row justify-content-end">
                      <div class="col">
                         Label
                      </div>
@@ -18,14 +20,14 @@
                         Log
                      </div>
                      <div class="col-sm-2">
-                        Error
+                        Error <a href="#" click.delegate="updateData()" class="tab"><span class="fa fa-refresh fa-2x ${loading ? 'fa-spin' : ''}" aria-hidden="true"></span></a>
                      </div>
                  </div>
              </div>
              <div class="list-group list-group-flush">
                  <div style="padding-left:0;padding-right:0;" repeat.for="process of processes" class="list-group-item list-group-item-action">
                      <div class="col">
-                        ${process.name}
+                        ${process.name} ${process.hidden ? '(Hidden)' : ''}
                     </div>
                     <div class="col">
                        Statusbar
@@ -34,15 +36,16 @@
                        ${process.status}
                     </div>
                     <div class="col-sm-2">
-                       <a href="/process/${process.process_id}/info_log">view log</a>
+                       <a href="/process/${process.process_id}/info_log" class="${process.log_path == '' ? 'disabled' : ''}">view log</a>
                     </div>
                     <div class="col-sm-2">
-                        <a href="/process/${process.process_id}/error_log">view error log</a>
+                        <a href="/process/${process.process_id}/error_log" class="${process.err_path == '' ? 'disabled' : ''}">view error log</a>
                     </div>
                 </div>
              </div>
         </div>
+        <button class="btn btn-success float-right" click.delegate="execute()">Starta</button>
         <label>Ta bort paketfiler i workdir: <input type="checkbox" checked.bind="removeWorkdir"/></label>
-        <button class="btn btn-success float-right" click.delegate="removePackage()">Klar (Ta bort projekt från databasen)</button>
+        <button class="btn btn-danger float-right" click.delegate="removePackage()">Klar (Ta bort projekt från databasen)</button>
     </div>
 </template>

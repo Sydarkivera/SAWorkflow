@@ -15,6 +15,7 @@ module1 = Module(name="Setup workdir",
                  type='1',
                  form='[]',
                  python_module='tools.setupWorkDir',
+                 hidden=True,
                  )
 module1.save()
 module2 = Module(name="Untar archive",

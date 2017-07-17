@@ -10,57 +10,40 @@ import os
 from shutil import copy
 import uuid
 from config import settings
+from api.tasks import pythonModuleBase
 
-from logging import getLogger
 import logging
-logger = getLogger('background_task')
 
-def execute(process, package):
-    dest = os.path.join(settings.PACKAGE_IN_PROGRESS_PATH, str(uuid.uuid4()))
-    logdir = os.path.join(dest, 'log')
-    package.logdir = logdir
-    try:
-        # cant start logging before folder in place.
-        if not os.path.exists(dest):
-            os.makedirs(dest)
-        if not os.path.exists(logdir):
-            os.makedirs(logdir)
-        package.workdir = dest
-        package.save()
-    except IOError:
-        logger.error("I/O error({0}): {1}".format(e.errno, e.strerror))
-        return -1
+class task(pythonModuleBase):
 
-    #setup logger
-    logger = logging.getLogger('setupWorkDir')
-    formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-    logger.setLevel(logging.DEBUG)
+    def setupLogging(self, process, package):
+        logger = logging.getLogger('background_task')
+        dest = os.path.join(settings.PACKAGE_IN_PROGRESS_PATH, str(uuid.uuid4()))
+        package.logdir = os.path.join(dest, 'log')
+        try:
+            # cant start logging before folder in place.
+            if not os.path.exists(dest):
+                os.makedirs(dest)
+            if not os.path.exists(package.logdir):
+                os.makedirs(package.logdir)
+            package.workdir = dest
+            package.save()
+        except IOError:
+            logger.error("I/O error({0}): {1}".format(e.errno, e.strerror))
+            return -1
 
-    log_hdlr = logging.FileHandler(os.path.join(logdir, 'setupWorkDir.log'))
-    process.log_path = os.path.join(logdir, 'setupWorkDir.log')
-    log_hdlr.setFormatter(formatter)
-    log_hdlr.setLevel(logging.INFO)
-    logger.addHandler(log_hdlr)
-    err_hdlr = logging.FileHandler(os.path.join(logdir, 'setupWorkDir.err'))
-    process.err_path = os.path.join(logdir, 'setupWorkDir.err')
-    err_hdlr.setFormatter(formatter)
-    err_hdlr.setLevel(logging.ERROR)
-    logger.addHandler(err_hdlr)
-    process.save()
+        super(task, self).setupLogging(process, package)
 
-    logger.info('Loggfiles and project directory created')
+    def execute(self, process, package):
 
-    try:
-        copy(package.path, dest)
-    except IOError:
-        logger.error("I/O error({0}): {1}".format(e.errno, e.strerror))
-        return -1
+        self.logger.info('Loggfiles and project directory created')
 
-    logger.info('Package copied to workdir')
+        try:
+            copy(package.path, package.workdir)
+        except IOError:
+            self.logger.error("I/O error({0}): {1}".format(e.errno, e.strerror))
+            return -1
 
-    #tear down logger
-    logger.removeHandler(log_hdlr)
-    logger.removeHandler(err_hdlr)
-    del logger, log_hdlr, err_hdlr
+        self.logger.info('Package copied to workdir')
 
-    return 1
+        return 1

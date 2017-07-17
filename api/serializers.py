@@ -19,6 +19,7 @@ class JSONSerializerField(serializers.Field):
 
 class ProcessSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='module.name', read_only=True)
+    hidden = serializers.BooleanField(source='module.hidden', read_only=True)
     type = serializers.EmailField(source='module.type', read_only=True)
     form = JSONSerializerField(source='module.form', read_only=True)
     value = JSONSerializerField(required=False)
@@ -28,7 +29,7 @@ class ProcessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Process
-        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package')
+        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden')
 
     def get_status(self,obj):
         return obj.get_status_display()
@@ -44,8 +45,7 @@ class PackageSerializer(serializers.ModelSerializer):
         return obj.get_status_display()
 
 class PackageDetailSerializer(serializers.ModelSerializer):
-    # processes = ProcessSerializer(many=True)
-    processes = serializers.StringRelatedField(many=True)
+    processes = ProcessSerializer(many=True)
 
     class Meta:
         model = Package
@@ -55,4 +55,4 @@ class PackageDetailSerializer(serializers.ModelSerializer):
 class ModuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Module
-        fields = ('module_id', 'name', 'type')
+        fields = ('module_id', 'name', 'type', 'hidden')

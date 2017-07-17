@@ -28,10 +28,11 @@ def package(request, id):
 @require_http_methods(["POST"])
 def execute(request, id):
     package = get_object_or_404(Package, pk=id)
-    if package.status == package.PACKAGE_STATUS_NEW:
+    if package.status == package.PACKAGE_STATUS_NEW or package.status == package.PACKAGE_STATUS_EDITED:
         for process in package.processes.all():
-            process.status = process.PROCESS_STATUS_WAITING
-            process.save()
+            if process.status != Process.PROCESS_STATUS_DONE:
+                process.status = process.PROCESS_STATUS_WAITING
+                process.save()
         package.status = package.PACKAGE_STATUS_WAITING
         package.save()
         executeProcessFlow(id)

@@ -14,7 +14,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from api.models import Module, Package, Process
-from api.serializers import ModuleSerializer, PackageSerializer, ProcessSerializer
+from api.serializers import ModuleSerializer, PackageSerializer, PackageDetailSerializer, ProcessSerializer
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
@@ -90,13 +90,13 @@ def package_list(request):
         return Response(serializer.data)
 
 @api_view(['GET', 'DELETE'])
-def package_detail_list(request, id):
+def package_detail(request, id):
     """
     Get one package or delete it.
     """
     package = get_object_or_404(Package, pk=id)
     if request.method == 'GET':
-        serializer = PackageSerializer(package)
+        serializer = PackageDetailSerializer(package)
         return Response(serializer.data)
     elif request.method == 'DELETE':
         if 'removeWorkdir' in request.data:
@@ -113,8 +113,8 @@ def process_list(request, id):
     """
     List all processes of selected package.
     """
+    package = get_object_or_404(Package, pk=id)
     if request.method == 'GET':
-        package = get_object_or_404(Package, pk=id)
         serializer = ProcessSerializer(package.processes, many=True)
         return Response(serializer.data)
     elif request.method == 'PUT':
@@ -122,7 +122,10 @@ def process_list(request, id):
         for process in request.data:
             p = Process.objects.get(pk=process['process_id'])
             p.order = process['order']
+            p.status = Process.PROCESS_STATUS_EDITED
             p.save()
+        package.status = package.PACKAGE_STATUS_EDITED
+        package.save()
         return HttpResponse(status=204)
 
 @api_view(['GET', 'PUT', 'DELETE'])
@@ -130,19 +133,23 @@ def process_detail(request, process_id):
     """
     Display specific process.
     """
+    process = get_object_or_404(Process, pk=process_id)
     if request.method == 'GET':
-        process = get_object_or_404(Process, pk=process_id)
         serializer = ProcessSerializer(process)
         return Response(serializer.data)
     elif request.method == 'PUT':
-        process = get_object_or_404(Process, pk=process_id)
         serializer = ProcessSerializer(process, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            process.status = Process.PROCESS_STATUS_EDITED
+            process.save()
+            process.package.status = Package.PACKAGE_STATUS_EDITED
+            process.package.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        process = get_object_or_404(Process, pk=process_id)
+        process.package.status = Package.PACKAGE_STATUS_EDITED
+        process.package.save()
         process.delete()
         return HttpResponse(status=204)
 
@@ -156,6 +163,8 @@ def process_add(request):
         if serializer.is_valid():
             serializer.save()
             package = get_object_or_404(Package, pk=request.data['package'])
+            package.status = Package.PACKAGE_STATUS_EDITED
+            package.save()
             serializer = ProcessSerializer(package.processes, many=True)
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

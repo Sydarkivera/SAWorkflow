@@ -5,10 +5,11 @@ import {HttpClient, json} from 'aurelia-fetch-client';
 declare var package_id: any;
 
 export class PackageAdmin {
-    title='Toolkit';
-    description='Lite beskrivande text';
+    title='S.A.W';
+    description='Välj vilka moduler som ska köras';
     processes = [];
     modules = [];
+    package = {};
     selected_module = 0;
     selected_process = 0;
     active_process_values = {'filename':'name'};
@@ -17,11 +18,13 @@ export class PackageAdmin {
 
     constructor() {
         this.client = new HttpClient();
-        this.client.fetch('/api/package/'+package_id+'/process/')
+        this.client.fetch('/api/package/'+package_id+'/')
             .then(response => response.json())
             .then(data => {
-                console.log(data);
-                this.processes = data;
+                // console.log(data);
+                this.package = data;
+                this.processes = data["processes"];
+                // this.processes = data;
             });
         this.client.fetch('/api/module/')
             .then(response => response.json())
@@ -52,7 +55,12 @@ export class PackageAdmin {
     addModule(module) {
         //POST to create a new process from package_id and module_id
         // post module, package and order
-        let data = {"module":module.module_id, "package":package_id, "order":this.processes[this.processes.length-1].order+1}
+        let data = {"module":module.module_id, "package":package_id}
+        if (this.processes.length > 0) {
+            data['order'] = this.processes[this.processes.length-1].order+1;
+        } else {
+            data['order'] = 0;
+        }
         this.client.fetch('/api/process/', {
             method: "POST",
             body: json(data),
@@ -68,16 +76,19 @@ export class PackageAdmin {
         this.process_has_changed = true;
     }
 
-    saveProcess(input) {
+    saveProcess(index) {
         if (this.process_has_changed) {
             let val = {'value':this.active_process_values};
             this.client.fetch('/api/process/'+this.selected_process+'/', {
                 method: "PUT",
                 body: json(val),
-            })
+            }).then(response => response.json())
+            .then(data => {
+                this.processes.splice(index, 1, data);
+            });
+            this.process_has_changed = false;
+            this.selected_process = 0;
         }
-        this.process_has_changed = false;
-        this.selected_process = 0;
     }
 
     execute() {

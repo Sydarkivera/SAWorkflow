@@ -3,8 +3,8 @@
 import {HttpClient} from 'aurelia-fetch-client';
 
 export class Index {
-    title='Toolkit';
-    description='Lite beskrivande text';
+    title='S.A.W';
+    description='Välj ett paket att administrera';
     packages = [];
 
     constructor() {
