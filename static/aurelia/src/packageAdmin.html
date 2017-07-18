@@ -25,11 +25,11 @@
                                             <input type="text" if.bind="input.type=='text'" id.bind="input.identifier" value.one-way="active_process_values[input.identifier]" keyup.delegate="setProcessValue(input.identifier, $event.target.value)" change.delegate="setProcessValue(input.identifier, $event.target.value)"/>
                                             <input type="checkbox" if.bind="input.type=='checkbox'" id.bind="input.identifier" checked.one-way="active_process_values[input.identifier]" change.delegate="setProcessValue(input.identifier, $event.target.checked)"/>
                                         </label>
-                                        <button class="btn btn-success" click.delegate="saveProcess($index)" disabled.bind="!process_has_changed">Save</button>
+                                        <button class="btn btn-success" click.delegate="saveProcess($index)" disabled.bind="!process_has_changed">Spara</button>
                                 </form>
-                                <button class="btn btn-success" disabled.bind="$index<=0" click.delegate="moveUp($index)">Move up</button>
-                                <button class="btn btn-success" disabled.bind="$index>=processes.length-1" click.delegate="moveDown($index)">Move down</button>
-                                <button class="btn btn-danger" click.delegate="removeProcess($index)">Remove</button>
+                                <button class="btn btn-success" disabled.bind="$index<=0" click.delegate="moveUp($index)">Flytta upp</button>
+                                <button class="btn btn-success" disabled.bind="$index>=processes.length-1" click.delegate="moveDown($index)">Flytta ner</button>
+                                <button class="btn btn-danger" click.delegate="removeProcess($index)">Ta bort</button>
                             </template>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                          <div repeat.for="module of modules" class="list-group-item list-group-item-action ${module.module_id==selected_module ? 'active' : ''}" if.bind="!module.hidden">
                             <p style="margin-bottom:0;" class="d-flex w-100 noselect" click.trigger="clickModule(module)">${module.name}</p>
                             <div if.bind="module.module_id==selected_module">
-                                <button class="btn btn-success" click.delegate="addModule(module)">Add module</button>
+                                <button class="btn btn-success" click.delegate="addModule(module)">Lägg till modul</button>
                             </div>
                         </div>
                      </div>
