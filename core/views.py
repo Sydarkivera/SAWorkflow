@@ -28,7 +28,7 @@ def package(request, id):
 @require_http_methods(["POST"])
 def execute(request, id):
     package = get_object_or_404(Package, pk=id)
-    if package.status == package.PACKAGE_STATUS_NEW or package.status == package.PACKAGE_STATUS_EDITED:
+    if package.status != package.PACKAGE_STATUS_DONE:
         for process in package.processes.all():
             if process.status != Process.PROCESS_STATUS_DONE:
                 process.status = process.PROCESS_STATUS_WAITING

@@ -17,12 +17,12 @@ class Package(models.Model):
     PACKAGE_STATUS_DONE = 4
     PACKAGE_STATUS_EDITED = 5
     PACKAGE_STATUS = (
-        (PACKAGE_STATUS_NEW, 'New'),
-        (PACKAGE_STATUS_WAITING, 'Waiting'),
-        (PACKAGE_STATUS_RUNNING, 'Running'),
-        (PACKAGE_STATUS_ERROR, 'Error'),
-        (PACKAGE_STATUS_DONE, 'Done'),
-        (PACKAGE_STATUS_EDITED, 'Edited'),
+        (PACKAGE_STATUS_NEW, 'Nytt'),
+        (PACKAGE_STATUS_WAITING, 'Väntar'),
+        (PACKAGE_STATUS_RUNNING, 'Kör'),
+        (PACKAGE_STATUS_ERROR, 'Fel'),
+        (PACKAGE_STATUS_DONE, 'Färdig'),
+        (PACKAGE_STATUS_EDITED, 'Redigerad'),
     )
     package_id = models.AutoField(primary_key=True)
     name = models.TextField()
@@ -46,6 +46,7 @@ class Module(models.Model):
     form = JSONField(default=[])
     python_module = models.CharField(max_length=100)
     hidden = models.BooleanField(default=False)
+    command = JSONField(default=[])
 
     class Meta:
         ordering = ('name',)
@@ -62,13 +63,13 @@ class Process(models.Model):
     PROCESS_STATUS_PAUSED = 5
     PROCESS_STATUS_EDITED = 6
     PROCESS_STATUS = (
-        (PROCESS_STATUS_DEFAULT, 'New'),
-        (PROCESS_STATUS_WAITING, 'Waiting'),
-        (PROCESS_STATUS_RUNNING, 'Running'),
-        (PROCESS_STATUS_ERROR, 'Error'),
-        (PROCESS_STATUS_DONE, 'Done'),
-        (PROCESS_STATUS_PAUSED, 'Paused'), # is it possible?
-        (PROCESS_STATUS_EDITED, 'Edited'),
+        (PROCESS_STATUS_DEFAULT, 'Ny'),
+        (PROCESS_STATUS_WAITING, 'Väntar'),
+        (PROCESS_STATUS_RUNNING, 'Kör'),
+        (PROCESS_STATUS_ERROR, 'Fel'),
+        (PROCESS_STATUS_DONE, 'Färdig'),
+        (PROCESS_STATUS_PAUSED, 'Pausad'), # is it possible?
+        (PROCESS_STATUS_EDITED, 'Redigerad'),
     )
     process_id = models.AutoField(primary_key=True)
     order = models.IntegerField(default=10000)
