@@ -18,7 +18,7 @@
                  </div>
              </div>
              <div class="list-group list-group-flush">
-                 <button style="padding-left:0;padding-right:0;" repeat.for="package of packages" class="list-group-item list-group-item-action">
+                 <div style="padding-left:0;padding-right:0;" repeat.for="package of packages" class="list-group-item list-group-item-action">
                      <div class="col">
                         <a href="package/${package.package_id}/">${package.name}</a>
                     </div>
@@ -28,7 +28,7 @@
                     <div class="col-sm-1">
                         <a href="package/${package.package_id}/status/">${package.status}</a>
                     </div>
-                </button>
+                </div>
              </div>
         </div>
     </div>
