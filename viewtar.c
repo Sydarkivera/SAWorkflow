@@ -1,3 +1,7 @@
+/*
+Created by Simon Nilsson, Axenu for Sydarkivera 2017
+simon@axenu.com simon.nilsson@sydarkivera.se
+*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -440,4 +444,3 @@ int main(int argc, char* argv[]) {
 
     return 0;
 }
-
