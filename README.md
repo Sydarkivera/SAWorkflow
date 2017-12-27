@@ -112,3 +112,11 @@ Configure Mysql in SAWorkflow/config/settings.py, the migrate
     python manage.py migrate
 
 reboot and you are done
+
+## Support
+
+Contact simon@axenu.com or simon.nilsson@sydarkivera.se
+
+## License
+
+This project is licensed under the terms of the GNU (General Public License)
