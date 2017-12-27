@@ -21,7 +21,7 @@ SECRET_KEY = '-2uhrhoxl(n)w3d0jp$ng9-pdesn63m8yyf&5pcky-vro+on!j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 #Custom settings: Store in database?
 PAKAGE_SEARCH_PATH = os.path.join(BASE_DIR, 'paket')
@@ -160,6 +160,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "statichtml")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

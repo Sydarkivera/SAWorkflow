@@ -16,6 +16,7 @@ import traceback
 import logging
 import os
 import subprocess
+import pwd
 
 logger = getLogger('background_task')
 
@@ -72,7 +73,6 @@ class bashModule(pythonModuleBase):
             else:
                 self.logger.error('unknown type: ' + str(arg['type']))
 
-        os.setuid(os.geteuid())
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         stdout, stderr = p.communicate()
@@ -93,7 +93,7 @@ def executeProcessFlow(package_id):
     except ObjectDoesNotExist:
         logger.error("The selected package does not exist")
         return
-
+    # os.setuid(pwd.getpwnam('apache').pw_uid) # production
     for process in package.processes.all():
         if process.status != Process.PROCESS_STATUS_DONE:
             process.status=Process.PROCESS_STATUS_RUNNING

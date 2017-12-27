@@ -28,13 +28,22 @@ module2 = Module(name="Untar archive",
                  module_id=2,
                  )
 module2.save()
-module3 = Module(name="tar",
-                 type='1',
-                 form='[{"type":"text", "label":"filename2", "identifier":"filename"},{"type":"checkbox", "label":"verbose2", "identifier":"verbose"}]',
-                 python_module='tools.untar.untar',
+module3 = Module(name="ClamAV",
+                 type='0',
+                 form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"},{"type":"checkbox", "label":"Ta bort infekterade filer", "identifier":"remove"}]',
+                 python_module='a',
+                 command='[{"value":"clamscan","type":"text"}{"type":"text","value":"-r"},,{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]'
                  module_id=3,
                  )
 module3.save()
+module4 = Module(name="Untar cmd",
+                 type='0',
+                 form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"}]',
+                 python_module='a',
+                 command='[{"type":"text","value":"tar"},{"type":"text","value":"-x"},{"name":"verbose","type":"var","value":"-v"},{"type":"text","value":"-f"},{"name":"tar_path","type":"var"},{"type":"text","value":"-C"},{"name":"workdir","type":"var"}]'
+                 module_id=3,
+                 )
+module4.save()
 
 # create default admin users
 User.objects.all().delete()

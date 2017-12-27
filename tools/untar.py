@@ -22,7 +22,6 @@ class task(pythonModuleBase):
         args = args + ['-f', os.path.join(package.workdir, package.file_name)]
         args = args + ['-C', package.workdir]
 
-        os.setuid(os.geteuid())
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         stdout, stderr = p.communicate()
