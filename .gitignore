@@ -12,3 +12,4 @@ log/
 */migrations/
 static_root/
 node_modules/
+.vscode/
