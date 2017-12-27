@@ -8,9 +8,14 @@ __status__ = "Development"
 
 import os, pwd
 
+#activate_this = '/var/www/html/SAWorkflow/venv/bin/activate_this.py'
+#with open(activate_this) as file_:
+#    exec(file_.read(), dict(__file__=activate_this))
+
+
 from django.core.wsgi import get_wsgi_application
 
-# os.setuid(pwd.getpwnam('apache').pw_uid)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+
 
 application = get_wsgi_application()

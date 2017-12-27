@@ -18,7 +18,7 @@ from api.serializers import ModuleSerializer, PackageSerializer, PackageDetailSe
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
-import os
+import os, pwd
 from os import listdir
 from os.path import isfile, join
 from django.conf import settings
@@ -67,7 +67,7 @@ def package_list(request):
                         packages.append(package)
                     except ObjectDoesNotExist:
                         archive_name = file_name.split('.')[-2]
-                        output = subprocess.check_output([os.path.join(settings.BASE_DIR, "a.out"), file_path,archive_name + '/mets.xml'])
+                        output = subprocess.check_output(['/var/www/html/SAWorkflow/a.out', file_path,archive_name + '/mets.xml'])
                         start_index = output.find(b'LABEL="')
                         label = output[start_index+7:start_index+200].decode('utf-8')
                         end_index = label.find('" ')
@@ -96,6 +96,7 @@ def package_detail(request, id):
     """
     package = get_object_or_404(Package, pk=id)
     if request.method == 'GET':
+        logger.error(pwd.getpwuid(os.getuid()))
         serializer = PackageDetailSerializer(package)
         return Response(serializer.data)
     elif request.method == 'DELETE':

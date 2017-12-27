@@ -10,3 +10,5 @@ workdir/
 log/
 .DS_Store
 */migrations/
+static_root/
+node_modules/

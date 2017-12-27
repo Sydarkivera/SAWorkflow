@@ -24,7 +24,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 #Custom settings: Store in database?
-PAKAGE_SEARCH_PATH = os.path.join(BASE_DIR, 'paket')
+PAKAGE_SEARCH_PATH = '/mnt/epp'
 PACKAGE_IN_PROGRESS_PATH = os.path.join(BASE_DIR, 'workdir')
 # django-background-tasks
 MAX_ATTEMPTS = 0
@@ -92,6 +92,13 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    #'default':{
+    #    'ENGINE':'django.db.backends.mysql',
+    #    'USER':'saw',
+    #    'PASSWORD':'!sles99!',
+    #    'HOST':'localhost',
+    #    'NAME':'saw_db',
+    #}
 }
 
 
@@ -163,6 +170,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "statichtml")
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-    os.path.join(BASE_DIR, "static/aurelia/static"),
+    os.path.join(BASE_DIR, "static/"),
+    os.path.join(BASE_DIR, "aurelia/static"),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, "static_root")
