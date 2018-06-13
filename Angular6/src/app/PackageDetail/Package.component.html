@@ -1,0 +1,46 @@
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Valda moduler</h4>
+        <div class="card">
+            <div class="card-header">
+                Namn
+            </div>
+            <div class="list-group list-group-flush">
+                <div *ngFor="let process of package.processes" repeat.for="process of processes" class="list-group-item list-group-item-action ${process.process_id==selected_process ? 'active' : ''}" if.bind="!process.hidden">
+                    <div class="d-flex w-100 justify-content-between">
+                        <p style="margin-bottom:0;" class="d-flex w-100 noselect" click.delegate="clickProcess(process)">{{process.name}}</p><small>{{process.status}}</small>
+                    </div>
+                    <template if.bind="process.process_id==selected_process" containterless>
+                        <form if.bind="process.form.length>0">
+                                <label repeat.for="input of process.form" for="${input.identifier}">input.label
+                                    <input type="text" if.bind="input.type=='text'" id.bind="input.identifier" value.one-way="active_process_values[input.identifier]" keyup.delegate="setProcessValue(input.identifier, $event.target.value)" change.delegate="setProcessValue(input.identifier, $event.target.value)"/>
+                                    <input type="checkbox" if.bind="input.type=='checkbox'" id.bind="input.identifier" checked.one-way="active_process_values[input.identifier]" change.delegate="setProcessValue(input.identifier, $event.target.checked)"/>
+                                </label>
+                                <button class="btn btn-success" click.delegate="saveProcess($index)" disabled.bind="!process_has_changed">Spara</button>
+                        </form>
+                        <button class="btn btn-success" disabled.bind="$index<=0" click.delegate="moveUp($index)">Flytta upp</button>
+                        <button class="btn btn-success" disabled.bind="$index>=processes.length-1" click.delegate="moveDown($index)">Flytta ner</button>
+                        <button class="btn btn-danger" click.delegate="removeProcess($index)">Ta bort</button>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6" data-query="view(Mooo)">
+        <h4>Tillgängliga moduler</h4>
+        <div class="card">
+             <div class="card-header">
+                Namn
+             </div>
+             <div class="list-group list-group-flush" data-query="each(modules)">
+                 <div *ngFor="let module of modules" class="list-group-item list-group-item-action ${module.module_id==selected_module ? 'active' : ''}" if.bind="!module.hidden">
+                    <p style="margin-bottom:0;" class="d-flex w-100 noselect" click.trigger="clickModule(module)">{{module.name}}</p>
+                    <div if.bind="module.module_id==selected_module">
+                        <button class="btn btn-success" click.delegate="addModule(module)">Lägg till modul</button>
+                    </div>
+                </div>
+             </div>
+        </div>
+    </div>
+</div>
+<button class="btn btn-success float-right" click.delegate="execute()">Starta</button>

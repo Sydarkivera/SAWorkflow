@@ -1,0 +1,15 @@
+<!-- <p>PackageHeader</p> -->
+<ul class="nav nav-tabs"><li class="nav-link"  routerLinkActive="active">
+  <a class="navbar-link">{{name}}</a>
+</li>
+  <li class="nav-link"  routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['dashboard']">Dashboard</a>
+  </li>
+  <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['edit']">Edit</a>
+  </li>
+  <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['status']">Status</a>
+  </li>
+</ul>
+<router-outlet></router-outlet>
