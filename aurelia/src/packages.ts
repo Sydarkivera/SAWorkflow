@@ -2,8 +2,8 @@
 
 import {HttpClient} from 'aurelia-fetch-client';
 
-export class Index {
-    title='S.A.W';
+export class Packages {
+    title='A.P.P';
     description='Välj ett paket att administrera';
     packages = [];
 

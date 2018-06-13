@@ -67,7 +67,7 @@ def package_list(request):
                         packages.append(package)
                     except ObjectDoesNotExist:
                         archive_name = file_name.split('.')[-2]
-                        output = subprocess.check_output(['/code/tools/a.out', file_path,archive_name + '/mets.xml'])
+                        output = subprocess.check_output(['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
                         start_index = output.find(b'LABEL="')
                         label = output[start_index+7:start_index+200].decode('utf-8')
                         end_index = label.find('" ')

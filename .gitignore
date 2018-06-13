@@ -13,4 +13,5 @@ log/
 static_root/
 node_modules/
 .vscode/
-static/aurelia
+static/angular
+test_packages/

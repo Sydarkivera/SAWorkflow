@@ -5,7 +5,7 @@ import {HttpClient,json} from 'aurelia-fetch-client';
 declare var package_id: any;
 
 export class Index {
-    title='S.A.W';
+    title='A.P.P';
     description='Se statusen för paketet: ';
     processes = [];
     package = {};

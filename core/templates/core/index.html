@@ -1,15 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 {% load static %}
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet"></style>
-    <link href="{% static "css/main.css" %}" rel="stylesheet"></style>
-    <title>Packages | SAW</title>
-  </head>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Angular2</title>
+  <base href="/">
+  <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet"></style>
+  <link href="{% static "css/bootstrap.css" %}" rel="stylesheet"></style>
+  <link href="{% static "css/main.css" %}" rel="stylesheet"></style>
 
-  <body aurelia-app="main" start="index">
-    <script src="{% static "vendor-bundle.js" %}" data-main="aurelia-bootstrapper"></script>
-  </body>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" type="image/x-icon" href="favicon.ico"> -->
+</head>
+<body>
+  <app-root></app-root>
+  <script type="text/javascript" src="{% static "runtime.js" %}"></script>
+  <script type="text/javascript" src="{% static "polyfills.js" %}"></script>
+  <script type="text/javascript" src="{% static "styles.js" %}"></script>
+  <script type="text/javascript" src="{% static "vendor.js" %}"></script>
+  <script type="text/javascript" src="{% static "main.js" %}"></script>
+</body>
 </html>

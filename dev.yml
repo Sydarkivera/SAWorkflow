@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    app:
+    # environment:
+    # DATABASE_URL: postgres://app_user:changeme@db/app_db
+    # REDIS_URL: redis://redis
+    # DJANGO_MANAGEPY_MIGRATE: on
+        build:
+            context: .
+            dockerfile: DevDockerfile
+        ports:
+            - "8000:8000"
+        volumes:
+            - "./config:/code/config"
+            - "./api:/code/api"
+            - "./core:/code/core"
+            - "./static:/code/static"

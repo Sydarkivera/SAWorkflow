@@ -24,6 +24,7 @@ Install required packages
     pip install django djangorestframework django-background-tasks jsonfield
 
 Install aurelia
+    npm global install aurelia-cli
 
     npm install aurelia-fetch-client whatwg-fetch --save
 

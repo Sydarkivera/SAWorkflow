@@ -6,7 +6,7 @@ import environment from './environment';
 export function configure(aurelia: Aurelia) {
   aurelia.use
     .standardConfiguration()
-    .feature('resources');
+    .feature('resources')
 
   if (environment.debug) {
     aurelia.use.developmentLogging();
@@ -16,7 +16,8 @@ export function configure(aurelia: Aurelia) {
     aurelia.use.plugin('aurelia-testing');
   }
 
-  aurelia.start().then(a => {
-      aurelia.setRoot(a.host.attributes['start'].value)
-  });
+  aurelia.start().then(() => aurelia.setRoot());
+  // aurelia.start().then(a => {
+  //     aurelia.setRoot(a.host.attributes['start'].value)
+  // });
 }
