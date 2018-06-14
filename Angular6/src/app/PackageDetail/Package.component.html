@@ -6,7 +6,9 @@
                 Namn
             </div>
             <div class="list-group list-group-flush">
-                <div *ngFor="let process of package.processes" repeat.for="process of processes" class="list-group-item list-group-item-action ${process.process_id==selected_process ? 'active' : ''}" if.bind="!process.hidden">
+              <!-- <div *ngIf="placeholderLocation==0.5" class="list-group-item list-group-item-action">
+              </div> -->
+                <div *ngFor="let process of package.processes" draggable="true" (drop)="onDrop($event)" (dragover)="allowDrop($event, process.order)" class="list-group-item list-group-item-action ${process.process_id==selected_process ? 'active' : ''}" if.bind="!process.hidden">
                     <div class="d-flex w-100 justify-content-between">
                         <p style="margin-bottom:0;" class="d-flex w-100 noselect" click.delegate="clickProcess(process)">{{process.name}}</p><small>{{process.status}}</small>
                     </div>
@@ -33,7 +35,7 @@
                 Namn
              </div>
              <div class="list-group list-group-flush" data-query="each(modules)">
-                 <div *ngFor="let module of modules" class="list-group-item list-group-item-action ${module.module_id==selected_module ? 'active' : ''}" if.bind="!module.hidden">
+                 <div *ngFor="let module of modules" draggable="true" (dragstart)="dragStart($event, module.module_id, 'module')" (dragend)="onRelease($event)" class="list-group-item list-group-item-action ${module.module_id==selected_module ? 'active' : ''}" if.bind="!module.hidden">
                     <p style="margin-bottom:0;" class="d-flex w-100 noselect" click.trigger="clickModule(module)">{{module.name}}</p>
                     <div if.bind="module.module_id==selected_module">
                         <button class="btn btn-success" click.delegate="addModule(module)">Lägg till modul</button>
@@ -44,3 +46,10 @@
     </div>
 </div>
 <button class="btn btn-success float-right" click.delegate="execute()">Starta</button>
+
+<ul appSortableList (sort)="sort($event)">
+    <li *ngFor="let box of sortableList" class="box" appSortable>
+      {{ box }}
+      <div class="box" *appDraggableHelper>{{ box }}</div>
+    </li>
+  </ul>
