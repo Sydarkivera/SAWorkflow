@@ -3,23 +3,48 @@ import { Component } from '@angular/core';
 // import { PackagesService } from './Packages.service'
 
 @Component({
-  selector: 'package',
-  // templateUrl: './Package.component.html',
-  template: '<p>Package Dashboard</p>'
-  // styleUrls: ['./packages.component.css']
+  selector: 'packageDashboard',
+  templateUrl: './PackageDashboard.component.html',
+  // template: '<p>Package Dashboard</p>'
+  styleUrls: ['./PackageDashboard.component.css']
 })
 export class PackageDashboardComponent {
   title = 'new title';
-  packages = [];
+  single = [
+  {
+    "name": "Germany",
+    "value": 8940000
+  },
+  {
+    "name": "USA",
+    "value": 5000000
+  },
+  {
+    "name": "France",
+    "value": 7200000
+  }
+];
+  // multi: any[];
+
+  view: any[] = [700, 400];
+
+  // options
+  showLegend = true;
+
+  colorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+  // pie
+  showLabels = true;
+  explodeSlices = false;
+  doughnut = false;
 
   constructor() {
-
+    // Object.assign(this, {single, multi})
   }
 
-  // ngOnInit() {
-  //   this.packagesService.getPackages().subscribe((data) => {
-  //     console.log(data);
-  //     this.packages = data as [any];
-  //   });
-  // }
+  onSelect(event) {
+    console.log(event);
+  }
 }

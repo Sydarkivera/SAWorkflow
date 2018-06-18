@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }    from '@angular/forms';
+import {NgxChartsModule} from '@swimlane/ngx-charts';
 
 import { PackageComponent }    from './Package.component';
 import { PackageDashboardComponent }    from './PackageDashboard.component';
@@ -16,8 +17,9 @@ import { PackageDetailService } from './PackageDetail.service';
 @NgModule({
   imports: [
     CommonModule,
+    NgxChartsModule,
     FormsModule,
-    RouterModule
+    RouterModule,
     // PackageRoutingModule
   ],
   declarations: [
