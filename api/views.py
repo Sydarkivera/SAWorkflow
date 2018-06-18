@@ -6,7 +6,7 @@ __maintainer__ = "Simon Nilsson"
 __email__ = "simon@axenu.com"
 __status__ = "Development"
 
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
@@ -88,6 +88,25 @@ def package_list(request):
         serializer = PackageSerializer(packages, many=True)
         # print(files)
         return Response(serializer.data)
+
+@api_view(['GET'])
+def package_file_list(request, id):
+    """
+    List file in a package.
+    """
+    package = get_object_or_404(Package, pk=id)
+    if request.method == 'GET':
+        output = subprocess.check_output(['/code/tools/a.out', package.path]).decode('utf-8')
+        response = StreamingHttpResponse(output)
+        response['Content-Type'] = 'text/plain; charset=utf8'
+        return response
+
+
+
+
+
+
+
 
 @api_view(['GET', 'DELETE'])
 def package_detail(request, id):

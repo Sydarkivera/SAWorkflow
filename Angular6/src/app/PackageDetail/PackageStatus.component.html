@@ -1,44 +1,70 @@
 
-        <div class="card">
-             <div class="card-header">
-                 <div class="row justify-content-end">
-                     <div class="col">
-                        Namn
-                     </div>
-                     <div class="col">
-                        Statusbar
-                     </div>
-                     <div class="col-sm-2">
-                        Status
-                     </div>
-                     <div class="col-sm-2">
-                        Log
-                     </div>
-                     <div class="col-sm-2">
-                        Fel <a href="#" click.delegate="updateData()" class="tab"><i class="material-icons">refresh</i></a>
-                     </div>
-                 </div>
+<div class="card">
+     <div class="card-header">
+         <div class="row justify-content-end">
+             <div class="col">
+                Namn
              </div>
-             <div class="list-group list-group-flush">
-                 <div style="padding-left:0;padding-right:0;" *ngFor="let process of package.processes" repeat.for="process of processes" class="list-group-item list-group-item-action">
-                     <div class="col">
-                        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
-                    </div>
-                    <div class="col">
-                       Statusbar
-                    </div>
-                    <div class="col-sm-2">
-                       {{process.status}}
-                    </div>
-                    <div class="col-sm-2">
-                       <a href="/process/${process.process_id}/info_log" class="${process.log_path == '' ? 'disabled' : ''}">view log</a>
-                    </div>
-                    <div class="col-sm-2">
-                        <a href="/process/${process.process_id}/error_log" class="${process.err_path == '' ? 'disabled' : ''}">view error log</a>
-                    </div>
-                </div>
+             <div class="col">
+                Statusbar
              </div>
+             <div class="col-sm-2">
+                Status
+             </div>
+             <div class="col-sm-2">
+                Log
+             </div>
+             <div class="col-sm-2">
+                Fel
+                <!-- <a href="#" click="updateData()" class="tab"><i class="material-icons">refresh</i></a> -->
+                <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
+             </div>
+         </div>
+     </div>
+     <div class="list-group list-group-flush">
+         <div style="padding-left:0;padding-right:0;" *ngFor="let process of package.processes" repeat.for="process of processes" class="list-group-item list-group-item-action">
+             <div class="col">
+                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
+            </div>
+            <div class="col">
+               Statusbar
+            </div>
+            <div class="col-sm-2">
+               {{process.status}}
+            </div>
+            <div class="col-sm-2">
+               <!-- <a (click)="showModal(process)" [class.disabled]="process.log_path == ''">view log</a> -->
+               <button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Info</button>
+            </div>
+            <div class="col-sm-2">
+                <!-- <a href="/process/${process.process_id}/error_log" [class.disabled]="process.log_path == ''">view error log</a> -->
+                <button class="btn btn-outline-danger" (click)="showModal(process, 'error_log')" [disabled]="process.err_path == ''">Error</button>
+            </div>
         </div>
-        <button class="btn btn-success float-right" click.delegate="execute()">Starta</button>
-        <label>Ta bort paketfiler i workdir: <input type="checkbox" checked.bind="removeWorkdir"/></label>
-        <button class="btn btn-danger float-right" click.delegate="removePackage()">Klar (Ta bort projekt från databasen)</button>
+     </div>
+</div>
+<button class="btn btn-success float-right" (click)="startWorkflow()">Starta</button>
+<label>Ta bort paketfiler i workdir: <input type="checkbox" checked.bind="removeWorkdir"/></label>
+<button class="btn btn-danger float-right" click.delegate="removePackage()">Klar (Ta bort projekt från databasen)</button>
+
+
+
+<div class="modal Amodal" [class.active]="modalActive" id="modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" (click)="modalActive=false">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        {{modalData}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modalActive=false">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>

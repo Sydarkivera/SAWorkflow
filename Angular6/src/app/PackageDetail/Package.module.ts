@@ -3,13 +3,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }    from '@angular/forms';
-import {NgxChartsModule} from '@swimlane/ngx-charts';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 import { PackageComponent }    from './Package.component';
 import { PackageDashboardComponent }    from './PackageDashboard.component';
 import { PackageStatusComponent }    from './PackageStatus.component';
 import { PackageHeaderComponent } from './PackageHeader.component';
 import { PackageDetailService } from './PackageDetail.service';
+import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
@@ -26,7 +27,8 @@ import { PackageDetailService } from './PackageDetail.service';
     PackageComponent,
     PackageDashboardComponent,
     PackageHeaderComponent,
-    PackageStatusComponent
+    PackageStatusComponent,
+    FileBrowserComponent
   ],
   // bootstrap: [PackageHeaderComponent] s
   providers: [PackageDetailService],

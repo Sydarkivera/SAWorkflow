@@ -27,6 +27,7 @@ def package(request, id):
 @csrf_exempt
 @require_http_methods(["POST"])
 def execute(request, id):
+    print('execute')
     package = get_object_or_404(Package, pk=id)
     if package.status != package.PACKAGE_STATUS_DONE:
         for process in package.processes.all():

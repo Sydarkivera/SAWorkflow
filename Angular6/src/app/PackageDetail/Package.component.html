@@ -35,6 +35,7 @@
                                   {{input.label}}
                                   <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
                                   <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="process.value[input.identifier]" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
+                                  <button class="btn" (click)="openFileBrowser()">Files: All</button>
                                 </label>
                         </form>
                     </ng-template>
@@ -59,4 +60,7 @@
         </div>
     </div>
 </div>
-<button class="btn btn-success float-right" click.delegate="execute()">Start</button>
+<button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
+
+<button class="btn" (click)="FileBrowserOpen = !FileBrowserOpen">Files: All</button>
+<FileBrowser *ngIf="!FileBrowserOpen"> </FileBrowser>

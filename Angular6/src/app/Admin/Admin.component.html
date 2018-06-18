@@ -1,0 +1,31 @@
+<div class="row">
+  <div class="col-lg-6" data-query="view(Mooo)">
+    <p>Admin</p>
+    <h4>Existing processes</h4>
+    <div class="card">
+      <div class="card-header">
+        Name
+      </div>
+      <div class="list-group list-group-flush">
+        <div *ngFor="let module of modules" class="list-group-item list-group-item-action" (click)="selectModule(module)">
+          <div class="d-flex w-100 justify-content-between">
+            <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-6" *ngIf="selected_module">
+    <h4>{{selected_module.name}} preview</h4>
+      <label *ngFor="let input of selected_module.form" for="{{input.identifier}}" class="input-label">
+        {{input.label}}
+        <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
+        <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
+      </label>
+      <h5>Command Settings:</h5>
+      <p>Hidden: {{selected_module.hidden}}</p>
+      <p>Type: {{selected_module.type}}</p>
+      <p *ngIf="selected_module.type == 'Command'">Command: {{renderCommand()}}</p>
+      <p *ngIf="selected_module.type == 'Python module'">Python Module: {{selected_module.python_module}}</p>
+  </div>
+</div>

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from "@angular/router";
 
 // import { PackagesService } from './Packages.service'
 import { PackageDetailService } from './PackageDetail.service';
+import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 
 @Component({
   selector: 'package',
@@ -18,8 +20,9 @@ export class PackageComponent {
   placeholderLocation: number = -1;
   selected_process_id: number = -1;
   selected_process = undefined;
+  FileBrowserOpen = false;
 
-  constructor(private packageService: PackageDetailService, private route: ActivatedRoute) {
+  constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {
       name: "Name"
     };
@@ -44,6 +47,11 @@ export class PackageComponent {
     //         this.modules = data;
     //
     //     });
+  }
+
+  startWorkflow() {
+    this.packageService.startWorkflow(this.package.package_id);
+    this.router.navigate(['packages', this.package.package_id, 'status']);
   }
 
   selectProcess(process) {

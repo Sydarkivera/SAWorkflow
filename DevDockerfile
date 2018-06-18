@@ -32,8 +32,10 @@ ADD ./viewtar.c /viewtar.c
 #     && apk add --virtual .python-rundeps $runDeps \
 #     && apk del .build-deps
 
-RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav
 RUN gcc /viewtar.c
+
+RUN freshclam
 
 RUN pip install -r requirements.txt
 

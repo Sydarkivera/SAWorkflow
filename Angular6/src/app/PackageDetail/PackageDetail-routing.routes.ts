@@ -8,7 +8,7 @@ import { PackageStatusComponent }    from './PackageStatus.component';
 
 export const packageRoutes: Routes = [
   { path: ':id', component: PackageHeaderComponent, children: [
-    { path: '', component: PackageDashboardComponent},
+    { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     { path: 'dashboard', component: PackageDashboardComponent},
     { path: 'edit', component: PackageComponent},
     { path: 'status', component: PackageStatusComponent}

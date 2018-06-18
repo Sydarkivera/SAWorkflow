@@ -15,12 +15,15 @@ import { AppComponent } from './app.component';
 import { PackagesModule } from './Packages/Packages.module';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { NotFoundComponent } from './NotFound.component';
+import { AdminComponent } from './Admin/Admin.component';
 
 @NgModule({
   declarations: [
+    // FileBrowserComponent,
     AppComponent,
     DashboardComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AdminComponent
   ],
   imports: [
     BrowserModule,

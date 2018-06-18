@@ -31,8 +31,16 @@ export class PackageDetailService {
     return this.http.put('/api/process/'+id+'/', data);
   }
 
-  // this.client.fetch('/api/package/'+package_id+'/process/', {
-  //     method: "PUT",
-  //     body: json(data)
-  // })
+  getLogFile(path, process_id) {
+    return this.http.get('/process/'+process_id+'/'+path, { responseType: 'text' });
+  }
+
+  startWorkflow(package_id) {
+    // this.client.fetch('/package/'+package_id+'/execute/', {
+    //     method: "POST",
+    // })
+    this.http.post('/package/'+package_id+'/execute/', {}).subscribe(() => {
+
+    });
+  }
 }

@@ -53,6 +53,13 @@ class PackageDetailSerializer(serializers.ModelSerializer):
 
 
 class ModuleSerializer(serializers.ModelSerializer):
+    form = JSONSerializerField()
+    command = JSONSerializerField()
+    type = serializers.SerializerMethodField()
+
     class Meta:
         model = Module
-        fields = ('module_id', 'name', 'type', 'hidden')
+        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden')
+
+    def get_type(self,obj):
+        return obj.get_type_display()
