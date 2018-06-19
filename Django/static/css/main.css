@@ -1,0 +1,108 @@
+body {
+    background-color: #ece8e8;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h1 a {
+    margin-top: 0;
+    color: #bc044e;
+    border-bottom: 1px solid #ccc;
+    -moz-box-shadow: #FFF 0 1px 0 0;
+    -webkit-box-shadow: #FFF 0 1px 0 0;
+    box-shadow: #FFF 0 1px 0 0;
+    text-decoration: none;
+}
+
+h1 a:hover {
+    margin-top: 0;
+    color: #bc044e;
+    text-decoration: none;
+}
+
+.card {
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-header {
+    border: none;
+    background-color: #bc044e;
+    color: #eee;
+}
+
+.list-group {
+    /*height: 500px;*/
+    /*overflow-y: scroll;*/
+}
+
+.list-group-item {
+    /*border: none;*/
+    background-color: white;
+    /*box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);*/
+}
+
+.list-group-item label {
+    /*clear: both;*/
+    display: inline-block;
+    margin-right: 10px;
+}
+
+form {
+    display: block;
+    width: 100%;
+}
+
+.btn {
+    margin: 5px;
+}
+
+.list-group-item.active {
+    background-color: #830236;
+    border-color: #bc044e;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.logga {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+
+a.disabled {
+  color: gray;
+  pointer-events: none;
+}
+
+.a-span {
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+.fa.fa-refresh {
+    margin-right: 15px;
+    /*margin-left: -25px;*/
+
+    font-size: 1.4em;
+}
+
+.tab {
+    margin-left: 80px;
+    color: inherit;
+}
+
+.tab:hover {
+    color: inherit;
+}
+
+/*.list-group-item:nth-child(even) {
+    background-color: #f2f2f2;
+}*/

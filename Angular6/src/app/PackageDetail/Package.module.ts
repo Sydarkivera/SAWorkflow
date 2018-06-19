@@ -11,6 +11,7 @@ import { PackageStatusComponent }    from './PackageStatus.component';
 import { PackageHeaderComponent } from './PackageHeader.component';
 import { PackageDetailService } from './PackageDetail.service';
 import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
+import { FileComponent } from '../FileBrowser/File.component';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
@@ -28,7 +29,8 @@ import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
     PackageDashboardComponent,
     PackageHeaderComponent,
     PackageStatusComponent,
-    FileBrowserComponent
+    FileBrowserComponent,
+    FileComponent
   ],
   // bootstrap: [PackageHeaderComponent] s
   providers: [PackageDetailService],

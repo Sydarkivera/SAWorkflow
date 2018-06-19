@@ -1,0 +1,13 @@
+
+<div class="file-header" (click)="expanded = !expanded">
+  <ng-template [ngIf]="file.type == 'folder'">
+    <i *ngIf="!expanded" class="material-icons file-float">arrow_right</i>
+    <i *ngIf="expanded" class="material-icons file-float">arrow_drop_down</i>
+  </ng-template>
+  <p class="file-float">{{file.name}}</p>
+</div>
+<div *ngIf="expanded" class="file-children">
+  <!-- <div *ngFor="let file of file.children"> -->
+    <file *ngFor="let f of file.children" [file]="f"></file>
+  <!-- </div> -->
+</div>

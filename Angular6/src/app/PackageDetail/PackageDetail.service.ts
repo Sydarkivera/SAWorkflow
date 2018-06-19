@@ -43,4 +43,20 @@ export class PackageDetailService {
 
     });
   }
+
+  removePackage(id) {
+
+    return this.http.delete('/api/package/'+id+'/');
+
+  //   let body = {"removeWorkdir": this.removeWorkdir};
+  //   this.client.fetch('/api/package/'+package_id+'/', {
+  //       method: "DELETE",
+  //       body: json(body),
+  //   })
+  //       .then(response => {
+  //           console.log(response.json());
+  //           window.location.href = "/";
+  //       });
+  // }
+  }
 }

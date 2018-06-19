@@ -12,7 +12,8 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - "./config:/code/config"
-            - "./api:/code/api"
-            - "./core:/code/core"
-            - "./static:/code/static"
+            - "./django/config:/code/config"
+            - "./django/api:/code/api"
+            - "./django/core:/code/core"
+            - "./django/static:/code/static"
+            - "./workdir:/code/workdir"

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from "@angular/router";
 
 // import { PackagesService } from './Packages.service'
 import { PackageDetailService } from './PackageDetail.service';
@@ -18,7 +19,7 @@ export class PackageStatusComponent {
   modalActive = false;
   modalData = '';
 
-  constructor(private packageService: PackageDetailService, private route: ActivatedRoute) {
+  constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {
       name: "Name"
     };
@@ -51,5 +52,12 @@ export class PackageStatusComponent {
       console.log(data);
       this.package = data;
     });
+  }
+
+  removePackage() {
+    this.packageService.removePackage(this.id).subscribe((data) => {
+      console.log(data);
+    });
+    this.router.navigate(['packages']);
   }
 }

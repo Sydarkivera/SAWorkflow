@@ -63,4 +63,4 @@
 <button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
 
 <button class="btn" (click)="FileBrowserOpen = !FileBrowserOpen">Files: All</button>
-<FileBrowser *ngIf="!FileBrowserOpen"> </FileBrowser>
+<FileBrowser [(active)]="FileBrowserOpen" [package_id]="id"> </FileBrowser>
