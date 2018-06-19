@@ -1,15 +1,30 @@
 <p>Package Dashboard</p>
-<ngx-charts-pie-chart
+
+<p>filetypes in package, size of package, number of files, </p>
+
+
+
+<!-- <ngx-charts-pie-chart
   [view]="view"
   [scheme]="colorScheme"
-  [results]="single"
+  [results]="fileTypes"
   [legend]="showLegend"
   [explodeSlices]="explodeSlices"
   [labels]="showLabels"
   [doughnut]="doughnut"
   [gradient]="gradient"
   (select)="onSelect($event)">
-</ngx-charts-pie-chart>
+</ngx-charts-pie-chart> -->
+
+<ngx-charts-advanced-pie-chart
+  [view]="view"
+  [scheme]="colorScheme"
+  [results]="fileTypes"
+  [gradient]="gradient"
+  (select)="onSelect($event)"
+  label="Filetypes">
+</ngx-charts-advanced-pie-chart>
+
 <ngx-charts-gauge
   [view]="view"
   [scheme]="colorScheme"

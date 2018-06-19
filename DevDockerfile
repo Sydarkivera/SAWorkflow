@@ -32,7 +32,8 @@ ADD ./viewtar.c /viewtar.c
 #     && apk add --virtual .python-rundeps $runDeps \
 #     && apk del .build-deps
 
-RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev
+RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
 RUN gcc /viewtar.c
 
 RUN freshclam
@@ -58,10 +59,10 @@ EXPOSE 8000
 # ENV UWSGI_VIRTUALENV=/venv UWSGI_WSGI_FILE=config/wsgi.py UWSGI_HTTP=:80 UWSGI_MASTER=1 UWSGI_WORKERS=2 UWSGI_THREADS=8  UWSGI_LAZY_APPS=1 UWSGI_WSGI_ENV_BEHAVIOR=holy
 
 # Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
-RUN python manage.py makemigrations api
-RUN python manage.py migrate
-RUN python populate_databse.py
+# RUN python manage.py makemigrations api
+# RUN python manage.py migrate
+# RUN python populate_databse.py
 
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 # Start uWSGI
 # CMD ["/venv/bin/uwsgi", "--http-auto-chunked", "--http-keepalive", "--static-map", "/static=/code/static_root"]

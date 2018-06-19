@@ -66,22 +66,23 @@ def package_list(request):
                         package = Package.objects.get(path=file_path)
                         packages.append(package)
                     except ObjectDoesNotExist:
-                        archive_name = file_name.split('.')[-2]
-                        output = subprocess.check_output(['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
-                        start_index = output.find(b'LABEL="')
-                        label = output[start_index+7:start_index+200].decode('utf-8')
-                        end_index = label.find('" ')
-                        label = label[0:end_index]
-                        package = Package(path=file_path, file_name=file_name, name=label)
-                        package.save()
-
-                        #set default module
-                        module = Module.objects.get(pk=1)
-                        if module:
-                            process1 = Process(order=0, package=package, module=module, value={})
-                            process1.save()
-
-                        packages.append(package)
+                        pass
+                        # archive_name = file_name.split('.')[-2]
+                        # output = subprocess.check_output(['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
+                        # start_index = output.find(b'LABEL="')
+                        # label = output[start_index+7:start_index+200].decode('utf-8')
+                        # end_index = label.find('" ')
+                        # label = label[0:end_index]
+                        # package = Package(path=file_path, file_name=file_name, name=label)
+                        # package.save()
+                        #
+                        # #set default module
+                        # module = Module.objects.get(pk=1)
+                        # if module:
+                        #     process1 = Process(order=0, package=package, module=module, value={})
+                        #     process1.save()
+                        #
+                        # packages.append(package)
                         # print("package does not exist")
                 # files.append({'name':file})
         # [f for f in listdir(path) if isfile(join(path, f))]

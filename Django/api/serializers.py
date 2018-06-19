@@ -46,10 +46,11 @@ class PackageSerializer(serializers.ModelSerializer):
 
 class PackageDetailSerializer(serializers.ModelSerializer):
     processes = ProcessSerializer(many=True)
+    statistics = JSONSerializerField(required=True)
 
     class Meta:
         model = Package
-        fields = ('package_id', 'name', 'file_name', 'status', 'processes')
+        fields = ('package_id', 'name', 'file_name', 'status', 'processes', 'statistics')
 
 
 class ModuleSerializer(serializers.ModelSerializer):

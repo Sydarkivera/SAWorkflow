@@ -31,6 +31,7 @@ class Package(models.Model):
     status = models.IntegerField(choices=PACKAGE_STATUS, default=0)
     workdir = models.TextField()
     logdir = models.TextField()
+    statistics = JSONField(default={})
 
 class Module(models.Model):
     MODULE_TYPE_COMMAND = 0
@@ -77,6 +78,7 @@ class Process(models.Model):
     module = models.ForeignKey(Module, related_name='processes', on_delete=models.PROTECT)
     value = JSONField(default={})
     status = models.IntegerField(choices=PROCESS_STATUS, default=0)
+    hidden = models.BooleanField(default=False)
     log_path = models.CharField(max_length=100, blank=True, default='')
     err_path = models.CharField(max_length=100, blank=True, default='')
 

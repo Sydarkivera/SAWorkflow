@@ -18,6 +18,13 @@ import os
 import subprocess
 import pwd
 
+from celery import Celery
+from celery.schedules import crontab
+from config.celeryconf import app
+from datetime import timedelta
+from celery.task import periodic_task
+from django.conf import settings
+
 logger = getLogger('background_task')
 
 class pythonModuleBase:
@@ -84,7 +91,8 @@ class bashModule(pythonModuleBase):
 
         return retval
 
-@background(schedule=1)
+# @background(schedule=1)
+@app.task
 def executeProcessFlow(package_id):
     # get list of all processes in package.
     # execute the processes one by one.
@@ -152,7 +160,77 @@ def executeProcessFlow(package_id):
 
     package.save()
 
+# @app.on_after_configure.connect
+@periodic_task(run_every=timedelta(seconds=60))
+def my_periodic_task(**kwargs):
+    logger.info('my_periodic_task running')
+    path = settings.PAKAGE_SEARCH_PATH
+    packages = []
+    for file_name in os.listdir(path):
+        file_path = os.path.join(path, file_name)
+        if os.path.isfile(file_path):
+            pass
+            #check if .tar
+            if file_name.split('.')[-1] == 'tar':
+                if Package.objects.filter(path=file_path).exists():
+                    # logger.info('package: ' + file_path + ' exists!')
+                    pass
+                else:
 
-@background()
-def SearchForNewPackages():
-    logger.info('background_task running')
+                    package = Package(path=file_path, file_name=file_name)
+                    package.save()
+                    # logger.info('found new package: ' + file_path + '!')
+                    # create database entry, queue jobs to create workdir and untar files.
+                    archive_name = file_name.split('.')[-2]
+                    output = subprocess.check_output(['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
+                    start_index = output.find(b'LABEL="')
+                    label = output[start_index+7:start_index+200].decode('utf-8')
+                    end_index = label.find('" ')
+                    label = label[0:end_index]
+                    package.name=label
+                    package.save()
+                    module = Module.objects.get(name="Setup workdir")
+                    if module:
+                        process1 = Process(order=0, package=package, module=module, value={})
+                        process1.save()
+                    module2 = Module.objects.get(name="Untar archive")
+                    if module2:
+                        process1 = Process(order=1, package=package, module=module2, value={})
+                        process1.save()
+                    executeProcessFlow(package.package_id)
+
+                    # calculate
+                    calculateMetricsForNewPackage(package)
+
+
+def calculateMetricsForNewPackage(package):
+
+    package = Package.objects.get(pk=package.package_id)
+
+    stats = {}
+    filetypes = {}
+
+    # for file_name in os.listdir(package.path):
+    logger.info(os.path.join(package.workdir, package.file_name.split('.')[0]))
+    for dirpath, dirs, files in os.walk(os.path.join(package.workdir, package.file_name.split('.')[0])):
+        for file in files:
+            type = file.split('.')[-1]
+            if type in filetypes:
+                filetypes[type] += 1
+            else:
+                filetypes[type] = 1
+
+    	# print files
+    logger.info(filetypes)
+    stats['fileTypes'] = filetypes
+
+    package.statistics = stats
+    package.save()
+
+    # calculate filetypes in package.
+    # calculate global filetypesself.
+    # calculate size of package
+    # calculate
+
+
+    pass

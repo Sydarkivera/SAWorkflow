@@ -851,7 +851,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Package Dashboard</p>\n<ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart>\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+module.exports = "<p>Package Dashboard</p>\n\n<p>filetypes in package, size of package, number of files, </p>\n\n\n\n<!-- <ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart> -->\n\n<ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart>\n\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
 
 /***/ }),
 
@@ -866,6 +866,8 @@ module.exports = "<p>Package Dashboard</p>\n<ngx-charts-pie-chart\n  [view]=\"vi
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageDashboardComponent", function() { return PackageDashboardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -876,9 +878,29 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+// import { PackagesService } from './Packages.service'
+
+// import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 // import { PackagesService } from './Packages.service'
 var PackageDashboardComponent = /** @class */ (function () {
-    function PackageDashboardComponent() {
+    function PackageDashboardComponent(packageService, route, router) {
+        // Object.assign(this, {single, multi})
+        this.packageService = packageService;
+        this.route = route;
+        this.router = router;
+        this.id = -1;
+        this.fileTypes = [];
+        //   {
+        //     "name":'pdf',
+        //     "value":10
+        //   },
+        //   {
+        //     "name":"xml",
+        //     "value":3
+        //   }
+        // ];
         this.title = 'new title';
         this.single = [
             {
@@ -897,16 +919,37 @@ var PackageDashboardComponent = /** @class */ (function () {
         // multi: any[];
         this.view = [700, 400];
         // options
-        this.showLegend = true;
+        this.showLegend = false;
         this.colorScheme = {
-            domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+            domain: ['#eac435', '#345995', '#e40066', '#03cea4', '#fb4d3d']
         };
         // pie
         this.showLabels = true;
         this.explodeSlices = false;
         this.doughnut = false;
-        // Object.assign(this, {single, multi})
+        this.gradient = false;
     }
+    PackageDashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.parent.params.subscribe(function (params) {
+            _this.id = +params['id'];
+            _this.packageService.getPackage(_this.id).subscribe(function (data) {
+                console.log(data);
+                _this.package = data;
+                var res = [];
+                for (var key in _this.package.statistics.fileTypes) {
+                    var value = _this.package.statistics.fileTypes[key];
+                    // Use `key` and `value`
+                    var temp = {};
+                    temp['name'] = key;
+                    temp['value'] = value;
+                    res.push({ "name": key.toUpperCase(), "value": value });
+                }
+                _this.fileTypes = res.slice();
+                // console.log(this.fileTypes)
+            });
+        });
+    };
     PackageDashboardComponent.prototype.onSelect = function (event) {
         console.log(event);
     };
@@ -916,7 +959,7 @@ var PackageDashboardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageDashboard.component.html */ "./src/app/PackageDetail/PackageDashboard.component.html"),
             styles: [__webpack_require__(/*! ./PackageDashboard.component.css */ "./src/app/PackageDetail/PackageDashboard.component.css")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageDashboardComponent);
     return PackageDashboardComponent;
 }());
@@ -1111,7 +1154,7 @@ var PackageHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".Amodal {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  /* width: 80%; */\n  max-width: 100%;\n  height: 98%;\n  max-height: 100%;\n  /* overflow-y: scroll; */\n  /* background-color: white; */\n}\n\n.Amodal.active {\n  display: block !important;\n}\n\n.modal-dialog,\n.modal-content {\n    /* 80% of window height */\n    height: 95%;\n}\n\n.modal-body {\n    /* 100% = dialog height, 120px = header + footer */\n    /* max-height: calc(100% + 120px); */\n    overflow-y: scroll;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px; */\n  float:right;\n  color: inherit;\n}\n"
+module.exports = ".Amodal {\n  /* position: fixed; */\n  /* top: 50%; */\n  /* left: 50%; */\n  /* transform: translate(-50%, -50%); */\n  /* width: 80%; */\n  /* max-width: 100%;\n  height: 98%;\n  max-height: 100%; */\n  /* overflow-y: scroll; */\n  /* background-color: white; */\n}\n\n.Amodal.active {\n  display: block !important;\n}\n\n.modal-dialog,\n.modal-content {\n    /* 80% of window height */\n    height: 95%;\n}\n\n.modal-body {\n    /* 100% = dialog height, 120px = header + footer */\n    /* max-height: calc(100% + 120px); */\n    overflow-y: scroll;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px; */\n  float:right;\n  color: inherit;\n}\n\n.modal-background {\n        /* modal background fixed across whole screen */\n        position: fixed;\n        top: 0;\n        right: 0;\n        bottom: 0;\n        left: 0;\n        /* semi-transparent black  */\n        background-color: #000;\n        opacity: 0.75;\n\n        /* z-index must be below .modal and above everything else  */\n        z-index: -1;\n    }\n"
 
 /***/ }),
 
@@ -1122,7 +1165,7 @@ module.exports = ".Amodal {\n  position: fixed;\n  top: 50%;\n  left: 50%;\n  -w
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col\">\n                Statusbar\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n             </div>\n             <div class=\"col-sm-2\">\n                Log\n             </div>\n             <div class=\"col-sm-2\">\n                Error\n                <!-- <a href=\"#\" click=\"updateData()\" class=\"tab\"><i class=\"material-icons\">refresh</i></a> -->\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let process of package.processes\" repeat.for=\"process of processes\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n            </div>\n            <div class=\"col\">\n               Statusbar\n            </div>\n            <div class=\"col-sm-2\">\n               {{process.status}}\n            </div>\n            <div class=\"col-sm-2\">\n               <!-- <a (click)=\"showModal(process)\" [class.disabled]=\"process.log_path == ''\">view log</a> -->\n               <button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button>\n            </div>\n            <div class=\"col-sm-2\">\n                <!-- <a href=\"/process/${process.process_id}/error_log\" [class.disabled]=\"process.log_path == ''\">view error log</a> -->\n                <button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == ''\">Error</button>\n            </div>\n        </div>\n     </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Done (Remove package from workdir)</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n</div>\n"
+module.exports = "\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col\">\n                Statusbar\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n             </div>\n             <div class=\"col-sm-2\">\n                Log\n             </div>\n             <div class=\"col-sm-2\">\n                Error\n                <!-- <a href=\"#\" click=\"updateData()\" class=\"tab\"><i class=\"material-icons\">refresh</i></a> -->\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let process of package.processes\" repeat.for=\"process of processes\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n            </div>\n            <div class=\"col\">\n               Statusbar\n            </div>\n            <div class=\"col-sm-2\">\n               {{process.status}}\n            </div>\n            <div class=\"col-sm-2\">\n               <!-- <a (click)=\"showModal(process)\" [class.disabled]=\"process.log_path == ''\">view log</a> -->\n               <button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button>\n            </div>\n            <div class=\"col-sm-2\">\n                <!-- <a href=\"/process/${process.process_id}/error_log\" [class.disabled]=\"process.log_path == ''\">view error log</a> -->\n                <button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == ''\">Error</button>\n            </div>\n        </div>\n     </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Done (Remove package from workdir)</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n"
 
 /***/ }),
 
