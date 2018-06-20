@@ -45,9 +45,12 @@ class Module(models.Model):
     name = models.CharField(max_length=100, blank=True, default='')
     type = models.IntegerField(choices=MODULE_TYPES, default=0)
     form = JSONField(default=[])
-    python_module = models.CharField(max_length=100)
+    python_module = models.CharField(max_length=100, default='')
     hidden = models.BooleanField(default=False)
     command = JSONField(default=[])
+
+    # for handling mulitfile tools:
+    multifile = models.BooleanField(default=False)
 
     class Meta:
         ordering = ('name',)
@@ -78,9 +81,17 @@ class Process(models.Model):
     module = models.ForeignKey(Module, related_name='processes', on_delete=models.PROTECT)
     value = JSONField(default={})
     status = models.IntegerField(choices=PROCESS_STATUS, default=0)
-    hidden = models.BooleanField(default=False)
     log_path = models.CharField(max_length=100, blank=True, default='')
     err_path = models.CharField(max_length=100, blank=True, default='')
+
+    # for handling mulitfile tools:
+    fileList = JSONField(default={})
+
+    ## TODO after lunch:
+    # 1. create better default modules...
+    # 2. modify admin for multifile
+    # 3. create a verapdf task for multiple files. Preferably as cmd.
+
 
     class Meta:
         ordering = ('order',)

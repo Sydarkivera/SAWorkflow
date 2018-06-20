@@ -45,6 +45,20 @@ def module_list(request):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['POST'])
+def module(request, id):
+    """
+    Handle module edits
+    """
+    module = get_object_or_404(Module, pk=id)
+    if request.method == 'POST':
+        serializer = ModuleSerializer(module, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    pass
+
 @api_view(['GET'])
 def package_list(request):
     """
@@ -55,18 +69,18 @@ def package_list(request):
         # create database entries for them.
         # find names of the packages.
         # list pacakges from database corresponding to files in folder.
-        path = settings.PAKAGE_SEARCH_PATH
-        packages = []
-        for file_name in listdir(path):
-            file_path = join(path, file_name)
-            if isfile(file_path):
-                #check if .tar
-                if file_name.split('.')[-1] == 'tar':
-                    try:
-                        package = Package.objects.get(path=file_path)
-                        packages.append(package)
-                    except ObjectDoesNotExist:
-                        pass
+        # path = settings.PAKAGE_SEARCH_PATH
+        # packages = []
+        # for file_name in listdir(path):
+        #     file_path = join(path, file_name)
+        #     if isfile(file_path):
+        #         #check if .tar
+        #         if file_name.split('.')[-1] == 'tar':
+        #             try:
+        #                 package = Package.objects.get(path=file_path)
+        #                 packages.append(package)
+        #             except ObjectDoesNotExist:
+        #                 pass
                         # archive_name = file_name.split('.')[-2]
                         # output = subprocess.check_output(['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
                         # start_index = output.find(b'LABEL="')
@@ -86,6 +100,7 @@ def package_list(request):
                         # print("package does not exist")
                 # files.append({'name':file})
         # [f for f in listdir(path) if isfile(join(path, f))]
+        packages = Package.objects.all()
         serializer = PackageSerializer(packages, many=True)
         # print(files)
         return Response(serializer.data)

@@ -16,16 +16,54 @@
     </div>
   </div>
   <div class="col-lg-6" *ngIf="selected_module">
-    <h4>{{selected_module.name}} preview</h4>
-      <label *ngFor="let input of selected_module.form" for="{{input.identifier}}" class="input-label">
-        {{input.label}}
-        <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
-        <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
-      </label>
-      <h5>Command Settings:</h5>
-      <p>Hidden: {{selected_module.hidden}}</p>
-      <p>Type: {{selected_module.type}}</p>
-      <p *ngIf="selected_module.type == 'Command'">Command: {{renderCommand()}}</p>
-      <p *ngIf="selected_module.type == 'Python module'">Python Module: {{selected_module.python_module}}</p>
+    <h4>{{title}} preview</h4>
+    <label *ngFor="let input of selected_module.form" for="{{input.identifier}}" class="input-label">
+      {{input.label}}
+      <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
+      <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
+    </label>
+    <button class="btn btn-success">Save as default values</button>
+
+    <h5>Command Settings:</h5>
+    <label class="input-label">
+      Name:
+      <input type="text" [(ngModel)]="selected_module.name"/>
+    </label>
+    <label class="input-label">
+      Hidden:
+      <input type="checkbox" [(ngModel)]="selected_module.hidden"/>
+    </label>
+    <label class="input-label">
+      Form:
+    </label>
+    <textarea rows="10" cols="70" [(ngModel)]="formJson">
+    </textarea>
+    <p class="Error-text">{{formJsonError}}</p>
+    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>
+    <h6>Command:</h6>
+    <label class="input-label">
+      type:
+      <select [(ngModel)]="selected_module.type">
+        <option value="Command">Command</option>
+        <option value="Python module">Python module</option>
+      </select>
+      <i class="material-icons icon-button">warning</i>
+    </label>
+    <label class="input-label" *ngIf="selected_module.type == 'Command'">
+      Command:
+      <!-- <input type="text" [value]="getJson(selected_module.command)"/> -->
+    </label>
+    <textarea rows="10" cols="70" [(ngModel)]="commandJson" *ngIf="selected_module.type == 'Command'">
+    </textarea>
+    <label class="input-label" *ngIf="selected_module.type == 'Python module'">
+      Python Module:
+      <input type="text" [(ngModel)]="selected_module.python_module"/>
+    </label>
+    <label class="input-label">
+      Run on multiple files:
+      <input type="checkbox" [(ngModel)]="selected_module.multifile"/>
+    </label>
+    <button class="btn btn-success" (click)="save()">Save changes</button>
+    <button class="btn" (click)="exportModule()">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>
   </div>
 </div>

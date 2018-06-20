@@ -10,6 +10,24 @@ from rest_framework import serializers
 from api.models import Module, Package, Process
 import json
 
+
+
+class TypeSerializer(serializers.Field):
+
+    def to_representation(self, obj):
+        for var in Module.MODULE_TYPES:
+            if var[0] == obj:
+                return var[1]
+        # return Module.MODULE_TYPES[obj][1]
+        return "Not found"
+
+    def to_internal_value(self, data):
+        for var in Module.MODULE_TYPES:
+            if var[1] == data:
+                return var[0]
+        return 0
+        # return {k:v for v,k in Module.MODULE_TYPES.items()}[data]
+
 class JSONSerializerField(serializers.Field):
     """ Serializer for JSONField -- required to make field writable"""
     def to_internal_value(self, data):
@@ -20,7 +38,7 @@ class JSONSerializerField(serializers.Field):
 class ProcessSerializer(serializers.ModelSerializer):
     name = serializers.CharField(source='module.name', read_only=True)
     hidden = serializers.BooleanField(source='module.hidden', read_only=True)
-    type = serializers.EmailField(source='module.type', read_only=True)
+    type = TypeSerializer(source='module.type', read_only=True)
     form = JSONSerializerField(source='module.form', read_only=True)
     value = JSONSerializerField(required=False)
     status = serializers.SerializerMethodField()
@@ -56,11 +74,11 @@ class PackageDetailSerializer(serializers.ModelSerializer):
 class ModuleSerializer(serializers.ModelSerializer):
     form = JSONSerializerField()
     command = JSONSerializerField()
-    type = serializers.SerializerMethodField()
+    type = TypeSerializer()
 
     class Meta:
         model = Module
-        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden')
+        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'multifile')
 
     def get_type(self,obj):
         return obj.get_type_display()

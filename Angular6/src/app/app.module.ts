@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,6 +18,8 @@ import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { NotFoundComponent } from './NotFound.component';
 import { AdminComponent } from './Admin/Admin.component';
 
+import { TooltipModule } from './Tooltip/Tooltip.module'
+
 @NgModule({
   declarations: [
     // FileBrowserComponent,
@@ -28,7 +31,9 @@ import { AdminComponent } from './Admin/Admin.component';
   imports: [
     BrowserModule,
     HttpClientModule,
+    FormsModule,
     NgxChartsModule,
+    TooltipModule,
     // DndListModule,
     // NgxDnDModule,
     // DragulaModule,

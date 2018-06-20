@@ -162,7 +162,7 @@ def executeProcessFlow(package_id):
 
 # @app.on_after_configure.connect
 @periodic_task(run_every=timedelta(seconds=60))
-def my_periodic_task(**kwargs):
+def periodic_scan_for_new_packages(**kwargs):
     logger.info('my_periodic_task running')
     path = settings.PAKAGE_SEARCH_PATH
     packages = []

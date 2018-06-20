@@ -30,7 +30,7 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".input-label {\n  width: 100%;\n}\n"
+module.exports = ".input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: red;\n}\n"
 
 /***/ }),
 
@@ -41,7 +41,7 @@ module.exports = ".input-label {\n  width: 100%;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <p>Admin</p>\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{selected_module.name}} preview</h4>\n      <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n        {{input.label}}\n        <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n        <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n      </label>\n      <h5>Command Settings:</h5>\n      <p>Hidden: {{selected_module.hidden}}</p>\n      <p>Type: {{selected_module.type}}</p>\n      <p *ngIf=\"selected_module.type == 'Command'\">Command: {{renderCommand()}}</p>\n      <p *ngIf=\"selected_module.type == 'Python module'\">Python Module: {{selected_module.python_module}}</p>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <p>Admin</p>\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{title}} preview</h4>\n    <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n      {{input.label}}\n      <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n      <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n    </label>\n    <button class=\"btn btn-success\">Save as default values</button>\n\n    <h5>Command Settings:</h5>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -57,6 +57,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminComponent", function() { return AdminComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PackageDetail/PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -68,21 +69,34 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var AdminComponent = /** @class */ (function () {
-    function AdminComponent(packageService) {
+    function AdminComponent(packageService, moduleService) {
         this.packageService = packageService;
+        this.moduleService = moduleService;
         this.selected_module = undefined;
+        this.formJson = "";
+        this.commandJson = "";
+        this.formJsonError = "";
+        this.commandJsonError = "";
     }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.packageService.getModules().subscribe(function (data) {
             _this.modules = data;
+            _this.setModule(_this.modules[_this.modules.length - 1]);
         });
+    };
+    AdminComponent.prototype.setModule = function (mod) {
+        console.log(mod);
+        this.selected_module = JSON.parse(JSON.stringify(mod));
+        this.title = this.selected_module.name;
+        this.formJson = this.getJson(this.selected_module.form);
+        this.commandJson = this.getJson(this.selected_module.command);
     };
     AdminComponent.prototype.selectModule = function (mod) {
         if (!this.selected_module || this.selected_module.module_id != mod.module_id) {
-            this.selected_module = mod;
-            console.log(mod);
+            this.setModule(mod);
         }
         else {
             this.selected_module = undefined;
@@ -96,15 +110,114 @@ var AdminComponent = /** @class */ (function () {
         }
         return res;
     };
+    AdminComponent.prototype.getJson = function (data) {
+        return JSON.stringify(data, null, 4);
+    };
+    AdminComponent.prototype.exportModule = function () {
+    };
+    AdminComponent.prototype.save = function () {
+        var _this = this;
+        //validate first!
+        console.log(this.selected_module.type);
+        try {
+            this.selected_module.form = JSON.parse(this.formJson);
+            this.formJsonError = "";
+        }
+        catch (e) {
+            console.log("Error", e.message);
+            this.formJsonError = e.message;
+            return false;
+        }
+        try {
+            this.selected_module.command = JSON.parse(this.commandJson);
+            this.commandJsonError = "";
+        }
+        catch (e) {
+            console.log("Error", e.message);
+            this.commandJsonError = e.message;
+            return false;
+        }
+        var data = {};
+        data["name"] = this.selected_module.name;
+        data["hidden"] = this.selected_module.hidden;
+        data["form"] = this.selected_module.form;
+        data["type"] = this.selected_module.type;
+        data["command"] = this.selected_module.command;
+        data["python_module"] = this.selected_module.python_module;
+        data["multifile"] = this.selected_module.multifile;
+        this.moduleService.saveData(this.selected_module.module_id, data).subscribe(function (data) {
+            // console.log(data);
+            for (var i in _this.modules) {
+                var m = _this.modules[i];
+                if (m.module_id == data["module_id"]) {
+                    // m = data;
+                    _this.modules[i] = data;
+                    _this.setModule(data);
+                }
+            }
+        });
+    };
+    AdminComponent.prototype.setJSONForm = function (event) {
+        // console.log(event)
+        try {
+            this.selected_module.form = JSON.parse(event);
+        }
+        catch (e) {
+            console.log("Error", e.message);
+            return false;
+        }
+    };
     AdminComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'admin',
             template: __webpack_require__(/*! ./Admin.component.html */ "./src/app/Admin/Admin.component.html"),
             styles: [__webpack_require__(/*! ./Admin.component.css */ "./src/app/Admin/Admin.component.css")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__["PackageDetailService"]])
+        __metadata("design:paramtypes", [_PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__["PackageDetailService"], _Module_service__WEBPACK_IMPORTED_MODULE_2__["ModuleService"]])
     ], AdminComponent);
     return AdminComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/Module.service.ts":
+/*!*****************************************!*\
+  !*** ./src/app/Admin/Module.service.ts ***!
+  \*****************************************/
+/*! exports provided: ModuleService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModuleService", function() { return ModuleService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ModuleService = /** @class */ (function () {
+    function ModuleService(http) {
+        this.http = http;
+        this.packagesURL = '/api/module/';
+    }
+    ModuleService.prototype.saveData = function (id, data) {
+        return this.http.post(this.packagesURL + id + '/', data);
+    };
+    ModuleService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], ModuleService);
+    return ModuleService;
 }());
 
 
@@ -221,9 +334,21 @@ var FileComponent = /** @class */ (function () {
         //   console.log(data);
         // });
     };
+    FileComponent.prototype.select = function () {
+        console.log(this.file.selected);
+        if (this.file.selected) {
+            this.file.selected = false;
+        }
+        else {
+            this.file.selected = true;
+        }
+        // for (f of file.children) {
+        //
+        // }
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Array)
+        __metadata("design:type", Object)
     ], FileComponent.prototype, "file", void 0);
     FileComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -290,8 +415,27 @@ var FileBrowserComponent = /** @class */ (function () {
         this.http = http;
         this.active = false;
         this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.selectedFiles = undefined;
         this.files = [];
     }
+    FileBrowserComponent.prototype.getSelectedFilesForChild = function (child) {
+        // if (!this.selectedFiles) {
+        //   return undefined;
+        // }
+        // if (this.selectedFiles.type == "all") {
+        //   return {"type": "all"}
+        // } else if (this.selectedFiles.type == "selected") {
+        //   // var exists = false;
+        //   // for (let c of this.selectedFiles.children) {
+        //   //   if (c.name == child) {
+        //   //
+        //   //   }
+        //   // }
+        //   // if (this.selectedFiles.children) {
+        //   //
+        //   // }
+        // }
+    };
     FileBrowserComponent.prototype.closeModal = function () {
         this.active = false;
         this.activeChange.emit(this.active);
@@ -315,6 +459,10 @@ var FileBrowserComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
     ], FileBrowserComponent.prototype, "activeChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], FileBrowserComponent.prototype, "selectedFiles", void 0);
     FileBrowserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'FileBrowser',
@@ -348,7 +496,7 @@ module.exports = ".file-header {\n  -webkit-user-select: none;\n\t-moz-user-sele
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"file-header\" (click)=\"expanded = !expanded\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n</div>\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of file.children\" [file]=\"f\"></file>\n  <!-- </div> -->\n</div>\n"
+module.exports = "\n<div class=\"file-header\" (click)=\"expanded = !expanded\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n  <!-- <i class=\"material-icons file-float\">indeterminate_check_box</i> -->\n</div>\n<i *ngIf=\"file.selected == true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Deselect this file\" tooltipPlacement=\"right\">check_box</i>\n<i *ngIf=\"file.selected != true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Select this file\" tooltipPlacement=\"right\">check_box_outline_blank</i>\n<i *ngIf=\"file.type == 'folder'\" class=\"material-icons file-float\" tooltip=\"Set a filter for items in folder\" tooltipPlacement=\"right\">filter_list</i>\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of file.children\" [file]=\"f\"></file>\n  <!-- </div> -->\n</div>\n"
 
 /***/ }),
 
@@ -406,7 +554,7 @@ module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow</h4>\n        <div class=\"card\">\n            <div class=\"card-header\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <div\n                  *ngFor=\"let process of package.processes\"\n                  draggable=\"true\"\n                  (dragstart)=\"dragStart($event, process.process_id, 'process')\"\n                  (drop)=\"onDrop($event)\"\n                  (dragover)=\"allowDrop($event, process.order)\"\n                  class=\"list-group-item list-group-item-action\"\n                  [class.active]=\"process.process_id==selected_process_id\"\n                  if.bind=\"!process.hidden\"\n                >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process.process_id)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button>\n                                </label>\n                        </form>\n                    </ng-template>\n                </div>\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable processes</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <div class=\"list-group list-group-flush\" data-query=\"each(modules)\">\n                 <div *ngFor=\"let module of modules\" draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module')\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div *ngIf=\"!module.hidden\" class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n        </div>\n    </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n\n<button class=\"btn\" (click)=\"FileBrowserOpen = !FileBrowserOpen\">Files: All</button>\n<FileBrowser [(active)]=\"FileBrowserOpen\" [package_id]=\"id\"> </FileBrowser>\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow</h4>\n        <div class=\"card\">\n            <div class=\"card-header\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <ng-template\n                ngFor\n                let-process\n                [ngForOf]=\"package.processes\"\n                >\n                  <div\n                      *ngIf=\"!process.hidden\"\n                      draggable=\"true\"\n                      (dragstart)=\"dragStart($event, process.process_id, 'process')\"\n                      (drop)=\"onDrop($event)\"\n                      (dragover)=\"allowDrop($event, process.order)\"\n                      class=\"list-group-item list-group-item-action\"\n                      [class.active]=\"process.process_id==selected_process_id\"\n                    >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process.process_id)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button>\n                                </label>\n                        </form>\n                    </ng-template>\n                  </div>\n                </ng-template>\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable processes</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <ng-template\n             ngFor\n             let-module\n             [ngForOf]=\"modules\"\n             >\n             <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n                 <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module')\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n           </ng-template>\n        </div>\n    </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n\n<button class=\"btn\" (click)=\"FileBrowserOpen = !FileBrowserOpen\">Files: All</button>\n<FileBrowser [(active)]=\"FileBrowserOpen\" [package_id]=\"id\"> </FileBrowser>\n"
 
 /***/ }),
 
@@ -445,7 +593,7 @@ var PackageComponent = /** @class */ (function () {
         this.placeholderLocation = -1;
         this.selected_process_id = -1;
         this.selected_process = undefined;
-        this.FileBrowserOpen = false;
+        this.FileBrowserOpen = true;
         this.package = {
             name: "Name"
         };
@@ -780,15 +928,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PackageDashboard.component */ "./src/app/PackageDetail/PackageDashboard.component.ts");
 /* harmony import */ var _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PackageStatus.component */ "./src/app/PackageDetail/PackageStatus.component.ts");
 /* harmony import */ var _PackageHeader_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PackageHeader.component */ "./src/app/PackageDetail/PackageHeader.component.ts");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
-/* harmony import */ var _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../FileBrowser/FileBrowser.component */ "./src/app/FileBrowser/FileBrowser.component.ts");
-/* harmony import */ var _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../FileBrowser/File.component */ "./src/app/FileBrowser/File.component.ts");
+/* harmony import */ var _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../FileBrowser/FileBrowser.component */ "./src/app/FileBrowser/FileBrowser.component.ts");
+/* harmony import */ var _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../FileBrowser/File.component */ "./src/app/FileBrowser/File.component.ts");
+/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Admin_Module_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Admin/Module.service */ "./src/app/Admin/Module.service.ts");
+/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -813,17 +965,18 @@ var PackageModule = /** @class */ (function () {
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
+                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
             ],
             declarations: [
                 _Package_component__WEBPACK_IMPORTED_MODULE_5__["PackageComponent"],
                 _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_6__["PackageDashboardComponent"],
                 _PackageHeader_component__WEBPACK_IMPORTED_MODULE_8__["PackageHeaderComponent"],
                 _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__["PackageStatusComponent"],
-                _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__["FileBrowserComponent"],
-                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__["FileComponent"]
+                _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_9__["FileBrowserComponent"],
+                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_10__["FileComponent"]
             ],
             // bootstrap: [PackageHeaderComponent] s
-            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_9__["PackageDetailService"]],
+            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_11__["PackageDetailService"], _Admin_Module_service__WEBPACK_IMPORTED_MODULE_12__["ModuleService"]],
         })
     ], PackageModule);
     return PackageModule;
@@ -1531,6 +1684,389 @@ var PackagesService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Tooltip/Tooltip.component.css":
+/*!***********************************************!*\
+  !*** ./src/app/Tooltip/Tooltip.component.css ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".tooltip {\n\n  /* @extend .tooltip; */\n  /* z-index: 1000 !important; */\n    /* position: fixed; */\n    /* display: block; */\n    /* display: block; */\n    opacity: 0.5;\n}\n"
+
+/***/ }),
+
+/***/ "./src/app/Tooltip/Tooltip.component.ts":
+/*!**********************************************!*\
+  !*** ./src/app/Tooltip/Tooltip.component.ts ***!
+  \**********************************************/
+/*! exports provided: TooltipComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TooltipComponent", function() { return TooltipComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TooltipComponent = /** @class */ (function () {
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+    function TooltipComponent(element, cdr) {
+        this.element = element;
+        this.cdr = cdr;
+        this.placement = "bottom";
+        this.animation = true;
+        // -------------------------------------------------------------------------
+        // Properties
+        // -------------------------------------------------------------------------
+        this.top = -100000;
+        this.left = -100000;
+        this.isIn = false;
+        this.isFade = false;
+    }
+    // -------------------------------------------------------------------------
+    // Lifecycle callbacks
+    // -------------------------------------------------------------------------
+    TooltipComponent.prototype.ngAfterViewInit = function () {
+        this.show();
+        this.cdr.detectChanges();
+    };
+    // -------------------------------------------------------------------------
+    // Public Methods
+    // -------------------------------------------------------------------------
+    TooltipComponent.prototype.show = function () {
+        if (!this.hostElement)
+            return;
+        var p = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
+        this.top = p.top;
+        this.left = p.left;
+        this.isIn = true;
+        if (this.animation)
+            this.isFade = true;
+    };
+    TooltipComponent.prototype.hide = function () {
+        this.top = -100000;
+        this.left = -100000;
+        this.isIn = true;
+        if (this.animation)
+            this.isFade = false;
+    };
+    // -------------------------------------------------------------------------
+    // Private Methods
+    // -------------------------------------------------------------------------
+    TooltipComponent.prototype.positionElements = function (hostEl, targetEl, positionStr, appendToBody) {
+        if (appendToBody === void 0) { appendToBody = false; }
+        var positionStrParts = positionStr.split("-");
+        var pos0 = positionStrParts[0];
+        var pos1 = positionStrParts[1] || "center";
+        var hostElPos = appendToBody ? this.offset(hostEl) : this.position(hostEl);
+        var targetElWidth = targetEl.offsetWidth;
+        var targetElHeight = targetEl.offsetHeight;
+        var shiftWidth = {
+            center: function () {
+                return hostElPos.left + hostElPos.width / 2 - targetElWidth / 2;
+            },
+            left: function () {
+                return hostElPos.left;
+            },
+            right: function () {
+                return hostElPos.left + hostElPos.width;
+            }
+        };
+        var shiftHeight = {
+            center: function () {
+                return hostElPos.top + hostElPos.height / 2 - targetElHeight / 2;
+            },
+            top: function () {
+                return hostElPos.top;
+            },
+            bottom: function () {
+                return hostElPos.top + hostElPos.height;
+            }
+        };
+        var targetElPos;
+        switch (pos0) {
+            case "right":
+                targetElPos = {
+                    top: shiftHeight[pos1](),
+                    left: shiftWidth[pos0]()
+                };
+                break;
+            case "left":
+                targetElPos = {
+                    top: shiftHeight[pos1](),
+                    left: hostElPos.left - targetElWidth
+                };
+                break;
+            case "bottom":
+                targetElPos = {
+                    top: shiftHeight[pos0](),
+                    left: shiftWidth[pos1]()
+                };
+                break;
+            default:
+                targetElPos = {
+                    top: hostElPos.top - targetElHeight,
+                    left: shiftWidth[pos1]()
+                };
+                break;
+        }
+        return targetElPos;
+    };
+    TooltipComponent.prototype.position = function (nativeEl) {
+        var offsetParentBCR = { top: 0, left: 0 };
+        var elBCR = this.offset(nativeEl);
+        var offsetParentEl = this.parentOffsetEl(nativeEl);
+        if (offsetParentEl !== window.document) {
+            offsetParentBCR = this.offset(offsetParentEl);
+            offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
+            offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
+        }
+        var boundingClientRect = nativeEl.getBoundingClientRect();
+        return {
+            width: boundingClientRect.width || nativeEl.offsetWidth,
+            height: boundingClientRect.height || nativeEl.offsetHeight,
+            top: elBCR.top - offsetParentBCR.top,
+            left: elBCR.left - offsetParentBCR.left
+        };
+    };
+    TooltipComponent.prototype.offset = function (nativeEl) {
+        var boundingClientRect = nativeEl.getBoundingClientRect();
+        return {
+            width: boundingClientRect.width || nativeEl.offsetWidth,
+            height: boundingClientRect.height || nativeEl.offsetHeight,
+            top: boundingClientRect.top + (window.pageYOffset || window.document.documentElement.scrollTop),
+            left: boundingClientRect.left + (window.pageXOffset || window.document.documentElement.scrollLeft)
+        };
+    };
+    TooltipComponent.prototype.getStyle = function (nativeEl, cssProp) {
+        if (nativeEl.currentStyle)
+            return nativeEl.currentStyle[cssProp];
+        if (window.getComputedStyle)
+            return window.getComputedStyle(nativeEl)[cssProp];
+        // finally try and get inline style
+        return nativeEl.style[cssProp];
+    };
+    TooltipComponent.prototype.isStaticPositioned = function (nativeEl) {
+        return (this.getStyle(nativeEl, "position") || "static") === "static";
+    };
+    TooltipComponent.prototype.parentOffsetEl = function (nativeEl) {
+        var offsetParent = nativeEl.offsetParent || window.document;
+        while (offsetParent && offsetParent !== window.document && this.isStaticPositioned(offsetParent)) {
+            offsetParent = offsetParent.offsetParent;
+        }
+        return offsetParent || window.document;
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", HTMLElement)
+    ], TooltipComponent.prototype, "hostElement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], TooltipComponent.prototype, "content", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], TooltipComponent.prototype, "placement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], TooltipComponent.prototype, "animation", void 0);
+    TooltipComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: "tooltip-content",
+            styles: [__webpack_require__(/*! ./Tooltip.component.css */ "./src/app/Tooltip/Tooltip.component.css")],
+            template: "\n<div class=\"tooltip {{ placement }}\"\n     [style.top]=\"top + 'px'\"\n     [style.left]=\"left + 'px'\"\n     [class.in]=\"isIn\"\n     [class.fade]=\"isFade\"\n     role=\"Atooltip\">\n    <div class=\"tooltip-arrow\"></div>\n    <div class=\"tooltip-inner\">\n        <ng-content></ng-content>\n        {{ content }}\n    </div>\n</div>\n"
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
+    ], TooltipComponent);
+    return TooltipComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Tooltip/Tooltip.directive.ts":
+/*!**********************************************!*\
+  !*** ./src/app/Tooltip/Tooltip.directive.ts ***!
+  \**********************************************/
+/*! exports provided: Tooltip */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return Tooltip; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Tooltip_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tooltip.component */ "./src/app/Tooltip/Tooltip.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Tooltip = /** @class */ (function () {
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+    function Tooltip(viewContainerRef, resolver) {
+        this.viewContainerRef = viewContainerRef;
+        this.resolver = resolver;
+        this.tooltipAnimation = true;
+        this.tooltipPlacement = "bottom";
+    }
+    // -------------------------------------------------------------------------
+    // Public Methods
+    // -------------------------------------------------------------------------
+    Tooltip.prototype.show = function () {
+        if (this.tooltipDisabled || this.visible)
+            return;
+        this.visible = true;
+        if (typeof this.content === "string") {
+            var factory = this.resolver.resolveComponentFactory(_Tooltip_component__WEBPACK_IMPORTED_MODULE_1__["TooltipComponent"]);
+            if (!this.visible)
+                return;
+            this.tooltip = this.viewContainerRef.createComponent(factory);
+            this.tooltip.instance.hostElement = this.viewContainerRef.element.nativeElement;
+            this.tooltip.instance.content = this.content;
+            this.tooltip.instance.placement = this.tooltipPlacement;
+            this.tooltip.instance.animation = this.tooltipAnimation;
+        }
+        else {
+            var tooltip = this.content;
+            tooltip.hostElement = this.viewContainerRef.element.nativeElement;
+            tooltip.placement = this.tooltipPlacement;
+            tooltip.animation = this.tooltipAnimation;
+            tooltip.show();
+        }
+    };
+    Tooltip.prototype.hide = function () {
+        if (!this.visible)
+            return;
+        this.visible = false;
+        if (this.tooltip)
+            this.tooltip.destroy();
+        if (this.content instanceof _Tooltip_component__WEBPACK_IMPORTED_MODULE_1__["TooltipComponent"])
+            this.content.hide();
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])("tooltip"),
+        __metadata("design:type", Object)
+    ], Tooltip.prototype, "content", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], Tooltip.prototype, "tooltipDisabled", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], Tooltip.prototype, "tooltipAnimation", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], Tooltip.prototype, "tooltipPlacement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusin"),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseenter"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], Tooltip.prototype, "show", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusout"),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseleave"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], Tooltip.prototype, "hide", null);
+    Tooltip = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
+            selector: "[tooltip]"
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]])
+    ], Tooltip);
+    return Tooltip;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Tooltip/Tooltip.module.ts":
+/*!*******************************************!*\
+  !*** ./src/app/Tooltip/Tooltip.module.ts ***!
+  \*******************************************/
+/*! exports provided: TooltipModule, Tooltip, TooltipComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TooltipModule", function() { return TooltipModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tooltip.directive */ "./src/app/Tooltip/Tooltip.directive.ts");
+/* harmony import */ var _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Tooltip.component */ "./src/app/Tooltip/Tooltip.component.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TooltipComponent", function() { return _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"]; });
+
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+var TooltipModule = /** @class */ (function () {
+    function TooltipModule() {
+    }
+    TooltipModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+            ],
+            declarations: [
+                _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"],
+                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"],
+            ],
+            exports: [
+                _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"],
+                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"],
+            ],
+            entryComponents: [
+                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"]
+            ]
+        })
+    ], TooltipModule);
+    return TooltipModule;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/app-routing.module.ts":
 /*!***************************************!*\
   !*** ./src/app/app-routing.module.ts ***!
@@ -1656,22 +2192,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
-/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
-/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
-/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
-/* harmony import */ var _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Admin/Admin.component */ "./src/app/Admin/Admin.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
+/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
+/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
+/* harmony import */ var _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Admin/Admin.component */ "./src/app/Admin/Admin.component.ts");
+/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1688,6 +2227,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -1695,25 +2235,27 @@ var AppModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 // FileBrowserComponent,
-                _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"],
-                _NotFound_component__WEBPACK_IMPORTED_MODULE_9__["NotFoundComponent"],
-                _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_10__["AdminComponent"]
+                _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
+                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_9__["DashboardComponent"],
+                _NotFound_component__WEBPACK_IMPORTED_MODULE_10__["NotFoundComponent"],
+                _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_11__["AdminComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClientModule"],
-                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_5__["NgxChartsModule"],
+                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__["TooltipModule"],
                 // DndListModule,
                 // NgxDnDModule,
                 // DragulaModule,
                 // DragDropDirectiveModule,
-                _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_7__["PackagesModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_5__["AppRoutingModule"],
-                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_3__["BrowserAnimationsModule"]
+                _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_8__["PackagesModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"]
             ],
             providers: [],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;

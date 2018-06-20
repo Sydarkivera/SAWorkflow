@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FileComponent {
 
-  @Input() file: Array<any>;
+  @Input() file: any;
   fileName = 'demoFile';
   expanded = false;
 
@@ -20,5 +20,17 @@ export class FileComponent {
     // this.http.get('/api/package/'+this.package_id+'/files/').subscribe((data) => {
     //   console.log(data);
     // });
+  }
+
+  select() {
+    console.log(this.file.selected)
+    if (this.file.selected) {
+      this.file.selected = false;
+    } else {
+      this.file.selected = true;
+    }
+    // for (f of file.children) {
+    //
+    // }
   }
 }

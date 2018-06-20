@@ -8,16 +8,20 @@
             <div class="list-group list-group-flush">
               <!-- <div *ngIf="placeholderLocation==0.5" class="list-group-item list-group-item-action">
               </div> -->
-                <div
-                  *ngFor="let process of package.processes"
-                  draggable="true"
-                  (dragstart)="dragStart($event, process.process_id, 'process')"
-                  (drop)="onDrop($event)"
-                  (dragover)="allowDrop($event, process.order)"
-                  class="list-group-item list-group-item-action"
-                  [class.active]="process.process_id==selected_process_id"
-                  if.bind="!process.hidden"
+                <ng-template
+                ngFor
+                let-process
+                [ngForOf]="package.processes"
                 >
+                  <div
+                      *ngIf="!process.hidden"
+                      draggable="true"
+                      (dragstart)="dragStart($event, process.process_id, 'process')"
+                      (drop)="onDrop($event)"
+                      (dragover)="allowDrop($event, process.order)"
+                      class="list-group-item list-group-item-action"
+                      [class.active]="process.process_id==selected_process_id"
+                    >
                     <div class="d-flex w-100 justify-content-between">
                         <p
                         style="margin-bottom:0;" class="d-flex w-100 noselect" (click)="selectProcess(process)">
@@ -39,7 +43,8 @@
                                 </label>
                         </form>
                     </ng-template>
-                </div>
+                  </div>
+                </ng-template>
             </div>
         </div>
     </div>
@@ -49,14 +54,20 @@
              <div class="card-header">
                 Name
              </div>
-             <div class="list-group list-group-flush" data-query="each(modules)">
-                 <div *ngFor="let module of modules" draggable="true" (dragstart)="dragStart($event, module.module_id, 'module')" (dragend)="onRelease($event)" class="list-group-item list-group-item-action">
-                   <div *ngIf="!module.hidden" class="d-flex w-100 justify-content-between">
+             <ng-template
+             ngFor
+             let-module
+             [ngForOf]="modules"
+             >
+             <div *ngIf="!module.hidden" class="list-group list-group-flush">
+                 <div draggable="true" (dragstart)="dragStart($event, module.module_id, 'module')" (dragend)="onRelease($event)" class="list-group-item list-group-item-action">
+                   <div class="d-flex w-100 justify-content-between">
                     <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
                     <i class="material-icons icon-button" (click)="addProcessLast(module.module_id)">add</i>
                    </div>
                 </div>
              </div>
+           </ng-template>
         </div>
     </div>
 </div>

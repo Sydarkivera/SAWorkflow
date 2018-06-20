@@ -32,8 +32,16 @@ ADD ./viewtar.c /viewtar.c
 #     && apk add --virtual .python-rundeps $runDeps \
 #     && apk del .build-deps
 
-RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre
 RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
+
+#insatll verapdf
+RUN curl -L http://downloads.verapdf.org/rel/verapdf-pdfbox-installer.zip -o /tmp/verapdf-installer.zip
+RUN unzip /tmp/verapdf-installer.zip -d /tmp/
+ADD ./auto-install-veraPDF.xml /tmp/auto-install-veraPDF.xml
+RUN java -jar /tmp/verapdf-pdfbox-1.12.1/verapdf-izpack-pdfbox-installer-1.12.1.jar /tmp/auto-install-veraPDF.xml
+ENV PATH="/opt/verapdf:${PATH}"
+
 RUN gcc /viewtar.c
 
 RUN freshclam

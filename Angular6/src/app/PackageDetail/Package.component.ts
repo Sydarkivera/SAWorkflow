@@ -20,7 +20,7 @@ export class PackageComponent {
   placeholderLocation: number = -1;
   selected_process_id: number = -1;
   selected_process = undefined;
-  FileBrowserOpen = false;
+  FileBrowserOpen = true;
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {

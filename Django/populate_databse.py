@@ -23,9 +23,8 @@ Module.objects.all().delete()
 # create new module
 module1 = Module(name="Setup workdir",
                  type='1',
-                 form='[]',
                  python_module='tools.setupWorkDir',
-                 hidden=False,
+                 hidden=True,
                  module_id=1,
                  )
 module1.save()
@@ -33,29 +32,37 @@ module2 = Module(name="Untar archive",
                  type='1',
                  form='[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}]',
                  python_module='tools.untar',
+                 hidden=True,
                  module_id=2,
                  )
 module2.save()
 module3 = Module(name="ClamAV",
                  type='0',
-                 form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"},{"type":"checkbox", "label":"Ta bort infekterade filer", "identifier":"remove"}]',
-                 python_module='a',
+                 form='[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove"}]',
                  command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
                  module_id=3,
                  )
 module3.save()
-module4 = Module(name="Untar cmd",
-                 type='0',
-                 form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"}]',
-                 python_module='a',
-                 command='[{"type":"text","value":"tar"},{"type":"text","value":"-x"},{"name":"verbose","type":"var","value":"-v"},{"type":"text","value":"-f"},{"name":"tar_path","type":"var"},{"type":"text","value":"-C"},{"name":"workdir","type":"var"}]',
-                 module_id=3,
+module4 = Module(name="VeraPDF validate pdf1/a",
+                 type='1',
+                 form='[]',
+                 command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+                 module_id=4,
+                 multifile=True,
                  )
 module4.save()
+# module4 = Module(name="Untar cmd",
+#                  type='0',
+#                  form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"}]',
+#                  python_module='a',
+#                  command='[{"type":"text","value":"tar"},{"type":"text","value":"-x"},{"name":"verbose","type":"var","value":"-v"},{"type":"text","value":"-f"},{"name":"tar_path","type":"var"},{"type":"text","value":"-C"},{"name":"workdir","type":"var"}]',
+#                  module_id=4,
+#                  )
+# module4.save()
 
 # create default admin users
 User.objects.all().delete()
-user = User.objects.create_user('admin', 'lennon@thebeatles.com', 'admin')
+user = User.objects.create_user('admin', 'simon@axenu.com', 'admin')
 user.is_superuser = True
 user.is_staff = True
 user.save()

@@ -9,9 +9,12 @@ import { PackageComponent }    from './Package.component';
 import { PackageDashboardComponent }    from './PackageDashboard.component';
 import { PackageStatusComponent }    from './PackageStatus.component';
 import { PackageHeaderComponent } from './PackageHeader.component';
-import { PackageDetailService } from './PackageDetail.service';
 import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 import { FileComponent } from '../FileBrowser/File.component';
+
+import { PackageDetailService } from './PackageDetail.service';
+import { ModuleService } from '../Admin/Module.service';
+import { TooltipModule } from '../Tooltip/Tooltip.module';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
@@ -22,6 +25,7 @@ import { FileComponent } from '../FileBrowser/File.component';
     NgxChartsModule,
     FormsModule,
     RouterModule,
+    TooltipModule,
     // PackageRoutingModule
   ],
   declarations: [
@@ -33,7 +37,7 @@ import { FileComponent } from '../FileBrowser/File.component';
     FileComponent
   ],
   // bootstrap: [PackageHeaderComponent] s
-  providers: [PackageDetailService],
+  providers: [PackageDetailService, ModuleService],
   // providers: [ HeroService ]
 })
 export class PackageModule {}
