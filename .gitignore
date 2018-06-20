@@ -14,4 +14,3 @@ static_root/
 node_modules/
 .vscode/
 static/angular
-test_packages/
