@@ -45,12 +45,14 @@ class Module(models.Model):
     name = models.CharField(max_length=100, blank=True, default='')
     type = models.IntegerField(choices=MODULE_TYPES, default=0)
     form = JSONField(default=[])
-    python_module = models.CharField(max_length=100, default='')
+    python_module = models.CharField(max_length=100, default='', blank=True)
     hidden = models.BooleanField(default=False)
     command = JSONField(default=[])
 
     # for handling mulitfile tools:
-    multifile = models.BooleanField(default=False)
+    # multifile = models.BooleanField(default=False)
+    filter = models.CharField(max_length=200, default='*', blank=True)
+    resultFilter = JSONField(default=[])
 
     class Meta:
         ordering = ('name',)
@@ -84,8 +86,12 @@ class Process(models.Model):
     log_path = models.CharField(max_length=100, blank=True, default='')
     err_path = models.CharField(max_length=100, blank=True, default='')
 
-    # for handling mulitfile tools:
-    fileList = JSONField(default={})
+    # progress/result
+    # % complete
+    progress = models.DecimalField(default=0, max_digits=10, decimal_places=5)
+    allFiles = JSONField(default=[])
+
+
 
     ## TODO after lunch:
     # 1. create better default modules...

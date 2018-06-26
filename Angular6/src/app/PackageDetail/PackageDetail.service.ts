@@ -7,6 +7,10 @@ export class PackageDetailService {
 
   constructor(private http: HttpClient) { }
 
+  getAllPackages() {
+    return this.http.get(this.packagesURL);
+  }
+
   getPackage(id: number) {
     return this.http.get(this.packagesURL + id + '/');
   }

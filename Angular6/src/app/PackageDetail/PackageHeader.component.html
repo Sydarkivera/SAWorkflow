@@ -1,7 +1,13 @@
 <!-- <p>PackageHeader</p> -->
-<ul class="nav nav-tabs"><li class="nav-link"  routerLinkActive="active">
-  <a class="navbar-link">{{name}}</a>
-</li>
+<ul class="nav nav-tabs">
+  <li class="nav-item dropdown" [class.show]="showDropDown">
+    <a class="nav-link dropdown-toggle package_title" (click)="showDropDown = !showDropDown">
+      {{name}}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown" [class.show]="showDropDown">
+      <a *ngFor="let package of packages" class="dropdown-item" (click)="navigateTo(package.package_id)">{{package.name}}</a>
+    </div>
+  </li>
   <li class="nav-link"  routerLinkActive="active">
     <a class="navbar-link" [routerLink]="['dashboard']">Dashboard</a>
   </li>

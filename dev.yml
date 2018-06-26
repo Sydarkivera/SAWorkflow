@@ -43,7 +43,10 @@ services:
       - "./django/api:/code/api"
       - "./django/core:/code/core"
       - "./django/static:/code/static"
-      - "./workdir:/code/workdir"
+      - "./django/workdir:/code/workdir"
+      - "./django/test_packages:/code/test_packages"
+      - "./django/populate_database.py:/code/populate_database.py"
+      - "./django/populate_database.py:/populate_database.py"
     ports:
       - "8000:8000"
     # set up links so that web knows about db, rabbit and redis
@@ -66,7 +69,8 @@ services:
       - "./django/api:/code/api"
       - "./django/core:/code/core"
       - "./django/static:/code/static"
-      - "./workdir:/code/workdir"
+      - "./django/workdir:/code/workdir"
+      - "./django/test_packages:/code/test_packages"
     links:
       - db
       - rabbit

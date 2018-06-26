@@ -17,6 +17,7 @@ import logging
 import os
 import subprocess
 import pwd
+import re
 
 from celery import Celery
 from celery.schedules import crontab
@@ -27,18 +28,23 @@ from django.conf import settings
 
 logger = getLogger('background_task')
 
+
 class pythonModuleBase:
 
     def __init__(self):
         pass
 
     def setupLogging(self, process, package):
+
+        # sanitiza log filename
+        logName = "".join(x for x in process.module.name if x.isalnum())
+
         self.logger = logging.getLogger(process.module.name + str(package.package_id))
         formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
         self.logger.setLevel(logging.DEBUG)
 
-        process.log_path = os.path.join(package.logdir, process.module.name + '.log')
-        process.err_path = os.path.join(package.logdir, process.module.name + '.err')
+        process.log_path = os.path.join(package.logdir, logName + '.log')
+        process.err_path = os.path.join(package.logdir, logName + '.err')
         self.log_hdlr = logging.FileHandler(process.log_path)
         self.log_hdlr.setFormatter(formatter)
         self.log_hdlr.setLevel(logging.INFO)
@@ -59,13 +65,7 @@ class pythonModuleBase:
 
 class bashModule(pythonModuleBase):
 
-    def execute(self, process, package):
-        retval = 1
-        values = {}
-        values['tar_path'] = os.path.join(package.workdir, package.file_name)
-        values['workdir'] = package.workdir
-        values['file_name'] = package.file_name
-        values.update(process.value)
+    def run(self, values, process):
         args = []
         for arg in process.module.command:
             if arg['type'] == "text":
@@ -83,11 +83,109 @@ class bashModule(pythonModuleBase):
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
         stdout, stderr = p.communicate()
-        if stdout:
-            self.logger.info(stdout.decode('utf-8'))
+
+        #validate output, check if there are any error, or if there are errors in the info file.
+
         if stderr:
             self.logger.error(stderr.decode('utf-8'))
-            retval = -1
+            return -1
+
+        if stdout:
+            self.logger.info(stdout.decode('utf-8'))
+            for resFilter in process.module.resultFilter:
+                # check if the pattern exists
+                text = stdout.decode('utf-8')
+                pattern = resFilter['value']
+                # pattern = '[\s,.]*(compliant)'
+                # text = '<validationReports compliant="1" nonCompliant="0" failedJobs="0">1</validationReports>'
+                match = re.match(pattern, text)
+                # logger.info(match)
+                # logger.info('')
+
+                if match and resFilter['type'] != "Containing":
+                    # logger.info(match)
+                    # logger.info()
+                    self.logger.error(text)
+                    return -1
+                elif not match and resFilter['type'] == "Containing":
+                    self.logger.error(text)
+                    return -1
+        return 1
+
+    def execute(self, process, package):
+        retval = 1
+        values = {}
+        values['tar_path'] = os.path.join(package.workdir, package.file_name)
+        values['workdir'] = package.workdir
+        values['file_name'] = package.file_name
+        values.update(process.value)
+        filter = process.module.filter
+        if filter == '':
+            res = self.run(values, process)
+            if res == -1:
+                return -1
+        else:
+            try:
+                pattern = re.compile(filter)
+            except:
+                self.logger.error('Regex is invalid: ' + filter)
+                return -1
+
+            # count number of files:
+            allFiles = []
+            if process.allFiles == []:
+                for root, dirs, files in os.walk(package.workdir):
+                    for name in files:
+                        file = os.path.join(root, name)
+                        if pattern.match(file):
+                            allFiles.append({"file":file, "status": False})
+            else:
+                allFiles = process.allFiles
+            # save file list? if fail, continue in the list.
+
+
+            # execute task on files
+            numberOfFiles = len(allFiles)
+            i = 0
+            for i in range(numberOfFiles):
+                f = allFiles[i]
+            # for root, dirs, files in os.walk(package.workdir):
+                # for name in files:
+                    # file = os.path.join(root, name)
+                if not f['status']:
+                    fileName = f['file']
+                    # logger.info(file)
+                    values['file'] = fileName
+                    res = self.run(values, process)
+                    if res == -1:
+                        return -1
+                    else:
+                        allFiles[i]['status'] = True
+                        process.progress = (i+1)/numberOfFiles * 100
+                        process.allFiles = allFiles
+                        process.save()
+        # args = []
+        # for arg in process.module.command:
+        #     if arg['type'] == "text":
+        #         args += [arg['value']]
+        #     elif arg['type'] == 'var':
+        #         if arg['name'] in values:
+        #             if 'value' in arg:
+        #                 if values[arg['name']] == True:
+        #                     args += [arg['value']]
+        #             else:
+        #                 args += [values[arg['name']]]
+        #     else:
+        #         self.logger.error('unknown type: ' + str(arg['type']))
+        #
+        # p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        #
+        # stdout, stderr = p.communicate()
+        # if stdout:
+        #     self.logger.info(stdout.decode('utf-8'))
+        # if stderr:
+        #     self.logger.error(stderr.decode('utf-8'))
+        #     retval = -1
 
         return retval
 
@@ -125,6 +223,7 @@ def executeProcessFlow(package_id):
                     break
                 if res == 1:
                     process.status=Process.PROCESS_STATUS_DONE
+                    process.progress=100
                     process.save()
                 else:
                     process.status = Process.PROCESS_STATUS_ERROR
@@ -147,6 +246,7 @@ def executeProcessFlow(package_id):
                     break
                 if res == 1:
                     process.status=Process.PROCESS_STATUS_DONE
+                    process.progress=100
                     process.save()
                 else:
                     process.status = Process.PROCESS_STATUS_ERROR
@@ -161,7 +261,7 @@ def executeProcessFlow(package_id):
     package.save()
 
 # @app.on_after_configure.connect
-@periodic_task(run_every=timedelta(seconds=60))
+@periodic_task(run_every=timedelta(seconds=20))
 def periodic_scan_for_new_packages(**kwargs):
     logger.info('my_periodic_task running')
     path = settings.PAKAGE_SEARCH_PATH
@@ -211,17 +311,18 @@ def calculateMetricsForNewPackage(package):
     filetypes = {}
 
     # for file_name in os.listdir(package.path):
-    logger.info(os.path.join(package.workdir, package.file_name.split('.')[0]))
+    # logger.info(os.path.join(package.workdir, package.file_name.split('.')[0]))
     for dirpath, dirs, files in os.walk(os.path.join(package.workdir, package.file_name.split('.')[0])):
         for file in files:
             type = file.split('.')[-1]
+            # logger.info(file)
             if type in filetypes:
                 filetypes[type] += 1
             else:
                 filetypes[type] = 1
 
     	# print files
-    logger.info(filetypes)
+    # logger.info(filetypes)
     stats['fileTypes'] = filetypes
 
     package.statistics = stats

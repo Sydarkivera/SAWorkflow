@@ -44,11 +44,12 @@ module3 = Module(name="ClamAV",
                  )
 module3.save()
 module4 = Module(name="VeraPDF validate pdf1/a",
-                 type='1',
+                 type='0',
                  form='[]',
                  command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
                  module_id=4,
-                 multifile=True,
+                 filter='.*(\.pdf)',
+                 resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]'
                  )
 module4.save()
 # module4 = Module(name="Untar cmd",

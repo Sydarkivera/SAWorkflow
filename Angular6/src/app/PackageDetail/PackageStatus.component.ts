@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, HostListener } from '@angular/core';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Router } from "@angular/router";
 
 // import { PackagesService } from './Packages.service'
@@ -18,11 +18,15 @@ export class PackageStatusComponent {
   logActive = true;
   modalActive = false;
   modalData = '';
+  interval;
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {
       name: "Name"
     };
+    router.events.subscribe((val) => {
+        clearInterval(this.interval);
+    });
   }
 
   ngOnInit() {
@@ -30,14 +34,19 @@ export class PackageStatusComponent {
        this.id = +params['id'];
         this.updateData();
     });
+
+    clearInterval(this.interval);
+    // this.interval = setInterval(() => {
+    //   this.updateData();
+    // }, 3000);
   }
 
   showModal(process, type) {
     this.modalActive = true;
     //load data fromserver...
     this.packageService.getLogFile(type, process.process_id).subscribe((data) => {
-      console.log(data);
-      this.modalData = data;
+      // console.log(data);
+      this.modalData = data.replace("\n", "<br>");
     });
     // '/process/${process.process_id}/error_log'
   }
@@ -49,14 +58,14 @@ export class PackageStatusComponent {
 
   updateData() {
     this.packageService.getPackage(this.id).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
       this.package = data;
     });
   }
 
   removePackage() {
     this.packageService.removePackage(this.id).subscribe((data) => {
-      console.log(data);
+      // console.log(data);
     });
     this.router.navigate(['packages']);
   }

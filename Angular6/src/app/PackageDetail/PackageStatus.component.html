@@ -27,7 +27,14 @@
                 {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
             </div>
             <div class="col">
-               Statusbar
+              <div class="progress">
+                <div class="progress-bar"
+                [class.bg-success]="process.status == 'Done'"
+                [class.bg-danger]="process.status == 'Error'"
+                [class.progress-bar-animated]="process.status == 'Running'"
+                [class.progress-bar-striped]="process.status == 'Running'"
+                [style.width]="process.progress + '%'"></div>
+              </div>
             </div>
             <div class="col-sm-2">
                {{process.status}}
@@ -38,7 +45,7 @@
             </div>
             <div class="col-sm-2">
                 <!-- <a href="/process/${process.process_id}/error_log" [class.disabled]="process.log_path == ''">view error log</a> -->
-                <button class="btn btn-outline-danger" (click)="showModal(process, 'error_log')" [disabled]="process.err_path == ''">Error</button>
+                <button class="btn btn-outline-danger" (click)="showModal(process, 'error_log')" [disabled]="process.err_path == '' || process.status != 'Error'">Error</button>
             </div>
         </div>
      </div>

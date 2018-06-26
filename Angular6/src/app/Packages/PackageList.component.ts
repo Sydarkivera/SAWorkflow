@@ -5,7 +5,7 @@ import { PackagesService } from './Packages.service'
 @Component({
   selector: 'packages',
   templateUrl: './PackageList.component.html',
-  // styleUrls: ['./packages.component.css']
+  styleUrls: ['./PackageList.component.css']
 })
 export class PackageListComponent {
   title = 'new title';
@@ -16,6 +16,13 @@ export class PackageListComponent {
   }
 
   ngOnInit() {
+    this.packagesService.getPackages().subscribe((data) => {
+      console.log(data);
+      this.packages = data as [any];
+    });
+  }
+
+  updateData() {
     this.packagesService.getPackages().subscribe((data) => {
       console.log(data);
       this.packages = data as [any];

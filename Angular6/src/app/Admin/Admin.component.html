@@ -34,11 +34,41 @@
       <input type="checkbox" [(ngModel)]="selected_module.hidden"/>
     </label>
     <label class="input-label">
+      File filter:
+      <input type="text" [(ngModel)]="selected_module.filter"/>
+    </label>
+    <label class="input-label">
       Form:
     </label>
     <textarea rows="10" cols="70" [(ngModel)]="formJson">
     </textarea>
     <p class="Error-text">{{formJsonError}}</p>
+    <hr>
+    <label class="input-label">
+      What qualifies succes in the log files:
+    </label>
+    <div *ngFor="let filter of selected_module.resultFilter">
+      <div class="resultFilterItem">
+        <select [(ngModel)]="filter.type">
+          <option value="Containing">Containing</option>
+          <option value="Not containing">Not containing</option>
+        </select>
+        <input type="text" [(ngModel)]="filter.value"/>
+        <i class="material-icons icon-button" (click)="removeResultFilter(filter)">delete</i>
+      </div>
+    </div>
+    <hr>
+    <p>Add a new filter</p>
+    <div class="resultFilterItem">
+      <select [(ngModel)]="newResultFilter.type">
+        <option value="Containing">Containing</option>
+        <option value="Not containing">Not containing</option>
+      </select>
+        <input type="text" [(ngModel)]="newResultFilter.value"/>
+        <i class="material-icons icon-button" (click)="addResultFilter()">add</i>
+      <!-- <button class="btn btn-success" (click)="addResultFilter()">Add Row</button> -->
+    </div>
+    <!-- <hr> -->
     <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>
     <h6>Command:</h6>
     <label class="input-label">

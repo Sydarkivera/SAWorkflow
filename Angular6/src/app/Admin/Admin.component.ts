@@ -19,6 +19,8 @@ export class AdminComponent {
   commandJson: string = "";
   formJsonError = "";
   commandJsonError = "";
+  resultFilters = undefined;
+  newResultFilter = {type: 'Containing', value: ''}
 
   constructor(private packageService: PackageDetailService, private moduleService: ModuleService) {
   }
@@ -94,6 +96,8 @@ export class AdminComponent {
     data["command"] = this.selected_module.command;
     data["python_module"] = this.selected_module.python_module;
     data["multifile"] = this.selected_module.multifile;
+    data["filter"] = this.selected_module.filter;
+    data["resultFilter"] = this.selected_module.resultFilter;
 
     this.moduleService.saveData(this.selected_module.module_id, data).subscribe((data) => {
       // console.log(data);
@@ -114,9 +118,23 @@ export class AdminComponent {
     try {
       this.selected_module.form = JSON.parse(event)
     } catch (e) {
-    console.log("Error", e.message);
-        return false;
+      console.log("Error", e.message);
+      return false;
     }
 
   }
+
+  addResultFilter() {
+    this.selected_module.resultFilter.push({...this.newResultFilter});
+    this.newResultFilter = {type: 'Containing', value: ''}
+  }
+
+  removeResultFilter(filter) {
+    var index = this.selected_module.resultFilter.indexOf(filter);
+    if (index > -1) {
+      this.selected_module.resultFilter.splice(index, 1);
+    }
+  }
+
+
 }

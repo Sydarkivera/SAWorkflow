@@ -44,10 +44,11 @@ class ProcessSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
     module = serializers.PrimaryKeyRelatedField(queryset=Module.objects.all())
     package = serializers.PrimaryKeyRelatedField(queryset=Package.objects.all())
+    filter = serializers.CharField(source='module.filter', read_only=True)
 
     class Meta:
         model = Process
-        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden')
+        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress')
 
     def get_status(self,obj):
         return obj.get_status_display()
@@ -75,10 +76,11 @@ class ModuleSerializer(serializers.ModelSerializer):
     form = JSONSerializerField()
     command = JSONSerializerField()
     type = TypeSerializer()
+    resultFilter = JSONSerializerField()
 
     class Meta:
         model = Module
-        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'multifile')
+        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'filter', 'resultFilter')
 
     def get_type(self,obj):
         return obj.get_type_display()

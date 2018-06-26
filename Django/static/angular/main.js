@@ -41,7 +41,7 @@ module.exports = ".input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <p>Admin</p>\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{title}} preview</h4>\n    <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n      {{input.label}}\n      <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n      <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n    </label>\n    <button class=\"btn btn-success\">Save as default values</button>\n\n    <h5>Command Settings:</h5>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <p>Admin</p>\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{title}} preview</h4>\n    <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n      {{input.label}}\n      <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n      <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n    </label>\n    <button class=\"btn btn-success\">Save as default values</button>\n\n    <h5>Command Settings:</h5>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      File filter:\n      <input type=\"text\" [(ngModel)]=\"selected_module.filter\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <hr>\n    <label class=\"input-label\">\n      What qualifies succes in the log files:\n    </label>\n    <div *ngFor=\"let filter of selected_module.resultFilter\">\n      <div class=\"resultFilterItem\">\n        <select [(ngModel)]=\"filter.type\">\n          <option value=\"Containing\">Containing</option>\n          <option value=\"Not containing\">Not containing</option>\n        </select>\n        <input type=\"text\" [(ngModel)]=\"filter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"removeResultFilter(filter)\">delete</i>\n      </div>\n    </div>\n    <hr>\n    <p>Add a new filter</p>\n    <div class=\"resultFilterItem\">\n      <select [(ngModel)]=\"newResultFilter.type\">\n        <option value=\"Containing\">Containing</option>\n        <option value=\"Not containing\">Not containing</option>\n      </select>\n        <input type=\"text\" [(ngModel)]=\"newResultFilter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"addResultFilter()\">add</i>\n      <!-- <button class=\"btn btn-success\" (click)=\"addResultFilter()\">Add Row</button> -->\n    </div>\n    <!-- <hr> -->\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -58,6 +58,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PackageDetail/PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
 /* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+var __assign = (undefined && undefined.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -79,6 +87,8 @@ var AdminComponent = /** @class */ (function () {
         this.commandJson = "";
         this.formJsonError = "";
         this.commandJsonError = "";
+        this.resultFilters = undefined;
+        this.newResultFilter = { type: 'Containing', value: '' };
     }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -145,6 +155,8 @@ var AdminComponent = /** @class */ (function () {
         data["command"] = this.selected_module.command;
         data["python_module"] = this.selected_module.python_module;
         data["multifile"] = this.selected_module.multifile;
+        data["filter"] = this.selected_module.filter;
+        data["resultFilter"] = this.selected_module.resultFilter;
         this.moduleService.saveData(this.selected_module.module_id, data).subscribe(function (data) {
             // console.log(data);
             for (var i in _this.modules) {
@@ -165,6 +177,16 @@ var AdminComponent = /** @class */ (function () {
         catch (e) {
             console.log("Error", e.message);
             return false;
+        }
+    };
+    AdminComponent.prototype.addResultFilter = function () {
+        this.selected_module.resultFilter.push(__assign({}, this.newResultFilter));
+        this.newResultFilter = { type: 'Containing', value: '' };
+    };
+    AdminComponent.prototype.removeResultFilter = function (filter) {
+        var index = this.selected_module.resultFilter.indexOf(filter);
+        if (index > -1) {
+            this.selected_module.resultFilter.splice(index, 1);
         }
     };
     AdminComponent = __decorate([
@@ -554,7 +576,7 @@ module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow</h4>\n        <div class=\"card\">\n            <div class=\"card-header\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <ng-template\n                ngFor\n                let-process\n                [ngForOf]=\"package.processes\"\n                >\n                  <div\n                      *ngIf=\"!process.hidden\"\n                      draggable=\"true\"\n                      (dragstart)=\"dragStart($event, process.process_id, 'process')\"\n                      (drop)=\"onDrop($event)\"\n                      (dragover)=\"allowDrop($event, process.order)\"\n                      class=\"list-group-item list-group-item-action\"\n                      [class.active]=\"process.process_id==selected_process_id\"\n                    >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process.process_id)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button>\n                                </label>\n                        </form>\n                    </ng-template>\n                  </div>\n                </ng-template>\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable processes</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <ng-template\n             ngFor\n             let-module\n             [ngForOf]=\"modules\"\n             >\n             <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n                 <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module')\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n           </ng-template>\n        </div>\n    </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n\n<button class=\"btn\" (click)=\"FileBrowserOpen = !FileBrowserOpen\">Files: All</button>\n<FileBrowser [(active)]=\"FileBrowserOpen\" [package_id]=\"id\"> </FileBrowser>\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow</h4>\n        <div class=\"card\">\n            <div class=\"card-header\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <ng-template\n                ngFor\n                let-process\n                [ngForOf]=\"package.processes\"\n                >\n                  <div\n                      *ngIf=\"!process.hidden\"\n                      draggable=\"true\"\n                      (dragstart)=\"dragStart($event, process.process_id, 'process')\"\n                      (drop)=\"onDrop($event)\"\n                      (dragover)=\"allowDrop($event, process.order)\"\n                      class=\"list-group-item list-group-item-action\"\n                      [class.active]=\"process.process_id==selected_process_id\"\n                    >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process.process_id)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n                        </form>\n                    </ng-template>\n                  </div>\n                </ng-template>\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable processes</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <ng-template\n             ngFor\n             let-module\n             [ngForOf]=\"modules\"\n             >\n             <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n                 <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module')\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n           </ng-template>\n        </div>\n    </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n\n<!-- <button class=\"btn\" (click)=\"FileBrowserOpen = !FileBrowserOpen\">Files: All</button>\n<FileBrowser [(active)]=\"FileBrowserOpen\" [package_id]=\"id\"> </FileBrowser> -->\n"
 
 /***/ }),
 
@@ -593,7 +615,7 @@ var PackageComponent = /** @class */ (function () {
         this.placeholderLocation = -1;
         this.selected_process_id = -1;
         this.selected_process = undefined;
-        this.FileBrowserOpen = true;
+        this.FileBrowserOpen = false;
         this.package = {
             name: "Name"
         };
@@ -1179,6 +1201,9 @@ var PackageDetailService = /** @class */ (function () {
         this.http = http;
         this.packagesURL = '/api/package/';
     }
+    PackageDetailService.prototype.getAllPackages = function () {
+        return this.http.get(this.packagesURL);
+    };
     PackageDetailService.prototype.getPackage = function (id) {
         return this.http.get(this.packagesURL + id + '/');
     };
@@ -1231,6 +1256,17 @@ var PackageDetailService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/PackageDetail/PackageHeader.component.css":
+/*!***********************************************************!*\
+  !*** ./src/app/PackageDetail/PackageHeader.component.css ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".package_title {\n  font-size: 1.1em;\n  font-weight: bold;\n}\n"
+
+/***/ }),
+
 /***/ "./src/app/PackageDetail/PackageHeader.component.html":
 /*!************************************************************!*\
   !*** ./src/app/PackageDetail/PackageHeader.component.html ***!
@@ -1238,7 +1274,7 @@ var PackageDetailService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <p>PackageHeader</p> -->\n<ul class=\"nav nav-tabs\"><li class=\"nav-link\"  routerLinkActive=\"active\">\n  <a class=\"navbar-link\">{{name}}</a>\n</li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul>\n<router-outlet></router-outlet>\n"
+module.exports = "<!-- <p>PackageHeader</p> -->\n<ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -1269,14 +1305,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 // import { PackagesService } from './Packages.service'
 
 var PackageHeaderComponent = /** @class */ (function () {
-    function PackageHeaderComponent(packageService, route) {
+    function PackageHeaderComponent(packageService, route, router) {
         this.packageService = packageService;
         this.route = route;
+        this.router = router;
         this.title = 'new title';
         this.name = "";
+        this.showDropDown = false;
     }
     PackageHeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
+        // console.log(this.router.url);
+        // console.log(this.route);
         this.sub = this.route.params.subscribe(function (params) {
             _this.id = +params['id'];
             _this.packageService.getPackage(_this.id).subscribe(function (data) {
@@ -1285,13 +1325,26 @@ var PackageHeaderComponent = /** @class */ (function () {
                 _this.name = data['name'];
             });
         });
+        this.packageService.getAllPackages().subscribe(function (data) {
+            // console.log(data);
+            _this.packages = data;
+            // this.name = data['name'];
+        });
+    };
+    PackageHeaderComponent.prototype.navigateTo = function (package_id) {
+        // console.log(this.router.url);
+        // console.log(this.route);
+        var topPath = this.router.url.split("/").pop();
+        this.router.navigate(['../', package_id, topPath], { relativeTo: this.route });
+        this.showDropDown = false;
     };
     PackageHeaderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'package',
             template: __webpack_require__(/*! ./PackageHeader.component.html */ "./src/app/PackageDetail/PackageHeader.component.html"),
+            styles: [__webpack_require__(/*! ./PackageHeader.component.css */ "./src/app/PackageDetail/PackageHeader.component.css")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageHeaderComponent);
     return PackageHeaderComponent;
 }());
@@ -1318,7 +1371,7 @@ module.exports = ".Amodal {\n  /* position: fixed; */\n  /* top: 50%; */\n  /* l
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col\">\n                Statusbar\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n             </div>\n             <div class=\"col-sm-2\">\n                Log\n             </div>\n             <div class=\"col-sm-2\">\n                Error\n                <!-- <a href=\"#\" click=\"updateData()\" class=\"tab\"><i class=\"material-icons\">refresh</i></a> -->\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let process of package.processes\" repeat.for=\"process of processes\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n            </div>\n            <div class=\"col\">\n               Statusbar\n            </div>\n            <div class=\"col-sm-2\">\n               {{process.status}}\n            </div>\n            <div class=\"col-sm-2\">\n               <!-- <a (click)=\"showModal(process)\" [class.disabled]=\"process.log_path == ''\">view log</a> -->\n               <button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button>\n            </div>\n            <div class=\"col-sm-2\">\n                <!-- <a href=\"/process/${process.process_id}/error_log\" [class.disabled]=\"process.log_path == ''\">view error log</a> -->\n                <button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == ''\">Error</button>\n            </div>\n        </div>\n     </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Done (Remove package from workdir)</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n"
+module.exports = "\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col\">\n                Statusbar\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n             </div>\n             <div class=\"col-sm-2\">\n                Log\n             </div>\n             <div class=\"col-sm-2\">\n                Error\n                <!-- <a href=\"#\" click=\"updateData()\" class=\"tab\"><i class=\"material-icons\">refresh</i></a> -->\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let process of package.processes\" repeat.for=\"process of processes\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n            </div>\n            <div class=\"col\">\n              <div class=\"progress\">\n                <div class=\"progress-bar\"\n                [class.bg-success]=\"process.status == 'Done'\"\n                [class.bg-danger]=\"process.status == 'Error'\"\n                [class.progress-bar-animated]=\"process.status == 'Running'\"\n                [class.progress-bar-striped]=\"process.status == 'Running'\"\n                [style.width]=\"process.progress + '%'\"></div>\n              </div>\n            </div>\n            <div class=\"col-sm-2\">\n               {{process.status}}\n            </div>\n            <div class=\"col-sm-2\">\n               <!-- <a (click)=\"showModal(process)\" [class.disabled]=\"process.log_path == ''\">view log</a> -->\n               <button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button>\n            </div>\n            <div class=\"col-sm-2\">\n                <!-- <a href=\"/process/${process.process_id}/error_log\" [class.disabled]=\"process.log_path == ''\">view error log</a> -->\n                <button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == '' || process.status != 'Error'\">Error</button>\n            </div>\n        </div>\n     </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Done (Remove package from workdir)</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n"
 
 /***/ }),
 
@@ -1351,6 +1404,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var PackageStatusComponent = /** @class */ (function () {
     function PackageStatusComponent(packageService, route, router) {
+        var _this = this;
         this.packageService = packageService;
         this.route = route;
         this.router = router;
@@ -1360,6 +1414,9 @@ var PackageStatusComponent = /** @class */ (function () {
         this.package = {
             name: "Name"
         };
+        router.events.subscribe(function (val) {
+            clearInterval(_this.interval);
+        });
     }
     PackageStatusComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -1367,14 +1424,18 @@ var PackageStatusComponent = /** @class */ (function () {
             _this.id = +params['id'];
             _this.updateData();
         });
+        clearInterval(this.interval);
+        // this.interval = setInterval(() => {
+        //   this.updateData();
+        // }, 3000);
     };
     PackageStatusComponent.prototype.showModal = function (process, type) {
         var _this = this;
         this.modalActive = true;
         //load data fromserver...
         this.packageService.getLogFile(type, process.process_id).subscribe(function (data) {
-            console.log(data);
-            _this.modalData = data;
+            // console.log(data);
+            _this.modalData = data.replace("\n", "<br>");
         });
         // '/process/${process.process_id}/error_log'
     };
@@ -1385,13 +1446,13 @@ var PackageStatusComponent = /** @class */ (function () {
     PackageStatusComponent.prototype.updateData = function () {
         var _this = this;
         this.packageService.getPackage(this.id).subscribe(function (data) {
-            console.log(data);
+            // console.log(data);
             _this.package = data;
         });
     };
     PackageStatusComponent.prototype.removePackage = function () {
         this.packageService.removePackage(this.id).subscribe(function (data) {
-            console.log(data);
+            // console.log(data);
         });
         this.router.navigate(['packages']);
     };
@@ -1410,6 +1471,17 @@ var PackageStatusComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Packages/PackageList.component.css":
+/*!****************************************************!*\
+  !*** ./src/app/Packages/PackageList.component.css ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px; */\n  float:right;\n  color: inherit;\n}\n"
+
+/***/ }),
+
 /***/ "./src/app/Packages/PackageList.component.html":
 /*!*****************************************************!*\
   !*** ./src/app/Packages/PackageList.component.html ***!
@@ -1417,7 +1489,7 @@ var PackageStatusComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Packages</p>\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-1\">\n                Status\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-1\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n</div>\n"
+module.exports = "<p>Packages</p>\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-1\">\n                Status\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-1\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n</div>\n"
 
 /***/ }),
 
@@ -1457,10 +1529,18 @@ var PackageListComponent = /** @class */ (function () {
             _this.packages = data;
         });
     };
+    PackageListComponent.prototype.updateData = function () {
+        var _this = this;
+        this.packagesService.getPackages().subscribe(function (data) {
+            console.log(data);
+            _this.packages = data;
+        });
+    };
     PackageListComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'packages',
             template: __webpack_require__(/*! ./PackageList.component.html */ "./src/app/Packages/PackageList.component.html"),
+            styles: [__webpack_require__(/*! ./PackageList.component.css */ "./src/app/Packages/PackageList.component.css")]
         }),
         __metadata("design:paramtypes", [_Packages_service__WEBPACK_IMPORTED_MODULE_1__["PackagesService"]])
     ], PackageListComponent);
@@ -2107,8 +2187,7 @@ var AppRoutingModule = /** @class */ (function () {
     AppRoutingModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(appRoutes, { enableTracing: true } // <-- debugging purposes only
-                )
+                _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(appRoutes)
             ],
             exports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]
