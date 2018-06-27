@@ -14,9 +14,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 // import { PackagesComponent } from './Packages/packages.component';
 import { PackagesModule } from './Packages/Packages.module';
+import { AdminModule } from './Admin/Admin.module';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { NotFoundComponent } from './NotFound.component';
-import { AdminComponent } from './Admin/Admin.component';
+// import { AdminComponent } from './Admin/Admin.component';
 
 import { TooltipModule } from './Tooltip/Tooltip.module'
 
@@ -26,7 +27,7 @@ import { TooltipModule } from './Tooltip/Tooltip.module'
     AppComponent,
     DashboardComponent,
     NotFoundComponent,
-    AdminComponent
+    // AdminComponent
   ],
   imports: [
     BrowserModule,
@@ -39,6 +40,7 @@ import { TooltipModule } from './Tooltip/Tooltip.module'
     // DragulaModule,
     // DragDropDirectiveModule,
     PackagesModule,
+    AdminModule,
     AppRoutingModule,
     BrowserAnimationsModule
   ],

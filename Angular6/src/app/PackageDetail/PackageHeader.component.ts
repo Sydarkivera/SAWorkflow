@@ -18,6 +18,7 @@ export class PackageHeaderComponent {
   private sub: any;
   showDropDown = false;
   packages: [any];
+  active_template: any;
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
 
@@ -31,7 +32,7 @@ export class PackageHeaderComponent {
 
        this.packageService.getPackage(this.id).subscribe((data) => {
          // console.log(data);
-         // this.package = data;
+         this.active_template = data['active_template'];
          this.name = data['name'];
        });
     });

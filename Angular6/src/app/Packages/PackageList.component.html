@@ -1,14 +1,13 @@
-<p>Packages</p>
 <div class="card">
      <div class="card-header">
-         <div class="row">
+         <div class="row justify-content-end">
              <div class="col">
                 Namn
              </div>
              <div class="col">
                 Filnamn
              </div>
-             <div class="col-sm-1">
+             <div class="col-sm-2">
                 Status
                 <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
              </div>
@@ -22,7 +21,7 @@
             <div class="col">
                 {{package.file_name}}
             </div>
-            <div class="col-sm-1">
+            <div class="col-sm-2">
                 <a [routerLink]="[package.package_id, 'status']">{{package.status}}</a>
             </div>
         </div>

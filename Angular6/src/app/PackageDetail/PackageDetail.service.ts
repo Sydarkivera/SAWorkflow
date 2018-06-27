@@ -15,6 +15,10 @@ export class PackageDetailService {
     return this.http.get(this.packagesURL + id + '/');
   }
 
+  setActiveTemplate(id: number, data) {
+    return this.http.put(this.packagesURL + id + '/', data);
+  }
+
   getModules() {
     return this.http.get('/api/module/');
   }
@@ -62,5 +66,13 @@ export class PackageDetailService {
   //           window.location.href = "/";
   //       });
   // }
+  }
+
+  getTemplates() {
+    return this.http.get('/api/template/');
+  }
+
+  postTemplate(data) {
+    return this.http.post('/api/template/', data);
   }
 }

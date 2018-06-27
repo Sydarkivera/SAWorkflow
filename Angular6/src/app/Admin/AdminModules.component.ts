@@ -8,10 +8,10 @@ import { ModuleService } from './Module.service';
 
 @Component({
   selector: 'admin',
-  templateUrl: './Admin.component.html',
-  styleUrls: ['./Admin.component.css']
+  templateUrl: './AdminModules.component.html',
+  styleUrls: ['./AdminModules.component.css']
 })
-export class AdminComponent {
+export class AdminModulesComponent {
   modules: [any];
   selected_module = undefined;
   title: ""

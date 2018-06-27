@@ -6,6 +6,13 @@ import { Router } from "@angular/router";
 import { PackageDetailService } from './PackageDetail.service';
 import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 
+
+interface Placeholder {
+    type: string;
+    order: number;
+    name: string;
+}
+
 @Component({
   selector: 'package',
   // template: '<p>PackageDetail</p>'
@@ -21,6 +28,8 @@ export class PackageComponent {
   selected_process_id: number = -1;
   selected_process = undefined;
   FileBrowserOpen = false;
+  modalActive = false;
+  templateName = "";
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {
@@ -33,6 +42,7 @@ export class PackageComponent {
        this.id = +params['id'];
        this.packageService.getPackage(this.id).subscribe((data) => {
          console.log(data);
+         console.log(data['processes'])
          this.package = data;
        });
     });
@@ -47,6 +57,21 @@ export class PackageComponent {
     //         this.modules = data;
     //
     //     });
+  }
+
+  saveAsTemplate() {
+    this.modalActive = true;
+  }
+
+  saveNewTemplate() {
+    //backendcall with package_id and templateName.
+    let data = {"package_id": this.package.package_id, "templateName": this.templateName};
+    this.packageService.postTemplate(data).subscribe((data) => {
+      console.log(data);
+      // this.package = data;
+      // this.modules = data as [any];
+    });
+    this.modalActive = false;
   }
 
   startWorkflow() {
@@ -67,16 +92,31 @@ export class PackageComponent {
     // console.log(this.selected_process_id);
   }
 
-  deleteProcess(id) {
-    this.packageService.deleteProcess(id).subscribe((data) => {
+  deleteProcess(process) {
+    this.packageService.deleteProcess(process.process_id).subscribe((data) => {
     });
     this.package.processes = this.package.processes.filter((item) => {
-      return item.process_id != id;
+      return item.process_id != process.process_id;
     })
-    // this.client.fetch('/api/process/'+id+'/', {
-    //     method: "DELETE",
-    // })
-    // this.package.processes.splice(id, 1);
+    // move up all processes below
+    let data = []
+    for (let index in this.package.processes) {
+      let item = this.package.processes[index];
+      if (item.type != 'placeholder' && item.order > process.order) {
+        item.order -= 1;
+        data.push({"order": item.order, "process_id":item.process_id});
+      }
+    }
+    this.packageService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+      // console.log(data);
+    });
+
+    this.package.processes = this.package.processes.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+       return -1;
+    });
   }
 
   addProcessLast(module_id) {
@@ -107,6 +147,18 @@ export class PackageComponent {
       //     this.package.processes.splice(process_index, 1, data);
       // });
       // this.selected_process = -1;
+  }
+
+  isListEmpty() {
+    if (this.package == undefined || this.package.processes == undefined) {
+      return true;
+    }
+    for (let item of this.package.processes) {
+      if (!item.hidden) {
+        return false;
+      }
+    }
+    return true;
   }
 
   moveUp(process) {
@@ -169,11 +221,12 @@ export class PackageComponent {
     });
   }
 
-  dragStart(e, id, type) {
+  dragStart(e, id, type, name) {
     console.log('drag start: ' + e);
     // console.log(id);
     e.dataTransfer.setData('id', id);
     e.dataTransfer.setData('type', type);
+    e.dataTransfer.setData('name', name);
   }
 
   onDrop(e) {
@@ -216,13 +269,14 @@ export class PackageComponent {
         "order": dropOrder,
         "process_id": 100,
         "module": e.dataTransfer.getData('id'),
-        "name": "added module"
+        "name": e.dataTransfer.getData('name')
       }
 
       this.package.processes.splice(dropOrder, 0, newProcess);
 
       this.packageService.addProcess({"order": dropOrder, "module": e.dataTransfer.getData('id'), "package": this.package.package_id}).subscribe((data) => {
-        console.log(data);
+        // console.log(data);
+        this.package.processes = data;
       });
 
       // console.log(this.package.processes);
@@ -304,12 +358,8 @@ export class PackageComponent {
   }
 //set ghost image to show where you will drop.
   allowDrop(e, index: number) {
+  console.log(index)
     e.preventDefault();
-
-    interface Placeholder {
-        type: string;
-        order: number;
-    }
     // console.log(index);
     var element = e.target as HTMLElement;
     // console.log(e.pageY);
@@ -330,7 +380,7 @@ export class PackageComponent {
         this.package.processes = this.package.processes.filter((item) => {
           return item.type != 'placeholder'
         });
-        let temp = <Placeholder> {type: "placeholder", order: ind};
+        let temp = <Placeholder> {type: "placeholder", order: ind, name: e.dataTransfer.getData('name')};
         this.package.processes.splice(index + 1, 0, temp);
       }
 
@@ -346,7 +396,7 @@ export class PackageComponent {
         this.package.processes = this.package.processes.filter((item) => {
           return item.type != 'placeholder'
         });
-        let temp = <Placeholder> {type: "placeholder", order: ind};
+        let temp = <Placeholder> {type: "placeholder", order: ind, name: e.dataTransfer.getData('name')};
         this.package.processes.splice(index, 0, temp);
       }
     }
@@ -354,6 +404,33 @@ export class PackageComponent {
 
 
     // e.preventDefault();
+  }
+
+  allowDropTop(e) {
+    e.preventDefault();
+    //calculate order. Order will be 0.5 lower than first visible.
+    var order = -0.5;
+    for (let index in this.package.processes) {
+      let item = this.package.processes[index];
+      if (item.hidden) {
+        order += 1;
+      } else {
+        break;
+      }
+    }
+    this.placeholderLocation = order;
+    this.package.processes = this.package.processes.filter((item) => {
+      return item.type != 'placeholder'
+    });
+    let temp = <Placeholder> {type: "placeholder", order: order, name: e.dataTransfer.getData('name')};
+    this.package.processes.push(temp);
+    this.package.processes = this.package.processes.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+       return -1;
+    });
+
   }
 
   //POST to create a new process from package_id and module_id

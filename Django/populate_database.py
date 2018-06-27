@@ -61,6 +61,30 @@ module4.save()
 #                  )
 # module4.save()
 
+# setup default templates
+
+template1 = Template(name="Default Start",
+                     id=0)
+template1.save()
+
+process1 = Process(order=0,
+                   template=template1,
+                   module=module1)
+process1.save()
+process2 = Process(order=1,
+                   template=template1,
+                   module=module2)
+process2.save()
+
+template2 = Template(name="Default Done",
+                     id=1)
+template2.save()
+
+template3 = Template(name="Empty template",
+                     id=2)
+template3.save()
+
+
 # create default admin users
 User.objects.all().delete()
 user = User.objects.create_user('admin', 'simon@axenu.com', 'admin')

@@ -11,25 +11,29 @@ export class ModuleService {
     return this.http.post(this.packagesURL + id + '/', data);
   }
 
+  getTemplate(id) {
+    return this.http.get('/api/template/' + id + '/');
+  }
+
   // getPackage(id: number) {
   //   return this.http.get(this.packagesURL + id + '/');
   // }
   //
-  // getModules() {
-  //   return this.http.get('/api/module/');
-  // }
-  //
-  // addProcess(process) {
-  //   return this.http.post('/api/process/', process);
-  // }
-  //
-  // reorderProcesses(data, package_id) {
-  //   return this.http.put('/api/package/'+package_id+'/process/', data);
-  // }
-  //
-  // deleteProcess(id) {
-  //   return this.http.delete('/api/process/'+id+'/');
-  // }
+  getModules() {
+    return this.http.get('/api/module/');
+  }
+
+  addProcess(process) {
+    return this.http.post('/api/process/', process);
+  }
+
+  reorderProcesses(data, template_id) {
+    return this.http.put('/api/template/'+template_id+'/process/', data);
+  }
+
+  deleteProcess(id) {
+    return this.http.delete('/api/process/'+id+'/');
+  }
   //
   // saveProcess(data, id) {
   //   return this.http.put('/api/process/'+id+'/', data);

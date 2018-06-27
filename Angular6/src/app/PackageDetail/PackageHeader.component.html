@@ -12,6 +12,12 @@
     <a class="navbar-link" [routerLink]="['dashboard']">Dashboard</a>
   </li>
   <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['template']">Templates</a>
+  </li>
+  <li *ngIf="!active_template" class="nav-link" routerLinkActive="active" tooltip="Select any template before you can modify it" tooltipPlacement="top">
+    <a class="navbar-link disabled" [routerLink]="['edit']">Workflow</a>
+  </li>
+  <li *ngIf="active_template" class="nav-link" routerLinkActive="active">
     <a class="navbar-link" [routerLink]="['edit']">Workflow</a>
   </li>
   <li class="nav-link" routerLinkActive="active">

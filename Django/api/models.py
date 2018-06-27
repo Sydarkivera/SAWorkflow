@@ -9,6 +9,19 @@ __status__ = "Development"
 from django.db import models
 from jsonfield import JSONField
 
+
+class Template(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.TextField()
+    # processes = models.ManyToManyField(Process, related_name='template')
+
+    class Meta:
+        ordering = ('name',)
+
+    def __str__(self):
+        return '%d: %d' % (self.id, self.name)
+
+
 class Package(models.Model):
     PACKAGE_STATUS_NEW = 0
     PACKAGE_STATUS_WAITING = 1
@@ -32,6 +45,9 @@ class Package(models.Model):
     workdir = models.TextField()
     logdir = models.TextField()
     statistics = JSONField(default={})
+    # active_template = models.ForeignKey()
+    active_template = models.ForeignKey(Template, related_name='packages', on_delete=models.PROTECT, blank = True, null = True)
+
 
 class Module(models.Model):
     MODULE_TYPE_COMMAND = 0
@@ -60,6 +76,7 @@ class Module(models.Model):
     def __str__(self):
         return '%s: %d' % (self.name, self.type)
 
+
 class Process(models.Model):
     PROCESS_STATUS_DEFAULT = 0
     PROCESS_STATUS_WAITING = 1
@@ -79,7 +96,8 @@ class Process(models.Model):
     )
     process_id = models.AutoField(primary_key=True)
     order = models.IntegerField(default=10000)
-    package = models.ForeignKey(Package, related_name='processes', on_delete=models.CASCADE)
+    package = models.ForeignKey(Package, related_name='processes', on_delete=models.CASCADE, blank = True, null=True)
+    template = models.ForeignKey(Template, related_name='processes', on_delete=models.CASCADE, blank = True, null=True)
     module = models.ForeignKey(Module, related_name='processes', on_delete=models.PROTECT)
     value = JSONField(default={})
     status = models.IntegerField(choices=PROCESS_STATUS, default=0)
@@ -90,13 +108,6 @@ class Process(models.Model):
     # % complete
     progress = models.DecimalField(default=0, max_digits=10, decimal_places=5)
     allFiles = JSONField(default=[])
-
-
-
-    ## TODO after lunch:
-    # 1. create better default modules...
-    # 2. modify admin for multifile
-    # 3. create a verapdf task for multiple files. Preferably as cmd.
 
 
     class Meta:

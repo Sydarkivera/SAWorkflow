@@ -13,12 +13,13 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from api.models import Module, Package, Process
-from api.serializers import ModuleSerializer, PackageSerializer, PackageDetailSerializer, ProcessSerializer
+from api.models import Module, Package, Process, Template
+from api.serializers import ModuleSerializer, PackageSerializer, PackageDetailSerializer, ProcessSerializer, TemplateListSerializer, TemplateDetailSerializer
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
-import os, pwd
+import os
+import pwd
 from os import listdir
 from os.path import isfile, join
 from django.conf import settings
@@ -27,6 +28,7 @@ import shutil
 
 from logging import getLogger
 logger = getLogger('django')
+
 
 @api_view(['GET', 'PUT'])
 def module_list(request):
@@ -45,6 +47,7 @@ def module_list(request):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 @api_view(['POST'])
 def module(request, id):
     """
@@ -59,51 +62,18 @@ def module(request, id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     pass
 
+
 @api_view(['GET'])
 def package_list(request):
     """
     List all packages.
     """
     if request.method == 'GET':
-        # Find packages in folder.
-        # create database entries for them.
-        # find names of the packages.
-        # list pacakges from database corresponding to files in folder.
-        # path = settings.PAKAGE_SEARCH_PATH
-        # packages = []
-        # for file_name in listdir(path):
-        #     file_path = join(path, file_name)
-        #     if isfile(file_path):
-        #         #check if .tar
-        #         if file_name.split('.')[-1] == 'tar':
-        #             try:
-        #                 package = Package.objects.get(path=file_path)
-        #                 packages.append(package)
-        #             except ObjectDoesNotExist:
-        #                 pass
-                        # archive_name = file_name.split('.')[-2]
-                        # output = subprocess.check_output(['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
-                        # start_index = output.find(b'LABEL="')
-                        # label = output[start_index+7:start_index+200].decode('utf-8')
-                        # end_index = label.find('" ')
-                        # label = label[0:end_index]
-                        # package = Package(path=file_path, file_name=file_name, name=label)
-                        # package.save()
-                        #
-                        # #set default module
-                        # module = Module.objects.get(pk=1)
-                        # if module:
-                        #     process1 = Process(order=0, package=package, module=module, value={})
-                        #     process1.save()
-                        #
-                        # packages.append(package)
-                        # print("package does not exist")
-                # files.append({'name':file})
-        # [f for f in listdir(path) if isfile(join(path, f))]
         packages = Package.objects.all()
         serializer = PackageSerializer(packages, many=True)
         # print(files)
         return Response(serializer.data)
+
 
 @api_view(['GET'])
 def package_file_list(request, id):
@@ -112,9 +82,10 @@ def package_file_list(request, id):
     """
     package = get_object_or_404(Package, pk=id)
     if request.method == 'GET':
-        output = subprocess.check_output(['/code/tools/a.out', package.path]).decode('utf-8')
+        output = subprocess.check_output(
+            ['/code/tools/a.out', package.path]).decode('utf-8')
 
-        #convert response to json dicts
+        # convert response to json dicts
         # res = {}
         # rows = output.split('\n')
         # for row in rows:
@@ -126,7 +97,7 @@ def package_file_list(request, id):
         #                 temp[part] = {}
         #             temp = temp[part]
 
-        #convert to json arrays
+        # convert to json arrays
         rows = output.split('\n')
         res = []
         lastPath = ''
@@ -154,7 +125,7 @@ def package_file_list(request, id):
                 d['path'] = '/'.join(parts)
                 d['type'] = 'folder'
                 if parts[-1].find('.') != -1:
-                    d['format'] = parts[-1][parts[-1].find('.')+1:]
+                    d['format'] = parts[-1][parts[-1].find('.') + 1:]
                     d['type'] = 'file'
                 temp.append(d)
                 temp = temp[-1]['children']
@@ -167,13 +138,7 @@ def package_file_list(request, id):
         return response
 
 
-
-
-
-
-
-
-@api_view(['GET', 'DELETE'])
+@api_view(['GET', 'DELETE', 'PUT'])
 def package_detail(request, id):
     """
     Get one package or delete it.
@@ -192,6 +157,13 @@ def package_detail(request, id):
             logger.info('deleting package workdir: ' + package.workdir)
         package.delete()
         return HttpResponse(status=204)
+    elif request.method == 'PUT':
+        serializer = PackageSerializer(package, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse(status=204)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET', 'PUT'])
 def process_list(request, id):
@@ -209,9 +181,10 @@ def process_list(request, id):
             p.order = process['order']
             p.status = Process.PROCESS_STATUS_EDITED
             p.save()
-        package.status = package.PACKAGE_STATUS_EDITED
-        package.save()
+            package.status = package.PACKAGE_STATUS_EDITED
+            package.save()
         return HttpResponse(status=204)
+
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def process_detail(request, process_id):
@@ -223,20 +196,24 @@ def process_detail(request, process_id):
         serializer = ProcessSerializer(process)
         return Response(serializer.data)
     elif request.method == 'PUT':
-        serializer = ProcessSerializer(process, data=request.data, partial=True)
+        serializer = ProcessSerializer(
+            process, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             process.status = Process.PROCESS_STATUS_EDITED
             process.save()
-            process.package.status = Package.PACKAGE_STATUS_EDITED
-            process.package.save()
+            if process.package != None:
+                process.package.status = Package.PACKAGE_STATUS_EDITED
+                process.package.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        process.package.status = Package.PACKAGE_STATUS_EDITED
-        process.package.save()
+        if process.package != None:
+            process.package.status = Package.PACKAGE_STATUS_EDITED
+            process.package.save()
         process.delete()
         return HttpResponse(status=204)
+
 
 @api_view(['GET', 'POST'])
 def process_add(request):
@@ -247,13 +224,102 @@ def process_add(request):
         serializer = ProcessSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            package = get_object_or_404(Package, pk=request.data['package'])
-            package.status = Package.PACKAGE_STATUS_EDITED
-            package.save()
-            serializer = ProcessSerializer(package.processes, many=True)
-            return Response(serializer.data)
+            if 'package' in request.data:
+                package = get_object_or_404(Package, pk=request.data['package'])
+                package.status = Package.PACKAGE_STATUS_EDITED
+                package.save()
+                serializer = ProcessSerializer(package.processes, many=True)
+                return Response(serializer.data)
+            elif 'template' in request.data:
+                template = get_object_or_404(Template, pk=request.data['template'])
+                serializer = ProcessSerializer(template.processes, many=True)
+                return Response(serializer.data)
+            else:
+                return Response('A call to add process requires either package or template to be defined', status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'GET':
         processes = Process.objects.all()
         serializer = ProcessSerializer(processes, many=True)
         return Response(serializer.data)
+
+
+@api_view(['GET', 'POST'])
+def template_list(request):
+    """
+    list templates.
+    """
+    if request.method == 'GET':
+        templates = Template.objects.all()
+        serializer = TemplateListSerializer(templates, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        # create a new template
+        if 'package_id' not in request.data:
+            return Response('package_id is required to save a new template', status=status.HTTP_400_BAD_REQUEST)
+        package = get_object_or_404(Package, pk=request.data['package_id'])
+        if 'template_id' in request.data:
+            # update template_id with the data from package_id.
+            template = get_object_or_404(Template, pk=request.data['template_id'])
+            # if templateName exists, update the name of template
+            if 'templateName' in request.data:
+                template.name = request.data['templateName']
+                template.save()
+            # delete old processes
+            template.processes.all().delete()
+            # save the new updated processes
+            for process in package.processes.all():
+                if not process.module.hidden:
+                    process.pk = None
+                    process.template = template
+                    process.package = None
+                    process.save()
+            package.active_template = template
+            package.save()
+            return HttpResponse(status=204)
+        elif 'templateName' in request.data:
+            # save as a new template.
+            logger.info('template from name only')
+            logger.info(request.data['templateName'])
+            template = Template(name=request.data['templateName'])
+            template.save()
+            for process in package.processes.all():
+                if not process.module.hidden:
+                    process.pk = None
+                    process.template = template
+                    process.package = None
+                    process.save()
+            package.active_template = template
+            package.save()
+            return HttpResponse(status=204)
+        else:
+            return Response('package_id is required to save a new template', status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['GET'])
+def template_detail(request, template_id):
+    """
+    display a single template.
+    """
+    template = get_object_or_404(Template, pk=template_id)
+    if request.method == 'GET':
+        serializer = TemplateDetailSerializer(template)
+        return Response(serializer.data)
+
+@api_view(['GET', 'PUT'])
+def template_process_list(request, template_id):
+    """
+    List all processes of selected Tempalte.
+    """
+    template = get_object_or_404(Template, pk=template_id)
+    if request.method == 'GET':
+        serializer = ProcessSerializer(template.processes, many=True)
+        return Response(serializer.data)
+    elif request.method == 'PUT':
+        logger.info(request.data)
+        for process in request.data:
+            p = Process.objects.get(pk=process['process_id'])
+            p.order = process['order']
+            p.status = Process.PROCESS_STATUS_EDITED
+            p.save()
+        return HttpResponse(status=204)

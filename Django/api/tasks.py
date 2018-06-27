@@ -8,7 +8,7 @@ __status__ = "Development"
 
 from background_task import background
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import Module, Package, Process
+from api.models import Module, Package, Process, Template
 from logging import getLogger
 import importlib
 import time
@@ -263,7 +263,7 @@ def executeProcessFlow(package_id):
 # @app.on_after_configure.connect
 @periodic_task(run_every=timedelta(seconds=20))
 def periodic_scan_for_new_packages(**kwargs):
-    logger.info('my_periodic_task running')
+    # logger.info('my_periodic_task running')
     path = settings.PAKAGE_SEARCH_PATH
     packages = []
     for file_name in os.listdir(path):
@@ -289,14 +289,21 @@ def periodic_scan_for_new_packages(**kwargs):
                     label = label[0:end_index]
                     package.name=label
                     package.save()
-                    module = Module.objects.get(name="Setup workdir")
-                    if module:
-                        process1 = Process(order=0, package=package, module=module, value={})
-                        process1.save()
-                    module2 = Module.objects.get(name="Untar archive")
-                    if module2:
-                        process1 = Process(order=1, package=package, module=module2, value={})
-                        process1.save()
+                    template = Template.objects.get(pk=0)
+                    if template:
+                        for process in template.processes.all():
+                            process.pk = None
+                            process.template = None
+                            process.package = package
+                            process.save()
+                    # module = Module.objects.get(name="Setup workdir")
+                    # if module:
+                    #     process1 = Process(order=0, package=package, module=module, value={})
+                    #     process1.save()
+                    # module2 = Module.objects.get(name="Untar archive")
+                    # if module2:
+                    #     process1 = Process(order=1, package=package, module=module2, value={})
+                    #     process1.save()
                     executeProcessFlow(package.package_id)
 
                     # calculate

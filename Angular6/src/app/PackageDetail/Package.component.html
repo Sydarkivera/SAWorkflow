@@ -1,8 +1,10 @@
 <div class="row">
     <div class="col-lg-6">
-        <h4>Current workflow</h4>
+        <h4>Current workflow: {{package.template_name}}</h4>
         <div class="card">
-            <div class="card-header">
+            <div class="card-header"
+            (drop)="onDrop($event)"
+            (dragover)="allowDropTop($event)">
                 Name
             </div>
             <div class="list-group list-group-flush">
@@ -16,11 +18,12 @@
                   <div
                       *ngIf="!process.hidden"
                       draggable="true"
-                      (dragstart)="dragStart($event, process.process_id, 'process')"
+                      (dragstart)="dragStart($event, process.process_id, 'process', process.name)"
                       (drop)="onDrop($event)"
                       (dragover)="allowDrop($event, process.order)"
                       class="list-group-item list-group-item-action"
                       [class.active]="process.process_id==selected_process_id"
+                      [class.template]="process.type=='placeholder'"
                     >
                     <div class="d-flex w-100 justify-content-between">
                         <p
@@ -30,7 +33,7 @@
                         <!-- <i class="material-icons">arrow_back</i> -->
                         <i *ngIf="process.order != 0" class="material-icons icon-button" (click)="moveUp(process)">keyboard_arrow_up</i>
                         <i *ngIf="process.order < package.processes.length-1" class="material-icons icon-button" (click)="moveDown(process)">keyboard_arrow_down</i>
-                        <i class="material-icons icon-button" (click)="deleteProcess(process.process_id)">delete</i>
+                        <i class="material-icons icon-button" (click)="deleteProcess(process)">delete</i>
                         <small>{{process.status}}</small>
                     </div>
                     <ng-template [ngIf]="process.process_id==selected_process_id">
@@ -45,11 +48,22 @@
                     </ng-template>
                   </div>
                 </ng-template>
+
+                <div class="emptyList" *ngIf="isListEmpty()">
+                  <p>
+                    You have not selected any tools.
+                    <br>
+                    Select on by either dragging it from the right or pressing the plus (
+                    <i class="material-icons">add</i>
+                    ) sign
+                  </p>
+                </div>
+
             </div>
         </div>
     </div>
     <div class="col-lg-6" data-query="view(Mooo)">
-        <h4>Avaliable processes</h4>
+        <h4>Avaliable Tools</h4>
         <div class="card">
              <div class="card-header">
                 Name
@@ -60,7 +74,7 @@
              [ngForOf]="modules"
              >
              <div *ngIf="!module.hidden" class="list-group list-group-flush">
-                 <div draggable="true" (dragstart)="dragStart($event, module.module_id, 'module')" (dragend)="onRelease($event)" class="list-group-item list-group-item-action">
+                 <div draggable="true" (dragstart)="dragStart($event, module.module_id, 'module', module.name)" (dragend)="onRelease($event)" class="list-group-item list-group-item-action">
                    <div class="d-flex w-100 justify-content-between">
                     <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
                     <i class="material-icons icon-button" (click)="addProcessLast(module.module_id)">add</i>
@@ -69,9 +83,20 @@
              </div>
            </ng-template>
         </div>
+        <button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
+        <button class="btn btn-success float-right" (click)="saveAsTemplate()">Save as template</button>
+        <button class="btn btn-success float-right" (click)="saveAsSameTemplate()">Modify template</button>
     </div>
 </div>
-<button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
 
-<!-- <button class="btn" (click)="FileBrowserOpen = !FileBrowserOpen">Files: All</button>
-<FileBrowser [(active)]="FileBrowserOpen" [package_id]="id"> </FileBrowser> -->
+<modal [(active)]="modalActive" title="Save as template">
+  <div modal-body>
+    <label class="input-label">
+      Name of new template:
+      <input type="text" [(ngModel)]="templateName"/>
+    </label>
+  </div>
+  <div modal-footer>
+    <button type="button" class="btn btn-success" (click)="saveNewTemplate()">Save</button>
+  </div>
+</modal>

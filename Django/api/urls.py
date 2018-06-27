@@ -19,4 +19,7 @@ urlpatterns = [
     url(r'^package/(?P<id>[0-9]+)/process/$', views.process_list),
     url(r'^process/$', views.process_add),
     url(r'^process/(?P<process_id>[0-9]+)/$', views.process_detail),
+    url(r'^template/$', views.template_list),
+    url(r'^template/(?P<template_id>[0-9]+)/$', views.template_detail),
+    url(r'^template/(?P<template_id>[0-9]+)/process/$', views.template_process_list),
 ]

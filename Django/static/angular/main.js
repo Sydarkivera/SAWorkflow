@@ -23,10 +23,284 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
-/***/ "./src/app/Admin/Admin.component.css":
-/*!*******************************************!*\
-  !*** ./src/app/Admin/Admin.component.css ***!
-  \*******************************************/
+/***/ "./src/app/Admin/Admin-routing.routes.ts":
+/*!***********************************************!*\
+  !*** ./src/app/Admin/Admin-routing.routes.ts ***!
+  \***********************************************/
+/*! exports provided: adminRoutes */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "adminRoutes", function() { return adminRoutes; });
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
+
+
+
+
+// import { PackageComponent }    from './Package.component';
+// import { PackageHeaderComponent }    from './PackageHeader.component';
+// import { PackageDashboardComponent } from './PackageDashboard.component';
+// import { PackageStatusComponent }    from './PackageStatus.component';
+var adminRoutes = [
+    { path: 'admin', component: _AdminHeader_component__WEBPACK_IMPORTED_MODULE_0__["AdminHeaderComponent"], children: [
+            { path: '', redirectTo: 'modules', pathMatch: 'full' },
+            { path: 'modules', component: _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__["AdminModulesComponent"] },
+            { path: 'global', component: _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__["AdminGlobalComponent"] },
+            { path: 'processes', component: _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_3__["AdminProcessesComponent"] },
+        ] }
+];
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/Admin.module.ts":
+/*!***************************************!*\
+  !*** ./src/app/Admin/Admin.module.ts ***!
+  \***************************************/
+/*! exports provided: AdminModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModule", function() { return AdminModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+//imports
+
+//declarations
+
+
+
+
+// import { PackageDashboardComponent }    from './PackageDashboard.component';
+// import { PackageStatusComponent }    from './PackageStatus.component';
+// import { PackageHeaderComponent } from './PackageHeader.component';
+// import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
+// import { FileComponent } from '../FileBrowser/File.component';
+//providers
+
+// import { ModuleService } from '../Admin/Module.service';
+// import { TooltipModule } from '../Tooltip/Tooltip.module';
+// import { HeroDetailComponent }  from './hero-detail.component';
+// import { HeroService } from './hero.service';
+var AdminModule = /** @class */ (function () {
+    function AdminModule() {
+    }
+    AdminModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
+                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
+            ],
+            declarations: [
+                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_6__["AdminHeaderComponent"],
+                _AdminModules_component__WEBPACK_IMPORTED_MODULE_7__["AdminModulesComponent"],
+                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_8__["AdminGlobalComponent"],
+                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_9__["AdminProcessesComponent"],
+            ],
+            // bootstrap: [PackageHeaderComponent] s
+            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_10__["ModuleService"]],
+        })
+    ], AdminModule);
+    return AdminModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminGlobal.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/Admin/AdminGlobal.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".input-label {\n  width: 100%;\n}\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminGlobal.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/Admin/AdminGlobal.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <label class=\"input-label\">\n    Working directory:\n    <input type=\"text\" [(ngModel)]=\"workDir\" tooltip=\"A directory where temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"right\"/>\n  </label>\n  <label class=\"input-label\">\n    Packages directory:\n    <input type=\"text\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"right\"/>\n  </label>\n  <label class=\"input-label\">\n    Premis XML file:\n    <input type=\"text\"/>\n  </label>\n  <label class=\"input-label\">\n    Mets XML file:\n    <input type=\"text\"/>\n  </label>\n  <label class=\"input-label\">\n    Name:\n    <input type=\"text\"/>\n  </label>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminGlobal.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/Admin/AdminGlobal.component.ts ***!
+  \************************************************/
+/*! exports provided: AdminGlobalComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminGlobalComponent", function() { return AdminGlobalComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+// import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
+
+var AdminGlobalComponent = /** @class */ (function () {
+    function AdminGlobalComponent(moduleService) {
+        this.moduleService = moduleService;
+        this.workDir = "";
+    }
+    AdminGlobalComponent.prototype.ngOnInit = function () {
+        // this.packageService.getModules().subscribe((data) => {
+        //   this.modules = data as [any];
+        //   this.setModule(this.modules[this.modules.length-1]);
+        // });
+    };
+    AdminGlobalComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'admin',
+            template: __webpack_require__(/*! ./AdminGlobal.component.html */ "./src/app/Admin/AdminGlobal.component.html"),
+            styles: [__webpack_require__(/*! ./AdminGlobal.component.css */ "./src/app/Admin/AdminGlobal.component.css")]
+        }),
+        __metadata("design:paramtypes", [_Module_service__WEBPACK_IMPORTED_MODULE_1__["ModuleService"]])
+    ], AdminGlobalComponent);
+    return AdminGlobalComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminHeader.component.css":
+/*!*************************************************!*\
+  !*** ./src/app/Admin/AdminHeader.component.css ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminHeader.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/Admin/AdminHeader.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<ul class=\"nav nav-tabs\">\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['modules']\">Modules</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['global']\">Global Settings</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['processes']\">Default processes</a>\n  </li>\n  <!-- <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li> -->\n</ul>\n<router-outlet></router-outlet>\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminHeader.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/Admin/AdminHeader.component.ts ***!
+  \************************************************/
+/*! exports provided: AdminHeaderComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminHeaderComponent", function() { return AdminHeaderComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+// import { PackagesService } from './Packages.service'
+// import { PackageDetailService } from './PackageDetail.service';
+var AdminHeaderComponent = /** @class */ (function () {
+    function AdminHeaderComponent(route, router) {
+        this.route = route;
+        this.router = router;
+        this.title = 'new title';
+        this.name = "";
+        this.showDropDown = false;
+    }
+    AdminHeaderComponent.prototype.ngOnInit = function () {
+        // console.log(this.router.url);
+        // console.log(this.route);
+        // this.sub = this.route.params.subscribe(params => {
+        //    this.id = +params['id'];
+        //
+        //    this.packageService.getPackage(this.id).subscribe((data) => {
+        //      // console.log(data);
+        //      // this.package = data;
+        //      this.name = data['name'];
+        //    });
+        // });
+        // this.packageService.getAllPackages().subscribe((data) => {
+        //   // console.log(data);
+        //   this.packages = data as [any];
+        //   // this.name = data['name'];
+        // });
+    };
+    AdminHeaderComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'adminHeader',
+            template: __webpack_require__(/*! ./AdminHeader.component.html */ "./src/app/Admin/AdminHeader.component.html"),
+            styles: [__webpack_require__(/*! ./AdminHeader.component.css */ "./src/app/Admin/AdminHeader.component.css")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+    ], AdminHeaderComponent);
+    return AdminHeaderComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminModules.component.css":
+/*!**************************************************!*\
+  !*** ./src/app/Admin/AdminModules.component.css ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -34,27 +308,27 @@ module.exports = ".input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: r
 
 /***/ }),
 
-/***/ "./src/app/Admin/Admin.component.html":
-/*!********************************************!*\
-  !*** ./src/app/Admin/Admin.component.html ***!
-  \********************************************/
+/***/ "./src/app/Admin/AdminModules.component.html":
+/*!***************************************************!*\
+  !*** ./src/app/Admin/AdminModules.component.html ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <p>Admin</p>\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{title}} preview</h4>\n    <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n      {{input.label}}\n      <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n      <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n    </label>\n    <button class=\"btn btn-success\">Save as default values</button>\n\n    <h5>Command Settings:</h5>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      File filter:\n      <input type=\"text\" [(ngModel)]=\"selected_module.filter\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <hr>\n    <label class=\"input-label\">\n      What qualifies succes in the log files:\n    </label>\n    <div *ngFor=\"let filter of selected_module.resultFilter\">\n      <div class=\"resultFilterItem\">\n        <select [(ngModel)]=\"filter.type\">\n          <option value=\"Containing\">Containing</option>\n          <option value=\"Not containing\">Not containing</option>\n        </select>\n        <input type=\"text\" [(ngModel)]=\"filter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"removeResultFilter(filter)\">delete</i>\n      </div>\n    </div>\n    <hr>\n    <p>Add a new filter</p>\n    <div class=\"resultFilterItem\">\n      <select [(ngModel)]=\"newResultFilter.type\">\n        <option value=\"Containing\">Containing</option>\n        <option value=\"Not containing\">Not containing</option>\n      </select>\n        <input type=\"text\" [(ngModel)]=\"newResultFilter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"addResultFilter()\">add</i>\n      <!-- <button class=\"btn btn-success\" (click)=\"addResultFilter()\">Add Row</button> -->\n    </div>\n    <!-- <hr> -->\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{title}} preview</h4>\n    <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n      {{input.label}}\n      <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n      <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n    </label>\n    <button class=\"btn btn-success\">Save as default values</button>\n\n    <h5>Command Settings:</h5>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      File filter:\n      <input type=\"text\" [(ngModel)]=\"selected_module.filter\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <hr>\n    <label class=\"input-label\">\n      What qualifies succes in the log files:\n    </label>\n    <div *ngFor=\"let filter of selected_module.resultFilter\">\n      <div class=\"resultFilterItem\">\n        <select [(ngModel)]=\"filter.type\">\n          <option value=\"Containing\">Containing</option>\n          <option value=\"Not containing\">Not containing</option>\n        </select>\n        <input type=\"text\" [(ngModel)]=\"filter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"removeResultFilter(filter)\">delete</i>\n      </div>\n    </div>\n    <hr>\n    <p>Add a new filter</p>\n    <div class=\"resultFilterItem\">\n      <select [(ngModel)]=\"newResultFilter.type\">\n        <option value=\"Containing\">Containing</option>\n        <option value=\"Not containing\">Not containing</option>\n      </select>\n        <input type=\"text\" [(ngModel)]=\"newResultFilter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"addResultFilter()\">add</i>\n      <!-- <button class=\"btn btn-success\" (click)=\"addResultFilter()\">Add Row</button> -->\n    </div>\n    <!-- <hr> -->\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
 
 /***/ }),
 
-/***/ "./src/app/Admin/Admin.component.ts":
-/*!******************************************!*\
-  !*** ./src/app/Admin/Admin.component.ts ***!
-  \******************************************/
-/*! exports provided: AdminComponent */
+/***/ "./src/app/Admin/AdminModules.component.ts":
+/*!*************************************************!*\
+  !*** ./src/app/Admin/AdminModules.component.ts ***!
+  \*************************************************/
+/*! exports provided: AdminModulesComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminComponent", function() { return AdminComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModulesComponent", function() { return AdminModulesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../PackageDetail/PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
 /* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
@@ -78,8 +352,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var AdminComponent = /** @class */ (function () {
-    function AdminComponent(packageService, moduleService) {
+var AdminModulesComponent = /** @class */ (function () {
+    function AdminModulesComponent(packageService, moduleService) {
         this.packageService = packageService;
         this.moduleService = moduleService;
         this.selected_module = undefined;
@@ -90,21 +364,21 @@ var AdminComponent = /** @class */ (function () {
         this.resultFilters = undefined;
         this.newResultFilter = { type: 'Containing', value: '' };
     }
-    AdminComponent.prototype.ngOnInit = function () {
+    AdminModulesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.packageService.getModules().subscribe(function (data) {
             _this.modules = data;
             _this.setModule(_this.modules[_this.modules.length - 1]);
         });
     };
-    AdminComponent.prototype.setModule = function (mod) {
+    AdminModulesComponent.prototype.setModule = function (mod) {
         console.log(mod);
         this.selected_module = JSON.parse(JSON.stringify(mod));
         this.title = this.selected_module.name;
         this.formJson = this.getJson(this.selected_module.form);
         this.commandJson = this.getJson(this.selected_module.command);
     };
-    AdminComponent.prototype.selectModule = function (mod) {
+    AdminModulesComponent.prototype.selectModule = function (mod) {
         if (!this.selected_module || this.selected_module.module_id != mod.module_id) {
             this.setModule(mod);
         }
@@ -112,7 +386,7 @@ var AdminComponent = /** @class */ (function () {
             this.selected_module = undefined;
         }
     };
-    AdminComponent.prototype.renderCommand = function () {
+    AdminModulesComponent.prototype.renderCommand = function () {
         var res = '';
         for (var _i = 0, _a = this.selected_module.command; _i < _a.length; _i++) {
             var cp = _a[_i];
@@ -120,12 +394,12 @@ var AdminComponent = /** @class */ (function () {
         }
         return res;
     };
-    AdminComponent.prototype.getJson = function (data) {
+    AdminModulesComponent.prototype.getJson = function (data) {
         return JSON.stringify(data, null, 4);
     };
-    AdminComponent.prototype.exportModule = function () {
+    AdminModulesComponent.prototype.exportModule = function () {
     };
-    AdminComponent.prototype.save = function () {
+    AdminModulesComponent.prototype.save = function () {
         var _this = this;
         //validate first!
         console.log(this.selected_module.type);
@@ -169,7 +443,7 @@ var AdminComponent = /** @class */ (function () {
             }
         });
     };
-    AdminComponent.prototype.setJSONForm = function (event) {
+    AdminModulesComponent.prototype.setJSONForm = function (event) {
         // console.log(event)
         try {
             this.selected_module.form = JSON.parse(event);
@@ -179,25 +453,379 @@ var AdminComponent = /** @class */ (function () {
             return false;
         }
     };
-    AdminComponent.prototype.addResultFilter = function () {
+    AdminModulesComponent.prototype.addResultFilter = function () {
         this.selected_module.resultFilter.push(__assign({}, this.newResultFilter));
         this.newResultFilter = { type: 'Containing', value: '' };
     };
-    AdminComponent.prototype.removeResultFilter = function (filter) {
+    AdminModulesComponent.prototype.removeResultFilter = function (filter) {
         var index = this.selected_module.resultFilter.indexOf(filter);
         if (index > -1) {
             this.selected_module.resultFilter.splice(index, 1);
         }
     };
-    AdminComponent = __decorate([
+    AdminModulesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'admin',
-            template: __webpack_require__(/*! ./Admin.component.html */ "./src/app/Admin/Admin.component.html"),
-            styles: [__webpack_require__(/*! ./Admin.component.css */ "./src/app/Admin/Admin.component.css")]
+            template: __webpack_require__(/*! ./AdminModules.component.html */ "./src/app/Admin/AdminModules.component.html"),
+            styles: [__webpack_require__(/*! ./AdminModules.component.css */ "./src/app/Admin/AdminModules.component.css")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__["PackageDetailService"], _Module_service__WEBPACK_IMPORTED_MODULE_2__["ModuleService"]])
-    ], AdminComponent);
-    return AdminComponent;
+    ], AdminModulesComponent);
+    return AdminModulesComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminProcesses.component.css":
+/*!****************************************************!*\
+  !*** ./src/app/Admin/AdminProcesses.component.css ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n.placeholder {\n  opacity: 0.4;\n}\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminProcesses.component.html":
+/*!*****************************************************!*\
+  !*** ./src/app/Admin/AdminProcesses.component.html ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n      <h4>Modules to be run before each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header\"\n          (dragover)=\"allowDropTop($event, 0)\"\n          (drop)=\"onDrop($event, 0)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"startTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'startTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 0)\"\n                    (dragover)=\"allowDrop($event, process.order, 0)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 0)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < startTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 0)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 0)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n      <h4>Modules to be run after each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header\"\n          (dragover)=\"allowDropTop($event, 1)\"\n          (drop)=\"onDrop($event, 1)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"endTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'endTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 1)\"\n                    (dragover)=\"allowDrop($event, process.order, 1)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 1)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < endTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 1)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 1)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminProcesses.component.ts":
+/*!***************************************************!*\
+  !*** ./src/app/Admin/AdminProcesses.component.ts ***!
+  \***************************************************/
+/*! exports provided: AdminProcessesComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminProcessesComponent", function() { return AdminProcessesComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+// import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
+
+var AdminProcessesComponent = /** @class */ (function () {
+    function AdminProcessesComponent(moduleService) {
+        this.moduleService = moduleService;
+        this.workDir = "";
+        this.startTemplate = { processes: [] };
+        this.endTemplate = { processes: [] };
+        this.selected_process_id = -1;
+        this.templates = [undefined, undefined];
+    }
+    AdminProcessesComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.moduleService.getTemplate(0).subscribe(function (data) {
+            console.log(data);
+            _this.startTemplate = data;
+            _this.templates[0] = data;
+        });
+        this.moduleService.getTemplate(1).subscribe(function (data) {
+            console.log(data);
+            _this.endTemplate = data;
+            _this.templates[1] = data;
+        });
+        this.moduleService.getModules().subscribe(function (data) {
+            _this.modules = data;
+            // this.setModule(this.modules[this.modules.length-1]);
+        });
+    };
+    AdminProcessesComponent.prototype.selectProcess = function (process) {
+        if (this.selected_process_id != process.process_id) {
+            this.selected_process = process;
+            this.selected_process_id = process.process_id;
+        }
+        else {
+            this.selected_process = undefined;
+            this.selected_process_id = -1;
+        }
+    };
+    AdminProcessesComponent.prototype.deleteProcess = function (process, template_id) {
+        this.moduleService.deleteProcess(process.process_id).subscribe(function (data) {
+        });
+        this.templates[template_id].processes = this.templates[template_id].processes.filter(function (item) {
+            return item.process_id != process.process_id;
+        });
+        // move up all processes below
+        var data = [];
+        for (var index in this.templates[template_id].processes) {
+            var item = this.templates[template_id].processes[index];
+            if (item.type != 'placeholder' && item.order > process.order) {
+                item.order -= 1;
+                data.push({ "order": item.order, "process_id": item.process_id });
+            }
+        }
+        this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
+            // console.log(data);
+        });
+        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    //dragging:
+    AdminProcessesComponent.prototype.moveUp = function (process, template_id) {
+        var data = [];
+        data.push({ "order": (process.order - 1), "process_id": process.process_id });
+        //find the one below
+        // console.table(this.package.processes);
+        var below;
+        for (var i = 0; i < this.templates[template_id].processes.length; i++) {
+            var p = this.templates[template_id].processes[i];
+            if (p.order == process.order - 1) {
+                data.push({ "order": (p.order + 1), "process_id": p.process_id });
+                // console.log(i);/
+                this.templates[template_id].processes[i].order += 1;
+                this.templates[template_id].processes[i + 1].order -= 1;
+                break;
+            }
+        }
+        // console.table(data);
+        // console.table(this.package.processes);
+        // this.packageService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+        //   // console.log(data);
+        // });
+        this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
+            console.log(data);
+        });
+        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    AdminProcessesComponent.prototype.moveDown = function (process, template_id) {
+        var data = [];
+        data.push({ "order": (process.order + 1), "process_id": process.process_id });
+        //find the one below
+        // console.table(this.package.processes);
+        var below;
+        for (var i = 0; i < this.templates[template_id].processes.length; i++) {
+            var p = this.templates[template_id].processes[i];
+            if (p.order == process.order + 1) {
+                data.push({ "order": (p.order - 1), "process_id": p.process_id });
+                // console.log(i);/
+                this.templates[template_id].processes[i].order -= 1;
+                this.templates[template_id].processes[i - 1].order += 1;
+                break;
+            }
+        }
+        // console.table(data);
+        // console.table(this.package.processes);
+        // this.packageService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+        //   // console.log(data);
+        // });
+        this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
+            console.log(data);
+        });
+        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    AdminProcessesComponent.prototype.dragStart = function (e, id, type, name) {
+        console.log('drag start: ' + e);
+        // console.log(id);
+        e.dataTransfer.setData('id', id);
+        e.dataTransfer.setData('type', type);
+        e.dataTransfer.setData('name', name);
+    };
+    AdminProcessesComponent.prototype.onDrop = function (e, template_id) {
+        console.group('dropEvent');
+        // console.log('drop: ' + e);
+        // console.log(e.dataTransfer.getData('id'));
+        // console.log(e.dataTransfer.getData('type'));
+        // console.log(this.placeholderLocation);
+        // if this.placeholderLocation == -0.5, insert first
+        // if this.placeholderLocation == 0.5, insert afeter first
+        var dropOrder = Math.ceil(this.placeholderLocation);
+        if (dropOrder < 0) {
+            dropOrder = 0;
+        }
+        // console.log(dropOrder);
+        if (e.dataTransfer.getData('type') == 'module') {
+            var data = [];
+            // move down all items under existingIndex
+            for (var index in this.templates[template_id].processes) {
+                var item = this.templates[template_id].processes[index];
+                // console.log(this.package.processes[index]);
+                if (item.type != 'placeholder' && item.order >= dropOrder) {
+                    item.order += 1;
+                    data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
+                }
+            }
+            // console.log(data);
+            //submit reorder:
+            this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
+                console.log(data);
+            });
+            //add process
+            var newProcess = {
+                "order": dropOrder,
+                "process_id": 100,
+                "module": e.dataTransfer.getData('id'),
+                "name": e.dataTransfer.getData('name')
+            };
+            this.templates[template_id].processes.splice(dropOrder, 0, newProcess);
+            this.moduleService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "template": template_id }).subscribe(function (data) {
+                console.log(data);
+            });
+            // console.log(this.package.processes);
+        }
+        else {
+            var startOrder = -1;
+            var movedProcessIndex;
+            var data = [];
+            for (var index in this.templates[template_id].processes) {
+                var item = this.templates[template_id].processes[index];
+                if (item.process_id == e.dataTransfer.getData('id')) {
+                    startOrder = item.order;
+                    movedProcessIndex = index;
+                }
+            }
+            if (startOrder > dropOrder) {
+                for (var index in this.templates[template_id].processes) {
+                    var item = this.templates[template_id].processes[index];
+                    if (item.type != 'placeholder' && item.order < startOrder && item.order >= dropOrder) {
+                        item.order += 1;
+                        data.push({ "order": item.order, "process_id": item.process_id });
+                    }
+                }
+                this.templates[template_id].processes[movedProcessIndex].order = dropOrder;
+                data.push({ "order": this.templates[template_id].processes[movedProcessIndex].order, "process_id": this.templates[template_id].processes[movedProcessIndex].process_id });
+            }
+            else {
+                for (var index in this.templates[template_id].processes) {
+                    var item = this.templates[template_id].processes[index];
+                    if (item.type != 'placeholder' && item.order > startOrder && item.order < dropOrder) {
+                        item.order -= 1;
+                        data.push({ "order": item.order, "process_id": item.process_id });
+                    }
+                }
+                this.templates[template_id].processes[movedProcessIndex].order = dropOrder - 1;
+                data.push({ "order": this.templates[template_id].processes[movedProcessIndex].order, "process_id": this.templates[template_id].processes[movedProcessIndex].process_id });
+            }
+            // push changes to api
+            this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
+                console.log(data);
+            });
+            this.onRelease(undefined);
+            this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
+                if (a.order > b.order) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
+        console.groupEnd();
+    };
+    AdminProcessesComponent.prototype.onRelease = function (e) {
+        //reset
+        this.templates[0].processes = this.templates[0].processes.filter(function (item) {
+            return item['type'] != 'placeholder';
+        });
+        this.templates[1].processes = this.templates[1].processes.filter(function (item) {
+            return item['type'] != 'placeholder';
+        });
+    };
+    //set ghost image to show where you will drop.
+    AdminProcessesComponent.prototype.allowDrop = function (e, index, template_id) {
+        e.preventDefault();
+        // console.log(index);
+        var element = e.target;
+        // console.log(e.pageY);
+        // console.log(e.pageY - element.getBoundingClientRect().top);
+        if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
+            return;
+        }
+        if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
+            // drop below elements
+            // console.log('s');
+            var ind = index + 0.5;
+            if (ind != this.placeholderLocation) {
+                // console.log(ind);
+                // console.log(index);
+                // console.log(this.placeholderLocation);
+                this.placeholderLocation = ind;
+                // this.package.processes = this.package.processes.filter((item) => {
+                //   return item.type != 'placeholder'
+                // });
+                this.onRelease(undefined);
+                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+                this.templates[template_id].processes.splice(index + 1, 0, temp);
+            }
+        }
+        else {
+            //drop above element.
+            // this.placeholderLocation = index + 0.5;
+            var ind = index - 0.5;
+            if (ind != this.placeholderLocation) {
+                // console.log(ind);
+                // console.log(index);
+                // console.log(this.placeholderLocation);
+                this.placeholderLocation = ind;
+                this.onRelease(undefined);
+                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+                this.templates[template_id].processes.splice(index, 0, temp);
+            }
+        }
+        this.placeholderTemplate = template_id;
+        // console.log(element.offsetHeight);
+        // e.preventDefault();
+    };
+    AdminProcessesComponent.prototype.allowDropTop = function (e, template_id) {
+        e.preventDefault();
+        //calculate order. Order will be 0.5 lower than first visible.
+        var order = -0.5;
+        this.placeholderLocation = order;
+        this.placeholderTemplate = template_id;
+        this.onRelease(undefined);
+        // this.templates[template_id].processes = this.package.processes.filter((item) => {
+        // return item.type != 'placeholder'
+        // });
+        var temp = { type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
+        this.templates[template_id].processes.push(temp);
+        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    AdminProcessesComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'admin',
+            template: __webpack_require__(/*! ./AdminProcesses.component.html */ "./src/app/Admin/AdminProcesses.component.html"),
+            styles: [__webpack_require__(/*! ./AdminProcesses.component.css */ "./src/app/Admin/AdminProcesses.component.css")]
+        }),
+        __metadata("design:paramtypes", [_Module_service__WEBPACK_IMPORTED_MODULE_1__["ModuleService"]])
+    ], AdminProcessesComponent);
+    return AdminProcessesComponent;
 }());
 
 
@@ -234,6 +862,25 @@ var ModuleService = /** @class */ (function () {
     }
     ModuleService.prototype.saveData = function (id, data) {
         return this.http.post(this.packagesURL + id + '/', data);
+    };
+    ModuleService.prototype.getTemplate = function (id) {
+        return this.http.get('/api/template/' + id + '/');
+    };
+    // getPackage(id: number) {
+    //   return this.http.get(this.packagesURL + id + '/');
+    // }
+    //
+    ModuleService.prototype.getModules = function () {
+        return this.http.get('/api/module/');
+    };
+    ModuleService.prototype.addProcess = function (process) {
+        return this.http.post('/api/process/', process);
+    };
+    ModuleService.prototype.reorderProcesses = function (data, template_id) {
+        return this.http.put('/api/template/' + template_id + '/process/', data);
+    };
+    ModuleService.prototype.deleteProcess = function (id) {
+        return this.http.delete('/api/process/' + id + '/');
     };
     ModuleService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -522,6 +1169,87 @@ module.exports = "\n<div class=\"file-header\" (click)=\"expanded = !expanded\">
 
 /***/ }),
 
+/***/ "./src/app/Modal/Modal.component.css":
+/*!*******************************************!*\
+  !*** ./src/app/Modal/Modal.component.css ***!
+  \*******************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".Amodal {\n  max-height: 95%;\n  display: block !important;\n}\n\n.modal-dialog {\n  height: 100%;\n}\n\n.modal-content {\n  max-height: 95%;\n}\n\n.modal-body {\n  margin-top: 5px;\n    overflow-y: scroll;\n}\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black  */\n  background-color: #000;\n  opacity: 0.75;\n\n  /* z-index must be below .modal and above everything else  */\n  z-index: -1;\n}\n"
+
+/***/ }),
+
+/***/ "./src/app/Modal/Modal.component.html":
+/*!********************************************!*\
+  !*** ./src/app/Modal/Modal.component.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal Amodal active\" *ngIf=\"active\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">{{title}}</h5>\n        <button type=\"button\" class=\"close\" (click)=\"close()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-content select=\"[modal-body]\"></ng-content>\n      </div>\n      <div class=\"modal-footer\">\n        <ng-content select=\"[modal-footer]\"></ng-content>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"close()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"close()\"></div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Modal/Modal.component.ts":
+/*!******************************************!*\
+  !*** ./src/app/Modal/Modal.component.ts ***!
+  \******************************************/
+/*! exports provided: ModalComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalComponent", function() { return ModalComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ModalComponent = /** @class */ (function () {
+    function ModalComponent() {
+        this.title = 'Title';
+        this.active = false;
+        this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    // @Output() active = new EventEmitter<boolean>();
+    // @Input() footer: string = 'this is footer';
+    ModalComponent.prototype.close = function () {
+        this.active = false;
+        this.activeChange.emit(this.active);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ModalComponent.prototype, "title", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ModalComponent.prototype, "active", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], ModalComponent.prototype, "activeChange", void 0);
+    ModalComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'modal',
+            template: __webpack_require__(/*! ./Modal.component.html */ "./src/app/Modal/Modal.component.html"),
+            styles: [__webpack_require__(/*! ./Modal.component.css */ "./src/app/Modal/Modal.component.css")]
+        })
+    ], ModalComponent);
+    return ModalComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/NotFound.component.ts":
 /*!***************************************!*\
   !*** ./src/app/NotFound.component.ts ***!
@@ -565,7 +1293,7 @@ var NotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border-radius: 2px;\n    color: white;\n}\n\n.input-label {\n  width: 100%;\n}\n"
+module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border-radius: 2px;\n    color: white;\n}\n\n.input-label {\n  width: 100%;\n}\n\n.template {\n  opacity: 0.4;\n}\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #ddd;\n  display: table;\n  padding: 0px 40px;\n}\n\n.emptyList p {\n  display: table-cell;\n  vertical-align: middle;\n  color: #444;\n}\n\n.emptyList i {\n  /* display: table-cell;\n  vertical-align: middle;\n  color: #444; */\n}\n"
 
 /***/ }),
 
@@ -576,7 +1304,7 @@ module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow</h4>\n        <div class=\"card\">\n            <div class=\"card-header\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <ng-template\n                ngFor\n                let-process\n                [ngForOf]=\"package.processes\"\n                >\n                  <div\n                      *ngIf=\"!process.hidden\"\n                      draggable=\"true\"\n                      (dragstart)=\"dragStart($event, process.process_id, 'process')\"\n                      (drop)=\"onDrop($event)\"\n                      (dragover)=\"allowDrop($event, process.order)\"\n                      class=\"list-group-item list-group-item-action\"\n                      [class.active]=\"process.process_id==selected_process_id\"\n                    >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process.process_id)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n                        </form>\n                    </ng-template>\n                  </div>\n                </ng-template>\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable processes</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <ng-template\n             ngFor\n             let-module\n             [ngForOf]=\"modules\"\n             >\n             <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n                 <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module')\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n           </ng-template>\n        </div>\n    </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n\n<!-- <button class=\"btn\" (click)=\"FileBrowserOpen = !FileBrowserOpen\">Files: All</button>\n<FileBrowser [(active)]=\"FileBrowserOpen\" [package_id]=\"id\"> </FileBrowser> -->\n"
+module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow: {{package.template_name}}</h4>\n        <div class=\"card\">\n            <div class=\"card-header\"\n            (drop)=\"onDrop($event)\"\n            (dragover)=\"allowDropTop($event)\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <ng-template\n                ngFor\n                let-process\n                [ngForOf]=\"package.processes\"\n                >\n                  <div\n                      *ngIf=\"!process.hidden\"\n                      draggable=\"true\"\n                      (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\"\n                      (drop)=\"onDrop($event)\"\n                      (dragover)=\"allowDrop($event, process.order)\"\n                      class=\"list-group-item list-group-item-action\"\n                      [class.active]=\"process.process_id==selected_process_id\"\n                      [class.template]=\"process.type=='placeholder'\"\n                    >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n                        </form>\n                    </ng-template>\n                  </div>\n                </ng-template>\n\n                <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n                  <p>\n                    You have not selected any tools.\n                    <br>\n                    Select on by either dragging it from the right or pressing the plus (\n                    <i class=\"material-icons\">add</i>\n                    ) sign\n                  </p>\n                </div>\n\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable Tools</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <ng-template\n             ngFor\n             let-module\n             [ngForOf]=\"modules\"\n             >\n             <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n                 <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n           </ng-template>\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n        <button class=\"btn btn-success float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n        <button class=\"btn btn-success float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    </div>\n</div>\n\n<modal [(active)]=\"modalActive\" title=\"Save as template\">\n  <div modal-body>\n    <label class=\"input-label\">\n      Name of new template:\n      <input type=\"text\" [(ngModel)]=\"templateName\"/>\n    </label>\n  </div>\n  <div modal-footer>\n    <button type=\"button\" class=\"btn btn-success\" (click)=\"saveNewTemplate()\">Save</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -616,6 +1344,8 @@ var PackageComponent = /** @class */ (function () {
         this.selected_process_id = -1;
         this.selected_process = undefined;
         this.FileBrowserOpen = false;
+        this.modalActive = false;
+        this.templateName = "";
         this.package = {
             name: "Name"
         };
@@ -626,6 +1356,7 @@ var PackageComponent = /** @class */ (function () {
             _this.id = +params['id'];
             _this.packageService.getPackage(_this.id).subscribe(function (data) {
                 console.log(data);
+                console.log(data['processes']);
                 _this.package = data;
             });
         });
@@ -640,6 +1371,19 @@ var PackageComponent = /** @class */ (function () {
         //         this.modules = data;
         //
         //     });
+    };
+    PackageComponent.prototype.saveAsTemplate = function () {
+        this.modalActive = true;
+    };
+    PackageComponent.prototype.saveNewTemplate = function () {
+        //backendcall with package_id and templateName.
+        var data = { "package_id": this.package.package_id, "templateName": this.templateName };
+        this.packageService.postTemplate(data).subscribe(function (data) {
+            console.log(data);
+            // this.package = data;
+            // this.modules = data as [any];
+        });
+        this.modalActive = false;
     };
     PackageComponent.prototype.startWorkflow = function () {
         this.packageService.startWorkflow(this.package.package_id);
@@ -658,16 +1402,30 @@ var PackageComponent = /** @class */ (function () {
         }
         // console.log(this.selected_process_id);
     };
-    PackageComponent.prototype.deleteProcess = function (id) {
-        this.packageService.deleteProcess(id).subscribe(function (data) {
+    PackageComponent.prototype.deleteProcess = function (process) {
+        this.packageService.deleteProcess(process.process_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.filter(function (item) {
-            return item.process_id != id;
+            return item.process_id != process.process_id;
         });
-        // this.client.fetch('/api/process/'+id+'/', {
-        //     method: "DELETE",
-        // })
-        // this.package.processes.splice(id, 1);
+        // move up all processes below
+        var data = [];
+        for (var index in this.package.processes) {
+            var item = this.package.processes[index];
+            if (item.type != 'placeholder' && item.order > process.order) {
+                item.order -= 1;
+                data.push({ "order": item.order, "process_id": item.process_id });
+            }
+        }
+        this.packageService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
+            // console.log(data);
+        });
+        this.package.processes = this.package.processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
     };
     PackageComponent.prototype.addProcessLast = function (module_id) {
         var _this = this;
@@ -696,6 +1454,18 @@ var PackageComponent = /** @class */ (function () {
         //     this.package.processes.splice(process_index, 1, data);
         // });
         // this.selected_process = -1;
+    };
+    PackageComponent.prototype.isListEmpty = function () {
+        if (this.package == undefined || this.package.processes == undefined) {
+            return true;
+        }
+        for (var _i = 0, _a = this.package.processes; _i < _a.length; _i++) {
+            var item = _a[_i];
+            if (!item.hidden) {
+                return false;
+            }
+        }
+        return true;
     };
     PackageComponent.prototype.moveUp = function (process) {
         var data = [];
@@ -753,13 +1523,15 @@ var PackageComponent = /** @class */ (function () {
             return -1;
         });
     };
-    PackageComponent.prototype.dragStart = function (e, id, type) {
+    PackageComponent.prototype.dragStart = function (e, id, type, name) {
         console.log('drag start: ' + e);
         // console.log(id);
         e.dataTransfer.setData('id', id);
         e.dataTransfer.setData('type', type);
+        e.dataTransfer.setData('name', name);
     };
     PackageComponent.prototype.onDrop = function (e) {
+        var _this = this;
         console.group('dropEvent');
         // console.log('drop: ' + e);
         // console.log(e.dataTransfer.getData('id'));
@@ -793,11 +1565,12 @@ var PackageComponent = /** @class */ (function () {
                 "order": dropOrder,
                 "process_id": 100,
                 "module": e.dataTransfer.getData('id'),
-                "name": "added module"
+                "name": e.dataTransfer.getData('name')
             };
             this.package.processes.splice(dropOrder, 0, newProcess);
             this.packageService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "package": this.package.package_id }).subscribe(function (data) {
-                console.log(data);
+                // console.log(data);
+                _this.package.processes = data;
             });
             // console.log(this.package.processes);
         }
@@ -872,6 +1645,7 @@ var PackageComponent = /** @class */ (function () {
     };
     //set ghost image to show where you will drop.
     PackageComponent.prototype.allowDrop = function (e, index) {
+        console.log(index);
         e.preventDefault();
         // console.log(index);
         var element = e.target;
@@ -892,7 +1666,7 @@ var PackageComponent = /** @class */ (function () {
                 this.package.processes = this.package.processes.filter(function (item) {
                     return item.type != 'placeholder';
                 });
-                var temp = { type: "placeholder", order: ind };
+                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
                 this.package.processes.splice(index + 1, 0, temp);
             }
         }
@@ -908,12 +1682,38 @@ var PackageComponent = /** @class */ (function () {
                 this.package.processes = this.package.processes.filter(function (item) {
                     return item.type != 'placeholder';
                 });
-                var temp = { type: "placeholder", order: ind };
+                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
                 this.package.processes.splice(index, 0, temp);
             }
         }
         // console.log(element.offsetHeight);
         // e.preventDefault();
+    };
+    PackageComponent.prototype.allowDropTop = function (e) {
+        e.preventDefault();
+        //calculate order. Order will be 0.5 lower than first visible.
+        var order = -0.5;
+        for (var index in this.package.processes) {
+            var item = this.package.processes[index];
+            if (item.hidden) {
+                order += 1;
+            }
+            else {
+                break;
+            }
+        }
+        this.placeholderLocation = order;
+        this.package.processes = this.package.processes.filter(function (item) {
+            return item.type != 'placeholder';
+        });
+        var temp = { type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
+        this.package.processes.push(temp);
+        this.package.processes = this.package.processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
     };
     PackageComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -949,18 +1749,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Package_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Package.component */ "./src/app/PackageDetail/Package.component.ts");
 /* harmony import */ var _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PackageDashboard.component */ "./src/app/PackageDetail/PackageDashboard.component.ts");
 /* harmony import */ var _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PackageStatus.component */ "./src/app/PackageDetail/PackageStatus.component.ts");
-/* harmony import */ var _PackageHeader_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PackageHeader.component */ "./src/app/PackageDetail/PackageHeader.component.ts");
-/* harmony import */ var _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../FileBrowser/FileBrowser.component */ "./src/app/FileBrowser/FileBrowser.component.ts");
-/* harmony import */ var _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../FileBrowser/File.component */ "./src/app/FileBrowser/File.component.ts");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
-/* harmony import */ var _Admin_Module_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Admin/Module.service */ "./src/app/Admin/Module.service.ts");
-/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PackageTemplate.component */ "./src/app/PackageDetail/PackageTemplate.component.ts");
+/* harmony import */ var _PackageHeader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PackageHeader.component */ "./src/app/PackageDetail/PackageHeader.component.ts");
+/* harmony import */ var _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../FileBrowser/FileBrowser.component */ "./src/app/FileBrowser/FileBrowser.component.ts");
+/* harmony import */ var _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../FileBrowser/File.component */ "./src/app/FileBrowser/File.component.ts");
+/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Admin/Module.service */ "./src/app/Admin/Module.service.ts");
+/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Modal/Modal.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -987,18 +1791,20 @@ var PackageModule = /** @class */ (function () {
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
-                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
+                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__["TooltipModule"],
             ],
             declarations: [
                 _Package_component__WEBPACK_IMPORTED_MODULE_5__["PackageComponent"],
                 _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_6__["PackageDashboardComponent"],
-                _PackageHeader_component__WEBPACK_IMPORTED_MODULE_8__["PackageHeaderComponent"],
+                _PackageHeader_component__WEBPACK_IMPORTED_MODULE_9__["PackageHeaderComponent"],
                 _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__["PackageStatusComponent"],
-                _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_9__["FileBrowserComponent"],
-                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_10__["FileComponent"]
+                _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__["PackageTemplateComponent"],
+                _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__["FileBrowserComponent"],
+                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__["FileComponent"],
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_15__["ModalComponent"]
             ],
             // bootstrap: [PackageHeaderComponent] s
-            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_11__["PackageDetailService"], _Admin_Module_service__WEBPACK_IMPORTED_MODULE_12__["ModuleService"]],
+            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__["PackageDetailService"], _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__["ModuleService"]],
         })
     ], PackageModule);
     return PackageModule;
@@ -1157,6 +1963,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PackageHeader_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PackageHeader.component */ "./src/app/PackageDetail/PackageHeader.component.ts");
 /* harmony import */ var _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDashboard.component */ "./src/app/PackageDetail/PackageDashboard.component.ts");
 /* harmony import */ var _PackageStatus_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PackageStatus.component */ "./src/app/PackageDetail/PackageStatus.component.ts");
+/* harmony import */ var _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PackageTemplate.component */ "./src/app/PackageDetail/PackageTemplate.component.ts");
+
 
 
 
@@ -1165,6 +1973,7 @@ var packageRoutes = [
     { path: ':id', component: _PackageHeader_component__WEBPACK_IMPORTED_MODULE_1__["PackageHeaderComponent"], children: [
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
             { path: 'dashboard', component: _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_2__["PackageDashboardComponent"] },
+            { path: 'template', component: _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_4__["PackageTemplateComponent"] },
             { path: 'edit', component: _Package_component__WEBPACK_IMPORTED_MODULE_0__["PackageComponent"] },
             { path: 'status', component: _PackageStatus_component__WEBPACK_IMPORTED_MODULE_3__["PackageStatusComponent"] }
         ] }
@@ -1207,6 +2016,9 @@ var PackageDetailService = /** @class */ (function () {
     PackageDetailService.prototype.getPackage = function (id) {
         return this.http.get(this.packagesURL + id + '/');
     };
+    PackageDetailService.prototype.setActiveTemplate = function (id, data) {
+        return this.http.put(this.packagesURL + id + '/', data);
+    };
     PackageDetailService.prototype.getModules = function () {
         return this.http.get('/api/module/');
     };
@@ -1245,6 +2057,12 @@ var PackageDetailService = /** @class */ (function () {
         //       });
         // }
     };
+    PackageDetailService.prototype.getTemplates = function () {
+        return this.http.get('/api/template/');
+    };
+    PackageDetailService.prototype.postTemplate = function (data) {
+        return this.http.post('/api/template/', data);
+    };
     PackageDetailService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -1274,7 +2092,7 @@ module.exports = ".package_title {\n  font-size: 1.1em;\n  font-weight: bold;\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <p>PackageHeader</p> -->\n<ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul>\n<router-outlet></router-outlet>\n"
+module.exports = "<!-- <p>PackageHeader</p> -->\n<ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul>\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -1321,7 +2139,7 @@ var PackageHeaderComponent = /** @class */ (function () {
             _this.id = +params['id'];
             _this.packageService.getPackage(_this.id).subscribe(function (data) {
                 // console.log(data);
-                // this.package = data;
+                _this.active_template = data['active_template'];
                 _this.name = data['name'];
             });
         });
@@ -1471,6 +2289,109 @@ var PackageStatusComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/PackageDetail/PackageTemplate.component.css":
+/*!*************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageTemplate.component.css ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/PackageTemplate.component.html":
+/*!**************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageTemplate.component.html ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col-sm-4\">\n               Actions\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let template of templates\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n               {{template.name}}\n            </div>\n            <div class=\"col-sm-4\">\n               <button class=\"btn btn-success\" (click)=\"selectTemplate(template)\">Select</button>\n               <button class=\"btn\" *ngIf=\"template.id!=2\">Start</button>\n            </div>\n        </div>\n     </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/PackageTemplate.component.ts":
+/*!************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageTemplate.component.ts ***!
+  \************************************************************/
+/*! exports provided: PackageTemplateComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageTemplateComponent", function() { return PackageTemplateComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+// import { PackagesService } from './Packages.service'
+
+var PackageTemplateComponent = /** @class */ (function () {
+    function PackageTemplateComponent(packageService, route, router) {
+        this.packageService = packageService;
+        this.route = route;
+        this.router = router;
+    }
+    PackageTemplateComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.parent.params.subscribe(function (params) {
+            _this.package_id = +params['id'];
+        });
+        this.packageService.getTemplates().subscribe(function (data) {
+            console.log(data);
+            // this.package = data;
+            var res = data;
+            _this.templates = res.filter(function (item) {
+                if (item.id > 1) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        // this.client.fetch('/api/module/')
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         this.modules = data;
+        //
+        //     });
+    };
+    PackageTemplateComponent.prototype.selectTemplate = function (template) {
+        var _this = this;
+        // api call to set the template for package.
+        var data = { "active_template": template.id };
+        this.packageService.setActiveTemplate(this.package_id, data).subscribe(function (res) {
+            console.log(res);
+            // this.router.navigate(['packages', this.package_id, 'edit']);
+            window.location.href = '/packages/' + _this.package_id + '/edit';
+        });
+    };
+    PackageTemplateComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'packageTemplate',
+            template: __webpack_require__(/*! ./PackageTemplate.component.html */ "./src/app/PackageDetail/PackageTemplate.component.html"),
+            styles: [__webpack_require__(/*! ./PackageTemplate.component.css */ "./src/app/PackageDetail/PackageTemplate.component.css")]
+        }),
+        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+    ], PackageTemplateComponent);
+    return PackageTemplateComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Packages/PackageList.component.css":
 /*!****************************************************!*\
   !*** ./src/app/Packages/PackageList.component.css ***!
@@ -1489,7 +2410,7 @@ module.exports = ".refresh {\n  background-color: transparent;\n  border: 0;\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Packages</p>\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-1\">\n                Status\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-1\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n</div>\n"
+module.exports = "<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-2\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n</div>\n"
 
 /***/ }),
 
@@ -2160,8 +3081,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Admin/Admin.component */ "./src/app/Admin/Admin.component.ts");
-/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
+/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
+/* harmony import */ var _Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Admin/Admin-routing.routes */ "./src/app/Admin/Admin-routing.routes.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2172,15 +3093,16 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 // import { PackagesComponent } from './Packages/packages.component';
 
+// import { AdminComponent } from './Admin/Admin.component';
 
 
 var appRoutes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     // { path: 'Packages', component: PackagesComponent },
-    { path: 'dashboard', component: _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"] },
-    { path: 'admin', component: _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_3__["AdminComponent"] },
-    { path: '**', component: _NotFound_component__WEBPACK_IMPORTED_MODULE_4__["NotFoundComponent"] },
-];
+    { path: 'dashboard', component: _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"] }
+].concat(_Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_4__["adminRoutes"], [
+    { path: '**', component: _NotFound_component__WEBPACK_IMPORTED_MODULE_3__["NotFoundComponent"] },
+]);
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
     }
@@ -2279,9 +3201,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
-/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
-/* harmony import */ var _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Admin/Admin.component */ "./src/app/Admin/Admin.component.ts");
+/* harmony import */ var _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Admin/Admin.module */ "./src/app/Admin/Admin.module.ts");
+/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
+/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2306,6 +3228,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+// import { AdminComponent } from './Admin/Admin.component';
 
 var AppModule = /** @class */ (function () {
     function AppModule() {
@@ -2315,9 +3238,8 @@ var AppModule = /** @class */ (function () {
             declarations: [
                 // FileBrowserComponent,
                 _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
-                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_9__["DashboardComponent"],
-                _NotFound_component__WEBPACK_IMPORTED_MODULE_10__["NotFoundComponent"],
-                _Admin_Admin_component__WEBPACK_IMPORTED_MODULE_11__["AdminComponent"]
+                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_10__["DashboardComponent"],
+                _NotFound_component__WEBPACK_IMPORTED_MODULE_11__["NotFoundComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -2330,6 +3252,7 @@ var AppModule = /** @class */ (function () {
                 // DragulaModule,
                 // DragDropDirectiveModule,
                 _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_8__["PackagesModule"],
+                _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_9__["AdminModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"]
             ],

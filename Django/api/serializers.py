@@ -7,7 +7,7 @@ __email__ = "simon@axenu.com"
 __status__ = "Development"
 
 from rest_framework import serializers
-from api.models import Module, Package, Process
+from api.models import Module, Package, Process, Template
 import json
 
 
@@ -43,22 +43,24 @@ class ProcessSerializer(serializers.ModelSerializer):
     value = JSONSerializerField(required=False)
     status = serializers.SerializerMethodField()
     module = serializers.PrimaryKeyRelatedField(queryset=Module.objects.all())
-    package = serializers.PrimaryKeyRelatedField(queryset=Package.objects.all())
+    package = serializers.PrimaryKeyRelatedField(queryset=Package.objects.all(), required=False)
+    template = serializers.PrimaryKeyRelatedField(queryset=Template.objects.all(), required=False)
     filter = serializers.CharField(source='module.filter', read_only=True)
 
     class Meta:
         model = Process
-        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress')
+        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template')
 
     def get_status(self,obj):
         return obj.get_status_display()
 
 class PackageSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
+    template_name = serializers.CharField(source='active_template.name', read_only=True)
 
     class Meta:
         model = Package
-        fields = ('package_id', 'name', 'path', 'file_name', 'status')
+        fields = ('package_id', 'name', 'path', 'file_name', 'status', 'active_template', 'template_name')
 
     def get_status(self,obj):
         return obj.get_status_display()
@@ -66,10 +68,11 @@ class PackageSerializer(serializers.ModelSerializer):
 class PackageDetailSerializer(serializers.ModelSerializer):
     processes = ProcessSerializer(many=True)
     statistics = JSONSerializerField(required=True)
+    template_name = serializers.CharField(source='active_template.name', read_only=True)
 
     class Meta:
         model = Package
-        fields = ('package_id', 'name', 'file_name', 'status', 'processes', 'statistics')
+        fields = ('package_id', 'name', 'file_name', 'status', 'processes', 'statistics', 'active_template', 'template_name')
 
 
 class ModuleSerializer(serializers.ModelSerializer):
@@ -84,3 +87,17 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     def get_type(self,obj):
         return obj.get_type_display()
+
+class TemplateListSerializer(serializers.ModelSerializer):
+
+
+    class Meta:
+        model = Template
+        fields = ('name', 'id')
+
+class TemplateDetailSerializer(serializers.ModelSerializer):
+    processes = ProcessSerializer(many=True)
+
+    class Meta:
+        model = Template
+        fields = ('name', 'id', 'processes')
