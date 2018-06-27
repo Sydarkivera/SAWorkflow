@@ -25,6 +25,7 @@ import { ModuleService } from './Module.service';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
+import { NavbarModule } from '../Navbar/Navbar.module';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { ModuleService } from './Module.service';
     FormsModule,
     RouterModule,
     TooltipModule,
+    NavbarModule,
     // PackageRoutingModule
   ],
   declarations: [

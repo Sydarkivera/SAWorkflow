@@ -79,6 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
 /* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
 /* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -108,6 +109,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 // import { TooltipModule } from '../Tooltip/Tooltip.module';
 // import { HeroDetailComponent }  from './hero-detail.component';
 // import { HeroService } from './hero.service';
+
 var AdminModule = /** @class */ (function () {
     function AdminModule() {
     }
@@ -119,6 +121,7 @@ var AdminModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_11__["NavbarModule"],
             ],
             declarations: [
                 _AdminHeader_component__WEBPACK_IMPORTED_MODULE_6__["AdminHeaderComponent"],
@@ -227,7 +230,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ul class=\"nav nav-tabs\">\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['modules']\">Modules</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['global']\">Global Settings</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['processes']\">Default processes</a>\n  </li>\n  <!-- <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li> -->\n</ul>\n<router-outlet></router-outlet>\n"
+module.exports = "<navbar>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['modules']\">Modules</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['global']\">Global Settings</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['processes']\">Default processes</a>\n  </li>\n</navbar>\n\n<!-- <ul class=\"nav nav-tabs\"> -->\n\n  <!-- <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li> -->\n<!-- </ul> -->\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -968,7 +971,7 @@ var DashboardComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Dashbaord 2</p>\n<i class=\"material-icons\">account_circle</i>\n<ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart>\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+module.exports = "<navbar></navbar>\n\n\n    <h1 class=\"h2\">Dashboard</h1>\n\n\n<!-- <p>Dashbaord 2</p> -->\n<i class=\"material-icons\">account_circle</i>\n<ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart>\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
 
 /***/ }),
 
@@ -1244,6 +1247,115 @@ var ModalComponent = /** @class */ (function () {
         })
     ], ModalComponent);
     return ModalComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Navbar/Navbar.component.css":
+/*!*********************************************!*\
+  !*** ./src/app/Navbar/Navbar.component.css ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Navbar/Navbar.component.html":
+/*!**********************************************!*\
+  !*** ./src/app/Navbar/Navbar.component.html ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a>\n  <ng-content></ng-content>\n</nav>\n"
+
+/***/ }),
+
+/***/ "./src/app/Navbar/Navbar.component.ts":
+/*!********************************************!*\
+  !*** ./src/app/Navbar/Navbar.component.ts ***!
+  \********************************************/
+/*! exports provided: NavbarComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var NavbarComponent = /** @class */ (function () {
+    function NavbarComponent() {
+    }
+    NavbarComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'navbar',
+            template: __webpack_require__(/*! ./Navbar.component.html */ "./src/app/Navbar/Navbar.component.html"),
+            styles: [__webpack_require__(/*! ./Navbar.component.css */ "./src/app/Navbar/Navbar.component.css")]
+        })
+    ], NavbarComponent);
+    return NavbarComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Navbar/Navbar.module.ts":
+/*!*****************************************!*\
+  !*** ./src/app/Navbar/Navbar.module.ts ***!
+  \*****************************************/
+/*! exports provided: NavbarModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarModule", function() { return NavbarModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _Navbar_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar.component */ "./src/app/Navbar/Navbar.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+// import {Tooltip} from "./Tooltip.directive";
+// import {TooltipComponent} from "./Tooltip.component";
+// export * from "./Tooltip.directive";
+// export * from "./Tooltip.component";
+
+var NavbarModule = /** @class */ (function () {
+    function NavbarModule() {
+    }
+    NavbarModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+            ],
+            declarations: [
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_2__["NavbarComponent"]
+            ],
+            exports: [
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_2__["NavbarComponent"]
+            ],
+            entryComponents: [
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_2__["NavbarComponent"]
+            ]
+        })
+    ], NavbarModule);
+    return NavbarModule;
 }());
 
 
@@ -1757,12 +1869,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Admin/Module.service */ "./src/app/Admin/Module.service.ts");
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
 /* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Modal/Modal.component.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1792,6 +1906,7 @@ var PackageModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__["TooltipModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__["NavbarModule"],
             ],
             declarations: [
                 _Package_component__WEBPACK_IMPORTED_MODULE_5__["PackageComponent"],
@@ -2092,7 +2207,7 @@ module.exports = ".package_title {\n  font-size: 1.1em;\n  font-weight: bold;\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <p>PackageHeader</p> -->\n<ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul>\n<router-outlet></router-outlet>\n"
+module.exports = "<navbar>\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link nav-item\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n\n<!-- <ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul> -->\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -2410,7 +2525,7 @@ module.exports = ".refresh {\n  background-color: transparent;\n  border: 0;\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-2\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n</div>\n"
+module.exports = "<navbar></navbar>\n\n<div class=\"row\">\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-2\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n<!-- </div> -->\n</div>\n</div>\n<!-- </main> -->\n"
 
 /***/ }),
 
@@ -2597,6 +2712,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Packages_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Packages.service */ "./src/app/Packages/Packages.service.ts");
 /* harmony import */ var _PackageList_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PackageList.component */ "./src/app/Packages/PackageList.component.ts");
 /* harmony import */ var _PackageDetail_Package_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../PackageDetail/Package.module */ "./src/app/PackageDetail/Package.module.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2616,6 +2732,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 // import { HeroDetailComponent }  from './hero-detail.component';
 // import { HeroService } from './hero.service';
+
 var PackagesModule = /** @class */ (function () {
     function PackagesModule() {
     }
@@ -2625,7 +2742,8 @@ var PackagesModule = /** @class */ (function () {
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _PackageDetail_Package_module__WEBPACK_IMPORTED_MODULE_7__["PackageModule"],
-                _Packages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PackagesRoutingModule"]
+                _Packages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PackagesRoutingModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_8__["NavbarModule"],
             ],
             declarations: [
                 _Packages_component__WEBPACK_IMPORTED_MODULE_4__["PackagesComponent"],
@@ -3130,7 +3248,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = "body {\n  font-size: .875rem;\n}\n\n.feather {\n  width: 16px;\n  height: 16px;\n  vertical-align: text-bottom;\n}\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100; /* Behind the navbar */\n  padding: 48px 0 0; /* Height of navbar */\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);\n}\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */\n}\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky;\n  }\n}\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333;\n}\n\n.sidebar .nav-link .feather {\n  margin-right: 4px;\n  color: #999;\n}\n\n.sidebar .nav-link.active {\n  color: #007bff;\n}\n\n.sidebar .nav-link:hover .feather,\n.sidebar .nav-link.active .feather {\n  color: inherit;\n}\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase;\n}\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; /* Space for fixed navbar */\n}\n\n/*\n * Navbar\n */\n\n.navbar-brand {\n  padding-top: .75rem;\n  padding-bottom: .75rem;\n  font-size: 1rem;\n  margin: 0;\n  margin-top: -10px;\n  background-color: rgba(0, 0, 0, .75);\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);\n}\n\n.navbar-brand a {\n  color: white;\n}\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0;\n}\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, .1);\n  border-color: rgba(255, 255, 255, .1);\n}\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);\n}\n\n/*\n * Utilities\n */\n\n.border-top { border-top: 1px solid #e5e5e5; }\n\n.border-bottom { border-bottom: 1px solid #e5e5e5; }\n"
 
 /***/ }),
 
@@ -3141,7 +3259,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<div class=\"container\">\n  <h1><a href=\"/\">Home</a></h1>\n  <img class=\"logga\" src=\"static/img/logga.jpg\"/>\n  <ul class=\"nav nav-tabs\">\n    <li class=\"nav-link\"  routerLinkActive=\"active\">\n      <a class=\"navbar-link\" routerLink=\"dashboard\">Dashboard</a>\n    </li>\n    <li class=\"nav-link\" routerLinkActive=\"active\">\n      <a class=\"navbar-link\" routerLink=\"packages\">Packages</a>\n    </li>\n    <li class=\"nav-link\" routerLinkActive=\"active\">\n      <a class=\"navbar-link\" routerLink=\"admin\">Admin</a>\n    </li>\n  </ul>\n  <router-outlet></router-outlet>\n</div>\n"
+module.exports = "\n\n<!-- <div class=\"container\">\n  <h1><a href=\"/\">Home</a></h1>\n  <img class=\"logga\" src=\"static/img/logga.jpg\"/>\n  <ul class=\"nav nav-tabs\">\n    <li class=\"nav-link\"  routerLinkActive=\"active\">\n      <a class=\"navbar-link\" routerLink=\"dashboard\">Dashboard</a>\n    </li>\n    <li class=\"nav-link\" routerLinkActive=\"active\">\n      <a class=\"navbar-link\" routerLink=\"packages\">Packages</a>\n    </li>\n    <li class=\"nav-link\" routerLinkActive=\"active\">\n      <a class=\"navbar-link\" routerLink=\"admin\">Admin</a>\n    </li>\n  </ul>\n  <router-outlet></router-outlet>\n</div> -->\n\n<!-- <nav class=\"navbar navbar-inverse visible-xs\">\n  <div class=\"container-fluid\">\n    <div class=\"navbar-header\">\n      <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#myNavbar\">\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n        <span class=\"icon-bar\"></span>\n      </button>\n      <a class=\"navbar-brand\" href=\"#\">Logo</a>\n    </div>\n    <div class=\"collapse navbar-collapse\" id=\"myNavbar\">\n      <ul class=\"nav navbar-nav\">\n        <li class=\"active\"><a href=\"#\">Dashboard</a></li>\n        <li><a href=\"#\">Age</a></li>\n        <li><a href=\"#\">Gender</a></li>\n        <li><a href=\"#\">Geo</a></li>\n      </ul>\n    </div>\n  </div>\n</nav> -->\n\n<!-- <nav class=\"navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Company name</a>\n  <input class=\"form-control form-control-dark w-100\" type=\"text\" placeholder=\"Search\" aria-label=\"Search\">\n  <ul class=\"navbar-nav px-3\">\n    <li class=\"nav-item text-nowrap\">\n      <a class=\"nav-link\" href=\"#\">Sign out</a>\n    </li>\n  </ul>\n</nav> -->\n\n<!-- <div class=\"container-fluid\">\n  <div class=\"row\">\n    <nav class=\"col-md-2 d-none d-md-block bg-light sidebar\">\n          <div class=\"sidebar-sticky\">\n            <ul class=\"nav flex-column\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link active\" href=\"#\">\n                  <span data-feather=\"home\"></span>\n                  Dashboard <span class=\"sr-only\">(current)</span>\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file\"></span>\n                  Orders\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"shopping-cart\"></span>\n                  Products\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"users\"></span>\n                  Customers\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"bar-chart-2\"></span>\n                  Reports\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"layers\"></span>\n                  Integrations\n                </a>\n              </li>\n            </ul>\n\n            <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Saved reports</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n            <ul class=\"nav flex-column mb-2\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Current month\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Last quarter\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Social engagement\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Year-end sale\n                </a>\n              </li>\n            </ul>\n          </div>\n        </nav>\n        <nav class=\"navbar navbar-dark bg-dark navbar-toggleable-xl\" style=\"margin-left: 100px;\">\n          <div class=\"navbar-nav\">\n            <a class=\"nav-item nav-link active\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n            <a class=\"nav-item nav-link\" href=\"#\">Features</a>\n            <a class=\"nav-item nav-link\" href=\"#\">Pricing</a>\n            <a class=\"nav-item nav-link disabled\" href=\"#\">Disabled</a>\n          </div>\n        </nav>\n        <main class=\"col-md-9 ml-sm-auto col-lg-10 px-4\">\n    <router-outlet></router-outlet>\n  </main>\n  </div>\n</div> -->\n\n<!-- <div class=\"container\">\n  <div class=\"row\" style=\"background-color: red;\">\n    <div class=\"col-sm\">\n      One of three columns\n    </div>\n    <div class=\"col-sm\">\n      One of three columns\n    </div>\n    <div class=\"col-sm\">\n      One of three columns\n    </div>\n  </div>\n</div> -->\n\n<!-- <div class=\"container-fluid\" style=\"background-color: red;\">\n  <div class=\"row\">\n  <div class=\"col-sm\" style=\"max-width: 200px;\">\n    <ul class=\"nav flex-column\" style=\"background-color: gray;\">\n      <li class=\"nav-item\">\n        <a class=\"nav-link active\" href=\"#\">Active</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" href=\"#\">Link</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link\" href=\"#\">Link</a>\n      </li>\n      <li class=\"nav-item\">\n        <a class=\"nav-link disabled\" href=\"#\">Disabled</a>\n      </li>\n      </ul>\n    </div>\n    <div class=\"col-sm\">\n      One of three columns\n    </div>\n  </div>\n</div> -->\n\n    <div class=\"container-fluid\">\n      <div class=\"row\">\n        <nav class=\"col-md-2 d-none d-md-block bg-light sidebar\">\n          <div class=\"sidebar-sticky\">\n            <ul class=\"nav flex-column\">\n              <!-- <li class=\"nav-link\"  routerLinkActive=\"active\">\n                <a class=\"navbar-link\" routerLink=\"dashboard\">Dashboard</a>\n              </li> -->\n              <!-- <li class=\"nav-item navbar-brand\">\n                <a class=\"col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a>\n              </li> -->\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <span data-feather=\"home\"></span>\n                  Dashboard\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <span data-feather=\"file\"></span>\n                  Packages\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" routerLinkActive=\"active\" routerLink=\"admin\">\n                  <span data-feather=\"shopping-cart\"></span>\n                  Admin\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"users\"></span>\n                  Customers\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"bar-chart-2\"></span>\n                  Reports\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"layers\"></span>\n                  Integrations\n                </a>\n              </li>\n            </ul>\n\n            <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Saved reports</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n            <ul class=\"nav flex-column mb-2\">\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Current month\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Last quarter\n                </a>\n              </li>\n              <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Social engagement\n                </a>\n              </li>\n              <!-- <li class=\"nav-item\">\n                <a class=\"nav-link\" href=\"#\">\n                  <span data-feather=\"file-text\"></span>\n                  Year-end sale\n                </a>\n              </li> -->\n            </ul>\n          </div>\n        </nav>\n          <router-outlet></router-outlet>\n\n        <!-- <router-outlet></router-outlet> -->\n        <!-- <nav class=\"navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow\"> -->\n              <!-- <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a> -->\n              <!-- <a class=\"col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a> -->\n              <!-- <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a> -->\n              <!-- <ul class=\"navbar-nav px-3\">\n                <li class=\"nav-item text-nowrap\">\n                  <a class=\"nav-link\" href=\"#\">Sign out</a>\n                </li>\n              </ul> -->\n              <!-- <router-outlet name=\"navbar\"></router-outlet> -->\n            <!-- </nav> -->\n\n        <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4\">\n          <router-outlet></router-outlet>\n          <!-- <div class=\"d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom\">\n            <h1 class=\"h2\">Dashboard</h1>\n            <div class=\"btn-toolbar mb-2 mb-md-0\">\n              <div class=\"btn-group mr-2\">\n                <button class=\"btn btn-sm btn-outline-secondary\">Share</button>\n                <button class=\"btn btn-sm btn-outline-secondary\">Export</button>\n              </div>\n              <button class=\"btn btn-sm btn-outline-secondary dropdown-toggle\">\n                <span data-feather=\"calendar\"></span>\n                This week\n              </button>\n            </div>\n          </div>\n\n          <canvas class=\"my-4 w-100\" id=\"myChart\" width=\"900\" height=\"380\"></canvas>\n\n          <h2>Section title</h2>\n          <div class=\"table-responsive\">\n            <table class=\"table table-striped table-sm\">\n              <thead>\n                <tr>\n                  <th>#</th>\n                  <th>Header</th>\n                  <th>Header</th>\n                  <th>Header</th>\n                  <th>Header</th>\n                </tr>\n              </thead>\n              <tbody>\n                <tr>\n                  <td>1,001</td>\n                  <td>Lorem</td>\n                  <td>ipsum</td>\n                  <td>dolor</td>\n                  <td>sit</td>\n                </tr>\n                <tr>\n                  <td>1,002</td>\n                  <td>amet</td>\n                  <td>consectetur</td>\n                  <td>adipiscing</td>\n                  <td>elit</td>\n                </tr>\n                <tr>\n                  <td>1,003</td>\n                  <td>Integer</td>\n                  <td>nec</td>\n                  <td>odio</td>\n                  <td>Praesent</td>\n                </tr>\n                <tr>\n                  <td>1,003</td>\n                  <td>libero</td>\n                  <td>Sed</td>\n                  <td>cursus</td>\n                  <td>ante</td>\n                </tr>\n                <tr>\n                  <td>1,004</td>\n                  <td>dapibus</td>\n                  <td>diam</td>\n                  <td>Sed</td>\n                  <td>nisi</td>\n                </tr>\n                <tr>\n                  <td>1,005</td>\n                  <td>Nulla</td>\n                  <td>quis</td>\n                  <td>sem</td>\n                  <td>at</td>\n                </tr>\n                <tr>\n                  <td>1,006</td>\n                  <td>nibh</td>\n                  <td>elementum</td>\n                  <td>imperdiet</td>\n                  <td>Duis</td>\n                </tr>\n                <tr>\n                  <td>1,007</td>\n                  <td>sagittis</td>\n                  <td>ipsum</td>\n                  <td>Praesent</td>\n                  <td>mauris</td>\n                </tr>\n                <tr>\n                  <td>1,008</td>\n                  <td>Fusce</td>\n                  <td>nec</td>\n                  <td>tellus</td>\n                  <td>sed</td>\n                </tr>\n                <tr>\n                  <td>1,009</td>\n                  <td>augue</td>\n                  <td>semper</td>\n                  <td>porta</td>\n                  <td>Mauris</td>\n                </tr>\n                <tr>\n                  <td>1,010</td>\n                  <td>massa</td>\n                  <td>Vestibulum</td>\n                  <td>lacinia</td>\n                  <td>arcu</td>\n                </tr>\n                <tr>\n                  <td>1,011</td>\n                  <td>eget</td>\n                  <td>nulla</td>\n                  <td>Class</td>\n                  <td>aptent</td>\n                </tr>\n                <tr>\n                  <td>1,012</td>\n                  <td>taciti</td>\n                  <td>sociosqu</td>\n                  <td>ad</td>\n                  <td>litora</td>\n                </tr>\n                <tr>\n                  <td>1,013</td>\n                  <td>torquent</td>\n                  <td>per</td>\n                  <td>conubia</td>\n                  <td>nostra</td>\n                </tr>\n                <tr>\n                  <td>1,014</td>\n                  <td>per</td>\n                  <td>inceptos</td>\n                  <td>himenaeos</td>\n                  <td>Curabitur</td>\n                </tr>\n                <tr>\n                  <td>1,015</td>\n                  <td>sodales</td>\n                  <td>ligula</td>\n                  <td>in</td>\n                  <td>libero</td>\n                </tr>\n              </tbody>\n            </table>\n          </div> -->\n        </main>\n      </div>\n    </div>\n"
 
 /***/ }),
 
@@ -3205,6 +3323,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
 /* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3230,6 +3349,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 // import { AdminComponent } from './Admin/Admin.component';
 
+
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -3247,6 +3367,7 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_5__["NgxChartsModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__["TooltipModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_13__["NavbarModule"],
                 // DndListModule,
                 // NgxDnDModule,
                 // DragulaModule,

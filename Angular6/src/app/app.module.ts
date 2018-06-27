@@ -19,7 +19,8 @@ import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { NotFoundComponent } from './NotFound.component';
 // import { AdminComponent } from './Admin/Admin.component';
 
-import { TooltipModule } from './Tooltip/Tooltip.module'
+import { TooltipModule } from './Tooltip/Tooltip.module';
+import { NavbarModule } from './Navbar/Navbar.module';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { TooltipModule } from './Tooltip/Tooltip.module'
     AppComponent,
     DashboardComponent,
     NotFoundComponent,
+
     // AdminComponent
   ],
   imports: [
@@ -35,6 +37,7 @@ import { TooltipModule } from './Tooltip/Tooltip.module'
     FormsModule,
     NgxChartsModule,
     TooltipModule,
+    NavbarModule,
     // DndListModule,
     // NgxDnDModule,
     // DragulaModule,

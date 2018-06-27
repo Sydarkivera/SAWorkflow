@@ -15,13 +15,15 @@ import { PackageModule } from '../PackageDetail/Package.module';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
+import { NavbarModule } from '../Navbar/Navbar.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     PackageModule,
-    PackagesRoutingModule
+    PackagesRoutingModule,
+    NavbarModule,
   ],
   declarations: [
     PackagesComponent,

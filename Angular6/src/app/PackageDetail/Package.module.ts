@@ -17,6 +17,7 @@ import { PackageDetailService } from './PackageDetail.service';
 import { ModuleService } from '../Admin/Module.service';
 import { TooltipModule } from '../Tooltip/Tooltip.module';
 import { ModalComponent } from '../Modal/Modal.component';
+import { NavbarModule } from '../Navbar/Navbar.module';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
@@ -28,6 +29,7 @@ import { ModalComponent } from '../Modal/Modal.component';
     FormsModule,
     RouterModule,
     TooltipModule,
+    NavbarModule,
     // PackageRoutingModule
   ],
   declarations: [

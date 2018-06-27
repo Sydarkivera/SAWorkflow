@@ -1,5 +1,31 @@
-<!-- <p>PackageHeader</p> -->
-<ul class="nav nav-tabs">
+<navbar>
+  <li class="nav-item dropdown" [class.show]="showDropDown">
+    <a class="nav-link dropdown-toggle package_title" (click)="showDropDown = !showDropDown">
+      {{name}}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown" [class.show]="showDropDown">
+      <a *ngFor="let package of packages" class="dropdown-item" (click)="navigateTo(package.package_id)">{{package.name}}</a>
+    </div>
+  </li>
+  <li class="nav-link nav-item"  routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['dashboard']">Dashboard</a>
+  </li>
+  <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['template']">Templates</a>
+  </li>
+  <li *ngIf="!active_template" class="nav-link" routerLinkActive="active" tooltip="Select any template before you can modify it" tooltipPlacement="top">
+    <a class="navbar-link disabled" [routerLink]="['edit']">Workflow</a>
+  </li>
+  <li *ngIf="active_template" class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['edit']">Workflow</a>
+  </li>
+  <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['status']">Status</a>
+  </li>
+</navbar>
+
+
+<!-- <ul class="nav nav-tabs">
   <li class="nav-item dropdown" [class.show]="showDropDown">
     <a class="nav-link dropdown-toggle package_title" (click)="showDropDown = !showDropDown">
       {{name}}
@@ -23,5 +49,5 @@
   <li class="nav-link" routerLinkActive="active">
     <a class="navbar-link" [routerLink]="['status']">Status</a>
   </li>
-</ul>
+</ul> -->
 <router-outlet></router-outlet>
