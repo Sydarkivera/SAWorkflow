@@ -11,7 +11,7 @@ from jsonfield import JSONField
 
 
 class Template(models.Model):
-    id = models.AutoField(primary_key=True)
+    template_id = models.AutoField(primary_key=True)
     name = models.TextField()
     # processes = models.ManyToManyField(Process, related_name='template')
 
@@ -19,7 +19,7 @@ class Template(models.Model):
         ordering = ('name',)
 
     def __str__(self):
-        return '%d: %d' % (self.id, self.name)
+        return '%d: %d' % (self.template_id, self.name)
 
 
 class Package(models.Model):

@@ -29,7 +29,7 @@ export class PackageTemplateComponent {
       // this.package = data;
       let res = data as [any]
       this.templates = res.filter((item) => {
-        if (item.id > 1) {
+        if (item.template_id > 1) {
           return true;
         }
         return false;
@@ -45,7 +45,7 @@ export class PackageTemplateComponent {
 
   selectTemplate(template) {
     // api call to set the template for package.
-    let data = {"active_template": template.id};
+    let data = {"active_template": template.template_id};
     this.packageService.setActiveTemplate(this.package_id, data).subscribe((res) => {
       console.log(res);
       // this.router.navigate(['packages', this.package_id, 'edit']);

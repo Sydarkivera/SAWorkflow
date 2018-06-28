@@ -64,7 +64,7 @@ module4.save()
 # setup default templates
 
 template1 = Template(name="Default Start",
-                     id=0)
+                     template_id=0)
 template1.save()
 
 process1 = Process(order=0,
@@ -77,11 +77,11 @@ process2 = Process(order=1,
 process2.save()
 
 template2 = Template(name="Default Done",
-                     id=1)
+                     template_id=1)
 template2.save()
 
 template3 = Template(name="Empty template",
-                     id=2)
+                     template_id=2)
 template3.save()
 
 

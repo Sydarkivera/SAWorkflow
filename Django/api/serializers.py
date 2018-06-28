@@ -93,11 +93,11 @@ class TemplateListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Template
-        fields = ('name', 'id')
+        fields = ('name', 'template_id')
 
 class TemplateDetailSerializer(serializers.ModelSerializer):
     processes = ProcessSerializer(many=True)
 
     class Meta:
         model = Template
-        fields = ('name', 'id', 'processes')
+        fields = ('name', 'template_id', 'processes')
