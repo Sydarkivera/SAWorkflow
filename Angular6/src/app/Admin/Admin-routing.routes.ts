@@ -7,6 +7,7 @@ import { AdminModulesComponent } from './AdminModules.component';
 import { AdminGlobalComponent } from './AdminGlobal.component';
 
 import { AdminProcessesComponent } from './AdminProcesses.component';
+import { AdminTemplatesComponent } from './AdminTemplates.component';
 
 // import { PackageComponent }    from './Package.component';
 // import { PackageHeaderComponent }    from './PackageHeader.component';
@@ -19,7 +20,7 @@ export const adminRoutes: Routes = [
     { path: 'modules', component: AdminModulesComponent},
     { path: 'global', component: AdminGlobalComponent},
     { path: 'processes', component: AdminProcessesComponent},
-    // { path: 'edit', component: PackageComponent},
+    { path: 'templates', component: AdminTemplatesComponent},
     // { path: 'status', component: PackageStatusComponent}
   ]}
 ];

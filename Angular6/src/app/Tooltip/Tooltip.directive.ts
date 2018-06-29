@@ -37,6 +37,9 @@ export class Tooltip {
     @Input()
     tooltipPlacement: "top"|"bottom"|"left"|"right" = "bottom";
 
+    @Input()
+    tooltipOpacity: number;
+
     // -------------------------------------------------------------------------
     // Public Methods
     // -------------------------------------------------------------------------
@@ -57,11 +60,13 @@ export class Tooltip {
             this.tooltip.instance.content = this.content as string;
             this.tooltip.instance.placement = this.tooltipPlacement;
             this.tooltip.instance.animation = this.tooltipAnimation;
+            this.tooltip.instance.opacity = this.tooltipOpacity;
         } else {
             const tooltip = this.content as TooltipComponent;
             tooltip.hostElement = this.viewContainerRef.element.nativeElement;
             tooltip.placement = this.tooltipPlacement;
             tooltip.animation = this.tooltipAnimation;
+            tooltip.opacity = this.tooltipOpacity;
             tooltip.show();
         }
     }

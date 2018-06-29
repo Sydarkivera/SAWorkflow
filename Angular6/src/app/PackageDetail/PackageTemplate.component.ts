@@ -10,7 +10,7 @@ import { PackageDetailService } from './PackageDetail.service';
   // template: '<p>PackageDetail</p>'
   templateUrl: './PackageTemplate.component.html',
 
-  styleUrls: ['./PackageTemplate.component.css']
+  styleUrls: ['./PackageTemplate.component.sass']
 })
 export class PackageTemplateComponent {
 

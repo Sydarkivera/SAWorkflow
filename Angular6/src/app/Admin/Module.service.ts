@@ -11,6 +11,10 @@ export class ModuleService {
     return this.http.post(this.packagesURL + id + '/', data);
   }
 
+  getTemplates() {
+    return this.http.get('/api/template/');
+  }
+
   getTemplate(id) {
     return this.http.get('/api/template/' + id + '/');
   }

@@ -1,0 +1,44 @@
+<div class="row">
+  <div class="col-lg-6">
+    <h4>Templates</h4>
+    <div class="card">
+      <div class="card-header company-table-head" (drop)="onDrop($event)" (dragover)="allowDropTop($event)">
+        Name
+      </div>
+      <div class="list-group list-group-flush">
+        <ng-template ngFor let-template [ngForOf]="templates">
+          <div class="list-group-item list-group-item-action" [class.active]="template.template_id==selected_template_id">
+            <div class="d-flex w-100 justify-content-between">
+              <p style="margin-bottom:0;" class="d-flex w-100 noselect" (click)="selectTemplate(template)">
+                {{template.name}}
+              </p>
+              <!-- <i class="material-icons">arrow_back</i> -->
+              <i class="material-icons icon-button" (click)="deleteTemplate(template)">delete</i>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="col-lg-6" data-query="view(Mooo)">
+    <h4>Avaliable Tools</h4>
+    <div class="card">
+      <div class="card-header">
+        Name
+      </div>
+      <ng-template ngFor let-module [ngForOf]="modules">
+        <div *ngIf="!module.hidden" class="list-group list-group-flush">
+          <div draggable="true" (dragstart)="dragStart($event, module.module_id, 'module', module.name)" (dragend)="onRelease($event)" class="list-group-item list-group-item-action">
+            <div class="d-flex w-100 justify-content-between">
+              <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
+              <i class="material-icons icon-button" (click)="addProcessLast(module.module_id)">add</i>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+    <button class="btn btn-secondary float-right" (click)="saveAsTemplate()">Save as template</button>
+    <button class="btn btn-secondary float-right" (click)="saveAsSameTemplate()">Modify template</button>
+    <button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
+  </div> -->
+</div>

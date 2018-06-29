@@ -18,7 +18,7 @@ interface Placeholder {
   // template: '<p>PackageDetail</p>'
   templateUrl: './Package.component.html',
 
-  styleUrls: ['./Package.component.css']
+  styleUrls: ['./Package.component.sass']
 })
 export class PackageComponent {
   id: number;

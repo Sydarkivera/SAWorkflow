@@ -2,11 +2,14 @@
 
 <!-- <div class="row"> -->
 <table class="table table-striped table-hover" style="background-color: white;">
-  <thead class="sydarkiverathead">
+  <thead class="company-table-head">
     <tr>
       <th>Name</th>
       <th>Filename</th>
-      <th>Status</th>
+      <th>
+        Status
+        <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
+      </th>
     </tr>
   </thead>
   <tbody>
@@ -17,54 +20,3 @@
     </tr>
   </tbody>
 </table>
-
-<table class="table table-striped table-dark table-hover">
-  <thead class="sydarkiverathead">
-    <tr>
-      <th>Name</th>
-      <th>Filename</th>
-      <th>Status</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let package of packages">
-      <td><a [routerLink]="[package.package_id]">{{package.name}}</a></td>
-      <td>{{package.file_name}}</td>
-      <td><a [routerLink]="[package.package_id, 'status']">{{package.status}}</a></td>
-    </tr>
-  </tbody>
-</table>
-
-
-<div class="card">
-     <div class="card-header">
-         <div class="row justify-content-end">
-             <div class="col">
-                Namn
-             </div>
-             <div class="col">
-                Filnamn
-             </div>
-             <div class="col-sm-2">
-                Status
-                <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
-             </div>
-         </div>
-     </div>
-     <div class="list-group list-group-flush">
-         <div style="padding-left:0;padding-right:0;" *ngFor="let package of packages" class="list-group-item list-group-item-action">
-             <div class="col">
-                <a [routerLink]="[package.package_id]">{{package.name}}</a>
-            </div>
-            <div class="col">
-                {{package.file_name}}
-            </div>
-            <div class="col-sm-2">
-                <a [routerLink]="[package.package_id, 'status']">{{package.status}}</a>
-            </div>
-        </div>
-     </div>
-<!-- </div> -->
-</div>
-<!-- </div> -->
-<!-- </main> -->

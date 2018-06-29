@@ -1,57 +1,40 @@
-
-<div class="card">
-     <div class="card-header">
-         <div class="row justify-content-end">
-             <div class="col">
-                Name
-             </div>
-             <div class="col">
-                Statusbar
-             </div>
-             <div class="col-sm-2">
-                Status
-             </div>
-             <div class="col-sm-2">
-                Log
-             </div>
-             <div class="col-sm-2">
-                Error
-                <!-- <a href="#" click="updateData()" class="tab"><i class="material-icons">refresh</i></a> -->
-                <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
-             </div>
-         </div>
-     </div>
-     <div class="list-group list-group-flush">
-         <div style="padding-left:0;padding-right:0;" *ngFor="let process of package.processes" repeat.for="process of processes" class="list-group-item list-group-item-action">
-             <div class="col">
-                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
-            </div>
-            <div class="col">
-              <div class="progress">
-                <div class="progress-bar"
-                [class.bg-success]="process.status == 'Done'"
-                [class.bg-danger]="process.status == 'Error'"
-                [class.progress-bar-animated]="process.status == 'Running'"
-                [class.progress-bar-striped]="process.status == 'Running'"
-                [style.width]="process.progress + '%'"></div>
-              </div>
-            </div>
-            <div class="col-sm-2">
-               {{process.status}}
-            </div>
-            <div class="col-sm-2">
-               <!-- <a (click)="showModal(process)" [class.disabled]="process.log_path == ''">view log</a> -->
-               <button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Info</button>
-            </div>
-            <div class="col-sm-2">
-                <!-- <a href="/process/${process.process_id}/error_log" [class.disabled]="process.log_path == ''">view error log</a> -->
-                <button class="btn btn-outline-danger" (click)="showModal(process, 'error_log')" [disabled]="process.err_path == '' || process.status != 'Error'">Error</button>
-            </div>
+<table class="table table-striped table-hover" style="background-color: white;">
+  <thead class="company-table-head">
+    <tr>
+      <th>Name</th>
+      <th>Statusbar</th>
+      <th>Status</th>
+      <th>Log</th>
+      <th>
+        Error
+        <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let process of package.processes">
+      <td>
+        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
+      </td>
+      <td>
+        <div class="progress">
+          <div class="progress-bar"
+          [class.bg-success]="process.status == 'Done'"
+          [class.bg-danger]="process.status == 'Error'"
+          [class.progress-bar-animated]="process.status == 'Running'"
+          [class.progress-bar-striped]="process.status == 'Running'"
+          [style.width]="process.progress + '%'"></div>
         </div>
-     </div>
-</div>
+      </td>
+      <td>{{process.status}}</td>
+      <td><button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Info</button></td>
+      <td><button class="btn btn-outline-danger" (click)="showModal(process, 'error_log')" [disabled]="process.err_path == '' || process.status != 'Error'">Error</button></td>
+    </tr>
+  </tbody>
+</table>
 <button class="btn btn-success float-right" (click)="startWorkflow()">Starta</button>
-<button class="btn btn-danger float-right" (click)="removePackage()">Done (Remove package from workdir)</button>
+<button class="btn btn-warning float-right" (click)="removePackage()">Done</button>
+<button class="btn btn-danger float-right" (click)="removePackage()">Delete</button>
 
 
 

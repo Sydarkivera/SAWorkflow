@@ -1,24 +1,22 @@
 <h4>Select a template to set as a startingpoint for this package</h4>
-<div class="card">
-     <div class="card-header">
-         <div class="row justify-content-end">
-             <div class="col">
-                Name
-             </div>
-             <div class="col-sm-4">
-               Actions
-             </div>
-         </div>
-     </div>
-     <div class="list-group list-group-flush">
-         <div style="padding-left:0;padding-right:0;" *ngFor="let template of templates" class="list-group-item list-group-item-action">
-             <div class="col">
-               {{template.name}}
-            </div>
-            <div class="col-sm-4">
-               <button class="btn btn-success" (click)="selectTemplate(template)">Select</button>
-               <button class="btn" *ngIf="template.template_id!=2">Start</button>
-            </div>
-        </div>
-     </div>
-</div>
+
+<table class="table table-striped table-hover" style="background-color: white;">
+  <thead class="company-table-head">
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let template of templates">
+      <td>
+        {{template.name}}
+      </td>
+      <td class="small-column">
+        <!-- <a [routerLink]="[package.package_id, 'status']">{{package.status}}</a> -->
+        <button class="btn btn-success" (click)="selectTemplate(template)">Select</button>
+        <button class="btn btn-secondary" *ngIf="template.template_id!=2">Start</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

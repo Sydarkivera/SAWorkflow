@@ -7,6 +7,7 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@a
 <div class="tooltip {{ placement }}"
      [style.top]="top + 'px'"
      [style.left]="left + 'px'"
+     [style.opacity]="opacity"
      [class.in]="isIn"
      [class.fade]="isFade"
      role="Atooltip">
@@ -34,6 +35,9 @@ export class TooltipComponent implements AfterViewInit {
 
     @Input()
     animation: boolean = true;
+
+    @Input()
+    opacity: number = 0.5;
 
     // -------------------------------------------------------------------------
     // Properties

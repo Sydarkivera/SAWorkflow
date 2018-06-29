@@ -37,6 +37,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
 /* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
 /* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+
 
 
 
@@ -51,6 +53,7 @@ var adminRoutes = [
             { path: 'modules', component: _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__["AdminModulesComponent"] },
             { path: 'global', component: _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__["AdminGlobalComponent"] },
             { path: 'processes', component: _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_3__["AdminProcessesComponent"] },
+            { path: 'templates', component: _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_4__["AdminTemplatesComponent"] },
         ] }
 ];
 
@@ -74,12 +77,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
 /* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
-/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
-/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
-/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -93,22 +97,14 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 //imports
 
+
 //declarations
 
 
 
 
-// import { PackageDashboardComponent }    from './PackageDashboard.component';
-// import { PackageStatusComponent }    from './PackageStatus.component';
-// import { PackageHeaderComponent } from './PackageHeader.component';
-// import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
-// import { FileComponent } from '../FileBrowser/File.component';
-//providers
 
-// import { ModuleService } from '../Admin/Module.service';
-// import { TooltipModule } from '../Tooltip/Tooltip.module';
-// import { HeroDetailComponent }  from './hero-detail.component';
-// import { HeroService } from './hero.service';
+//providers
 
 var AdminModule = /** @class */ (function () {
     function AdminModule() {
@@ -121,16 +117,16 @@ var AdminModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_11__["NavbarModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
             ],
             declarations: [
-                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_6__["AdminHeaderComponent"],
-                _AdminModules_component__WEBPACK_IMPORTED_MODULE_7__["AdminModulesComponent"],
-                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_8__["AdminGlobalComponent"],
-                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_9__["AdminProcessesComponent"],
+                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_7__["AdminHeaderComponent"],
+                _AdminModules_component__WEBPACK_IMPORTED_MODULE_8__["AdminModulesComponent"],
+                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_9__["AdminGlobalComponent"],
+                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_10__["AdminProcessesComponent"],
+                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_11__["AdminTemplatesComponent"]
             ],
-            // bootstrap: [PackageHeaderComponent] s
-            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_10__["ModuleService"]],
+            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_12__["ModuleService"]],
         })
     ], AdminModule);
     return AdminModule;
@@ -230,7 +226,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['modules']\">Modules</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['global']\">Global Settings</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['processes']\">Default processes</a>\n  </li>\n</navbar>\n\n<!-- <ul class=\"nav nav-tabs\"> -->\n\n  <!-- <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li> -->\n<!-- </ul> -->\n<router-outlet></router-outlet>\n"
+module.exports = "<navbar>\n  <!-- <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['modules']\">Modules</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['global']\">Global Settings</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['processes']\">Default processes</a>\n  </li> -->\n</navbar>\n\n<!-- <ul class=\"nav nav-tabs\"> -->\n\n  <!-- <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li> -->\n<!-- </ul> -->\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -318,7 +314,7 @@ module.exports = ".input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Existing processes</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" *ngIf=\"selected_module\">\n    <h4>{{title}} preview</h4>\n    <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n      {{input.label}}\n      <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n      <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n    </label>\n    <button class=\"btn btn-success\">Save as default values</button>\n\n    <h5>Command Settings:</h5>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      File filter:\n      <input type=\"text\" [(ngModel)]=\"selected_module.filter\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <hr>\n    <label class=\"input-label\">\n      What qualifies succes in the log files:\n    </label>\n    <div *ngFor=\"let filter of selected_module.resultFilter\">\n      <div class=\"resultFilterItem\">\n        <select [(ngModel)]=\"filter.type\">\n          <option value=\"Containing\">Containing</option>\n          <option value=\"Not containing\">Not containing</option>\n        </select>\n        <input type=\"text\" [(ngModel)]=\"filter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"removeResultFilter(filter)\">delete</i>\n      </div>\n    </div>\n    <hr>\n    <p>Add a new filter</p>\n    <div class=\"resultFilterItem\">\n      <select [(ngModel)]=\"newResultFilter.type\">\n        <option value=\"Containing\">Containing</option>\n        <option value=\"Not containing\">Not containing</option>\n      </select>\n        <input type=\"text\" [(ngModel)]=\"newResultFilter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"addResultFilter()\">add</i>\n      <!-- <button class=\"btn btn-success\" (click)=\"addResultFilter()\">Add Row</button> -->\n    </div>\n    <!-- <hr> -->\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" cols=\"70\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-8\" *ngIf=\"selected_module\">\n    <h4>{{title}}</h4>\n    <div *ngIf=\"selected_module.form.length > 0\">\n      <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n        {{input.label}}\n        <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n        <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n      </label>\n      <button class=\"btn btn-success\">Save as default values</button>\n    </div>\n\n    <h5 style=\"display:block; float:left\">Settings:</h5>\n    <button class=\"btn btn-success\" style=\"float:right;\" (click)=\"save()\">Save changes</button>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      File filter:\n      <input type=\"text\" [(ngModel)]=\"selected_module.filter\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <hr>\n    <label class=\"input-label\">\n      What qualifies succes in the log files:\n    </label>\n    <div *ngFor=\"let filter of selected_module.resultFilter\">\n      <div class=\"resultFilterItem\">\n        <select [(ngModel)]=\"filter.type\">\n          <option value=\"Containing\">Containing</option>\n          <option value=\"Not containing\">Not containing</option>\n        </select>\n        <input type=\"text\" [(ngModel)]=\"filter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"removeResultFilter(filter)\">delete</i>\n      </div>\n    </div>\n    <hr>\n    <p>Add a new filter</p>\n    <div class=\"resultFilterItem\">\n      <select [(ngModel)]=\"newResultFilter.type\">\n        <option value=\"Containing\">Containing</option>\n        <option value=\"Not containing\">Not containing</option>\n      </select>\n        <input type=\"text\" [(ngModel)]=\"newResultFilter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"addResultFilter()\">add</i>\n      <!-- <button class=\"btn btn-success\" (click)=\"addResultFilter()\">Add Row</button> -->\n    </div>\n    <!-- <hr> -->\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -499,7 +495,7 @@ module.exports = "\n.placeholder {\n  opacity: 0.4;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n      <h4>Modules to be run before each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header\"\n          (dragover)=\"allowDropTop($event, 0)\"\n          (drop)=\"onDrop($event, 0)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"startTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'startTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 0)\"\n                    (dragover)=\"allowDrop($event, process.order, 0)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 0)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < startTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 0)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 0)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n      <h4>Modules to be run after each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header\"\n          (dragover)=\"allowDropTop($event, 1)\"\n          (drop)=\"onDrop($event, 1)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"endTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'endTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 1)\"\n                    (dragover)=\"allowDrop($event, process.order, 1)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 1)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < endTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 1)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 1)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n      <h4>Modules to be run before each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 0)\"\n          (drop)=\"onDrop($event, 0)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"startTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'startTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 0)\"\n                    (dragover)=\"allowDrop($event, process.order, 0)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 0)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < startTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 0)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 0)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n      <h4>Modules to be run after each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 1)\"\n          (drop)=\"onDrop($event, 1)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"endTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'endTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 1)\"\n                    (dragover)=\"allowDrop($event, process.order, 1)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 1)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < endTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 1)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 1)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header company-table-head\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -835,6 +831,86 @@ var AdminProcessesComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Admin/AdminTemplates.component.html":
+/*!*****************************************************!*\
+  !*** ./src/app/Admin/AdminTemplates.component.html ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Templates</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n  </div>\n  <!-- <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div> -->\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminTemplates.component.sass":
+/*!*****************************************************!*\
+  !*** ./src/app/Admin/AdminTemplates.component.sass ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminTemplates.component.ts":
+/*!***************************************************!*\
+  !*** ./src/app/Admin/AdminTemplates.component.ts ***!
+  \***************************************************/
+/*! exports provided: AdminTemplatesComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminTemplatesComponent", function() { return AdminTemplatesComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AdminTemplatesComponent = /** @class */ (function () {
+    function AdminTemplatesComponent(moduleService) {
+        this.moduleService = moduleService;
+    }
+    AdminTemplatesComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.moduleService.getTemplates().subscribe(function (data) {
+            _this.templates = data;
+            console.log(data);
+            // this.setModule(this.modules[this.modules.length-1]);
+        });
+    };
+    AdminTemplatesComponent.prototype.selectTemplate = function (template) {
+        if (this.selected_template_id != template.template_id) {
+            this.selected_template_id = template.template_id;
+        }
+        else {
+            this.selected_template_id = -1;
+        }
+    };
+    AdminTemplatesComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'adminTemplates',
+            template: __webpack_require__(/*! ./AdminTemplates.component.html */ "./src/app/Admin/AdminTemplates.component.html"),
+            styles: [__webpack_require__(/*! ./AdminTemplates.component.sass */ "./src/app/Admin/AdminTemplates.component.sass")]
+        }),
+        __metadata("design:paramtypes", [_Module_service__WEBPACK_IMPORTED_MODULE_1__["ModuleService"]])
+    ], AdminTemplatesComponent);
+    return AdminTemplatesComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Admin/Module.service.ts":
 /*!*****************************************!*\
   !*** ./src/app/Admin/Module.service.ts ***!
@@ -865,6 +941,9 @@ var ModuleService = /** @class */ (function () {
     }
     ModuleService.prototype.saveData = function (id, data) {
         return this.http.post(this.packagesURL + id + '/', data);
+    };
+    ModuleService.prototype.getTemplates = function () {
+        return this.http.get('/api/template/');
     };
     ModuleService.prototype.getTemplate = function (id) {
         return this.http.get('/api/template/' + id + '/');
@@ -1253,17 +1332,6 @@ var ModalComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Navbar/Navbar.component.css":
-/*!*********************************************!*\
-  !*** ./src/app/Navbar/Navbar.component.css ***!
-  \*********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  /* padding: 0; */\n  width: 220px;\n  min-width: 220px;\n}\n"
-
-/***/ }),
-
 /***/ "./src/app/Navbar/Navbar.component.html":
 /*!**********************************************!*\
   !*** ./src/app/Navbar/Navbar.component.html ***!
@@ -1271,7 +1339,18 @@ module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  /* padding: 0
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a>\n  <ng-content></ng-content>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n    <!-- <li class=\"nav-item active\">\n      <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Features</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Pricingg</a>\n    </li> -->\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Login</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Register</a>\n    </li>\n  </ul>\n</nav>\n"
+
+/***/ }),
+
+/***/ "./src/app/Navbar/Navbar.component.sass":
+/*!**********************************************!*\
+  !*** ./src/app/Navbar/Navbar.component.sass ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  width: 220px;\n  min-width: 220px; }\n\n.nav-user {\n  color: white; }\n"
 
 /***/ }),
 
@@ -1300,7 +1379,7 @@ var NavbarComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'navbar',
             template: __webpack_require__(/*! ./Navbar.component.html */ "./src/app/Navbar/Navbar.component.html"),
-            styles: [__webpack_require__(/*! ./Navbar.component.css */ "./src/app/Navbar/Navbar.component.css")]
+            styles: [__webpack_require__(/*! ./Navbar.component.sass */ "./src/app/Navbar/Navbar.component.sass")]
         })
     ], NavbarComponent);
     return NavbarComponent;
@@ -1398,17 +1477,6 @@ var NotFoundComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/PackageDetail/Package.component.css":
-/*!*****************************************************!*\
-  !*** ./src/app/PackageDetail/Package.component.css ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border-radius: 2px;\n    color: white;\n}\n\n.input-label {\n  width: 100%;\n}\n\n.template {\n  opacity: 0.4;\n}\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #ddd;\n  display: table;\n  padding: 0px 40px;\n}\n\n.emptyList p {\n  display: table-cell;\n  vertical-align: middle;\n  color: #444;\n}\n\n.emptyList i {\n  /* display: table-cell;\n  vertical-align: middle;\n  color: #444; */\n}\n"
-
-/***/ }),
-
 /***/ "./src/app/PackageDetail/Package.component.html":
 /*!******************************************************!*\
   !*** ./src/app/PackageDetail/Package.component.html ***!
@@ -1416,7 +1484,18 @@ module.exports = ".icon-button:hover {\n  background-color: #b5b5b5;\n    border
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n    <div class=\"col-lg-6\">\n        <h4>Current workflow: {{package.template_name}}</h4>\n        <div class=\"card\">\n            <div class=\"card-header\"\n            (drop)=\"onDrop($event)\"\n            (dragover)=\"allowDropTop($event)\">\n                Name\n            </div>\n            <div class=\"list-group list-group-flush\">\n              <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n                <ng-template\n                ngFor\n                let-process\n                [ngForOf]=\"package.processes\"\n                >\n                  <div\n                      *ngIf=\"!process.hidden\"\n                      draggable=\"true\"\n                      (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\"\n                      (drop)=\"onDrop($event)\"\n                      (dragover)=\"allowDrop($event, process.order)\"\n                      class=\"list-group-item list-group-item-action\"\n                      [class.active]=\"process.process_id==selected_process_id\"\n                      [class.template]=\"process.type=='placeholder'\"\n                    >\n                    <div class=\"d-flex w-100 justify-content-between\">\n                        <p\n                        style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                          {{process.name}}\n                        </p>\n                        <!-- <i class=\"material-icons\">arrow_back</i> -->\n                        <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n                        <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n                        <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n                        <small>{{process.status}}</small>\n                    </div>\n                    <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                        <form *ngIf=\"process.form.length>0\">\n                                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n                        </form>\n                    </ng-template>\n                  </div>\n                </ng-template>\n\n                <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n                  <p>\n                    You have not selected any tools.\n                    <br>\n                    Select on by either dragging it from the right or pressing the plus (\n                    <i class=\"material-icons\">add</i>\n                    ) sign\n                  </p>\n                </div>\n\n            </div>\n        </div>\n    </div>\n    <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n        <h4>Avaliable Tools</h4>\n        <div class=\"card\">\n             <div class=\"card-header\">\n                Name\n             </div>\n             <ng-template\n             ngFor\n             let-module\n             [ngForOf]=\"modules\"\n             >\n             <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n                 <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                   <div class=\"d-flex w-100 justify-content-between\">\n                    <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                    <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                   </div>\n                </div>\n             </div>\n           </ng-template>\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n        <button class=\"btn btn-success float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n        <button class=\"btn btn-success float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    </div>\n</div>\n\n<modal [(active)]=\"modalActive\" title=\"Save as template\">\n  <div modal-body>\n    <label class=\"input-label\">\n      Name of new template:\n      <input type=\"text\" [(ngModel)]=\"templateName\"/>\n    </label>\n  </div>\n  <div modal-footer>\n    <button type=\"button\" class=\"btn btn-success\" (click)=\"saveNewTemplate()\">Save</button>\n  </div>\n</modal>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <small>{{process.status}}</small>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n\n<modal [(active)]=\"modalActive\" title=\"Save as template\">\n  <div modal-body>\n    <label class=\"input-label\">\n      Name of new template:\n      <input type=\"text\" [(ngModel)]=\"templateName\"/>\n    </label>\n  </div>\n  <div modal-footer>\n    <button type=\"button\" class=\"btn btn-success\" (click)=\"saveNewTemplate()\">Save</button>\n  </div>\n</modal>\n"
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/Package.component.sass":
+/*!******************************************************!*\
+  !*** ./src/app/PackageDetail/Package.component.sass ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n    background-color-border-radius: 2px;\n    background-color-color: white; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
 
 /***/ }),
 
@@ -1831,7 +1910,7 @@ var PackageComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'package',
             template: __webpack_require__(/*! ./Package.component.html */ "./src/app/PackageDetail/Package.component.html"),
-            styles: [__webpack_require__(/*! ./Package.component.css */ "./src/app/PackageDetail/Package.component.css")]
+            styles: [__webpack_require__(/*! ./Package.component.sass */ "./src/app/PackageDetail/Package.component.sass")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageComponent);
@@ -1947,7 +2026,7 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>Package Dashboard</p>\n\n<p>filetypes in package, size of package, number of files, </p>\n\n\n\n<!-- <ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart> -->\n\n<ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart>\n\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+module.exports = "<ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart>\n\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
 
 /***/ }),
 
@@ -2189,17 +2268,6 @@ var PackageDetailService = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/PackageDetail/PackageHeader.component.css":
-/*!***********************************************************!*\
-  !*** ./src/app/PackageDetail/PackageHeader.component.css ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer;\n}\n"
-
-/***/ }),
-
 /***/ "./src/app/PackageDetail/PackageHeader.component.html":
 /*!************************************************************!*\
   !*** ./src/app/PackageDetail/PackageHeader.component.html ***!
@@ -2207,7 +2275,18 @@ module.exports = ".package_title {\n  font-weight: bold;\n  color: white;\n  mar
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.show]=\"showDropDown\">\n    <p class=\"navbar-link dropdown-toggle package_title noselect\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </p>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link nav-item\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"bottom\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n\n<!-- <ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul> -->\n<router-outlet></router-outlet>\n"
+module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.show]=\"showDropDown\">\n    <p class=\"navbar-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </p>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-item\"  routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-item disabled\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"bottom\" tooltipOpacity=\"0.8\">\n    <a class=\"nav-link disabled noselect\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n\n<!-- <ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul> -->\n<router-outlet></router-outlet>\n"
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/PackageHeader.component.sass":
+/*!************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageHeader.component.sass ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
 
 /***/ }),
 
@@ -2275,7 +2354,7 @@ var PackageHeaderComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'package',
             template: __webpack_require__(/*! ./PackageHeader.component.html */ "./src/app/PackageDetail/PackageHeader.component.html"),
-            styles: [__webpack_require__(/*! ./PackageHeader.component.css */ "./src/app/PackageDetail/PackageHeader.component.css")]
+            styles: [__webpack_require__(/*! ./PackageHeader.component.sass */ "./src/app/PackageDetail/PackageHeader.component.sass")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageHeaderComponent);
@@ -2304,7 +2383,7 @@ module.exports = ".Amodal {\n  /* position: fixed; */\n  /* top: 50%; */\n  /* l
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col\">\n                Statusbar\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n             </div>\n             <div class=\"col-sm-2\">\n                Log\n             </div>\n             <div class=\"col-sm-2\">\n                Error\n                <!-- <a href=\"#\" click=\"updateData()\" class=\"tab\"><i class=\"material-icons\">refresh</i></a> -->\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let process of package.processes\" repeat.for=\"process of processes\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n            </div>\n            <div class=\"col\">\n              <div class=\"progress\">\n                <div class=\"progress-bar\"\n                [class.bg-success]=\"process.status == 'Done'\"\n                [class.bg-danger]=\"process.status == 'Error'\"\n                [class.progress-bar-animated]=\"process.status == 'Running'\"\n                [class.progress-bar-striped]=\"process.status == 'Running'\"\n                [style.width]=\"process.progress + '%'\"></div>\n              </div>\n            </div>\n            <div class=\"col-sm-2\">\n               {{process.status}}\n            </div>\n            <div class=\"col-sm-2\">\n               <!-- <a (click)=\"showModal(process)\" [class.disabled]=\"process.log_path == ''\">view log</a> -->\n               <button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button>\n            </div>\n            <div class=\"col-sm-2\">\n                <!-- <a href=\"/process/${process.process_id}/error_log\" [class.disabled]=\"process.log_path == ''\">view error log</a> -->\n                <button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == '' || process.status != 'Error'\">Error</button>\n            </div>\n        </div>\n     </div>\n</div>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Done (Remove package from workdir)</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n"
+module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td>\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td>\n        <div class=\"progress\">\n          <div class=\"progress-bar\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\"></div>\n        </div>\n      </td>\n      <td>{{process.status}}</td>\n      <td><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button></td>\n      <td><button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == '' || process.status != 'Error'\">Error</button></td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-warning float-right\" (click)=\"removePackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n"
 
 /***/ }),
 
@@ -2404,17 +2483,6 @@ var PackageStatusComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/PackageDetail/PackageTemplate.component.css":
-/*!*************************************************************!*\
-  !*** ./src/app/PackageDetail/PackageTemplate.component.css ***!
-  \*************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
 /***/ "./src/app/PackageDetail/PackageTemplate.component.html":
 /*!**************************************************************!*\
   !*** ./src/app/PackageDetail/PackageTemplate.component.html ***!
@@ -2422,7 +2490,18 @@ module.exports = ""
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Name\n             </div>\n             <div class=\"col-sm-4\">\n               Actions\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let template of templates\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n               {{template.name}}\n            </div>\n            <div class=\"col-sm-4\">\n               <button class=\"btn btn-success\" (click)=\"selectTemplate(template)\">Select</button>\n               <button class=\"btn\" *ngIf=\"template.template_id!=2\">Start</button>\n            </div>\n        </div>\n     </div>\n</div>\n"
+module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\">\n      <td>\n        {{template.name}}\n      </td>\n      <td class=\"small-column\">\n        <!-- <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a> -->\n        <button class=\"btn btn-success\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-secondary\" *ngIf=\"template.template_id!=2\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/PackageTemplate.component.sass":
+/*!**************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageTemplate.component.sass ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n"
 
 /***/ }),
 
@@ -2496,7 +2575,7 @@ var PackageTemplateComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'packageTemplate',
             template: __webpack_require__(/*! ./PackageTemplate.component.html */ "./src/app/PackageDetail/PackageTemplate.component.html"),
-            styles: [__webpack_require__(/*! ./PackageTemplate.component.css */ "./src/app/PackageDetail/PackageTemplate.component.css")]
+            styles: [__webpack_require__(/*! ./PackageTemplate.component.sass */ "./src/app/PackageDetail/PackageTemplate.component.sass")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageTemplateComponent);
@@ -2507,17 +2586,6 @@ var PackageTemplateComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Packages/PackageList.component.css":
-/*!****************************************************!*\
-  !*** ./src/app/Packages/PackageList.component.css ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px; */\n  float:right;\n  color: inherit;\n}\n\n.table {\n    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n}\n\n.sydarkiverathead {\n    border: none;\n    background-color: #bc044e;\n    /* color: #bc044e; */\n    color: #eee;\n}\n\n/* tr { */\n\n/* background-color: #bc044e; */\n\n/* color: #bc044e; */\n\n/* } */\n"
-
-/***/ }),
-
 /***/ "./src/app/Packages/PackageList.component.html":
 /*!*****************************************************!*\
   !*** ./src/app/Packages/PackageList.component.html ***!
@@ -2525,7 +2593,18 @@ module.exports = ".refresh {\n  background-color: transparent;\n  border: 0;\n  
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<!-- <div class=\"row\"> -->\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"sydarkiverathead\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n\n<table class=\"table table-striped table-dark table-hover\">\n  <thead class=\"sydarkiverathead\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Status</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n\n\n<div class=\"card\">\n     <div class=\"card-header\">\n         <div class=\"row justify-content-end\">\n             <div class=\"col\">\n                Namn\n             </div>\n             <div class=\"col\">\n                Filnamn\n             </div>\n             <div class=\"col-sm-2\">\n                Status\n                <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n             </div>\n         </div>\n     </div>\n     <div class=\"list-group list-group-flush\">\n         <div style=\"padding-left:0;padding-right:0;\" *ngFor=\"let package of packages\" class=\"list-group-item list-group-item-action\">\n             <div class=\"col\">\n                <a [routerLink]=\"[package.package_id]\">{{package.name}}</a>\n            </div>\n            <div class=\"col\">\n                {{package.file_name}}\n            </div>\n            <div class=\"col-sm-2\">\n                <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a>\n            </div>\n        </div>\n     </div>\n<!-- </div> -->\n</div>\n<!-- </div> -->\n<!-- </main> -->\n"
+module.exports = "<navbar></navbar>\n\n<!-- <div class=\"row\"> -->\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n"
+
+/***/ }),
+
+/***/ "./src/app/Packages/PackageList.component.sass":
+/*!*****************************************************!*\
+  !*** ./src/app/Packages/PackageList.component.sass ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
 
 /***/ }),
 
@@ -2576,7 +2655,7 @@ var PackageListComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'packages',
             template: __webpack_require__(/*! ./PackageList.component.html */ "./src/app/Packages/PackageList.component.html"),
-            styles: [__webpack_require__(/*! ./PackageList.component.css */ "./src/app/Packages/PackageList.component.css")]
+            styles: [__webpack_require__(/*! ./PackageList.component.sass */ "./src/app/Packages/PackageList.component.sass")]
         }),
         __metadata("design:paramtypes", [_Packages_service__WEBPACK_IMPORTED_MODULE_1__["PackagesService"]])
     ], PackageListComponent);
@@ -2844,6 +2923,7 @@ var TooltipComponent = /** @class */ (function () {
         this.cdr = cdr;
         this.placement = "bottom";
         this.animation = true;
+        this.opacity = 0.5;
         // -------------------------------------------------------------------------
         // Properties
         // -------------------------------------------------------------------------
@@ -3001,11 +3081,15 @@ var TooltipComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Boolean)
     ], TooltipComponent.prototype, "animation", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], TooltipComponent.prototype, "opacity", void 0);
     TooltipComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: "tooltip-content",
             styles: [__webpack_require__(/*! ./Tooltip.component.css */ "./src/app/Tooltip/Tooltip.component.css")],
-            template: "\n<div class=\"tooltip {{ placement }}\"\n     [style.top]=\"top + 'px'\"\n     [style.left]=\"left + 'px'\"\n     [class.in]=\"isIn\"\n     [class.fade]=\"isFade\"\n     role=\"Atooltip\">\n    <div class=\"tooltip-arrow\"></div>\n    <div class=\"tooltip-inner\">\n        <ng-content></ng-content>\n        {{ content }}\n    </div>\n</div>\n"
+            template: "\n<div class=\"tooltip {{ placement }}\"\n     [style.top]=\"top + 'px'\"\n     [style.left]=\"left + 'px'\"\n     [style.opacity]=\"opacity\"\n     [class.in]=\"isIn\"\n     [class.fade]=\"isFade\"\n     role=\"Atooltip\">\n    <div class=\"tooltip-arrow\"></div>\n    <div class=\"tooltip-inner\">\n        <ng-content></ng-content>\n        {{ content }}\n    </div>\n</div>\n"
         }),
         __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
             _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
@@ -3066,12 +3150,14 @@ var Tooltip = /** @class */ (function () {
             this.tooltip.instance.content = this.content;
             this.tooltip.instance.placement = this.tooltipPlacement;
             this.tooltip.instance.animation = this.tooltipAnimation;
+            this.tooltip.instance.opacity = this.tooltipOpacity;
         }
         else {
             var tooltip = this.content;
             tooltip.hostElement = this.viewContainerRef.element.nativeElement;
             tooltip.placement = this.tooltipPlacement;
             tooltip.animation = this.tooltipAnimation;
+            tooltip.opacity = this.tooltipOpacity;
             tooltip.show();
         }
     };
@@ -3100,6 +3186,10 @@ var Tooltip = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
     ], Tooltip.prototype, "tooltipPlacement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], Tooltip.prototype, "tooltipOpacity", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusin"),
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseenter"),
@@ -3241,17 +3331,6 @@ var AppRoutingModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/app.component.css":
-/*!***********************************!*\
-  !*** ./src/app/app.component.css ***!
-  \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "body {\n  font-size: .875rem;\n}\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100; /* Behind the navbar */\n  padding: 48px 0 0; /* Height of navbar */\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);\n  width: 220px;\n  max-width: 220px;\n}\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */\n}\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky;\n  }\n}\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333;\n}\n\n.sidebar .nav-link .active {\n  margin-right: 4px;\n  color: #999;\n}\n\n.sidebar .nav-link.active {\n  color: #007bff;\n}\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit;\n}\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase;\n}\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; /* Space for fixed navbar */\n}\n\n/*\n * Navbar\n */\n\n/* .navbar-brand {\n  padding-top: .75rem;\n  padding-bottom: .75rem;\n  font-size: 1rem;\n  margin: 0;\n  margin-top: -10px;\n  background-color: rgba(0, 0, 0, .75);\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);\n}\n\n.navbar-brand a {\n  color: white;\n}\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0;\n}\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, .1);\n  border-color: rgba(255, 255, 255, .1);\n}\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);\n} */\n\n/*\n * Utilities\n */\n\n/* .border-top { border-top: 1px solid #e5e5e5; }\n.border-bottom { border-bottom: 1px solid #e5e5e5; } */\n\n.material-icons {\n  float:left;\n  margin-right: 20px;\n}\n\n.main-view {\n  /* margin-left: 220px; */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float:left;\n}\n"
-
-/***/ }),
-
 /***/ "./src/app/app.component.html":
 /*!************************************!*\
   !*** ./src/app/app.component.html ***!
@@ -3259,7 +3338,18 @@ module.exports = "body {\n  font-size: .875rem;\n}\n\n/*\n * Sidebar\n */\n\n.si
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Modules\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/processes\">\n                  <i class=\"material-icons\">layers</i>\n                  Default processes\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n    <router-outlet></router-outlet>\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/processes\">\n                  <i class=\"material-icons\">layers</i>\n                  Default processes\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n    <router-outlet></router-outlet>\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/app.component.sass":
+/*!************************************!*\
+  !*** ./src/app/app.component.sass ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n  color: #bc044e;\n  background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
 
 /***/ }),
 
@@ -3289,7 +3379,7 @@ var AppComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
-            styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
+            styles: [__webpack_require__(/*! ./app.component.sass */ "./src/app/app.component.sass")]
         })
     ], AppComponent);
     return AppComponent;

@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-lg-6">
-    <h4>Existing processes</h4>
+  <div class="col-lg-4">
+    <h4>Existing Tools</h4>
     <div class="card">
-      <div class="card-header">
+      <div class="card-header company-table-head">
         Name
       </div>
       <div class="list-group list-group-flush">
@@ -14,16 +14,19 @@
       </div>
     </div>
   </div>
-  <div class="col-lg-6" *ngIf="selected_module">
-    <h4>{{title}} preview</h4>
-    <label *ngFor="let input of selected_module.form" for="{{input.identifier}}" class="input-label">
-      {{input.label}}
-      <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
-      <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
-    </label>
-    <button class="btn btn-success">Save as default values</button>
+  <div class="col-lg-8" *ngIf="selected_module">
+    <h4>{{title}}</h4>
+    <div *ngIf="selected_module.form.length > 0">
+      <label *ngFor="let input of selected_module.form" for="{{input.identifier}}" class="input-label">
+        {{input.label}}
+        <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
+        <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
+      </label>
+      <button class="btn btn-success">Save as default values</button>
+    </div>
 
-    <h5>Command Settings:</h5>
+    <h5 style="display:block; float:left">Settings:</h5>
+    <button class="btn btn-success" style="float:right;" (click)="save()">Save changes</button>
     <label class="input-label">
       Name:
       <input type="text" [(ngModel)]="selected_module.name"/>
@@ -39,7 +42,7 @@
     <label class="input-label">
       Form:
     </label>
-    <textarea rows="10" cols="70" [(ngModel)]="formJson">
+    <textarea rows="10" [(ngModel)]="formJson">
     </textarea>
     <p class="Error-text">{{formJsonError}}</p>
     <hr>
@@ -82,7 +85,7 @@
       Command:
       <!-- <input type="text" [value]="getJson(selected_module.command)"/> -->
     </label>
-    <textarea rows="10" cols="70" [(ngModel)]="commandJson" *ngIf="selected_module.type == 'Command'">
+    <textarea rows="10" [(ngModel)]="commandJson" *ngIf="selected_module.type == 'Command'">
     </textarea>
     <label class="input-label" *ngIf="selected_module.type == 'Python module'">
       Python Module:

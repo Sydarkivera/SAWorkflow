@@ -5,7 +5,7 @@ import { PackagesService } from './Packages.service'
 @Component({
   selector: 'packages',
   templateUrl: './PackageList.component.html',
-  styleUrls: ['./PackageList.component.css']
+  styleUrls: ['./PackageList.component.sass']
 })
 export class PackageListComponent {
   title = 'new title';

@@ -9,7 +9,7 @@ import { PackageDetailService } from './PackageDetail.service';
   // template: '<p>PackageHeader</p><router-outlet></router-outlet>'
   templateUrl: './PackageHeader.component.html',
 
-  styleUrls: ['./PackageHeader.component.css']
+  styleUrls: ['./PackageHeader.component.sass']
 })
 export class PackageHeaderComponent {
   title = 'new title';
