@@ -1,4 +1,6 @@
 .navbar-brand {
   background-color: #5c5c5c;
   /* padding: 0; */
+  width: 220px;
+  min-width: 220px;
 }
