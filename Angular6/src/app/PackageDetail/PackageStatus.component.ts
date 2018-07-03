@@ -19,8 +19,10 @@ export class PackageStatusComponent {
   modalActive = false;
   modalData = '';
   interval;
-  modalLogActive = false;
+  modalactive = false;
   modalLoading = true;
+  modalType = 'info';
+  modalProcess = undefined;
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {
@@ -46,15 +48,20 @@ export class PackageStatusComponent {
   showModal(process, type) {
     // this.modalActive = true;
     //load data fromserver...
-    this.modalLogActive = true;
+    this.modalactive = true;
     this.modalLoading = true;
-    this.packageService.getLogFile(type, process.process_id).subscribe((data) => {
-      // console.log(data);
-      this.modalLogActive = true;
+    this.modalData = "";
+    if (type == 'info_log') {
+      this.modalType = 'info';
+      this.packageService.getLogFile(type, process.process_id).subscribe((data) => {
+        this.modalLoading = false;
+        this.modalData = this.sanitizeLog(data);
+      });
+    } else {
       this.modalLoading = false;
-      this.modalData = data.replace("\n", "<br>");
-    });
-    // '/process/${process.process_id}/error_log'
+      this.modalType = 'error';
+      this.modalProcess = process;
+    }
   }
 
   startWorkflow() {
@@ -74,5 +81,9 @@ export class PackageStatusComponent {
       // console.log(data);
     });
     this.router.navigate(['packages']);
+  }
+
+  sanitizeLog(data) {
+    return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
   }
 }

@@ -1,10 +1,11 @@
-.Amodal {
+.modal {
   max-height: 95%;
   display: block !important;
 }
 
 .modal-dialog {
   height: 100%;
+  max-width: 90%;
 }
 
 .modal-content {

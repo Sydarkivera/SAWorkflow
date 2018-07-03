@@ -986,6 +986,8 @@ var ModuleService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PackageDetail/PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -996,8 +998,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
+
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent() {
+    function DashboardComponent(packageService, route, router) {
+        // Object.assign(this, {single, multi})
+        this.packageService = packageService;
+        this.route = route;
+        this.router = router;
+        this.stats = undefined;
         this.title = 'new title';
         this.single = [
             {
@@ -1024,8 +1034,41 @@ var DashboardComponent = /** @class */ (function () {
         this.showLabels = true;
         this.explodeSlices = false;
         this.doughnut = false;
-        // Object.assign(this, {single, multi})
     }
+    DashboardComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.packageService.getStatsDashboard().subscribe(function (data) {
+            console.log(data);
+            _this.stats = data;
+            _this.total_size = data['total_size'];
+            _this.total_number_of_files = data['total_number_of_files'];
+            _this.total_number_of_errors = data['total_number_of_errors'];
+            _this.total_number_of_packages = data['total_number_of_packages'];
+            _this.fileTypes = [];
+            for (var key in _this.stats.fileTypes) {
+                var value = _this.stats.fileTypes[key];
+                _this.fileTypes.push({ "name": value['name'].toUpperCase(), "value": value['total'] });
+            }
+            var counts = [];
+            var sizes = [];
+            for (var key in _this.stats.graphData) {
+                var value = _this.stats.graphData[key];
+                counts.push({ "name": value['date'], "value": value['count'] });
+                sizes.push({ "name": value['date'], "value": value['size'] });
+                // this.fileTypes.push({"name":value['name'].toUpperCase(), "value":value['total']});
+            }
+            _this.graphData = [
+                {
+                    "name": "count",
+                    "series": counts
+                },
+                {
+                    "name": "size",
+                    "series": sizes
+                }
+            ];
+        });
+    };
     DashboardComponent.prototype.onSelect = function (event) {
         console.log(event);
     };
@@ -1033,8 +1076,9 @@ var DashboardComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'dashboard',
             template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/Dashboard/dashboard.component.html"),
+            styles: [__webpack_require__(/*! ./dashboard.component.sass */ "./src/app/Dashboard/dashboard.component.sass")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -1050,7 +1094,18 @@ var DashboardComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart>\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div class=\"col-md-3 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Packages:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_packages}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Errors:\n    </p>\n    <p class=\"number errors\">\n      {{total_number_of_errors}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n</div>\n\n<div class=\"card\">\n  <ngx-charts-line-chart\n    [results]=\"graphData\">\n  </ngx-charts-line-chart>\n</div>\n\n<div class=\"card\">\n  <ngx-charts-advanced-pie-chart\n    [view]=\"view\"\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Filetypes\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n\n<ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart>\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+
+/***/ }),
+
+/***/ "./src/app/Dashboard/dashboard.component.sass":
+/*!****************************************************!*\
+  !*** ./src/app/Dashboard/dashboard.component.sass ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n"
 
 /***/ }),
 
@@ -1258,7 +1313,7 @@ module.exports = "\n<div class=\"file-header\" (click)=\"expanded = !expanded\">
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".Amodal {\n  max-height: 95%;\n  display: block !important;\n}\n\n.modal-dialog {\n  height: 100%;\n}\n\n.modal-content {\n  max-height: 95%;\n}\n\n.modal-body {\n  margin-top: 5px;\n    overflow-y: scroll;\n}\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black  */\n  background-color: #000;\n  opacity: 0.75;\n\n  /* z-index must be below .modal and above everything else  */\n  z-index: -1;\n}\n"
+module.exports = ".modal {\n  max-height: 95%;\n  display: block !important;\n}\n\n.modal-dialog {\n  height: 100%;\n  max-width: 90%;\n}\n\n.modal-content {\n  max-height: 95%;\n}\n\n.modal-body {\n  margin-top: 5px;\n    overflow-y: scroll;\n}\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black  */\n  background-color: #000;\n  opacity: 0.75;\n\n  /* z-index must be below .modal and above everything else  */\n  z-index: -1;\n}\n"
 
 /***/ }),
 
@@ -1269,7 +1324,7 @@ module.exports = ".Amodal {\n  max-height: 95%;\n  display: block !important;\n}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal Amodal active\" *ngIf=\"active\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">{{title}}</h5>\n        <button type=\"button\" class=\"close\" (click)=\"close()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-content select=\"[modal-body]\"></ng-content>\n      </div>\n      <div class=\"modal-footer\">\n        <ng-content select=\"[modal-footer]\"></ng-content>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"close()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"close()\"></div>\n</div>\n"
+module.exports = "<div class=\"modal active\" *ngIf=\"active\" id=\"modal\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">{{title}}</h5>\n        <button type=\"button\" class=\"close\" (click)=\"close()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-content select=\"[modal-body]\"></ng-content>\n      </div>\n      <div class=\"modal-footer\">\n        <ng-content select=\"[modal-footer]\"></ng-content>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"close()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"close()\"></div>\n</div>\n"
 
 /***/ }),
 
@@ -2261,6 +2316,9 @@ var PackageDetailService = /** @class */ (function () {
     PackageDetailService.prototype.postTemplate = function (data) {
         return this.http.post('/api/template/', data);
     };
+    PackageDetailService.prototype.getStatsDashboard = function () {
+        return this.http.get('/api/stats/dashboard/');
+    };
     PackageDetailService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -2376,7 +2434,7 @@ var PackageHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Startå</button>\n<button class=\"btn btn-warning float-right\" (click)=\"removePackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n\n\n<modal [(active)]=\"modalLogActive\" title=\"Complete log\">\n  <div modal-body>\n    {{modalData}}\n  </div>\n</modal>\n"
+module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n<button class=\"btn btn-warning float-right\" (click)=\"removePackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div>\n    <div *ngIf=\"modalType == 'error'\" class=\"list-group\">\n      <div *ngFor=\"let error of modalProcess.errors\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.Error)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -2387,7 +2445,7 @@ module.exports = "<table class=\"table table-striped table-hover\" style=\"backg
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".Amodal.active {\n  display: block !important; }\n\n.modal-dialog,\n.modal-content {\n  /* 80% of window height */\n  height: 95%; }\n\n.modal-body {\n  /* 100% = dialog height, 120px = header + footer */\n  /* max-height: calc(100% + 120px) */\n  overflow-y: scroll; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit; }\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black */\n  background-color: #000;\n  opacity: 0.75;\n  /* z-index must be below .modal and above everything else */\n  z-index: -1; }\n"
+module.exports = ".Amodal.active {\n  display: block !important; }\n\n.modal-dialog,\n.modal-content {\n  /* 80% of window height */\n  height: 95%; }\n\n.modal-body {\n  /* 100% = dialog height, 120px = header + footer */\n  /* max-height: calc(100% + 120px) */\n  overflow-y: scroll; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit; }\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black */\n  background-color: #000;\n  opacity: 0.75;\n  /* z-index must be below .modal and above everything else */\n  z-index: -1; }\n\n.loading {\n  border: 6px solid #f3f3f3;\n  border-top: 6px solid #3498db;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  -webkit-animation: spin 1.5s linear infinite;\n          animation: spin 1.5s linear infinite; }\n\n@-webkit-keyframes spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@keyframes spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n"
 
 /***/ }),
 
@@ -2427,8 +2485,10 @@ var PackageStatusComponent = /** @class */ (function () {
         this.logActive = true;
         this.modalActive = false;
         this.modalData = '';
-        this.modalLogActive = false;
+        this.modalactive = false;
         this.modalLoading = true;
+        this.modalType = 'info';
+        this.modalProcess = undefined;
         this.package = {
             name: "Name"
         };
@@ -2451,15 +2511,21 @@ var PackageStatusComponent = /** @class */ (function () {
         var _this = this;
         // this.modalActive = true;
         //load data fromserver...
-        this.modalLogActive = true;
+        this.modalactive = true;
         this.modalLoading = true;
-        this.packageService.getLogFile(type, process.process_id).subscribe(function (data) {
-            // console.log(data);
-            _this.modalLogActive = true;
-            _this.modalLoading = false;
-            _this.modalData = data.replace("\n", "<br>");
-        });
-        // '/process/${process.process_id}/error_log'
+        this.modalData = "";
+        if (type == 'info_log') {
+            this.modalType = 'info';
+            this.packageService.getLogFile(type, process.process_id).subscribe(function (data) {
+                _this.modalLoading = false;
+                _this.modalData = _this.sanitizeLog(data);
+            });
+        }
+        else {
+            this.modalLoading = false;
+            this.modalType = 'error';
+            this.modalProcess = process;
+        }
     };
     PackageStatusComponent.prototype.startWorkflow = function () {
         this.packageService.startWorkflow(this.package.package_id);
@@ -2477,6 +2543,9 @@ var PackageStatusComponent = /** @class */ (function () {
             // console.log(data);
         });
         this.router.navigate(['packages']);
+    };
+    PackageStatusComponent.prototype.sanitizeLog = function (data) {
+        return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
     };
     PackageStatusComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -3549,7 +3618,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/Axenu/Sydarkviera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
 
 
 /***/ })

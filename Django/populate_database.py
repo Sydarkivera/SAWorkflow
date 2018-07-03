@@ -14,12 +14,16 @@ django.setup()
 
 from django.contrib.auth.models import User
 from api.models import *
+import datetime
 
 # delete all old objects, if there are any.
 Package.objects.all().delete()
 Process.objects.all().delete()
 Module.objects.all().delete()
 Template.objects.all().delete()
+FileType.objects.all().delete()
+Variable.objects.all().delete()
+GraphData.objects.all().delete()
 
 # create new module
 module1 = Module(name="Setup workdir",
@@ -84,6 +88,37 @@ template2.save()
 template3 = Template(name="Empty template",
                      template_id=2)
 template3.save()
+
+# create default variables # TODO set data to 0 for all variables
+var = Variable(name="total_number_of_files", data="134")
+var.save()
+var = Variable(name="total_size", data="12345578")
+var.save()
+var = Variable(name="total_number_of_packages", data="2")
+var.save()
+var = Variable(name="total_number_of_errors", data="34")
+var.save()
+
+# default test data, TODO remove in production
+ftype = FileType(name="PDF", errors=3, total=100, size=1203000)
+ftype.save()
+ftype = FileType(name="JPG", errors=33, total=10, size=12033400)
+ftype.save()
+ftype = FileType(name="XML", errors=0, total=43, size=120340)
+ftype.save()
+ftype = FileType(name="XSD", errors=0, total=12, size=120300123)
+ftype.save()
+
+graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=21)), size=1110000000, count=37954)
+graph.save()
+graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=14)), size=5834400000, count=9754)
+graph.save()
+print(datetime.date.today())
+print(datetime.date.today() - datetime.timedelta(days=7))
+graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=7)), size=2340000000, count=751)
+graph.save()
+graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
+graph.save()
 
 
 # create default admin users

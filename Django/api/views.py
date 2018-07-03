@@ -14,7 +14,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from api.models import Module, Package, Process, Template
-from api.serializers import ModuleSerializer, PackageSerializer, PackageDetailSerializer, ProcessSerializer, TemplateListSerializer, TemplateDetailSerializer
+from api.serializers import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 
@@ -346,3 +346,30 @@ def template_package_detail(request, template_id, package_id):
                 process.save()
         package.save()
     return HttpResponse(status=204)
+
+@api_view(['GET'])
+def dashboardStats(request):
+    """
+    Get the data required for the global dashboard in one json response
+    """
+    if request.method == 'GET':
+        #filetypes:
+        fileTypes = FileType.objects.all()
+        data = {}
+        data['fileTypes'] = FileTypesSerializer(fileTypes, many=True).data
+        # variables
+        var = Variable.objects.get(name="total_number_of_files")
+        data['total_number_of_files'] = var.data
+        var = Variable.objects.get(name="total_size")
+        data['total_size'] = var.data
+        var = Variable.objects.get(name="total_number_of_packages")
+        data['total_number_of_packages'] = var.data
+        var = Variable.objects.get(name="total_number_of_errors")
+        data['total_number_of_errors'] = var.data
+
+        #graphdata
+        graph = GraphData.objects.order_by('date')[:52]
+        data['graphData'] = GraphDataSerializer(graph, many=True).data
+        # graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
+
+        return Response(data)

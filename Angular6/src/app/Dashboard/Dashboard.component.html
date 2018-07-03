@@ -1,5 +1,58 @@
 <navbar></navbar>
 
+<div class="row numberRow">
+  <div class="col-md-3 col-sm-4 col-xs-6">
+    <p class="numberTitle">
+      Total Packages:
+    </p>
+    <p class="number">
+      {{total_number_of_packages}}
+    </p>
+  </div>
+  <div class="col-md-3 col-sm-4 col-xs-6 divider">
+    <p class="numberTitle">
+      Total Files:
+    </p>
+    <p class="number">
+      {{total_number_of_files}}
+    </p>
+  </div>
+  <div class="col-md-3 col-sm-4 col-xs-6 divider">
+    <p class="numberTitle">
+      Total Errors:
+    </p>
+    <p class="number errors">
+      {{total_number_of_errors}}
+    </p>
+  </div>
+  <div class="col-md-3 col-sm-4 col-xs-6 divider">
+    <p class="numberTitle">
+      Total Filesize:
+    </p>
+    <p class="number">
+      {{total_size}}
+    </p>
+  </div>
+</div>
+
+<div class="card">
+  <ngx-charts-line-chart
+    [results]="graphData">
+  </ngx-charts-line-chart>
+</div>
+
+<div class="card">
+  <ngx-charts-advanced-pie-chart
+    [view]="view"
+    [scheme]="colorScheme"
+    [results]="fileTypes"
+    [gradient]="gradient"
+    (select)="onSelect($event)"
+    label="Filetypes">
+  </ngx-charts-advanced-pie-chart>
+</div>
+
+
 <ngx-charts-pie-chart
   [view]="view"
   [scheme]="colorScheme"

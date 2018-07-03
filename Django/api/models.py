@@ -9,6 +9,18 @@ __status__ = "Development"
 from django.db import models
 from jsonfield import JSONField
 
+#cusom field for bigint
+# from django.db.models.fields import IntegerField
+# from django.conf import settings
+
+class BigIntegerField(models.IntegerField):
+    empty_strings_allowed=False
+    def get_internal_type(self):
+        return "BigIntegerField"
+    def db_type(self):
+        return 'bigint' # Note this won't work with Oracle.
+
+
 
 class Template(models.Model):
     template_id = models.AutoField(primary_key=True)
@@ -116,3 +128,28 @@ class Process(models.Model):
 
     def __str__(self):
         return '%d: %d' % (self.process_id, self.order)
+
+
+
+# number of packages
+# total size
+# number of files
+# number of errors
+class Variable(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, default='')
+    data = JSONField(default={})
+
+class FileType(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, default='')
+    errors = models.IntegerField(default=0)
+    total = models.IntegerField(default=0)
+    size = models.BigIntegerField(default=0) # in bytes
+
+# MB over time and packages over time filled by task run at cron time once a week
+class GraphData(models.Model):
+    id = models.AutoField(primary_key=True)
+    date = models.DateField()
+    size = models.BigIntegerField(default=0) # in bytes
+    count = models.BigIntegerField(default=0) # number of files

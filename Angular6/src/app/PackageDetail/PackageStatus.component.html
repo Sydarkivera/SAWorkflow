@@ -39,37 +39,27 @@
     </tr>
   </tbody>
 </table>
-<button class="btn btn-success float-right" (click)="startWorkflow()">Startå</button>
+<button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
 <button class="btn btn-warning float-right" (click)="removePackage()">Done</button>
 <button class="btn btn-danger float-right" (click)="removePackage()">Delete</button>
 
 
-
-
-<div class="modal Amodal" [class.active]="modalActive" id="modal">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" (click)="modalActive=false">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        {{modalData}}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="modalActive=false">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+<modal [(active)]="modalactive" title="Complete log">
+  <div modal-body style="margin-bottom: 10px">
+    <div class="loading mx-auto" *ngIf="modalLoading"></div>
+    <div *ngIf="modalType == 'info'" [innerHTML]="modalData" style="white-space: pre-wrap;"></div>
+    <div *ngIf="modalType == 'error'" class="list-group">
+      <div *ngFor="let error of modalProcess.errors" class="list-group-item list-group-item-action" (click)="error.expanded = !error.expanded">
+        <div class=" d-flex justify-content-between">
+          <p class="">{{error.file}}</p>
+          <i *ngIf="!error.expanded" class="material-icons my-auto">keyboard_arrow_right</i>
+          <i *ngIf="error.expanded" class="material-icons my-auto">keyboard_arrow_down</i>
+        </div>
+        <div *ngIf="error.expanded">
+          <p [innerHTML]="sanitizeLog(error.Error)" style="white-space: pre-wrap;">
+          </p>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="modal-background" (click)="modalActive=false"></div>
-</div>
-
-
-<modal [(active)]="modalLogActive" title="Complete log">
-  <div modal-body>
-    {{modalData}}
   </div>
 </modal>

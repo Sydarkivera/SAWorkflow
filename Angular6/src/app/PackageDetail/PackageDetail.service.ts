@@ -75,4 +75,9 @@ export class PackageDetailService {
   postTemplate(data) {
     return this.http.post('/api/template/', data);
   }
+
+  getStatsDashboard() {
+    return this.http.get('/api/stats/dashboard/');
+  }
+
 }

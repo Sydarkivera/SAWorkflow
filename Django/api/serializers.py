@@ -7,10 +7,15 @@ __email__ = "simon@axenu.com"
 __status__ = "Development"
 
 from rest_framework import serializers
-from api.models import Module, Package, Process, Template
+from api.models import *
 import json
 
+class BigintSerializer(serializers.Field):
+    def to_representation(self, obj):
+        return obj
 
+    def to_internal_value(self, data):
+        return data
 
 class TypeSerializer(serializers.Field):
 
@@ -102,3 +107,20 @@ class TemplateDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Template
         fields = ('name', 'template_id', 'processes')
+
+
+# statistis serialisers
+
+class FileTypesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = FileType
+        fields = ('name', 'errors', 'total', 'size')
+
+
+class GraphDataSerializer(serializers.ModelSerializer):
+    date = serializers.DateField()
+    size = BigintSerializer()
+    count = BigintSerializer()
+    class Meta:
+        model = GraphData
+        fields = ('date', 'size', 'count')
