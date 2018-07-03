@@ -108,6 +108,7 @@ class Process(models.Model):
     # % complete
     progress = models.DecimalField(default=0, max_digits=10, decimal_places=5)
     allFiles = JSONField(default=[])
+    errors = JSONField(default=[])
 
 
     class Meta:

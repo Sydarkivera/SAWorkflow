@@ -1339,7 +1339,7 @@ var ModalComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" href=\"#\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n    <!-- <li class=\"nav-item active\">\n      <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Features</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Pricingg</a>\n    </li> -->\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Login</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Register</a>\n    </li>\n  </ul>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n    <!-- <li class=\"nav-item active\">\n      <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Features</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Pricingg</a>\n    </li> -->\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Login</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Register</a>\n    </li>\n  </ul>\n</nav>\n"
 
 /***/ }),
 
@@ -1350,7 +1350,7 @@ module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  width: 220px;\n  min-width: 220px; }\n\n.nav-user {\n  color: white; }\n"
+module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  width: 220px;\n  min-width: 220px;\n  max-width: 220px; }\n\n.nav-user {\n  color: white; }\n"
 
 /***/ }),
 
@@ -1401,13 +1401,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarModule", function() { return NavbarModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _Navbar_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Navbar.component */ "./src/app/Navbar/Navbar.component.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _Navbar_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navbar.component */ "./src/app/Navbar/Navbar.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 // import {Tooltip} from "./Tooltip.directive";
@@ -1421,16 +1423,17 @@ var NavbarModule = /** @class */ (function () {
     NavbarModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]
             ],
             declarations: [
-                _Navbar_component__WEBPACK_IMPORTED_MODULE_2__["NavbarComponent"]
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
             ],
             exports: [
-                _Navbar_component__WEBPACK_IMPORTED_MODULE_2__["NavbarComponent"]
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
             ],
             entryComponents: [
-                _Navbar_component__WEBPACK_IMPORTED_MODULE_2__["NavbarComponent"]
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
             ]
         })
     ], NavbarModule);
@@ -1574,6 +1577,7 @@ var PackageComponent = /** @class */ (function () {
             // this.package = data;
             // this.modules = data as [any];
         });
+        this.package.template_name = this.templateName;
         this.modalActive = false;
     };
     PackageComponent.prototype.startWorkflow = function () {
@@ -2008,17 +2012,6 @@ var PackageModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/PackageDetail/PackageDashboard.component.css":
-/*!**************************************************************!*\
-  !*** ./src/app/PackageDetail/PackageDashboard.component.css ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
 /***/ "./src/app/PackageDetail/PackageDashboard.component.html":
 /*!***************************************************************!*\
   !*** ./src/app/PackageDetail/PackageDashboard.component.html ***!
@@ -2027,6 +2020,17 @@ module.exports = ""
 /***/ (function(module, exports) {
 
 module.exports = "<ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart>\n\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/PackageDashboard.component.sass":
+/*!***************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageDashboard.component.sass ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
 
 /***/ }),
 
@@ -2132,7 +2136,7 @@ var PackageDashboardComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'packageDashboard',
             template: __webpack_require__(/*! ./PackageDashboard.component.html */ "./src/app/PackageDetail/PackageDashboard.component.html"),
-            styles: [__webpack_require__(/*! ./PackageDashboard.component.css */ "./src/app/PackageDetail/PackageDashboard.component.css")]
+            styles: [__webpack_require__(/*! ./PackageDashboard.component.sass */ "./src/app/PackageDetail/PackageDashboard.component.sass")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageDashboardComponent);
@@ -2210,8 +2214,8 @@ var PackageDetailService = /** @class */ (function () {
     PackageDetailService.prototype.getPackage = function (id) {
         return this.http.get(this.packagesURL + id + '/');
     };
-    PackageDetailService.prototype.setActiveTemplate = function (id, data) {
-        return this.http.put(this.packagesURL + id + '/', data);
+    PackageDetailService.prototype.setActiveTemplate = function (template_id, package_id, data) {
+        return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
     };
     PackageDetailService.prototype.getModules = function () {
         return this.http.get('/api/module/');
@@ -2365,17 +2369,6 @@ var PackageHeaderComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/PackageDetail/PackageStatus.component.css":
-/*!***********************************************************!*\
-  !*** ./src/app/PackageDetail/PackageStatus.component.css ***!
-  \***********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".Amodal {\n  /* position: fixed; */\n  /* top: 50%; */\n  /* left: 50%; */\n  /* transform: translate(-50%, -50%); */\n  /* width: 80%; */\n  /* max-width: 100%;\n  height: 98%;\n  max-height: 100%; */\n  /* overflow-y: scroll; */\n  /* background-color: white; */\n}\n\n.Amodal.active {\n  display: block !important;\n}\n\n.modal-dialog,\n.modal-content {\n    /* 80% of window height */\n    height: 95%;\n}\n\n.modal-body {\n    /* 100% = dialog height, 120px = header + footer */\n    /* max-height: calc(100% + 120px); */\n    overflow-y: scroll;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px; */\n  float:right;\n  color: inherit;\n}\n\n.modal-background {\n        /* modal background fixed across whole screen */\n        position: fixed;\n        top: 0;\n        right: 0;\n        bottom: 0;\n        left: 0;\n        /* semi-transparent black  */\n        background-color: #000;\n        opacity: 0.75;\n\n        /* z-index must be below .modal and above everything else  */\n        z-index: -1;\n    }\n"
-
-/***/ }),
-
 /***/ "./src/app/PackageDetail/PackageStatus.component.html":
 /*!************************************************************!*\
   !*** ./src/app/PackageDetail/PackageStatus.component.html ***!
@@ -2383,7 +2376,18 @@ module.exports = ".Amodal {\n  /* position: fixed; */\n  /* top: 50%; */\n  /* l
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td>\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td>\n        <div class=\"progress\">\n          <div class=\"progress-bar\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\"></div>\n        </div>\n      </td>\n      <td>{{process.status}}</td>\n      <td><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Info</button></td>\n      <td><button class=\"btn btn-outline-danger\" (click)=\"showModal(process, 'error_log')\" [disabled]=\"process.err_path == '' || process.status != 'Error'\">Error</button></td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Starta</button>\n<button class=\"btn btn-warning float-right\" (click)=\"removePackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n"
+module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Startå</button>\n<button class=\"btn btn-warning float-right\" (click)=\"removePackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n\n\n<div class=\"modal Amodal\" [class.active]=\"modalActive\" id=\"modal\">\n  <div class=\"modal-dialog\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n        <button type=\"button\" class=\"close\" (click)=\"modalActive=false\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        {{modalData}}\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"modalActive=false\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"modalActive=false\"></div>\n</div>\n\n\n<modal [(active)]=\"modalLogActive\" title=\"Complete log\">\n  <div modal-body>\n    {{modalData}}\n  </div>\n</modal>\n"
+
+/***/ }),
+
+/***/ "./src/app/PackageDetail/PackageStatus.component.sass":
+/*!************************************************************!*\
+  !*** ./src/app/PackageDetail/PackageStatus.component.sass ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".Amodal.active {\n  display: block !important; }\n\n.modal-dialog,\n.modal-content {\n  /* 80% of window height */\n  height: 95%; }\n\n.modal-body {\n  /* 100% = dialog height, 120px = header + footer */\n  /* max-height: calc(100% + 120px) */\n  overflow-y: scroll; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit; }\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black */\n  background-color: #000;\n  opacity: 0.75;\n  /* z-index must be below .modal and above everything else */\n  z-index: -1; }\n"
 
 /***/ }),
 
@@ -2423,6 +2427,8 @@ var PackageStatusComponent = /** @class */ (function () {
         this.logActive = true;
         this.modalActive = false;
         this.modalData = '';
+        this.modalLogActive = false;
+        this.modalLoading = true;
         this.package = {
             name: "Name"
         };
@@ -2443,10 +2449,14 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.showModal = function (process, type) {
         var _this = this;
-        this.modalActive = true;
+        // this.modalActive = true;
         //load data fromserver...
+        this.modalLogActive = true;
+        this.modalLoading = true;
         this.packageService.getLogFile(type, process.process_id).subscribe(function (data) {
             // console.log(data);
+            _this.modalLogActive = true;
+            _this.modalLoading = false;
             _this.modalData = data.replace("\n", "<br>");
         });
         // '/process/${process.process_id}/error_log'
@@ -2472,7 +2482,7 @@ var PackageStatusComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'packageStatus',
             template: __webpack_require__(/*! ./PackageStatus.component.html */ "./src/app/PackageDetail/PackageStatus.component.html"),
-            styles: [__webpack_require__(/*! ./PackageStatus.component.css */ "./src/app/PackageDetail/PackageStatus.component.css")]
+            styles: [__webpack_require__(/*! ./PackageStatus.component.sass */ "./src/app/PackageDetail/PackageStatus.component.sass")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageStatusComponent);
@@ -2490,7 +2500,7 @@ var PackageStatusComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\">\n      <td>\n        {{template.name}}\n      </td>\n      <td class=\"small-column\">\n        <!-- <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a> -->\n        <button class=\"btn btn-success\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-secondary\" *ngIf=\"template.template_id!=2\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <!-- <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a> -->\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\" *ngIf=\"template.template_id!=2\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -2501,7 +2511,7 @@ module.exports = "<h4>Select a template to set as a startingpoint for this packa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n"
+module.exports = ".small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n\n.selected {\n  background-color: #aaa;\n  color: white; }\n"
 
 /***/ }),
 
@@ -2537,11 +2547,18 @@ var PackageTemplateComponent = /** @class */ (function () {
         this.packageService = packageService;
         this.route = route;
         this.router = router;
+        this.active_template = -1;
     }
     PackageTemplateComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.parent.params.subscribe(function (params) {
             _this.package_id = +params['id'];
+            // get package
+            _this.packageService.getPackage(_this.package_id).subscribe(function (data) {
+                _this.package = data;
+                _this.active_template = data['active_template'];
+                console.log(data);
+            });
         });
         this.packageService.getTemplates().subscribe(function (data) {
             console.log(data);
@@ -2554,18 +2571,12 @@ var PackageTemplateComponent = /** @class */ (function () {
                 return false;
             });
         });
-        // this.client.fetch('/api/module/')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         this.modules = data;
-        //
-        //     });
     };
     PackageTemplateComponent.prototype.selectTemplate = function (template) {
         var _this = this;
         // api call to set the template for package.
         var data = { "active_template": template.template_id };
-        this.packageService.setActiveTemplate(this.package_id, data).subscribe(function (res) {
+        this.packageService.setActiveTemplate(template.template_id, this.package_id, data).subscribe(function (res) {
             console.log(res);
             // this.router.navigate(['packages', this.package_id, 'edit']);
             window.location.href = '/packages/' + _this.package_id + '/edit';
@@ -3538,7 +3549,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/Axenu/Sydarkviera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
 
 
 /***/ })

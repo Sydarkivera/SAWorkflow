@@ -88,9 +88,10 @@ class bashModule(pythonModuleBase):
 
         if stderr:
             self.logger.error(stderr.decode('utf-8'))
-            return -1
+            return (-1, stderr.decode('utf-8'))
 
         if stdout:
+            # self.logger.info('File: ' + )
             self.logger.info(stdout.decode('utf-8'))
             for resFilter in process.module.resultFilter:
                 # check if the pattern exists
@@ -106,11 +107,11 @@ class bashModule(pythonModuleBase):
                     # logger.info(match)
                     # logger.info()
                     self.logger.error(text)
-                    return -1
+                    return (-1, text)
                 elif not match and resFilter['type'] == "Containing":
                     self.logger.error(text)
-                    return -1
-        return 1
+                    return (-1, text)
+        return (1, "")
 
     def execute(self, process, package):
         retval = 1
@@ -121,7 +122,7 @@ class bashModule(pythonModuleBase):
         values.update(process.value)
         filter = process.module.filter
         if filter == '':
-            res = self.run(values, process)
+            res, errorText = self.run(values, process)
             if res == -1:
                 return -1
         else:
@@ -133,6 +134,7 @@ class bashModule(pythonModuleBase):
 
             # count number of files:
             allFiles = []
+            errorFiles = []
             if process.allFiles == []:
                 for root, dirs, files in os.walk(package.workdir):
                     for name in files:
@@ -149,44 +151,25 @@ class bashModule(pythonModuleBase):
             i = 0
             for i in range(numberOfFiles):
                 f = allFiles[i]
-            # for root, dirs, files in os.walk(package.workdir):
-                # for name in files:
-                    # file = os.path.join(root, name)
                 if not f['status']:
                     fileName = f['file']
-                    # logger.info(file)
                     values['file'] = fileName
-                    res = self.run(values, process)
+                    res, errorText = self.run(values, process)
                     if res == -1:
-                        return -1
+                        allFiles[i]['status'] = False
+                        errorDict = {}
+                        errorDict['file'] = fileName
+                        errorDict['Error'] = errorText
+                        errorFiles.append(errorDict)
+                        retval = -1
                     else:
                         allFiles[i]['status'] = True
-                        process.progress = (i+1)/numberOfFiles * 100
-                        process.allFiles = allFiles
-                        process.save()
-        # args = []
-        # for arg in process.module.command:
-        #     if arg['type'] == "text":
-        #         args += [arg['value']]
-        #     elif arg['type'] == 'var':
-        #         if arg['name'] in values:
-        #             if 'value' in arg:
-        #                 if values[arg['name']] == True:
-        #                     args += [arg['value']]
-        #             else:
-        #                 args += [values[arg['name']]]
-        #     else:
-        #         self.logger.error('unknown type: ' + str(arg['type']))
-        #
-        # p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-        #
-        # stdout, stderr = p.communicate()
-        # if stdout:
-        #     self.logger.info(stdout.decode('utf-8'))
-        # if stderr:
-        #     self.logger.error(stderr.decode('utf-8'))
-        #     retval = -1
-
+                    process.progress = (i+1)/numberOfFiles * 100
+                    process.allFiles = allFiles
+                    process.save()
+        process.errors = errorFiles
+        process.save()
+        # logger.info(errorDict)
         return retval
 
 # @background(schedule=1)

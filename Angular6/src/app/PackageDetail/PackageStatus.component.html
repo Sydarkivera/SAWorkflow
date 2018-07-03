@@ -13,28 +13,36 @@
   </thead>
   <tbody>
     <tr *ngFor="let process of package.processes">
-      <td>
+      <td class="align-middle">
         {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
       </td>
-      <td>
-        <div class="progress">
-          <div class="progress-bar"
+      <td class="align-middle">
+        <div class="progress border border-primary">
+          <div class="progress-bar text-dark text-center"
           [class.bg-success]="process.status == 'Done'"
           [class.bg-danger]="process.status == 'Error'"
           [class.progress-bar-animated]="process.status == 'Running'"
           [class.progress-bar-striped]="process.status == 'Running'"
-          [style.width]="process.progress + '%'"></div>
+          [style.width]="process.progress + '%'">{{process.progress}}%</div>
         </div>
       </td>
-      <td>{{process.status}}</td>
-      <td><button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Info</button></td>
-      <td><button class="btn btn-outline-danger" (click)="showModal(process, 'error_log')" [disabled]="process.err_path == '' || process.status != 'Error'">Error</button></td>
+      <td class="align-middle">{{process.status}}</td>
+      <td class="align-middle"><button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Open log</button></td>
+      <td class="align-middle">
+        <button class="btn btn-danger"
+                (click)="showModal(process, 'error_log')"
+                [disabled]="process.err_path == '' || process.status != 'Error'"
+                [class.btn-outline-danger]="process.errors.length <= 0">
+                Errors: {{process.errors.length}}
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
-<button class="btn btn-success float-right" (click)="startWorkflow()">Starta</button>
+<button class="btn btn-success float-right" (click)="startWorkflow()">Startå</button>
 <button class="btn btn-warning float-right" (click)="removePackage()">Done</button>
 <button class="btn btn-danger float-right" (click)="removePackage()">Delete</button>
+
 
 
 
@@ -58,3 +66,10 @@
   </div>
   <div class="modal-background" (click)="modalActive=false"></div>
 </div>
+
+
+<modal [(active)]="modalLogActive" title="Complete log">
+  <div modal-body>
+    {{modalData}}
+  </div>
+</modal>

@@ -22,4 +22,5 @@ urlpatterns = [
     url(r'^template/$', views.template_list),
     url(r'^template/(?P<template_id>[0-9]+)/$', views.template_detail),
     url(r'^template/(?P<template_id>[0-9]+)/process/$', views.template_process_list),
+    url(r'^template/(?P<template_id>[0-9]+)/package/(?P<package_id>[0-9]+)/$', views.template_package_detail),
 ]

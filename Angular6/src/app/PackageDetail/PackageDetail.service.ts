@@ -15,8 +15,8 @@ export class PackageDetailService {
     return this.http.get(this.packagesURL + id + '/');
   }
 
-  setActiveTemplate(id: number, data) {
-    return this.http.put(this.packagesURL + id + '/', data);
+  setActiveTemplate(template_id: number, package_id: number, data) {
+    return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
   }
 
   getModules() {

@@ -41,6 +41,7 @@ class ProcessSerializer(serializers.ModelSerializer):
     type = TypeSerializer(source='module.type', read_only=True)
     form = JSONSerializerField(source='module.form', read_only=True)
     value = JSONSerializerField(required=False)
+    errors = JSONSerializerField(required=False)
     status = serializers.SerializerMethodField()
     module = serializers.PrimaryKeyRelatedField(queryset=Module.objects.all())
     package = serializers.PrimaryKeyRelatedField(queryset=Package.objects.all(), required=False)
@@ -49,7 +50,7 @@ class ProcessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Process
-        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template')
+        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template', 'errors')
 
     def get_status(self,obj):
         return obj.get_status_display()

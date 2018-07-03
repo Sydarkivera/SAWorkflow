@@ -71,6 +71,7 @@ export class PackageComponent {
       // this.package = data;
       // this.modules = data as [any];
     });
+    this.package.template_name = this.templateName;
     this.modalActive = false;
   }
 

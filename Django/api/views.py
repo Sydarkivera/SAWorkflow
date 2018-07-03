@@ -320,6 +320,29 @@ def template_process_list(request, template_id):
         for process in request.data:
             p = Process.objects.get(pk=process['process_id'])
             p.order = process['order']
-            p.status = Process.PROCESS_STATUS_EDITED
+            # p.status = Process.PROCESS_STATUS_EDITED
             p.save()
         return HttpResponse(status=204)
+
+@api_view(['PUT'])
+def template_package_detail(request, template_id, package_id):
+    """
+    Set a template to a package
+    """
+    template = get_object_or_404(Template, pk=template_id)
+    package = get_object_or_404(Package, pk=package_id)
+    if request.method == 'PUT':
+        package.active_template = template
+        # delete old processes from package
+        for process in package.processes.all():
+            if not process.module.hidden:
+                process.delete()
+        for process in template.processes.all():
+            # logger.info(process.name)
+            if not process.module.hidden:
+                process.pk = None
+                process.template = None
+                process.package = package
+                process.save()
+        package.save()
+    return HttpResponse(status=204)

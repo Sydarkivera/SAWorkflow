@@ -19,6 +19,7 @@ from api.models import *
 Package.objects.all().delete()
 Process.objects.all().delete()
 Module.objects.all().delete()
+Template.objects.all().delete()
 
 # create new module
 module1 = Module(name="Setup workdir",

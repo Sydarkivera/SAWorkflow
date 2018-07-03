@@ -16,6 +16,8 @@ export class PackageTemplateComponent {
 
   templates: any[];
   package_id: number;
+  package: any;
+  active_template: number = -1
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
   }
@@ -23,6 +25,12 @@ export class PackageTemplateComponent {
   ngOnInit() {
     this.route.parent.params.subscribe(params => {
        this.package_id = +params['id'];
+       // get package
+       this.packageService.getPackage(this.package_id).subscribe((data) => {
+         this.package = data
+         this.active_template = data['active_template'];
+         console.log(data);
+       });
     });
     this.packageService.getTemplates().subscribe((data) => {
       console.log(data);
@@ -35,18 +43,12 @@ export class PackageTemplateComponent {
         return false;
       });
     });
-    // this.client.fetch('/api/module/')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         this.modules = data;
-    //
-    //     });
   }
 
   selectTemplate(template) {
     // api call to set the template for package.
     let data = {"active_template": template.template_id};
-    this.packageService.setActiveTemplate(this.package_id, data).subscribe((res) => {
+    this.packageService.setActiveTemplate(template.template_id, this.package_id, data).subscribe((res) => {
       console.log(res);
       // this.router.navigate(['packages', this.package_id, 'edit']);
       window.location.href = '/packages/' + this.package_id + '/edit';

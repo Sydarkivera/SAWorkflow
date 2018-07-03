@@ -12,7 +12,7 @@ import { PackageDetailService } from './PackageDetail.service';
   selector: 'packageDashboard',
   templateUrl: './PackageDashboard.component.html',
   // template: '<p>Package Dashboard</p>'
-  styleUrls: ['./PackageDashboard.component.css']
+  styleUrls: ['./PackageDashboard.component.sass']
 })
 export class PackageDashboardComponent {
   id: number = -1;

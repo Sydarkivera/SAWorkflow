@@ -10,7 +10,7 @@ import { PackageDetailService } from './PackageDetail.service';
   // template: '<p>PackageDetail</p>'
   templateUrl: './PackageStatus.component.html',
 
-  styleUrls: ['./PackageStatus.component.css']
+  styleUrls: ['./PackageStatus.component.sass']
 })
 export class PackageStatusComponent {
   id: number;
@@ -19,6 +19,8 @@ export class PackageStatusComponent {
   modalActive = false;
   modalData = '';
   interval;
+  modalLogActive = false;
+  modalLoading = true;
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     this.package = {
@@ -42,10 +44,14 @@ export class PackageStatusComponent {
   }
 
   showModal(process, type) {
-    this.modalActive = true;
+    // this.modalActive = true;
     //load data fromserver...
+    this.modalLogActive = true;
+    this.modalLoading = true;
     this.packageService.getLogFile(type, process.process_id).subscribe((data) => {
       // console.log(data);
+      this.modalLogActive = true;
+      this.modalLoading = false;
       this.modalData = data.replace("\n", "<br>");
     });
     // '/process/${process.process_id}/error_log'
