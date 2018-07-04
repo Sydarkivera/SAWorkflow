@@ -8,6 +8,8 @@ import { PackageDetailService } from './PackageDetail.service';
 
 // import { PackagesService } from './Packages.service'
 
+import { GraphColors, formatBytes } from '../Utilities';
+
 @Component({
   selector: 'packageDashboard',
   templateUrl: './PackageDashboard.component.html',
@@ -51,7 +53,7 @@ export class PackageDashboardComponent {
   showLegend = false;
 
   colorScheme = {
-    domain: ['#eac435', '#345995', '#e40066', '#03cea4', '#fb4d3d']
+    domain: GraphColors
   };
 
   // pie
@@ -59,6 +61,11 @@ export class PackageDashboardComponent {
   explodeSlices = false;
   doughnut = false;
   gradient = false;
+
+// change to 0 later
+  total_number_of_files = 12
+  total_size = '3.45 GB'
+  progress = 0
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     // Object.assign(this, {single, multi})
@@ -80,8 +87,15 @@ export class PackageDashboardComponent {
             temp['value'] = value;
             res.push({"name":key.toUpperCase(), "value":value});
           }
+          this.total_size = formatBytes(this.package.statistics.total_size);
+          this.total_number_of_files = this.package.statistics.total_number_of_files;
           this.fileTypes = [...res]
-          // console.log(this.fileTypes)
+          //calculate total progress
+          this.progress = 0
+          for (let process of this.package.processes) {
+            this.progress += Number(process.progress);
+          }
+          this.progress = this.progress / this.package.processes.length;
        });
     });
   }

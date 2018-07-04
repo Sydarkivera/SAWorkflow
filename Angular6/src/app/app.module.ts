@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { PackagesModule } from './Packages/Packages.module';
 import { AdminModule } from './Admin/Admin.module';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
+import { ComboChartComponent } from './Dashboard/combo-chart.component';
 import { NotFoundComponent } from './NotFound.component';
 // import { AdminComponent } from './Admin/Admin.component';
 
@@ -27,6 +28,7 @@ import { NavbarModule } from './Navbar/Navbar.module';
     // FileBrowserComponent,
     AppComponent,
     DashboardComponent,
+    ComboChartComponent,
     NotFoundComponent,
 
     // AdminComponent
@@ -35,6 +37,7 @@ import { NavbarModule } from './Navbar/Navbar.module';
     BrowserModule,
     HttpClientModule,
     FormsModule,
+    BrowserAnimationsModule,
     NgxChartsModule,
     TooltipModule,
     NavbarModule,
@@ -44,8 +47,7 @@ import { NavbarModule } from './Navbar/Navbar.module';
     // DragDropDirectiveModule,
     PackagesModule,
     AdminModule,
-    AppRoutingModule,
-    BrowserAnimationsModule
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]

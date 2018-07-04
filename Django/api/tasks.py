@@ -302,10 +302,14 @@ def calculateMetricsForNewPackage(package):
 
     # for file_name in os.listdir(package.path):
     # logger.info(os.path.join(package.workdir, package.file_name.split('.')[0]))
+    total_number_of_files = 0
+    total_size = 0
     for dirpath, dirs, files in os.walk(os.path.join(package.workdir, package.file_name.split('.')[0])):
         for file in files:
             type = file.split('.')[-1]
             # logger.info(file)
+            total_size += os.path.getsize(os.path.join(dirpath, file))
+            total_number_of_files += 1
             if type in filetypes:
                 filetypes[type] += 1
             else:
@@ -314,6 +318,8 @@ def calculateMetricsForNewPackage(package):
     	# print files
     # logger.info(filetypes)
     stats['fileTypes'] = filetypes
+    stats['total_number_of_files'] = total_number_of_files
+    stats['total_size'] = total_size
 
     package.statistics = stats
     package.save()

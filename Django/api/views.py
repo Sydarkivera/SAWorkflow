@@ -354,7 +354,7 @@ def dashboardStats(request):
     """
     if request.method == 'GET':
         #filetypes:
-        fileTypes = FileType.objects.all()
+        fileTypes = FileType.objects.all().order_by('total').reverse()
         data = {}
         data['fileTypes'] = FileTypesSerializer(fileTypes, many=True).data
         # variables

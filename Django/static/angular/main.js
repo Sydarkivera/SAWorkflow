@@ -988,6 +988,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PackageDetail/PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utilities */ "./src/app/Utilities.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1001,6 +1002,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var DashboardComponent = /** @class */ (function () {
     function DashboardComponent(packageService, route, router) {
         // Object.assign(this, {single, multi})
@@ -1008,47 +1010,49 @@ var DashboardComponent = /** @class */ (function () {
         this.route = route;
         this.router = router;
         this.stats = undefined;
-        this.title = 'new title';
-        this.single = [
-            {
-                "name": "Germany",
-                "value": 8940000
-            },
-            {
-                "name": "USA",
-                "value": 5000000
-            },
-            {
-                "name": "France",
-                "value": 7200000
-            }
-        ];
-        // multi: any[];
-        this.view = [700, 400];
         // options
         this.showLegend = true;
         this.colorScheme = {
-            domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+            domain: _Utilities__WEBPACK_IMPORTED_MODULE_3__["GraphColors"]
         };
         // pie
         this.showLabels = true;
         this.explodeSlices = false;
         this.doughnut = false;
+        // options
+        this.showXAxis = true;
+        this.showYAxis = true;
+        this.gradient = false;
+        // showLegend = true;
+        this.showXAxisLabel = true;
+        this.xAxisLabel = 'Country';
+        this.showYAxisLabel = true;
+        this.yAxisLabel = 'Population';
+        this.autoScale = true;
+        this.dataLoaded = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.packageService.getStatsDashboard().subscribe(function (data) {
             console.log(data);
             _this.stats = data;
-            _this.total_size = data['total_size'];
+            _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_3__["formatBytes"])(data['total_size']);
             _this.total_number_of_files = data['total_number_of_files'];
             _this.total_number_of_errors = data['total_number_of_errors'];
             _this.total_number_of_packages = data['total_number_of_packages'];
             _this.fileTypes = [];
+            _this.fileTypesErrors = [];
             for (var key in _this.stats.fileTypes) {
                 var value = _this.stats.fileTypes[key];
                 _this.fileTypes.push({ "name": value['name'].toUpperCase(), "value": value['total'] });
+                _this.fileTypesErrors.push({ "name": value['name'].toUpperCase(), "value": value['errors'] });
             }
+            _this.fileTypesErrors = _this.fileTypesErrors.sort(function (a, b) {
+                if (a['value'] > b['value']) {
+                    return -1;
+                }
+                return 1;
+            });
             var counts = [];
             var sizes = [];
             for (var key in _this.stats.graphData) {
@@ -1057,16 +1061,25 @@ var DashboardComponent = /** @class */ (function () {
                 sizes.push({ "name": value['date'], "value": value['size'] });
                 // this.fileTypes.push({"name":value['name'].toUpperCase(), "value":value['total']});
             }
-            _this.graphData = [
-                {
-                    "name": "count",
-                    "series": counts
-                },
+            _this.graphDataSize = [
                 {
                     "name": "size",
                     "series": sizes
                 }
             ];
+            _this.graphDataCount = [
+                {
+                    "name": "count",
+                    "series": counts
+                }
+            ];
+            // this.graphDataSize = [
+            //   {
+            //     "name": "size",
+            //     "series": sizes
+            //   }
+            // ];
+            _this.dataLoaded = true;
         });
     };
     DashboardComponent.prototype.onSelect = function (event) {
@@ -1087,6 +1100,503 @@ var DashboardComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Dashboard/combo-chart.component.ts":
+/*!****************************************************!*\
+  !*** ./src/app/Dashboard/combo-chart.component.ts ***!
+  \****************************************************/
+/*! exports provided: ComboChartComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ComboChartComponent", function() { return ComboChartComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var d3_shape__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! d3-shape */ "./node_modules/d3-shape/index.js");
+/* harmony import */ var d3_scale__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! d3-scale */ "./node_modules/d3-scale/index.js");
+var __extends = (undefined && undefined.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+// import { getUniqueXDomainValues } from '@swimlane/ngx-charts';
+var ComboChartComponent = /** @class */ (function (_super) {
+    __extends(ComboChartComponent, _super);
+    function ComboChartComponent() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.legendTitle = 'Legend';
+        _this.showGridLines = true;
+        _this.curve = d3_shape__WEBPACK_IMPORTED_MODULE_3__["curveLinear"];
+        _this.activeEntries = [];
+        _this.roundDomains = false;
+        _this.tooltipDisabled = false;
+        _this.showRefLines = false;
+        _this.showRefLabels = true;
+        _this.activate = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        _this.deactivate = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        _this.margin = [10, 20, 10, 20];
+        _this.xAxisHeight = 0;
+        _this.yAxisWidth = 0;
+        _this.timelineHeight = 50;
+        _this.timelinePadding = 10;
+        return _this;
+    }
+    ComboChartComponent.prototype.update = function () {
+        _super.prototype.update.call(this);
+        this.dims = Object(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_2__["calculateViewDimensions"])({
+            width: this.width,
+            height: this.height,
+            margins: this.margin,
+            showXAxis: this.xAxis,
+            showYAxis: this.yAxis,
+            xAxisHeight: this.xAxisHeight,
+            yAxisWidth: this.yAxisWidth,
+            showXLabel: this.showXAxisLabel,
+            showYLabel: this.showYAxisLabel,
+            showLegend: this.legend,
+            legendType: this.schemeType,
+        });
+        // if (this.timeline) {
+        //   this.dims.height -= (this.timelineHeight + this.margin[2] + this.timelinePadding);
+        // }
+        this.xDomain = this.getXDomain();
+        if (this.filteredDomain) {
+            this.xDomain = this.filteredDomain;
+        }
+        this.yDomain = this.getYDomain();
+        this.seriesDomain = this.getSeriesDomain();
+        this.xScale = this.getXScale(this.xDomain, this.dims.width);
+        this.yScale = this.getYScale(this.yDomain, this.dims.height);
+        this.updateTimeline();
+        this.setColors();
+        // console.log(this.colors);
+        this.legendOptions = this.getLegendOptions();
+        this.transform = "translate(" + this.dims.xOffset + " , " + this.margin[0] + ")";
+        this.clipPathId = 'clipabc';
+        this.clipPath = "url(#" + this.clipPathId + ")";
+    };
+    ComboChartComponent.prototype.updateTimeline = function () {
+        if (this.timeline) {
+            this.timelineWidth = this.dims.width;
+            this.timelineXDomain = this.getXDomain();
+            this.timelineXScale = this.getXScale(this.timelineXDomain, this.timelineWidth);
+            this.timelineYScale = this.getYScale(this.yDomain, this.timelineHeight);
+            this.timelineTransform = "translate(" + this.dims.xOffset + ", " + -this.margin[2] + ")";
+        }
+    };
+    ComboChartComponent.prototype.getXDomain = function () {
+        // let values = getUniqueXDomainValues(this.results);
+        var valueSet = new Set();
+        for (var _i = 0, _a = this.results; _i < _a.length; _i++) {
+            var result = _a[_i];
+            for (var _b = 0, _c = result.series; _b < _c.length; _b++) {
+                var d = _c[_b];
+                valueSet.add(d.name);
+            }
+        }
+        var values = Array.from(valueSet);
+        this.scaleType = this.getScaleType(values);
+        var domain = [];
+        if (this.scaleType === 'linear') {
+            values = values.map(function (v) { return Number(v); });
+        }
+        var min;
+        var max;
+        if (this.scaleType === 'time' || this.scaleType === 'linear') {
+            min = this.xScaleMin
+                ? this.xScaleMin
+                : Math.min.apply(Math, values);
+            max = this.xScaleMax
+                ? this.xScaleMax
+                : Math.max.apply(Math, values);
+        }
+        if (this.scaleType === 'time') {
+            domain = [new Date(min), new Date(max)];
+            this.xSet = values.slice().sort(function (a, b) {
+                var aDate = a.getTime();
+                var bDate = b.getTime();
+                if (aDate > bDate)
+                    return 1;
+                if (bDate > aDate)
+                    return -1;
+                return 0;
+            });
+        }
+        else if (this.scaleType === 'linear') {
+            domain = [min, max];
+            // Use compare function to sort numbers numerically
+            this.xSet = values.slice().sort(function (a, b) { return (a - b); });
+        }
+        else {
+            domain = values;
+            this.xSet = values;
+        }
+        return domain;
+    };
+    ComboChartComponent.prototype.getYDomain = function () {
+        var domain = [];
+        for (var _i = 0, _a = this.results; _i < _a.length; _i++) {
+            var results = _a[_i];
+            for (var _b = 0, _c = results.series; _b < _c.length; _b++) {
+                var d = _c[_b];
+                if (domain.indexOf(d.value) < 0) {
+                    domain.push(d.value);
+                }
+                if (d.min !== undefined) {
+                    this.hasRange = true;
+                    if (domain.indexOf(d.min) < 0) {
+                        domain.push(d.min);
+                    }
+                }
+                if (d.max !== undefined) {
+                    this.hasRange = true;
+                    if (domain.indexOf(d.max) < 0) {
+                        domain.push(d.max);
+                    }
+                }
+            }
+        }
+        var values = domain.slice();
+        if (!this.autoScale) {
+            values.push(0);
+        }
+        var min = this.yScaleMin
+            ? this.yScaleMin
+            : Math.min.apply(Math, values);
+        var max = this.yScaleMax
+            ? this.yScaleMax
+            : Math.max.apply(Math, values);
+        return [min, max];
+    };
+    ComboChartComponent.prototype.getSeriesDomain = function () {
+        return this.results.map(function (d) { return d.name; });
+    };
+    ComboChartComponent.prototype.getXScale = function (domain, width) {
+        var scale;
+        if (this.scaleType === 'time') {
+            scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_4__["scaleTime"])()
+                .range([0, width])
+                .domain(domain);
+        }
+        else if (this.scaleType === 'linear') {
+            scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_4__["scaleLinear"])()
+                .range([0, width])
+                .domain(domain);
+            if (this.roundDomains) {
+                scale = scale.nice();
+            }
+        }
+        else if (this.scaleType === 'ordinal') {
+            scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_4__["scalePoint"])()
+                .range([0, width])
+                .padding(0.1)
+                .domain(domain);
+        }
+        return scale;
+    };
+    ComboChartComponent.prototype.getYScale = function (domain, height) {
+        var scale = Object(d3_scale__WEBPACK_IMPORTED_MODULE_4__["scaleLinear"])()
+            .range([height, 0])
+            .domain(domain);
+        return this.roundDomains ? scale.nice() : scale;
+    };
+    ComboChartComponent.prototype.getScaleType = function (values) {
+        var date = true;
+        var num = true;
+        for (var _i = 0, values_1 = values; _i < values_1.length; _i++) {
+            var value = values_1[_i];
+            if (!this.isDate(value)) {
+                date = false;
+            }
+            if (typeof value !== 'number') {
+                num = false;
+            }
+        }
+        if (date)
+            return 'time';
+        if (num)
+            return 'linear';
+        return 'ordinal';
+    };
+    ComboChartComponent.prototype.isDate = function (value) {
+        if (value instanceof Date) {
+            return true;
+        }
+        return false;
+    };
+    ComboChartComponent.prototype.updateDomain = function (domain) {
+        this.filteredDomain = domain;
+        this.xDomain = this.filteredDomain;
+        this.xScale = this.getXScale(this.xDomain, this.dims.width);
+    };
+    ComboChartComponent.prototype.updateHoveredVertical = function (item) {
+        this.hoveredVertical = item.value;
+        this.deactivateAll();
+    };
+    ComboChartComponent.prototype.hideCircles = function () {
+        this.hoveredVertical = null;
+        this.deactivateAll();
+    };
+    ComboChartComponent.prototype.onClick = function (data, series) {
+        if (series) {
+            data.series = series.name;
+        }
+        this.select.emit(data);
+    };
+    ComboChartComponent.prototype.trackBy = function (index, item) {
+        return item.name;
+    };
+    ComboChartComponent.prototype.setColors = function () {
+        var domain;
+        if (this.schemeType === 'ordinal') {
+            domain = this.seriesDomain;
+        }
+        else {
+            domain = this.yDomain;
+        }
+        this.colors = new _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_2__["ColorHelper"](this.scheme, this.schemeType, domain, this.customColors);
+    };
+    ComboChartComponent.prototype.getLegendOptions = function () {
+        var opts = {
+            scaleType: this.schemeType,
+            colors: undefined,
+            domain: [],
+            title: undefined
+        };
+        if (opts.scaleType === 'ordinal') {
+            opts.domain = this.seriesDomain;
+            opts.colors = this.colors;
+            opts.title = this.legendTitle;
+        }
+        else {
+            opts.domain = this.yDomain;
+            opts.colors = this.colors.scale;
+        }
+        return opts;
+    };
+    ComboChartComponent.prototype.updateYAxisWidth = function (_a) {
+        var width = _a.width;
+        this.yAxisWidth = width;
+        this.update();
+    };
+    ComboChartComponent.prototype.updateXAxisHeight = function (_a) {
+        var height = _a.height;
+        this.xAxisHeight = height;
+        this.update();
+    };
+    ComboChartComponent.prototype.onActivate = function (item) {
+        this.deactivateAll();
+        var idx = this.activeEntries.findIndex(function (d) {
+            return d.name === item.name && d.value === item.value;
+        });
+        if (idx > -1) {
+            return;
+        }
+        this.activeEntries = [item];
+        this.activate.emit({ value: item, entries: this.activeEntries });
+    };
+    ComboChartComponent.prototype.onDeactivate = function (item) {
+        var idx = this.activeEntries.findIndex(function (d) {
+            return d.name === item.name && d.value === item.value;
+        });
+        this.activeEntries.splice(idx, 1);
+        this.activeEntries = this.activeEntries.slice();
+        this.deactivate.emit({ value: item, entries: this.activeEntries });
+    };
+    ComboChartComponent.prototype.deactivateAll = function () {
+        this.activeEntries = this.activeEntries.slice();
+        for (var _i = 0, _a = this.activeEntries; _i < _a.length; _i++) {
+            var entry = _a[_i];
+            this.deactivate.emit({ value: entry, entries: [] });
+        }
+        this.activeEntries = [];
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "legend", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ComboChartComponent.prototype, "legendTitle", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "xAxis", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "yAxis", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "showXAxisLabel", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "showYAxisLabel", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "xAxisLabel", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "yAxisLabel", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "autoScale", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "timeline", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ComboChartComponent.prototype, "gradient", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ComboChartComponent.prototype, "showGridLines", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "curve", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], ComboChartComponent.prototype, "activeEntries", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ComboChartComponent.prototype, "schemeType", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], ComboChartComponent.prototype, "rangeFillOpacity", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "xAxisTickFormatting", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "yAxisTickFormatting", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], ComboChartComponent.prototype, "xAxisTicks", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], ComboChartComponent.prototype, "yAxisTicks", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ComboChartComponent.prototype, "roundDomains", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ComboChartComponent.prototype, "tooltipDisabled", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ComboChartComponent.prototype, "showRefLines", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "referenceLines", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ComboChartComponent.prototype, "showRefLabels", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "xScaleMin", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ComboChartComponent.prototype, "xScaleMax", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], ComboChartComponent.prototype, "yScaleMin", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], ComboChartComponent.prototype, "yScaleMax", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"])
+    ], ComboChartComponent.prototype, "activate", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"])
+    ], ComboChartComponent.prototype, "deactivate", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChild"])('tooltipTemplate'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"])
+    ], ComboChartComponent.prototype, "tooltipTemplate", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ContentChild"])('seriesTooltipTemplate'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["TemplateRef"])
+    ], ComboChartComponent.prototype, "seriesTooltipTemplate", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('mouseleave'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], ComboChartComponent.prototype, "hideCircles", null);
+    ComboChartComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'combo-chart-component',
+            template: "\n  <ngx-charts-chart\n      [view]=\"[width, height]\"\n      [showLegend]=\"legend\"\n      [legendOptions]=\"legendOptions\"\n      [activeEntries]=\"activeEntries\"\n      [animations]=\"animations\"\n      (legendLabelClick)=\"onClick($event)\"\n      (legendLabelActivate)=\"onActivate($event)\"\n      (legendLabelDeactivate)=\"onDeactivate($event)\">\n      <svg:defs>\n        <svg:clipPath [attr.id]=\"clipPathId\">\n          <svg:rect\n            [attr.width]=\"dims.width + 10\"\n            [attr.height]=\"dims.height + 10\"\n            [attr.transform]=\"'translate(-5, -5)'\"/>\n        </svg:clipPath>\n      </svg:defs>\n      <svg:g [attr.transform]=\"transform\" class=\"line-chart chart\">\n        <svg:g ngx-charts-x-axis\n          *ngIf=\"xAxis\"\n          [xScale]=\"xScale\"\n          [dims]=\"dims\"\n          [showGridLines]=\"showGridLines\"\n          [showLabel]=\"showXAxisLabel\"\n          [labelText]=\"xAxisLabel\"\n          [tickFormatting]=\"xAxisTickFormatting\"\n          [ticks]=\"xAxisTicks\"\n          (dimensionsChanged)=\"updateXAxisHeight($event)\">\n        </svg:g>\n        <svg:g ngx-charts-y-axis\n          *ngIf=\"yAxis\"\n          [yScale]=\"yScale\"\n          [dims]=\"dims\"\n          [showGridLines]=\"showGridLines\"\n          [showLabel]=\"showYAxisLabel\"\n          [labelText]=\"yAxisLabel\"\n          [tickFormatting]=\"yAxisTickFormatting\"\n          [ticks]=\"yAxisTicks\"\n          [referenceLines]=\"referenceLines\"\n          [showRefLines]=\"showRefLines\"\n          [showRefLabels]=\"showRefLabels\"\n          (dimensionsChanged)=\"updateYAxisWidth($event)\">\n        </svg:g>\n        <svg:g [attr.clip-path]=\"clipPath\">\n          <svg:g *ngFor=\"let series of results; trackBy:trackBy\" [@animationState]=\"'active'\">\n            <svg:g ngx-charts-line-series\n              [xScale]=\"xScale\"\n              [yScale]=\"yScale\"\n              [colors]=\"colors\"\n              [data]=\"series\"\n              [activeEntries]=\"activeEntries\"\n              [scaleType]=\"scaleType\"\n              [curve]=\"curve\"\n              [rangeFillOpacity]=\"rangeFillOpacity\"\n              [hasRange]=\"hasRange\"\n              [animations]=\"animations\"\n            />\n          </svg:g>\n          <svg:g *ngIf=\"!tooltipDisabled\" (mouseleave)=\"hideCircles()\">\n            <svg:g ngx-charts-tooltip-area\n              [dims]=\"dims\"\n              [xSet]=\"xSet\"\n              [xScale]=\"xScale\"\n              [yScale]=\"yScale\"\n              [results]=\"results\"\n              [colors]=\"colors\"\n              [tooltipDisabled]=\"tooltipDisabled\"\n              [tooltipTemplate]=\"seriesTooltipTemplate\"\n              (hover)=\"updateHoveredVertical($event)\"\n            />\n            <svg:g *ngFor=\"let series of results\">\n              <svg:g ngx-charts-circle-series\n                [xScale]=\"xScale\"\n                [yScale]=\"yScale\"\n                [colors]=\"colors\"\n                [data]=\"series\"\n                [scaleType]=\"scaleType\"\n                [visibleValue]=\"hoveredVertical\"\n                [activeEntries]=\"activeEntries\"\n                [tooltipDisabled]=\"tooltipDisabled\"\n                [tooltipTemplate]=\"tooltipTemplate\"\n                (select)=\"onClick($event, series)\"\n                (activate)=\"onActivate($event)\"\n                (deactivate)=\"onDeactivate($event)\"\n              />\n            </svg:g>\n          </svg:g>\n        </svg:g>\n      </svg:g>\n    </ngx-charts-chart>\n  ",
+            styleUrls: [],
+            encapsulation: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewEncapsulation"].None,
+            animations: [
+                Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["trigger"])('animationState', [
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["transition"])(':leave', [
+                        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({
+                            opacity: 1,
+                        }),
+                        Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animate"])(500, Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({
+                            opacity: 0
+                        }))
+                    ])
+                ])
+            ]
+        })
+    ], ComboChartComponent);
+    return ComboChartComponent;
+}(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_2__["BaseChartComponent"]));
+
+
+
+/***/ }),
+
 /***/ "./src/app/Dashboard/dashboard.component.html":
 /*!****************************************************!*\
   !*** ./src/app/Dashboard/dashboard.component.html ***!
@@ -1094,7 +1604,7 @@ var DashboardComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div class=\"col-md-3 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Packages:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_packages}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Errors:\n    </p>\n    <p class=\"number errors\">\n      {{total_number_of_errors}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n</div>\n\n<div class=\"card\">\n  <ngx-charts-line-chart\n    [results]=\"graphData\">\n  </ngx-charts-line-chart>\n</div>\n\n<div class=\"card\">\n  <ngx-charts-advanced-pie-chart\n    [view]=\"view\"\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Filetypes\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n\n<ngx-charts-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [legend]=\"showLegend\"\n  [explodeSlices]=\"explodeSlices\"\n  [labels]=\"showLabels\"\n  [doughnut]=\"doughnut\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-pie-chart>\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div class=\"col-md-3 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Packages:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_packages}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Errors:\n    </p>\n    <p class=\"number errors\">\n      {{total_number_of_errors}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n</div>\n\n<div class=\"row  half-graph\">\n<!-- <div class=\"card\">\n  <combo-chart-component\n    *ngIf=\"dataLoaded\"\n    [view]=\"view\"\n    [scheme]=\"colorScheme\"\n    [results]=\"graphData\"\n    xAxis=\"true\"\n    yAxis=\"true\"\n    [gradient]=\"gradient\"\n    schemeType=\"ordinal\">\n  </combo-chart-component>\n</div> -->\n  <div class=\"card col-md-6\">\n    <div class=\"card-title\">\n      Number of files\n    </div>\n    <div class=\"card-body\">\n      <combo-chart-component\n        [results]=\"graphDataCount\"\n        xAxis=\"true\"\n        yAxis=\"true\"\n        >\n      </combo-chart-component>\n    </div>\n  </div>\n  <div class=\"card col-md-6\">\n    <div class=\"card-title\">\n      Total size of all files\n    </div>\n    <div class=\"card-body\">\n      <combo-chart-component\n        [results]=\"graphDataSize\"\n        xAxis=\"true\"\n        yAxis=\"true\"\n        [yAxisTickFormatting]=\"formatBytes\">\n      </combo-chart-component>\n    </div>\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Filetypes\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypesErrors\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Errors per Filetype\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n"
 
 /***/ }),
 
@@ -1105,7 +1615,7 @@ module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div cla
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -2074,7 +2584,7 @@ var PackageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart>\n\n<ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge>\n"
+module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <!-- <p class=\"numberTitle\">\n      Browse:\n    </p> -->\n    <button class=\"btn btn-success browse\" (click)=\"startWorkflow()\">Browse package</button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div class=\"progress-bar text-dark text-center\"\n  [style.width]=\"progress + '%'\">{{progress}}%</div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Filetypes\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<!-- <div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypesErrors\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Errors per Filetype\">\n  </ngx-charts-advanced-pie-chart>\n</div> -->\n\n\n\n<!-- <ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart> -->\n\n<!-- <ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge> -->\n"
 
 /***/ }),
 
@@ -2085,7 +2595,7 @@ module.exports = "<ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ""
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -2102,6 +2612,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utilities */ "./src/app/Utilities.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2118,6 +2629,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 // import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 // import { PackagesService } from './Packages.service'
+
 var PackageDashboardComponent = /** @class */ (function () {
     function PackageDashboardComponent(packageService, route, router) {
         // Object.assign(this, {single, multi})
@@ -2155,13 +2667,17 @@ var PackageDashboardComponent = /** @class */ (function () {
         // options
         this.showLegend = false;
         this.colorScheme = {
-            domain: ['#eac435', '#345995', '#e40066', '#03cea4', '#fb4d3d']
+            domain: _Utilities__WEBPACK_IMPORTED_MODULE_3__["GraphColors"]
         };
         // pie
         this.showLabels = true;
         this.explodeSlices = false;
         this.doughnut = false;
         this.gradient = false;
+        // change to 0 later
+        this.total_number_of_files = 12;
+        this.total_size = '3.45 GB';
+        this.progress = 0;
     }
     PackageDashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2179,8 +2695,16 @@ var PackageDashboardComponent = /** @class */ (function () {
                     temp['value'] = value;
                     res.push({ "name": key.toUpperCase(), "value": value });
                 }
+                _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_3__["formatBytes"])(_this.package.statistics.total_size);
+                _this.total_number_of_files = _this.package.statistics.total_number_of_files;
                 _this.fileTypes = res.slice();
-                // console.log(this.fileTypes)
+                //calculate total progress
+                _this.progress = 0;
+                for (var _i = 0, _a = _this.package.processes; _i < _a.length; _i++) {
+                    var process = _a[_i];
+                    _this.progress += Number(process.progress);
+                }
+                _this.progress = _this.progress / _this.package.processes.length;
             });
         });
     };
@@ -3356,6 +3880,42 @@ var TooltipModule = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Utilities.ts":
+/*!******************************!*\
+  !*** ./src/app/Utilities.ts ***!
+  \******************************/
+/*! exports provided: formatBytes, GraphColors */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "formatBytes", function() { return formatBytes; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "GraphColors", function() { return GraphColors; });
+function formatBytes(o) {
+    var sizes = [
+        'Bytes',
+        'KB',
+        'MB',
+        'GB',
+        'TB',
+        'PB'
+    ];
+    var size = o;
+    var index = 0;
+    while (size / 1000 > 0.1) {
+        size = size / 1000;
+        index += 1;
+    }
+    size = Math.floor(size * 1000) / 1000;
+    return size + ' ' + sizes[index];
+}
+var GraphColors = ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6',
+    '#34495e', '#f1c40f', '#e67e22', '#e74c3c', '#95a5a6', '#16a085', '#27ae60',
+    '#2980b9', '#8e44ad', '#2c3e50', '#f39c12', '#d35400', '#c0392b', '#7f8c8d'];
+
+
+/***/ }),
+
 /***/ "./src/app/app-routing.module.ts":
 /*!***************************************!*\
   !*** ./src/app/app-routing.module.ts ***!
@@ -3429,7 +3989,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n  color: #bc044e;\n  background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
 
 /***/ }),
 
@@ -3491,9 +4051,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
 /* harmony import */ var _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Admin/Admin.module */ "./src/app/Admin/Admin.module.ts");
 /* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
-/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Dashboard/combo-chart.component */ "./src/app/Dashboard/combo-chart.component.ts");
+/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
+/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3517,6 +4078,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 // import { AdminComponent } from './Admin/Admin.component';
 
 
@@ -3529,23 +4091,24 @@ var AppModule = /** @class */ (function () {
                 // FileBrowserComponent,
                 _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
                 _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_10__["DashboardComponent"],
-                _NotFound_component__WEBPACK_IMPORTED_MODULE_11__["NotFoundComponent"],
+                _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_11__["ComboChartComponent"],
+                _NotFound_component__WEBPACK_IMPORTED_MODULE_12__["NotFoundComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_5__["NgxChartsModule"],
-                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_12__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_13__["NavbarModule"],
+                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__["NavbarModule"],
                 // DndListModule,
                 // NgxDnDModule,
                 // DragulaModule,
                 // DragDropDirectiveModule,
                 _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_8__["PackagesModule"],
                 _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_9__["AdminModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"],
-                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"]
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_6__["AppRoutingModule"]
             ],
             providers: [],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
