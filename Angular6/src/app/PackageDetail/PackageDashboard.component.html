@@ -25,8 +25,16 @@
 </div>
 
 <div class="progress border border-primary">
-  <div class="progress-bar text-dark text-center"
-  [style.width]="progress + '%'">{{progress}}%</div>
+  <div
+    *ngFor="let process of package.processes"
+    class="progress-bar text-dark text-center"
+    [style.width]="process.progress/package.processes.length + '%'"
+    [class.bg-success]="process.status == 'Done'"
+    [class.bg-danger]="process.status == 'Error'"
+    [class.progress-bar-animated]="process.status == 'Running'"
+    [class.progress-bar-striped]="process.status == 'Running'"
+    >
+  </div>
 </div>
 
 <div class="card filetypes">
@@ -35,7 +43,7 @@
     [results]="fileTypes"
     [gradient]="gradient"
     (select)="onSelect($event)"
-    label="Filetypes">
+    label="Files">
   </ngx-charts-advanced-pie-chart>
 </div>
 

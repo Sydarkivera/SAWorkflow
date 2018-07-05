@@ -18,7 +18,7 @@ import { GraphColors, formatBytes } from '../Utilities';
 })
 export class PackageDashboardComponent {
   id: number = -1;
-  package: any
+  package: any = {processes: []}
   fileTypes = []
   //   {
   //     "name":'pdf',
@@ -66,6 +66,7 @@ export class PackageDashboardComponent {
   total_number_of_files = 12
   total_size = '3.45 GB'
   progress = 0
+
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
     // Object.assign(this, {single, multi})

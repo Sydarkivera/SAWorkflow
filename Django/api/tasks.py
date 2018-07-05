@@ -393,3 +393,5 @@ def finishPackage(package_id):
     value = int(var.data)
     var.data = value + 1
     var.save()
+    package.status = Package.PACKAGE_STATUS_FINISHED
+    package.save()

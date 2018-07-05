@@ -41,6 +41,7 @@ class Package(models.Model):
     PACKAGE_STATUS_ERROR = 3
     PACKAGE_STATUS_DONE = 4
     PACKAGE_STATUS_EDITED = 5
+    PACKAGE_STATUS_FINISHED = 6
     PACKAGE_STATUS = (
         (PACKAGE_STATUS_NEW, 'New'),
         (PACKAGE_STATUS_WAITING, 'Waiting'),
@@ -48,6 +49,7 @@ class Package(models.Model):
         (PACKAGE_STATUS_ERROR, 'Error'),
         (PACKAGE_STATUS_DONE, 'Done'),
         (PACKAGE_STATUS_EDITED, 'Edited'),
+        (PACKAGE_STATUS_FINISHED, 'Finished'),
     )
     package_id = models.AutoField(primary_key=True)
     name = models.TextField()

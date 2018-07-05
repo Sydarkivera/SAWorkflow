@@ -39,8 +39,8 @@
     </tr>
   </tbody>
 </table>
-<button class="btn btn-success float-right" (click)="startWorkflow()">Start</button>
-<button class="btn btn-warning float-right" (click)="finishPackage()">Done</button>
+<button class="btn btn-success float-right" (click)="startWorkflow()" *ngIf="package.status != 6">Start</button>
+<button class="btn btn-warning float-right" (click)="finishPackage()" *ngIf="package.status != 6">Done</button>
 <button class="btn btn-danger float-right" (click)="removePackage()">Delete</button>
 
 

@@ -19,6 +19,7 @@ export class PackageHeaderComponent {
   showDropDown = false;
   packages: [any];
   active_template: any;
+  status = -1
 
   constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
 
@@ -34,6 +35,7 @@ export class PackageHeaderComponent {
          // console.log(data);
          this.active_template = data['active_template'];
          this.name = data['name'];
+         this.status = data['status']
        });
     });
     this.packageService.getAllPackages().subscribe((data) => {
