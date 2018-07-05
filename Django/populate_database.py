@@ -121,8 +121,6 @@ graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=21)), si
 graph.save()
 graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=14)), size=5834400000, count=9754)
 graph.save()
-print(datetime.date.today())
-print(datetime.date.today() - datetime.timedelta(days=7))
 graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=7)), size=2340000000, count=751)
 graph.save()
 graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)

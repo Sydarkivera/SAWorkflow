@@ -17,6 +17,7 @@ from api.models import Module, Package, Process, Template
 from api.serializers import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
+from api.tasks import executeProcessFlow, finishPackage
 
 import os
 import pwd
@@ -149,9 +150,6 @@ def package_detail(request, id):
         serializer = PackageDetailSerializer(package)
         return Response(serializer.data)
     elif request.method == 'DELETE':
-        # if 'removeWorkdir' in request.data:
-            # if request.data['removeWorkdir']:
-                # delete workdir
         if os.path.isdir(package.workdir):
             shutil.rmtree(package.workdir)
             logger.info('deleting package workdir: ' + package.workdir)
@@ -373,3 +371,26 @@ def dashboardStats(request):
         # graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
 
         return Response(data)
+
+
+@api_view(['POST'])
+def package_execute(request, package_id):
+    package = get_object_or_404(Package, pk=package_id)
+    if package.status != package.PACKAGE_STATUS_DONE:
+        for process in package.processes.all():
+            if process.status != Process.PROCESS_STATUS_DONE:
+                process.status = process.PROCESS_STATUS_WAITING
+                process.save()
+        package.status = package.PACKAGE_STATUS_WAITING
+        package.save()
+        executeProcessFlow.delay(package_id)
+        return HttpResponse(status=204)
+    return HttpResponseBadRequest("The specified package is not ready to be run.")
+
+
+@api_view(['POST'])
+def package_finish(request, package_id):
+    if request.method == 'POST':
+        #done buton pressed in ui.
+        finishPackage.delay(package_id)
+        return HttpResponse(status=204)

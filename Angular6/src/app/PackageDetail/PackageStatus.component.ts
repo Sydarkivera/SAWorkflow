@@ -40,9 +40,9 @@ export class PackageStatusComponent {
     });
 
     clearInterval(this.interval);
-    // this.interval = setInterval(() => {
-    //   this.updateData();
-    // }, 3000);
+    this.interval = setInterval(() => {
+      this.updateData();
+    }, 3000);
   }
 
   showModal(process, type) {
@@ -66,6 +66,11 @@ export class PackageStatusComponent {
 
   startWorkflow() {
     this.packageService.startWorkflow(this.package.package_id);
+    this.updateData();
+  }
+
+  finishPackage() {
+    this.packageService.finishPackage(this.package.package_id);
     this.updateData();
   }
 

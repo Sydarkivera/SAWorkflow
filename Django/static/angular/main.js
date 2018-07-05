@@ -2815,24 +2815,15 @@ var PackageDetailService = /** @class */ (function () {
         return this.http.get('/process/' + process_id + '/' + path, { responseType: 'text' });
     };
     PackageDetailService.prototype.startWorkflow = function (package_id) {
-        // this.client.fetch('/package/'+package_id+'/execute/', {
-        //     method: "POST",
-        // })
-        this.http.post('/package/' + package_id + '/execute/', {}).subscribe(function () {
+        this.http.post('/api/package/' + package_id + '/execute/', {}).subscribe(function () {
+        });
+    };
+    PackageDetailService.prototype.finishPackage = function (package_id) {
+        this.http.post('/api/package/' + package_id + '/finish/', {}).subscribe(function () {
         });
     };
     PackageDetailService.prototype.removePackage = function (id) {
         return this.http.delete('/api/package/' + id + '/');
-        //   let body = {"removeWorkdir": this.removeWorkdir};
-        //   this.client.fetch('/api/package/'+package_id+'/', {
-        //       method: "DELETE",
-        //       body: json(body),
-        //   })
-        //       .then(response => {
-        //           console.log(response.json());
-        //           window.location.href = "/";
-        //       });
-        // }
     };
     PackageDetailService.prototype.getTemplates = function () {
         return this.http.get('/api/template/');
@@ -2958,7 +2949,7 @@ var PackageHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n<button class=\"btn btn-warning float-right\" (click)=\"removePackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div>\n    <div *ngIf=\"modalType == 'error'\" class=\"list-group\">\n      <div *ngFor=\"let error of modalProcess.errors\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.Error)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
+module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n<button class=\"btn btn-warning float-right\" (click)=\"finishPackage()\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div>\n    <div *ngIf=\"modalType == 'error'\" class=\"list-group\">\n      <div *ngFor=\"let error of modalProcess.errors\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.Error)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -3027,9 +3018,9 @@ var PackageStatusComponent = /** @class */ (function () {
             _this.updateData();
         });
         clearInterval(this.interval);
-        // this.interval = setInterval(() => {
-        //   this.updateData();
-        // }, 3000);
+        this.interval = setInterval(function () {
+            _this.updateData();
+        }, 3000);
     };
     PackageStatusComponent.prototype.showModal = function (process, type) {
         var _this = this;
@@ -3053,6 +3044,10 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.startWorkflow = function () {
         this.packageService.startWorkflow(this.package.package_id);
+        this.updateData();
+    };
+    PackageStatusComponent.prototype.finishPackage = function () {
+        this.packageService.finishPackage(this.package.package_id);
         this.updateData();
     };
     PackageStatusComponent.prototype.updateData = function () {

@@ -8,7 +8,7 @@ __status__ = "Development"
 
 from background_task import background
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import Module, Package, Process, Template
+from api.models import Module, Package, Process, Template, Variable, FileType
 from logging import getLogger
 import importlib
 import time
@@ -22,11 +22,28 @@ import re
 from celery import Celery
 from celery.schedules import crontab
 from config.celeryconf import app
+from celery.decorators import task
 from datetime import timedelta
 from celery.task import periodic_task
 from django.conf import settings
 
 logger = getLogger('background_task')
+
+def errorHappend(fileName=""):
+    var = Variable.objects.get(name='total_number_of_errors')
+    value = int(var.data)
+    var.data = value + 1
+    var.save()
+    # var.save()
+    if fileName != "":
+        fileType = fileName.split('.')[-1].upper()
+        try:
+            ft = FileType.objects.get(name=fileType)
+            ft.errors += 1
+            ft.save()
+        except FileType.DoesNotExist:
+            ft = FileType(name=fileType, errors=1)
+            ft.save()
 
 
 class pythonModuleBase:
@@ -161,6 +178,7 @@ class bashModule(pythonModuleBase):
                         errorDict['file'] = fileName
                         errorDict['Error'] = errorText
                         errorFiles.append(errorDict)
+                        errorHappend(fileName)
                         retval = -1
                     else:
                         allFiles[i]['status'] = True
@@ -173,7 +191,7 @@ class bashModule(pythonModuleBase):
         return retval
 
 # @background(schedule=1)
-@app.task
+@task(name="executeProcessFlow")
 def executeProcessFlow(package_id):
     # get list of all processes in package.
     # execute the processes one by one.
@@ -306,7 +324,7 @@ def calculateMetricsForNewPackage(package):
     total_size = 0
     for dirpath, dirs, files in os.walk(os.path.join(package.workdir, package.file_name.split('.')[0])):
         for file in files:
-            type = file.split('.')[-1]
+            type = file.split('.')[-1].upper()
             # logger.info(file)
             total_size += os.path.getsize(os.path.join(dirpath, file))
             total_number_of_files += 1
@@ -324,10 +342,54 @@ def calculateMetricsForNewPackage(package):
     package.statistics = stats
     package.save()
 
-    # calculate filetypes in package.
-    # calculate global filetypesself.
-    # calculate size of package
-    # calculate
 
+@task(name="finished package")
+def finishPackage(package_id):
+    try:
+        package = Package.objects.get(pk=package_id)
+    except ObjectDoesNotExist:
+        logger.error("The selected package does not exist")
+        return
 
-    pass
+    # add template tasks
+    template = Template.objects.get(pk=1)
+    if template:
+        for process in template.processes.all():
+            process.pk = None
+            process.template = None
+            process.package = package
+            process.save()
+
+    executeProcessFlow(package_id)
+
+    # save the data to done.
+    try:
+        package = Package.objects.get(pk=package_id)
+    except ObjectDoesNotExist:
+        logger.error("The selected package does not exist")
+        return
+
+    stats = package.statistics
+    # for every filetype, add to processed files.
+    fileTypes = stats['fileTypes']
+    for ft in fileTypes:
+        logger.info(ft)
+        try:
+            fileType = FileType.objects.get(name=ft)
+            fileType.total += fileTypes[ft]
+            fileType.save()
+        except FileType.DoesNotExist:
+            fileType = FileType(name=ft, total=fileTypes[ft])
+            fileType.save()
+    var = Variable.objects.get(name="total_number_of_files")
+    value = int(var.data)
+    var.data = value + stats['total_number_of_files']
+    var.save()
+    var = Variable.objects.get(name="total_size")
+    value = int(var.data)
+    var.data = value + stats['total_size']
+    var.save()
+    var = Variable.objects.get(name="total_number_of_packages")
+    value = int(var.data)
+    var.data = value + 1
+    var.save()
