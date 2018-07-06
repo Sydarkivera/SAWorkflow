@@ -39,14 +39,15 @@ services:
     command: ./run_web.sh
     volumes:
       # - .:/app  # mount current directory inside container
-      - "./django/config:/code/config"
-      - "./django/api:/code/api"
-      - "./django/core:/code/core"
-      - "./django/static:/code/static"
-      - "./django/workdir:/code/workdir"
-      - "./django/test_packages:/code/test_packages"
-      - "./django/populate_database.py:/code/populate_database.py"
-      - "./django/populate_database.py:/populate_database.py"
+      - "./Django/config:/code/config"
+      - "./Django/api:/code/api"
+      - "./Django/core:/code/core"
+      - "./Django/static:/code/static"
+      - "./Django/workdir:/code/workdir"
+      - "./Django/test_packages:/code/test_packages"
+      - "./Django/populate_database.py:/code/populate_database.py"
+#      - "./django/populate_database.py:/populate_database.py"
+#       - "./Django:/code"
     ports:
       - "8000:8000"
     # set up links so that web knows about db, rabbit and redis
@@ -65,12 +66,13 @@ services:
     command: ./run_celery.sh
     volumes:
       # - .:/app  # mount current directory inside container
-      - "./django/config:/code/config"
-      - "./django/api:/code/api"
-      - "./django/core:/code/core"
-      - "./django/static:/code/static"
-      - "./django/workdir:/code/workdir"
-      - "./django/test_packages:/code/test_packages"
+      - "./Django/config:/code/config"
+      - "./Django/api:/code/api"
+      - "./Django/core:/code/core"
+      - "./Django/static:/code/static"
+      - "./Django/workdir:/code/workdir"
+      - "./Django/test_packages:/code/test_packages"
+#       - "./Django:/code"
     links:
       - db
       - rabbit
