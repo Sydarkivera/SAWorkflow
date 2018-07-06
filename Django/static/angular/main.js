@@ -78,12 +78,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
 /* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
-/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
-/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
-/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
-/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+/* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -96,6 +97,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //imports
+
 
 
 //declarations
@@ -118,15 +120,16 @@ var AdminModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
                 _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
+                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"]
             ],
             declarations: [
-                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_7__["AdminHeaderComponent"],
-                _AdminModules_component__WEBPACK_IMPORTED_MODULE_8__["AdminModulesComponent"],
-                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_9__["AdminGlobalComponent"],
-                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_10__["AdminProcessesComponent"],
-                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_11__["AdminTemplatesComponent"]
+                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_8__["AdminHeaderComponent"],
+                _AdminModules_component__WEBPACK_IMPORTED_MODULE_9__["AdminModulesComponent"],
+                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_10__["AdminGlobalComponent"],
+                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_11__["AdminProcessesComponent"],
+                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__["AdminTemplatesComponent"]
             ],
-            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_12__["ModuleService"]],
+            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_13__["ModuleService"]],
         })
     ], AdminModule);
     return AdminModule;
@@ -296,17 +299,6 @@ var AdminHeaderComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Admin/AdminModules.component.css":
-/*!**************************************************!*\
-  !*** ./src/app/Admin/AdminModules.component.css ***!
-  \**************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: red;\n}\n"
-
-/***/ }),
-
 /***/ "./src/app/Admin/AdminModules.component.html":
 /*!***************************************************!*\
   !*** ./src/app/Admin/AdminModules.component.html ***!
@@ -314,7 +306,18 @@ module.exports = ".input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: r
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-8\" *ngIf=\"selected_module\">\n    <h4>{{title}}</h4>\n    <div *ngIf=\"selected_module.form.length > 0\">\n      <label *ngFor=\"let input of selected_module.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n        {{input.label}}\n        <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n        <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n      </label>\n      <button class=\"btn btn-success\">Save as default values</button>\n    </div>\n\n    <h5 style=\"display:block; float:left\">Settings:</h5>\n    <button class=\"btn btn-success\" style=\"float:right;\" (click)=\"save()\">Save changes</button>\n    <label class=\"input-label\">\n      Name:\n      <input type=\"text\" [(ngModel)]=\"selected_module.name\"/>\n    </label>\n    <label class=\"input-label\">\n      Hidden:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.hidden\"/>\n    </label>\n    <label class=\"input-label\">\n      File filter:\n      <input type=\"text\" [(ngModel)]=\"selected_module.filter\"/>\n    </label>\n    <label class=\"input-label\">\n      Form:\n    </label>\n    <textarea rows=\"10\" [(ngModel)]=\"formJson\">\n    </textarea>\n    <p class=\"Error-text\">{{formJsonError}}</p>\n    <hr>\n    <label class=\"input-label\">\n      What qualifies succes in the log files:\n    </label>\n    <div *ngFor=\"let filter of selected_module.resultFilter\">\n      <div class=\"resultFilterItem\">\n        <select [(ngModel)]=\"filter.type\">\n          <option value=\"Containing\">Containing</option>\n          <option value=\"Not containing\">Not containing</option>\n        </select>\n        <input type=\"text\" [(ngModel)]=\"filter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"removeResultFilter(filter)\">delete</i>\n      </div>\n    </div>\n    <hr>\n    <p>Add a new filter</p>\n    <div class=\"resultFilterItem\">\n      <select [(ngModel)]=\"newResultFilter.type\">\n        <option value=\"Containing\">Containing</option>\n        <option value=\"Not containing\">Not containing</option>\n      </select>\n        <input type=\"text\" [(ngModel)]=\"newResultFilter.value\"/>\n        <i class=\"material-icons icon-button\" (click)=\"addResultFilter()\">add</i>\n      <!-- <button class=\"btn btn-success\" (click)=\"addResultFilter()\">Add Row</button> -->\n    </div>\n    <!-- <hr> -->\n    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n    <h6>Command:</h6>\n    <label class=\"input-label\">\n      type:\n      <select [(ngModel)]=\"selected_module.type\">\n        <option value=\"Command\">Command</option>\n        <option value=\"Python module\">Python module</option>\n      </select>\n      <i class=\"material-icons icon-button\">warning</i>\n    </label>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Command'\">\n      Command:\n      <!-- <input type=\"text\" [value]=\"getJson(selected_module.command)\"/> -->\n    </label>\n    <textarea rows=\"10\" [(ngModel)]=\"commandJson\" *ngIf=\"selected_module.type == 'Command'\">\n    </textarea>\n    <label class=\"input-label\" *ngIf=\"selected_module.type == 'Python module'\">\n      Python Module:\n      <input type=\"text\" [(ngModel)]=\"selected_module.python_module\"/>\n    </label>\n    <label class=\"input-label\">\n      Run on multiple files:\n      <input type=\"checkbox\" [(ngModel)]=\"selected_module.multifile\"/>\n    </label>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n    <button class=\"btn\" (click)=\"exportModule()\">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div\n          *ngFor=\"let module of modules\"\n          class=\"list-group-item list-group-item-action\"\n          (click)=\"selectModule(module)\"\n          [class.active]=\"module.module_id == selected_module.module_id\"\n          >\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">Add new tool</button>\n    <button class=\"btn\" (click)=\"importModule()\">Import tool</button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <!-- <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/> -->\n          <!-- <label class=\"form-check-label\" for=\"{{input.identifier}}\" class=\"input-label\"  [class.form-check-label]=\"input.type=='checkbox'\"> -->\n            <!-- {{input.label}} -->\n          <!-- </label> -->\n          <!-- <input class=\"form-control\" type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">Form json</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <!-- <input type=\"text\" [(ngModel)]=\"filter.value\"/> -->\n            <div class=\"form-group my-auto\">\n              <!-- <label>Name</label> -->\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <!-- <input type=\"text\" [(ngModel)]=\"filter.value\"/> -->\n          <div class=\"form-group my-auto\">\n            <!-- <label>Name</label> -->\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"commandJson\" ></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputMultipleFiles\" [(ngModel)]=\"selected_module.multifile\">\n            <label class=\"form-check-label\" for=\"inputMultipleFiles\">Run on multiple files</label>\n          </div>\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">Delete</button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\">\n          {{fileName}}\n        </label>\n      </div>\n      <button type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<!-- TODO: export, import, delete -->\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminModules.component.sass":
+/*!***************************************************!*\
+  !*** ./src/app/Admin/AdminModules.component.sass ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.input-label {\n  width: 100%; }\n\n.Error-text {\n  color: red; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n\ntextarea {\n  width: 100%; }\n\n.allow-scroll-beneath-page-end {\n  height: 300px; }\n\n.card {\n  margin-bottom: 10px; }\n\n.form-row div, .form-row select {\n  margin-right: 5px; }\n"
 
 /***/ }),
 
@@ -355,13 +358,16 @@ var AdminModulesComponent = /** @class */ (function () {
     function AdminModulesComponent(packageService, moduleService) {
         this.packageService = packageService;
         this.moduleService = moduleService;
-        this.selected_module = undefined;
+        this.selected_module = { module_id: -1 };
+        this.title = "";
         this.formJson = "";
         this.commandJson = "";
         this.formJsonError = "";
         this.commandJsonError = "";
-        this.resultFilters = undefined;
+        this.resultFilters = [];
         this.newResultFilter = { type: 'Containing', value: '' };
+        this.modalactive = false;
+        this.fileName = "Select file...";
     }
     AdminModulesComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -377,12 +383,32 @@ var AdminModulesComponent = /** @class */ (function () {
         this.formJson = this.getJson(this.selected_module.form);
         this.commandJson = this.getJson(this.selected_module.command);
     };
+    AdminModulesComponent.prototype.addNewModule = function () {
+        this.selected_module = { module_id: -2, form: [], type: "Command" };
+        this.title = "New module";
+        this.formJson = "[]";
+        this.commandJson = "[]";
+    };
+    AdminModulesComponent.prototype.deleteModule = function (dmodule) {
+        var _this = this;
+        if (confirm("Are you sure to delete " + dmodule.name)) {
+            this.moduleService.deleteModule(dmodule.module_id).subscribe(function (data) {
+                _this.modules = _this.modules.filter(function (item) {
+                    if (item.module_id == dmodule.module_id) {
+                        return false;
+                    }
+                    return true;
+                });
+                _this.selected_module = { module_id: -1 };
+            });
+        }
+    };
     AdminModulesComponent.prototype.selectModule = function (mod) {
         if (!this.selected_module || this.selected_module.module_id != mod.module_id) {
             this.setModule(mod);
         }
         else {
-            this.selected_module = undefined;
+            this.selected_module = { module_id: -1 };
         }
     };
     AdminModulesComponent.prototype.renderCommand = function () {
@@ -396,12 +422,9 @@ var AdminModulesComponent = /** @class */ (function () {
     AdminModulesComponent.prototype.getJson = function (data) {
         return JSON.stringify(data, null, 4);
     };
-    AdminModulesComponent.prototype.exportModule = function () {
-    };
     AdminModulesComponent.prototype.save = function () {
-        var _this = this;
         //validate first!
-        console.log(this.selected_module.type);
+        var _this = this;
         try {
             this.selected_module.form = JSON.parse(this.formJson);
             this.formJsonError = "";
@@ -421,25 +444,102 @@ var AdminModulesComponent = /** @class */ (function () {
             return false;
         }
         var data = {};
-        data["name"] = this.selected_module.name;
-        data["hidden"] = this.selected_module.hidden;
-        data["form"] = this.selected_module.form;
-        data["type"] = this.selected_module.type;
-        data["command"] = this.selected_module.command;
-        data["python_module"] = this.selected_module.python_module;
-        data["multifile"] = this.selected_module.multifile;
-        data["filter"] = this.selected_module.filter;
-        data["resultFilter"] = this.selected_module.resultFilter;
-        this.moduleService.saveData(this.selected_module.module_id, data).subscribe(function (data) {
-            // console.log(data);
-            for (var i in _this.modules) {
-                var m = _this.modules[i];
-                if (m.module_id == data["module_id"]) {
-                    // m = data;
-                    _this.modules[i] = data;
-                    _this.setModule(data);
-                }
+        if (this.selected_module.name != undefined) {
+            data["name"] = this.selected_module.name;
+        }
+        if (this.selected_module.hidden != undefined) {
+            data["hidden"] = this.selected_module.hidden;
+        }
+        if (this.selected_module.form != undefined) {
+            data["form"] = this.selected_module.form;
+        }
+        if (this.selected_module.type != undefined) {
+            data["type"] = this.selected_module.type;
+        }
+        if (this.selected_module.command != undefined) {
+            data["command"] = this.selected_module.command;
+        }
+        if (this.selected_module.python_module != undefined) {
+            data["python_module"] = this.selected_module.python_module;
+        }
+        if (this.selected_module.multifile != undefined) {
+            data["multifile"] = this.selected_module.multifile;
+        }
+        if (this.selected_module.filter != undefined) {
+            data["filter"] = this.selected_module.filter;
+        }
+        if (this.selected_module.resultFilter != undefined) {
+            data["resultFilter"] = this.selected_module.resultFilter;
+        }
+        console.log(this.selected_module.type);
+        console.log(this.selected_module.command);
+        console.log(this.selected_module.python_module);
+        if (this.selected_module.type == 'Command') {
+            if (!this.selected_module.command || this.selected_module.command.length <= 0) {
+                this.commandJsonError = "to save a new tool, the command needs to be configured";
+                return false;
             }
+        }
+        else if (this.selected_module.type == 'Python module') {
+            if (!this.selected_module.python_module || this.selected_module.python_module == "") {
+                this.commandJsonError = "to save a new tool, the python file needs to be specified";
+                return false;
+            }
+        }
+        if (this.selected_module.module_id != -2) {
+            this.moduleService.saveData(this.selected_module.module_id, data).subscribe(function (data) {
+                for (var i in _this.modules) {
+                    var m = _this.modules[i];
+                    if (m.module_id == data["module_id"]) {
+                        _this.modules[i] = data;
+                        _this.setModule(data);
+                    }
+                }
+            });
+        }
+        else {
+            delete this.selected_module.module_id;
+            this.moduleService.createModule(data).subscribe(function (data) {
+                _this.setModule(data);
+                _this.modules.push(data);
+                _this.modules = _this.modules.sort(function (a, b) {
+                    if (a.name.toUpperCase() > b.name.toUpperCase()) {
+                        return 1;
+                    }
+                    return -1;
+                });
+            });
+        }
+    };
+    AdminModulesComponent.prototype.importModule = function () {
+        this.modalactive = true;
+    };
+    AdminModulesComponent.prototype.fileSelected = function (e) {
+        // console.log(e)
+        if (e.target.files.length > 0) {
+            //check fileFormat
+            if (!e.target.files[0].name.endsWith('.tar')) {
+                console.log('error, wrong fileType');
+                this.fileName = "Select file...";
+            }
+            else {
+                this.file = e.target.files[0];
+                this.fileName = this.file.name;
+            }
+        }
+    };
+    AdminModulesComponent.prototype.uploadFile = function () {
+        // console.log('upload');
+        if (!this.file.name.endsWith('.tar')) {
+            console.log('error, wrong fileType');
+            return;
+        }
+        this.modalactive = false;
+        this.fileName = "Select file...";
+        var formData = new FormData();
+        formData.append('file', this.file, 'import.tar');
+        this.moduleService.importModule(formData).subscribe(function (data) {
+            console.log(data);
         });
     };
     AdminModulesComponent.prototype.setJSONForm = function (event) {
@@ -466,7 +566,7 @@ var AdminModulesComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'admin',
             template: __webpack_require__(/*! ./AdminModules.component.html */ "./src/app/Admin/AdminModules.component.html"),
-            styles: [__webpack_require__(/*! ./AdminModules.component.css */ "./src/app/Admin/AdminModules.component.css")]
+            styles: [__webpack_require__(/*! ./AdminModules.component.sass */ "./src/app/Admin/AdminModules.component.sass")]
         }),
         __metadata("design:paramtypes", [_PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_1__["PackageDetailService"], _Module_service__WEBPACK_IMPORTED_MODULE_2__["ModuleService"]])
     ], AdminModulesComponent);
@@ -849,7 +949,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Templ
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
 
 /***/ }),
 
@@ -955,6 +1055,13 @@ var ModuleService = /** @class */ (function () {
     ModuleService.prototype.getModules = function () {
         return this.http.get('/api/module/');
     };
+    ModuleService.prototype.createModule = function (data) {
+        console.log(data);
+        return this.http.put(this.packagesURL, data);
+    };
+    ModuleService.prototype.deleteModule = function (module_id) {
+        return this.http.delete(this.packagesURL + module_id + '/');
+    };
     ModuleService.prototype.addProcess = function (process) {
         return this.http.post('/api/process/', process);
     };
@@ -963,6 +1070,14 @@ var ModuleService = /** @class */ (function () {
     };
     ModuleService.prototype.deleteProcess = function (id) {
         return this.http.delete('/api/process/' + id + '/');
+    };
+    ModuleService.prototype.importModule = function (formData) {
+        // create a http-post request and pass the form
+        // tell it to report the upload progress
+        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/module/import/', formData, {
+            reportProgress: true
+        });
+        return this.http.request(req);
     };
     ModuleService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -1615,7 +1730,7 @@ module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div cla
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -1897,6 +2012,61 @@ var ModalComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Modal/Modal.module.ts":
+/*!***************************************!*\
+  !*** ./src/app/Modal/Modal.module.ts ***!
+  \***************************************/
+/*! exports provided: ModalModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalModule", function() { return ModalModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Modal/Modal.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+//imports
+//declarations
+
+//providers
+var ModalModule = /** @class */ (function () {
+    function ModalModule() {
+    }
+    ModalModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
+            ],
+            declarations: [
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
+            ],
+            providers: [],
+            exports: [
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
+            ]
+        })
+    ], ModalModule);
+    return ModalModule;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Navbar/Navbar.component.html":
 /*!**********************************************!*\
   !*** ./src/app/Navbar/Navbar.component.html ***!
@@ -2063,7 +2233,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Curre
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n    background-color-border-radius: 2px;\n    background-color-color: white; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
 
 /***/ }),
 
@@ -2516,8 +2686,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
 /* harmony import */ var _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Admin/Module.service */ "./src/app/Admin/Module.service.ts");
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Modal/Modal.component.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2554,7 +2724,8 @@ var PackageModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__["NavbarModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_15__["NavbarModule"],
+                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_16__["ModalModule"],
             ],
             declarations: [
                 _Package_component__WEBPACK_IMPORTED_MODULE_5__["PackageComponent"],
@@ -2563,8 +2734,7 @@ var PackageModule = /** @class */ (function () {
                 _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__["PackageStatusComponent"],
                 _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__["PackageTemplateComponent"],
                 _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__["FileBrowserComponent"],
-                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__["FileComponent"],
-                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_15__["ModalComponent"]
+                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__["FileComponent"]
             ],
             // bootstrap: [PackageHeaderComponent] s
             providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__["PackageDetailService"], _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__["ModuleService"]],
@@ -2595,7 +2765,7 @@ module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-s
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -2864,7 +3034,7 @@ module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.sh
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
 
 /***/ }),
 
@@ -3987,7 +4157,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
 
 /***/ }),
 

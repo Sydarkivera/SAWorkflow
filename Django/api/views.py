@@ -18,6 +18,10 @@ from api.serializers import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from api.tasks import executeProcessFlow, finishPackage
+from django.core.files.base import ContentFile, File
+from django.utils.six import b, BytesIO
+import json
+from config.settings import BASE_DIR
 
 import os
 import pwd
@@ -26,6 +30,9 @@ from os.path import isfile, join
 from django.conf import settings
 import subprocess
 import shutil
+import tarfile
+from io import UnsupportedOperation
+import time
 
 from logging import getLogger
 logger = getLogger('django')
@@ -42,14 +49,44 @@ def module_list(request):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        serializer = ModuleSerializer(data=request.data)
+        serializer = ModuleSerializer(data=request.data, partial=True)
         if serializer.is_valid():
+            # TODO: Check if the file exists if it is a python module, or validate the command more exactly
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 @api_view(['POST'])
+def module_import(request):
+    """
+    unpack imported module and add it to the system
+    """
+    logger.info(request)
+    logger.info(request.FILES)
+    logger.info(request.FILES['file'])
+    file = request.FILES['file']
+
+    try:
+        os.mkdir(os.path.join(settings.BASE_DIR, 'temp'))
+    except:
+        pass
+    fname = 'temp' + str(int(time.time())) + '.tar'
+
+    full_filename = os.path.join(settings.BASE_DIR, 'temp', fname)
+    fout = open(full_filename, 'wb+')
+
+    file_content = ContentFile( file.read() )
+
+    # Iterate through the chunks.
+    for chunk in file_content.chunks():
+        fout.write(chunk)
+    fout.close()
+
+# TODO untar file and use content, then delete tar and untared folder.
+
+    return HttpResponse(status=200)
+
+@api_view(['POST', 'DELETE'])
 def module(request, id):
     """
     Handle module edits
@@ -61,7 +98,63 @@ def module(request, id):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    pass
+    elif request.method == 'DELETE':
+        module.delete()
+        return HttpResponse(status=204)
+
+@api_view(['GET'])
+def module_export(request, module_id):
+    """
+    Export all data in the module as a tar file.
+    """
+    module = get_object_or_404(Module, pk=module_id)
+    serializer = ModuleSerializer(module)
+
+
+    files = []
+    files.append(ContentFile(b(json.dumps(serializer.data)), name="data.json"))
+
+    if module.type == 1:
+        # export python file
+        logger.info(module.python_module.split('.')[-1:])
+        files.append(File(open(os.path.join(BASE_DIR, 'tools/') + '.'.join(module.python_module.split('.')[-1:]) + '.py'), name=module.python_module.split('.')[-1] + '.py'))
+
+    temp_file = ContentFile(b(""), name=module.name + '.tar')
+    with tarfile.TarFile(fileobj=temp_file, mode='w', debug=3) as tar_file:
+        for file_ in files:
+            file_name = file_.name
+            try:
+                data = file_.read()
+            except UnicodeDecodeError:
+                pass
+            file_.seek(0, os.SEEK_SET)
+            size = len(data)
+            try:
+                if isinstance(data, bytes):
+                    lol = BytesIO(data)
+                else:
+                    lol = BytesIO(data.encode())
+            except UnicodeDecodeError:
+                pass
+            try:
+                info = tar_file.gettarinfo(fileobj=file_)
+            except UnsupportedOperation:
+                info = tarfile.TarInfo(name=file_name)
+            info.size = size
+            tar_file.addfile(tarinfo=info, fileobj=lol)
+    file_size = temp_file.tell()
+    temp_file.seek(0)
+
+    response = HttpResponse(temp_file, content_type='application/x-tar')
+    response['Content-Disposition'] = 'attachment; filename=\"' + module.name + '.tar\"'
+    response['Content-Length'] = file_size
+    return response
+    # def get_files(self):
+    #     # for i in range(0,10):
+    #     yield ContentFile(b(json.dumps(serializer.data)), name="data.json")
+    #         # yield file_like
+    #
+
 
 
 @api_view(['GET'])

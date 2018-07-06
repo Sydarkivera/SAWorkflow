@@ -1,4 +1,6 @@
 <div class="row">
+
+  <!-- Existing tools, left side -->
   <div class="col-lg-4">
     <h4>Existing Tools</h4>
     <div class="card">
@@ -6,96 +8,169 @@
         Name
       </div>
       <div class="list-group list-group-flush">
-        <div *ngFor="let module of modules" class="list-group-item list-group-item-action" (click)="selectModule(module)">
+        <div
+          *ngFor="let module of modules"
+          class="list-group-item list-group-item-action"
+          (click)="selectModule(module)"
+          [class.active]="module.module_id == selected_module.module_id"
+          >
           <div class="d-flex w-100 justify-content-between">
             <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
+            <i class="material-icons icon-button" (click)="deleteModule(module)">delete</i>
           </div>
         </div>
       </div>
     </div>
+    <button class="btn btn-success" (click)="addNewModule()">Add new tool</button>
+    <button class="btn" (click)="importModule()">Import tool</button>
   </div>
-  <div class="col-lg-8" *ngIf="selected_module">
-    <h4>{{title}}</h4>
-    <div *ngIf="selected_module.form.length > 0">
-      <label *ngFor="let input of selected_module.form" for="{{input.identifier}}" class="input-label">
-        {{input.label}}
-        <!-- <input type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="process.values[input.identifier]" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
-        <input type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
-      </label>
-      <button class="btn btn-success">Save as default values</button>
-    </div>
 
-    <h5 style="display:block; float:left">Settings:</h5>
-    <button class="btn btn-success" style="float:right;" (click)="save()">Save changes</button>
-    <label class="input-label">
-      Name:
-      <input type="text" [(ngModel)]="selected_module.name"/>
-    </label>
-    <label class="input-label">
-      Hidden:
-      <input type="checkbox" [(ngModel)]="selected_module.hidden"/>
-    </label>
-    <label class="input-label">
-      File filter:
-      <input type="text" [(ngModel)]="selected_module.filter"/>
-    </label>
-    <label class="input-label">
-      Form:
-    </label>
-    <textarea rows="10" [(ngModel)]="formJson">
-    </textarea>
-    <p class="Error-text">{{formJsonError}}</p>
-    <hr>
-    <label class="input-label">
-      What qualifies succes in the log files:
-    </label>
-    <div *ngFor="let filter of selected_module.resultFilter">
-      <div class="resultFilterItem">
-        <select [(ngModel)]="filter.type">
-          <option value="Containing">Containing</option>
-          <option value="Not containing">Not containing</option>
-        </select>
-        <input type="text" [(ngModel)]="filter.value"/>
-        <i class="material-icons icon-button" (click)="removeResultFilter(filter)">delete</i>
+  <!-- Detail view of tool -->
+
+  <div class="col-lg-8" *ngIf="selected_module.module_id != -1">
+    <h4>{{title}}</h4>
+
+    <!-- display the form if there is one -->
+    <div class="card" *ngIf="selected_module.form.length > 0">
+      <div class="card-header">
+        <h5>Form preview</h5>
+      </div>
+      <div class="card-body">
+        <div class="form-group" *ngFor="let input of selected_module.form">
+          <!-- <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/> -->
+          <!-- <label class="form-check-label" for="{{input.identifier}}" class="input-label"  [class.form-check-label]="input.type=='checkbox'"> -->
+            <!-- {{input.label}} -->
+          <!-- </label> -->
+          <!-- <input class="form-control" type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="input.default ? input.default : ''" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
+          <div class="form-check" *ngIf="input.type=='checkbox'">
+            <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
+            <label class="form-check-label" for="{{input.identifier}}">
+              {{input.label}}
+            </label>
+          </div>
+          <ng-template [ngIf]="input.type=='text'">
+            <label for="{{input.identifier}}">{{input.label}}</label>
+            <input type="text" class="form-control" [id]="input.identifier" placeholder="{{input.identifier}}" [value]="input.default ? input.default : ''" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)">
+          </ng-template>
+        </div>
       </div>
     </div>
-    <hr>
-    <p>Add a new filter</p>
-    <div class="resultFilterItem">
-      <select [(ngModel)]="newResultFilter.type">
-        <option value="Containing">Containing</option>
-        <option value="Not containing">Not containing</option>
-      </select>
-        <input type="text" [(ngModel)]="newResultFilter.value"/>
-        <i class="material-icons icon-button" (click)="addResultFilter()">add</i>
-      <!-- <button class="btn btn-success" (click)="addResultFilter()">Add Row</button> -->
+
+    <!-- Display the general settings -->
+    <div class="card">
+      <div class="card-header">
+        <h5 style="float:left">Settings</h5>
+        <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
+      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <input type="text" class="form-control" id="inputName" placeholder="Virus scan ClamAV" [(ngModel)]="selected_module.name">
+        </div>
+        <div class="form-group">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="inputHidden" [(ngModel)]="selected_module.hidden">
+            <label class="form-check-label" for="inputHidden">Hidden</label>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputFileFilter">File filter</label>
+          <input type="text" class="form-control" id="inputFileFilter" [(ngModel)]="selected_module.filter" placeholder=".*(\.pdf)">
+        </div>
+        <div class="form-group">
+          <label for="inputForm">Form json</label>
+          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="formJson"></textarea>
+        </div>
+
+        <p class="Error-text">{{formJsonError}}</p>
+        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>
+
+        <!-- Display logfile checks -->
+        <h5 class="input-label">
+          What qualifies succes in the log files:
+        </h5>
+        <div *ngFor="let filter of selected_module.resultFilter">
+          <div class="form-row">
+            <select class="custom-select col-sm-3 my-1 my-auto" [(ngModel)]="filter.type">
+              <option value="Containing">Containing</option>
+              <option value="Not containing">Not containing</option>
+            </select>
+            <!-- <input type="text" [(ngModel)]="filter.value"/> -->
+            <div class="form-group my-auto">
+              <!-- <label>Name</label> -->
+              <input type="text" class="form-control" placeholder="[\w\W]*pattern[\w\W]*" [(ngModel)]="filter.value">
+            </div>
+            <i class="material-icons icon-button my-auto" (click)="removeResultFilter(filter)">delete</i>
+          </div>
+        </div>
+        <hr>
+        <p>Add a new filter</p>
+        <div class="form-row">
+          <select class="custom-select col-sm-3 my-1 my-auto" [(ngModel)]="newResultFilter.type">
+            <option value="Containing">Containing</option>
+            <option value="Not containing">Not containing</option>
+          </select>
+          <!-- <input type="text" [(ngModel)]="filter.value"/> -->
+          <div class="form-group my-auto">
+            <!-- <label>Name</label> -->
+            <input type="text" class="form-control" placeholder="[\w\W]*pattern[\w\W]*" [(ngModel)]="newResultFilter.value">
+          </div>
+          <i class="material-icons icon-button my-auto" (click)="addResultFilter(filter)">add</i>
+        </div>
+      </div>
     </div>
-    <!-- <hr> -->
-    <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>
-    <h6>Command:</h6>
-    <label class="input-label">
-      type:
-      <select [(ngModel)]="selected_module.type">
-        <option value="Command">Command</option>
-        <option value="Python module">Python module</option>
-      </select>
-      <i class="material-icons icon-button">warning</i>
-    </label>
-    <label class="input-label" *ngIf="selected_module.type == 'Command'">
-      Command:
-      <!-- <input type="text" [value]="getJson(selected_module.command)"/> -->
-    </label>
-    <textarea rows="10" [(ngModel)]="commandJson" *ngIf="selected_module.type == 'Command'">
-    </textarea>
-    <label class="input-label" *ngIf="selected_module.type == 'Python module'">
-      Python Module:
-      <input type="text" [(ngModel)]="selected_module.python_module"/>
-    </label>
-    <label class="input-label">
-      Run on multiple files:
-      <input type="checkbox" [(ngModel)]="selected_module.multifile"/>
-    </label>
-    <button class="btn btn-success" (click)="save()">Save changes</button>
-    <button class="btn" (click)="exportModule()">Export</button> <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>
+
+    <!-- Display the actual command to be run -->
+    <div class="card">
+      <div class="card-header">
+        <h5 style="float:left">Command</h5>
+        <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
+      </div>
+      <div class="card-body">
+        <label class="input-label">
+          Type:
+          <select class="custom-select col-sm-3 my-1 my-auto" [(ngModel)]="selected_module.type">
+            <option value="Command">Command</option>
+            <option value="Python module">Python module</option>
+          </select>
+        </label>
+        <div class="form-group" *ngIf="selected_module.type == 'Command'">
+          <label for="inputForm">Command</label>
+          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="commandJson" ></textarea>
+        </div>
+        <div class="form-group" *ngIf="selected_module.type == 'Python module'">
+          <label for="inputName">Python Module</label>
+          <input type="text" class="form-control" id="inputName" placeholder="Path to python file" [(ngModel)]="selected_module.python_module">
+        </div>
+        <p class="Error-text">{{commandJsonError}}</p>
+        <div class="form-group">
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" id="inputMultipleFiles" [(ngModel)]="selected_module.multifile">
+            <label class="form-check-label" for="inputMultipleFiles">Run on multiple files</label>
+          </div>
+        </div>
+        <button class="btn btn-success" (click)="save()">Save changes</button>
+        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>
+      </div>
+    </div>
+    <a class="btn btn-secondary" href="/api/module/{{selected_module.module_id}}/export/">Export tool</a>
+    <button class="btn btn-danger" (click)="deleteModule(selected_module)">Delete</button>
+    <div class="allow-scroll-beneath-page-end"></div>
   </div>
 </div>
+
+<modal [(active)]="modalactive">
+  <div modal-body>
+    <form method="post" enctype="multipart/form-data">
+      <div class="custom-file" id="customFile" lang="en">
+        <input type="file" class="custom-file-input" id="exampleInputFile" (change)="fileSelected($event)" name="import.tar">
+        <label class="custom-file-label" for="exampleInputFile">
+          {{fileName}}
+        </label>
+      </div>
+      <button type="submit" (click)="uploadFile()">Upload</button>
+    </form>
+  </div>
+</modal>
+
+<!-- TODO: export, import, delete -->

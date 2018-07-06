@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 
 @Injectable()
 export class ModuleService {
@@ -27,6 +27,15 @@ export class ModuleService {
     return this.http.get('/api/module/');
   }
 
+  createModule(data) {
+    console.log(data)
+    return this.http.put(this.packagesURL, data);
+  }
+
+  deleteModule(module_id) {
+    return this.http.delete(this.packagesURL + module_id + '/');
+  }
+
   addProcess(process) {
     return this.http.post('/api/process/', process);
   }
@@ -37,6 +46,15 @@ export class ModuleService {
 
   deleteProcess(id) {
     return this.http.delete('/api/process/'+id+'/');
+  }
+
+  importModule(formData) {
+    // create a http-post request and pass the form
+    // tell it to report the upload progress
+    const req = new HttpRequest('POST', '/api/module/import/', formData, {
+      reportProgress: true
+    });
+    return this.http.request(req);
   }
   //
   // saveProcess(data, id) {

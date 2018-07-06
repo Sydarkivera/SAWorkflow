@@ -73,16 +73,16 @@ class Module(models.Model):
     )
     module_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, default='')
-    type = models.IntegerField(choices=MODULE_TYPES, default=0)
-    form = JSONField(default=[])
+    type = models.IntegerField(choices=MODULE_TYPES, default=0, blank=True)
+    form = JSONField(default=[], blank=True)
     python_module = models.CharField(max_length=100, default='', blank=True)
-    hidden = models.BooleanField(default=False)
-    command = JSONField(default=[])
+    hidden = models.BooleanField(default=False, blank=True)
+    command = JSONField(default=[], blank=True)
 
     # for handling mulitfile tools:
     # multifile = models.BooleanField(default=False)
     filter = models.CharField(max_length=200, default='*', blank=True)
-    resultFilter = JSONField(default=[])
+    resultFilter = JSONField(default=[], blank=True)
 
     class Meta:
         ordering = ('name',)

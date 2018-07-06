@@ -30,7 +30,7 @@ module1 = Module(name="Setup workdir",
                  type='1',
                  python_module='tools.setupWorkDir',
                  hidden=True,
-                 module_id=1,
+                 module_id=0,
                  )
 module1.save()
 module2 = Module(name="Untar archive",
@@ -38,21 +38,21 @@ module2 = Module(name="Untar archive",
                  form='[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}]',
                  python_module='tools.untar',
                  hidden=True,
-                 module_id=2,
+                 module_id=1,
                  )
 module2.save()
 module3 = Module(name="ClamAV",
                  type='0',
                  form='[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove"}]',
                  command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
-                 module_id=3,
+                 module_id=2,
                  )
 module3.save()
 module4 = Module(name="VeraPDF validate pdf1/a",
                  type='0',
                  form='[]',
                  command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 module_id=4,
+                 module_id=3,
                  filter='.*(\.pdf)',
                  resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]'
                  )

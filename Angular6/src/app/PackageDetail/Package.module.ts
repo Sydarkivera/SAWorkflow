@@ -16,8 +16,8 @@ import { FileComponent } from '../FileBrowser/File.component';
 import { PackageDetailService } from './PackageDetail.service';
 import { ModuleService } from '../Admin/Module.service';
 import { TooltipModule } from '../Tooltip/Tooltip.module';
-import { ModalComponent } from '../Modal/Modal.component';
 import { NavbarModule } from '../Navbar/Navbar.module';
+import { ModalModule } from '../Modal/Modal.module';
 // import { HeroDetailComponent }  from './hero-detail.component';
 
 // import { HeroService } from './hero.service';
@@ -30,6 +30,7 @@ import { NavbarModule } from '../Navbar/Navbar.module';
     RouterModule,
     TooltipModule,
     NavbarModule,
+    ModalModule,
     // PackageRoutingModule
   ],
   declarations: [
@@ -39,8 +40,7 @@ import { NavbarModule } from '../Navbar/Navbar.module';
     PackageStatusComponent,
     PackageTemplateComponent,
     FileBrowserComponent,
-    FileComponent,
-    ModalComponent
+    FileComponent
   ],
   // bootstrap: [PackageHeaderComponent] s
   providers: [PackageDetailService, ModuleService],

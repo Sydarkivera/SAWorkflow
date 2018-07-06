@@ -12,7 +12,10 @@ from api import views
 urlpatterns = [
     # url(r'^api/$', views.snippet_list),
     url(r'^module/$', views.module_list),
+    url(r'^module/import/$', views.module_import),
     url(r'^module/(?P<id>[0-9]+)/$', views.module),
+    url(r'^module/(?P<module_id>[0-9]+)/export/$', views.module_export),
+
     url(r'^package/$', views.package_list),
     url(r'^package/(?P<id>[0-9]+)/files/$', views.package_file_list),
     url(r'^package/(?P<id>[0-9]+)/$', views.package_detail),
