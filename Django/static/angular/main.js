@@ -529,6 +529,7 @@ var AdminModulesComponent = /** @class */ (function () {
         }
     };
     AdminModulesComponent.prototype.uploadFile = function () {
+        var _this = this;
         // console.log('upload');
         if (!this.file.name.endsWith('.tar')) {
             console.log('error, wrong fileType');
@@ -539,7 +540,11 @@ var AdminModulesComponent = /** @class */ (function () {
         var formData = new FormData();
         formData.append('file', this.file, 'import.tar');
         this.moduleService.importModule(formData).subscribe(function (data) {
-            console.log(data);
+            if (data.type == 4) {
+                // console.log(data['body']);
+                _this.modules = data['body'];
+            }
+            // this.setModule(this.modules[this.modules.length - 1]);
         });
     };
     AdminModulesComponent.prototype.setJSONForm = function (event) {

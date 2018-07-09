@@ -33,6 +33,7 @@ import shutil
 import tarfile
 from io import UnsupportedOperation
 import time
+import tarfile
 
 from logging import getLogger
 logger = getLogger('django')
@@ -61,30 +62,35 @@ def module_import(request):
     """
     unpack imported module and add it to the system
     """
-    logger.info(request)
-    logger.info(request.FILES)
-    logger.info(request.FILES['file'])
     file = request.FILES['file']
+    fname = 'temp' + str(int(time.time()))
 
-    try:
-        os.mkdir(os.path.join(settings.BASE_DIR, 'temp'))
-    except:
-        pass
-    fname = 'temp' + str(int(time.time())) + '.tar'
+    tar = tarfile.open(fileobj=file)
+    tar_list = tar.getnames()
+    if 'data.json' in tar_list:
+        jsonFO = tar.extractfile('data.json')
+        data = jsonFO.read()
+        jsonData = json.loads(data.decode("utf-8"))
+        serializer = ModuleSerializer(data=jsonData, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            # logger.info('python_file_path: ', serializer.data['python_module'])
+            if 'python_module' in serializer.data and serializer.data['type'] == 'Python module':
+                # import python file
+                py_file_name = serializer.data['python_module'].split('.')[-1]
+                py_file_name += '.py'
+                py_path = os.path.join(settings.BASE_DIR, 'tools')
+                # verify that the python file exists in the package:
+                if py_file_name in tar_list:
+                    tar.extract(py_file_name, path=py_path)
+        else:
+            logger.error('Failed to serialize imported module: ', serializer.errors)
+    tar.close()
 
-    full_filename = os.path.join(settings.BASE_DIR, 'temp', fname)
-    fout = open(full_filename, 'wb+')
-
-    file_content = ContentFile( file.read() )
-
-    # Iterate through the chunks.
-    for chunk in file_content.chunks():
-        fout.write(chunk)
-    fout.close()
-
-# TODO untar file and use content, then delete tar and untared folder.
-
-    return HttpResponse(status=200)
+    #return list of all tools:
+    modules = Module.objects.all()
+    serializer = ModuleSerializer(modules, many=True)
+    return Response(serializer.data)
 
 @api_view(['POST', 'DELETE'])
 def module(request, id):

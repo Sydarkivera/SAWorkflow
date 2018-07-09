@@ -207,7 +207,12 @@ export class AdminModulesComponent {
     formData.append('file', this.file, 'import.tar');
 
     this.moduleService.importModule(formData).subscribe((data) => {
-      console.log(data);
+      if (data.type == 4) {
+        // console.log(data['body']);
+        this.modules = data['body'] as [any];
+      }
+      // this.setModule(this.modules[this.modules.length - 1]);
+
     })
   }
 
