@@ -1,0 +1,65 @@
+<table class="table table-striped table-hover" style="background-color: white;">
+  <thead class="company-table-head">
+    <tr>
+      <th>Name</th>
+      <th>Statusbar</th>
+      <th>Status</th>
+      <th>Log</th>
+      <th>
+        Error
+        <button class="refresh" (click)="updateData()"><i class="material-icons">refresh</i></button>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let process of package.processes">
+      <td class="align-middle">
+        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}
+      </td>
+      <td class="align-middle">
+        <div class="progress border border-primary">
+          <div class="progress-bar text-dark text-center"
+          [class.bg-success]="process.status == 'Done'"
+          [class.bg-danger]="process.status == 'Error'"
+          [class.progress-bar-animated]="process.status == 'Running'"
+          [class.progress-bar-striped]="process.status == 'Running'"
+          [style.width]="process.progress + '%'">{{process.progress}}%</div>
+        </div>
+      </td>
+      <td class="align-middle">{{process.status}}</td>
+      <td class="align-middle"><button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Open log</button></td>
+      <td class="align-middle">
+        <button class="btn btn-danger"
+                (click)="showModal(process, 'error_log')"
+                [disabled]="process.err_path == '' || process.status != 'Error'"
+                [class.btn-outline-danger]="process.errors.length <= 0">
+                Errors: {{process.errors.length}}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<button class="btn btn-success float-right" (click)="startWorkflow()" *ngIf="package.status != 6">Start</button>
+<button class="btn btn-warning float-right" (click)="finishPackage()" *ngIf="package.status != 6">Done</button>
+<button class="btn btn-danger float-right" (click)="removePackage()">Delete</button>
+
+
+<modal [(active)]="modalactive" title="Complete log">
+  <div modal-body style="margin-bottom: 10px">
+    <div class="loading mx-auto" *ngIf="modalLoading"></div>
+    <div *ngIf="modalType == 'info'" [innerHTML]="modalData" style="white-space: pre-wrap;"></div>
+    <div *ngIf="modalType == 'error'" class="list-group">
+      <div *ngFor="let error of modalProcess.errors" class="list-group-item list-group-item-action" (click)="error.expanded = !error.expanded">
+        <div class=" d-flex justify-content-between">
+          <p class="">{{error.file}}</p>
+          <i *ngIf="!error.expanded" class="material-icons my-auto">keyboard_arrow_right</i>
+          <i *ngIf="error.expanded" class="material-icons my-auto">keyboard_arrow_down</i>
+        </div>
+        <div *ngIf="error.expanded">
+          <p [innerHTML]="sanitizeLog(error.Error)" style="white-space: pre-wrap;">
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</modal>

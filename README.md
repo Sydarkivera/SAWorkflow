@@ -24,6 +24,7 @@ Install required packages
     pip install django djangorestframework django-background-tasks jsonfield
 
 Install aurelia
+    npm global install aurelia-cli
 
     npm install aurelia-fetch-client whatwg-fetch --save
 
@@ -120,3 +121,28 @@ Contact simon@axenu.com or simon.nilsson@sydarkivera.se
 ## License
 
 This project is licensed under the terms of the GNU (General Public License)
+
+
+## TODO
+
+structure change? Should the packages automatically get unpacked?
+
+filebrowser from api call.
+preloading packages into
+modify tar library for returning json struct (including filformat, size, date?).
+implement unoconv and verapdf.
+enable processes to run per file.
+
+## Design decisions
+
+Should the user be able to add remove files?
+
+## Thursday
+
+* what should the program do when it's done?
+* Should the user be able to modify files in the program? i.e. delete files
+* How should the file browser work?
+* What data shall we visualise?
+* Should the program record the changes in some premis file?
+
+* Prepare some more test packages. One with pdf files, one with pdf and doc files and one with doc files. preferably 100s of files.

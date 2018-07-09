@@ -1,0 +1,25 @@
+@import ../../styles
+
+.package_title
+  font-weight: bold
+  color: white
+  margin: 0
+  padding: 0
+  cursor: pointer
+
+.nav-item
+  &.disabled
+    cursor: not-allowed
+  &.active
+    background-color: $company-color-primary
+  .nav-link
+    color: white
+    &.disabled
+      color: gray
+      pointer-events: none
+      cursor: not-allowed
+
+.dropdown-item
+  &:active
+    background-color: $company-color-primary
+    color: white !important

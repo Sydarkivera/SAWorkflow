@@ -1,0 +1,22 @@
+<h4>Select a template to set as a startingpoint for this package</h4>
+
+<table class="table table-striped table-hover" style="background-color: white;">
+  <thead class="company-table-head">
+    <tr>
+      <th>Name</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let template of templates" [class.selected]="active_template==template.template_id">
+      <td [class.selected]="active_template==template.template_id">
+        {{template.name}}
+      </td>
+      <td class="small-column" [class.selected]="active_template==template.template_id">
+        <!-- <a [routerLink]="[package.package_id, 'status']">{{package.status}}</a> -->
+        <button class="btn btn-success" *ngIf="active_template != template.template_id" [class.btn-warning]="active_template != undefined" (click)="selectTemplate(template)">Select</button>
+        <button class="btn btn-success">Start</button>
+      </td>
+    </tr>
+  </tbody>
+</table>

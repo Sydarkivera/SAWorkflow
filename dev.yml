@@ -1,0 +1,95 @@
+version: '3'
+
+services:
+
+    # PostgreSQL database
+  db:
+    image: postgres:9.4
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+
+
+  # Redis
+  redis:
+    image: redis:2.8.19
+    hostname: redis
+
+    # RabbitMQ
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3.6.0
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"  # we forward this port because it's useful for debugging
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+
+  # Django web server
+  web:
+    build:
+      context: .
+      dockerfile: DevDockerfile
+    hostname: web
+    command: ./run_web.sh
+    volumes:
+      # - .:/app  # mount current directory inside container
+      - "./Django/config:/code/config"
+      - "./Django/api:/code/api"
+      - "./Django/core:/code/core"
+      - "./Django/static:/code/static"
+      - "./Django/workdir:/code/workdir"
+      - "./Django/test_packages:/code/test_packages"
+      - "./Django/populate_database.py:/code/populate_database.py"
+#      - "./django/populate_database.py:/populate_database.py"
+#       - "./Django:/code"
+    ports:
+      - "8000:8000"
+    # set up links so that web knows about db, rabbit and redis
+    links:
+      - db
+      - rabbit
+      - redis
+    depends_on:
+      - db
+
+      # Celery worker
+  worker:
+    build:
+      context: .
+      dockerfile: DevDockerfile
+    command: ./run_celery.sh
+    volumes:
+      # - .:/app  # mount current directory inside container
+      - "./Django/config:/code/config"
+      - "./Django/api:/code/api"
+      - "./Django/core:/code/core"
+      - "./Django/static:/code/static"
+      - "./Django/workdir:/code/workdir"
+      - "./Django/test_packages:/code/test_packages"
+#       - "./Django:/code"
+    links:
+      - db
+      - rabbit
+      - redis
+    depends_on:
+      - rabbit
+
+
+    # app:
+    #     build:
+    #         context: .
+    #         dockerfile: DevDockerfile
+    #     ports:
+    #         - "8000:8000"
+    #     volumes:
+    #         - "./django/config:/code/config"
+    #         - "./django/api:/code/api"
+    #         - "./django/core:/code/core"
+    #         - "./django/static:/code/static"
+    #         - "./workdir:/code/workdir"

@@ -1,0 +1,53 @@
+<navbar>
+  <li class="nav-item nav-link dropdown" [class.show]="showDropDown">
+    <p class="navbar-link dropdown-toggle package_title" (click)="showDropDown = !showDropDown">
+      {{name}}
+    </p>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown" [class.show]="showDropDown">
+      <a *ngFor="let package of packages" class="dropdown-item" (click)="navigateTo(package.package_id)">{{package.name}}</a>
+    </div>
+  </li>
+  <li class="nav-item"  routerLinkActive="active">
+    <a class="nav-link" [routerLink]="['dashboard']">Dashboard</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active" [class.disabled]="status==6">
+    <a class="nav-link" [routerLink]="['template']" [class.disabled]="status==6">Templates</a>
+  </li>
+  <li *ngIf="!active_template" class="nav-item disabled" tooltip="Select any template before you can modify it" tooltipPlacement="bottom" tooltipOpacity="0.8">
+    <a class="nav-link disabled noselect">Workflow</a>
+  </li>
+  <li *ngIf="active_template" class="nav-item" routerLinkActive="active" [class.disabled]="status==6">
+    <a class="nav-link" [routerLink]="['edit']" [class.disabled]="status==6">Workflow</a>
+  </li>
+  <li class="nav-item" routerLinkActive="active">
+    <a class="nav-link" [routerLink]="['status']">Status</a>
+  </li>
+</navbar>
+
+
+<!-- <ul class="nav nav-tabs">
+  <li class="nav-item dropdown" [class.show]="showDropDown">
+    <a class="nav-link dropdown-toggle package_title" (click)="showDropDown = !showDropDown">
+      {{name}}
+    </a>
+    <div class="dropdown-menu" aria-labelledby="navbarDropdown" [class.show]="showDropDown">
+      <a *ngFor="let package of packages" class="dropdown-item" (click)="navigateTo(package.package_id)">{{package.name}}</a>
+    </div>
+  </li>
+  <li class="nav-link"  routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['dashboard']">Dashboard</a>
+  </li>
+  <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['template']">Templates</a>
+  </li>
+  <li *ngIf="!active_template" class="nav-link" routerLinkActive="active" tooltip="Select any template before you can modify it" tooltipPlacement="top">
+    <a class="navbar-link disabled" [routerLink]="['edit']">Workflow</a>
+  </li>
+  <li *ngIf="active_template" class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['edit']">Workflow</a>
+  </li>
+  <li class="nav-link" routerLinkActive="active">
+    <a class="navbar-link" [routerLink]="['status']">Status</a>
+  </li>
+</ul> -->
+<router-outlet></router-outlet>
