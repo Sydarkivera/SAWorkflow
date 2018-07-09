@@ -3932,7 +3932,7 @@ var PackageTemplateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<!-- <div class=\"row\"> -->\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<navbar></navbar>\n\n<!-- <div class=\"row\"> -->\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -3977,11 +3977,7 @@ var PackageListComponent = /** @class */ (function () {
         this.packages = [];
     }
     PackageListComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.packagesService.getPackages().subscribe(function (data) {
-            console.log(data);
-            _this.packages = data;
-        });
+        this.updateData();
     };
     PackageListComponent.prototype.updateData = function () {
         var _this = this;

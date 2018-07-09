@@ -16,10 +16,7 @@ export class PackageListComponent {
   }
 
   ngOnInit() {
-    this.packagesService.getPackages().subscribe((data) => {
-      console.log(data);
-      this.packages = data as [any];
-    });
+    this.updateData()
   }
 
   updateData() {

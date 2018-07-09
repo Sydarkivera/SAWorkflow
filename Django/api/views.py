@@ -170,7 +170,7 @@ def package_list(request):
     """
     if request.method == 'GET':
         packages = Package.objects.all()
-        serializer = PackageSerializer(packages, many=True)
+        serializer = PackageDetailSerializer(packages, many=True)
         # print(files)
         return Response(serializer.data)
 

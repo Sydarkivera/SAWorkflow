@@ -75,10 +75,15 @@ class PackageDetailSerializer(serializers.ModelSerializer):
     processes = ProcessSerializer(many=True)
     statistics = JSONSerializerField(required=True)
     template_name = serializers.CharField(source='active_template.name', read_only=True)
+    status = serializers.SerializerMethodField()
 
     class Meta:
         model = Package
         fields = ('package_id', 'name', 'file_name', 'status', 'processes', 'statistics', 'active_template', 'template_name')
+
+
+    def get_status(self,obj):
+        return obj.get_status_display()
 
 
 class ModuleSerializer(serializers.ModelSerializer):
