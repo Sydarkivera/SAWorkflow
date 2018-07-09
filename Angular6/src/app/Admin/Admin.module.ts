@@ -8,6 +8,7 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { TooltipModule } from '../Tooltip/Tooltip.module';
 import { NavbarModule } from '../Navbar/Navbar.module';
 import { ModalModule } from '../Modal/Modal.module';
+import { MessageModule } from '../Components/Message/Message.module';
 
 //declarations
 import { AdminHeaderComponent }    from './AdminHeader.component';
@@ -27,7 +28,8 @@ import { ModuleService } from './Module.service';
     RouterModule,
     TooltipModule,
     NavbarModule,
-    ModalModule
+    ModalModule,
+    MessageModule
   ],
   declarations: [
     AdminHeaderComponent,
