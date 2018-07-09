@@ -56,6 +56,15 @@ export class ModuleService {
     });
     return this.http.request(req);
   }
+
+  getVariables() {
+    return this.http.get('/api/variables/global/');
+  }
+
+  setVariables(data) {
+    return this.http.post('/api/variables/global/', data);
+  }
+
   //
   // saveProcess(data, id) {
   //   return this.http.put('/api/process/'+id+'/', data);

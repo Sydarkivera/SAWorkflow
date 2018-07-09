@@ -79,12 +79,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
 /* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
 /* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
-/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
-/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
-/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
-/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+/* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -97,6 +98,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //imports
+
 
 
 
@@ -120,33 +122,23 @@ var AdminModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
                 _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
                 _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
-                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"]
+                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"],
+                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__["MessageModule"]
             ],
             declarations: [
-                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_8__["AdminHeaderComponent"],
-                _AdminModules_component__WEBPACK_IMPORTED_MODULE_9__["AdminModulesComponent"],
-                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_10__["AdminGlobalComponent"],
-                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_11__["AdminProcessesComponent"],
-                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__["AdminTemplatesComponent"]
+                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__["AdminHeaderComponent"],
+                _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__["AdminModulesComponent"],
+                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_11__["AdminGlobalComponent"],
+                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_12__["AdminProcessesComponent"],
+                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__["AdminTemplatesComponent"]
             ],
-            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_13__["ModuleService"]],
+            providers: [_Module_service__WEBPACK_IMPORTED_MODULE_14__["ModuleService"]],
         })
     ], AdminModule);
     return AdminModule;
 }());
 
 
-
-/***/ }),
-
-/***/ "./src/app/Admin/AdminGlobal.component.css":
-/*!*************************************************!*\
-  !*** ./src/app/Admin/AdminGlobal.component.css ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".input-label {\n  width: 100%;\n}\n"
 
 /***/ }),
 
@@ -157,7 +149,18 @@ module.exports = ".input-label {\n  width: 100%;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <label class=\"input-label\">\n    Working directory:\n    <input type=\"text\" [(ngModel)]=\"workDir\" tooltip=\"A directory where temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"right\"/>\n  </label>\n  <label class=\"input-label\">\n    Packages directory:\n    <input type=\"text\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"right\"/>\n  </label>\n  <label class=\"input-label\">\n    Premis XML file:\n    <input type=\"text\"/>\n  </label>\n  <label class=\"input-label\">\n    Mets XML file:\n    <input type=\"text\"/>\n  </label>\n  <label class=\"input-label\">\n    Name:\n    <input type=\"text\"/>\n  </label>\n</div>\n"
+module.exports = "\n\n<div class=\"card\">\n  <div class=\"card-header\">\n    <h5 style=\"float:left\">Paths</h5>\n    <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n  </div>\n  <div class=\"card-body\">\n\n    <!-- <div class=\"alert alert-success\" [@visibilityChanged]=\"visiblityState\" role=\"alert\">\n      All changes have been saved!\n    </div> -->\n    <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Working directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path\" tooltip=\"A directory for temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/workdir\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Packages directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"packages_path\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"bottom\" placeholder=\"/ESSArch/data/epp/workarea\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">APP log file (premis)</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_file_name\" tooltip=\"The name of the premis log file generated by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"app_log.xml\">\n    </div>\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminGlobal.component.sass":
+/*!**************************************************!*\
+  !*** ./src/app/Admin/AdminGlobal.component.sass ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".input-label {\n  width: 100%; }\n"
 
 /***/ }),
 
@@ -183,24 +186,40 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-// import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
 
 var AdminGlobalComponent = /** @class */ (function () {
     function AdminGlobalComponent(moduleService) {
         this.moduleService = moduleService;
-        this.workDir = "";
+        this.work_dir_path = "";
+        this.packages_path = "";
+        this.premis_file_name = "";
+        this.messageVisible = false;
     }
     AdminGlobalComponent.prototype.ngOnInit = function () {
-        // this.packageService.getModules().subscribe((data) => {
-        //   this.modules = data as [any];
-        //   this.setModule(this.modules[this.modules.length-1]);
-        // });
+        var _this = this;
+        this.moduleService.getVariables().subscribe(function (data) {
+            // console.log(data)
+            _this.work_dir_path = data['work_dir_path'];
+            _this.packages_path = data['packages_path'];
+            _this.premis_file_name = data['premis_file_name'];
+        });
+    };
+    AdminGlobalComponent.prototype.save = function () {
+        var _this = this;
+        var data = {
+            work_dir_path: this.work_dir_path,
+            packages_path: this.packages_path,
+            premis_file_name: this.premis_file_name
+        };
+        this.moduleService.setVariables(data).subscribe(function (response) {
+            _this.messageVisible = true;
+        });
     };
     AdminGlobalComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'admin',
             template: __webpack_require__(/*! ./AdminGlobal.component.html */ "./src/app/Admin/AdminGlobal.component.html"),
-            styles: [__webpack_require__(/*! ./AdminGlobal.component.css */ "./src/app/Admin/AdminGlobal.component.css")]
+            styles: [__webpack_require__(/*! ./AdminGlobal.component.sass */ "./src/app/Admin/AdminGlobal.component.sass")]
         }),
         __metadata("design:paramtypes", [_Module_service__WEBPACK_IMPORTED_MODULE_1__["ModuleService"]])
     ], AdminGlobalComponent);
@@ -1084,11 +1103,183 @@ var ModuleService = /** @class */ (function () {
         });
         return this.http.request(req);
     };
+    ModuleService.prototype.getVariables = function () {
+        return this.http.get('/api/variables/global/');
+    };
+    ModuleService.prototype.setVariables = function (data) {
+        return this.http.post('/api/variables/global/', data);
+    };
     ModuleService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], ModuleService);
     return ModuleService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Message/Message.component.html":
+/*!***********************************************************!*\
+  !*** ./src/app/Components/Message/Message.component.html ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"alert alert-success\" [@visibilityChanged]=\"visiblityState\" role=\"alert\">\n  <ng-content></ng-content>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/Message/Message.component.sass":
+/*!***********************************************************!*\
+  !*** ./src/app/Components/Message/Message.component.sass ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/Components/Message/Message.component.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/Components/Message/Message.component.ts ***!
+  \*********************************************************/
+/*! exports provided: MessageComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageComponent", function() { return MessageComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var MessageComponent = /** @class */ (function () {
+    function MessageComponent() {
+        this.visiblityState = 'hidden';
+        // @Input() title: string = 'Title';
+        // @Input() active: boolean = false;
+        // @Output() activeChange = new EventEmitter<boolean>();
+        this.duration = 3000;
+        this._active = false;
+        this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        // close() {
+        // this.active = false;
+        // this.activeChange.emit(this.active);
+        // }
+    }
+    Object.defineProperty(MessageComponent.prototype, "active", {
+        get: function () {
+            return this._active;
+        },
+        set: function (active) {
+            var _this = this;
+            this._active = active;
+            if (active) {
+                this.visiblityState = 'shown';
+                setTimeout(function () {
+                    _this.visiblityState = 'hidden';
+                    _this._active = false;
+                    _this.activeChange.emit(false);
+                }, this.duration);
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], MessageComponent.prototype, "duration", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], MessageComponent.prototype, "activeChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], MessageComponent.prototype, "active", null);
+    MessageComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'message',
+            template: __webpack_require__(/*! ./Message.component.html */ "./src/app/Components/Message/Message.component.html"),
+            styles: [__webpack_require__(/*! ./Message.component.sass */ "./src/app/Components/Message/Message.component.sass")],
+            animations: [
+                Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["trigger"])('visibilityChanged', [
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('shown', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({ opacity: 1 })),
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["state"])('hidden', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["style"])({ opacity: 0, display: 'none' })),
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["transition"])('shown => hidden', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animate"])('600ms')),
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["transition"])('hidden => shown', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_1__["animate"])('300ms')),
+                ])
+            ]
+        })
+    ], MessageComponent);
+    return MessageComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Message/Message.module.ts":
+/*!******************************************************!*\
+  !*** ./src/app/Components/Message/Message.module.ts ***!
+  \******************************************************/
+/*! exports provided: MessageModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageModule", function() { return MessageModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _Message_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message.component */ "./src/app/Components/Message/Message.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+//imports
+//declarations
+
+//providers
+var MessageModule = /** @class */ (function () {
+    function MessageModule() {
+    }
+    MessageModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
+            ],
+            declarations: [
+                _Message_component__WEBPACK_IMPORTED_MODULE_4__["MessageComponent"]
+            ],
+            providers: [],
+            exports: [_Message_component__WEBPACK_IMPORTED_MODULE_4__["MessageComponent"]]
+        })
+    ], MessageModule);
+    return MessageModule;
 }());
 
 

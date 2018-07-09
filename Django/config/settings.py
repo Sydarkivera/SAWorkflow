@@ -26,10 +26,10 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 #Custom settings: Store in database?
-PAKAGE_SEARCH_PATH = '/mnt/epp'
-if DEBUG:
-    PAKAGE_SEARCH_PATH = '/code/test_packages'
-PACKAGE_IN_PROGRESS_PATH = os.path.join(BASE_DIR, 'workdir')
+# PAKAGE_SEARCH_PATH = '/mnt/epp'
+# if DEBUG:
+#     PAKAGE_SEARCH_PATH = '/code/test_packages'
+# PACKAGE_IN_PROGRESS_PATH = os.path.join(BASE_DIR, 'workdir')
 # django-background-tasks
 MAX_ATTEMPTS = 0
 

@@ -2,26 +2,43 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from "@angular/router";
 
-// import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
 import { ModuleService } from './Module.service';
 
 
 @Component({
   selector: 'admin',
   templateUrl: './AdminGlobal.component.html',
-  styleUrls: ['./AdminGlobal.component.css']
+  styleUrls: ['./AdminGlobal.component.sass']
 })
 export class AdminGlobalComponent {
-  workDir = ""
+  work_dir_path = ""
+  packages_path = ""
+  premis_file_name = ""
+  messageVisible = false;
 
   constructor(private moduleService: ModuleService) {
   }
 
   ngOnInit() {
-    // this.packageService.getModules().subscribe((data) => {
-    //   this.modules = data as [any];
-    //   this.setModule(this.modules[this.modules.length-1]);
-    // });
+    this.moduleService.getVariables().subscribe((data) => {
+      // console.log(data)
+      this.work_dir_path = data['work_dir_path']
+      this.packages_path = data['packages_path']
+      this.premis_file_name = data['premis_file_name']
+    });
+  }
+
+  save() {
+
+    let data = {
+      work_dir_path: this.work_dir_path,
+      packages_path: this.packages_path,
+      premis_file_name: this.premis_file_name
+    }
+
+    this.moduleService.setVariables(data).subscribe((response) => {
+      this.messageVisible = true;
+    });
   }
 
 

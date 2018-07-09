@@ -11,6 +11,7 @@ from shutil import copy
 import uuid
 from config import settings
 from api.tasks import pythonModuleBase
+from api.models import Variable
 
 import logging
 
@@ -18,7 +19,8 @@ class task(pythonModuleBase):
 
     def setupLogging(self, process, package):
         logger = logging.getLogger('background_task')
-        dest = os.path.join(settings.PACKAGE_IN_PROGRESS_PATH, str(uuid.uuid4()))
+        workdir_path = Variable.objects.get(name='work_dir_path').data
+        dest = os.path.join(workdir_path, str(uuid.uuid4()))
         package.logdir = os.path.join(dest, 'log')
         try:
             # cant start logging before folder in place.

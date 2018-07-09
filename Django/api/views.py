@@ -13,7 +13,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from api.models import Module, Package, Process, Template
+from api.models import Module, Package, Process, Template, Variable
 from api.serializers import *
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
@@ -493,3 +493,32 @@ def package_finish(request, package_id):
         #done buton pressed in ui.
         finishPackage.delay(package_id)
         return HttpResponse(status=204)
+
+
+@api_view(['GET', 'POST'])
+def variables_global(request):
+    """
+    Get a list of system variables or (POST) set the variables
+    """
+
+    if request.method == 'GET':
+        global_variables = ['work_dir_path', 'packages_path', 'premis_file_name']
+        res = {}
+        for vname in global_variables:
+            v = get_object_or_404(Variable, name=vname)
+            res[vname] = v.data
+        return JsonResponse(res)
+    elif request.method == 'POST':
+        for key, value in request.data.items():
+            v = get_object_or_404(Variable, name=key)
+            v.data = value
+            v.save()
+
+        # for var in request.data:
+        #     v = get_object_or_404(Variable, pk=var.id)
+        #     serialzer = VariableSerializer(v, request.data)
+        #     if serialzer.is_valid():
+        #         serialzer.save()
+        #     else:
+        #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return HttpResponse(status=200)

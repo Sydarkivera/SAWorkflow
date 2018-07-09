@@ -25,7 +25,6 @@ from config.celeryconf import app
 from celery.decorators import task
 from datetime import timedelta
 from celery.task import periodic_task
-from django.conf import settings
 
 logger = getLogger('background_task')
 
@@ -265,7 +264,8 @@ def executeProcessFlow(package_id):
 @periodic_task(run_every=timedelta(seconds=20))
 def periodic_scan_for_new_packages(**kwargs):
     # logger.info('my_periodic_task running')
-    path = settings.PAKAGE_SEARCH_PATH
+    # path = settings.PAKAGE_SEARCH_PATH
+    path = Variable.objects.get(name="packages_path").data
     packages = []
     for file_name in os.listdir(path):
         file_path = os.path.join(path, file_name)

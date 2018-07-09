@@ -124,3 +124,8 @@ class GraphDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = GraphData
         fields = ('date', 'size', 'count')
+
+class VariableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Variable
+        fields = ('id', 'name', 'data')

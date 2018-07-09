@@ -31,5 +31,7 @@ urlpatterns = [
     url(r'^template/(?P<template_id>[0-9]+)/process/$', views.template_process_list),
     url(r'^template/(?P<template_id>[0-9]+)/package/(?P<package_id>[0-9]+)/$', views.template_package_detail),
 
-    url(r'^stats/dashboard/$', views.dashboardStats)
+    url(r'^stats/dashboard/$', views.dashboardStats),
+
+    url(r'^variables/global/$', views.variables_global)
 ]

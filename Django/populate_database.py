@@ -98,6 +98,13 @@ var = Variable(name="total_number_of_packages", data="2")
 var.save()
 var = Variable(name="total_number_of_errors", data="34")
 var.save()
+# system variables
+var = Variable(name="work_dir_path", data="/code/workdir")
+var.save()
+var = Variable(name="packages_path", data="/code/test_packages")
+var.save()
+var = Variable(name="premis_file_name", data="app_log.xml")
+var.save()
 
 # default test data, TODO remove in production
 ftype = FileType(name="PDF", errors=3, total=100, size=1203000)
