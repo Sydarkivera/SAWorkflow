@@ -36,9 +36,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
 /* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
 /* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
-/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
 
 
 
@@ -52,8 +50,8 @@ var adminRoutes = [
             { path: '', redirectTo: 'modules', pathMatch: 'full' },
             { path: 'modules', component: _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__["AdminModulesComponent"] },
             { path: 'global', component: _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__["AdminGlobalComponent"] },
-            { path: 'processes', component: _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_3__["AdminProcessesComponent"] },
-            { path: 'templates', component: _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_4__["AdminTemplatesComponent"] },
+            // { path: 'processes', component: AdminProcessesComponent},
+            { path: 'templates', component: _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_3__["AdminTemplatesComponent"] },
         ] }
 ];
 
@@ -325,7 +323,7 @@ var AdminHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div\n          *ngFor=\"let module of modules\"\n          class=\"list-group-item list-group-item-action\"\n          (click)=\"selectModule(module)\"\n          [class.active]=\"module.module_id == selected_module.module_id\"\n          >\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">Add new tool</button>\n    <button class=\"btn\" (click)=\"importModule()\">Import tool</button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <!-- <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/> -->\n          <!-- <label class=\"form-check-label\" for=\"{{input.identifier}}\" class=\"input-label\"  [class.form-check-label]=\"input.type=='checkbox'\"> -->\n            <!-- {{input.label}} -->\n          <!-- </label> -->\n          <!-- <input class=\"form-control\" type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">Form json</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <!-- <input type=\"text\" [(ngModel)]=\"filter.value\"/> -->\n            <div class=\"form-group my-auto\">\n              <!-- <label>Name</label> -->\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <!-- <input type=\"text\" [(ngModel)]=\"filter.value\"/> -->\n          <div class=\"form-group my-auto\">\n            <!-- <label>Name</label> -->\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"commandJson\" ></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputMultipleFiles\" [(ngModel)]=\"selected_module.multifile\">\n            <label class=\"form-check-label\" for=\"inputMultipleFiles\">Run on multiple files</label>\n          </div>\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">Delete</button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\">\n          {{fileName}}\n        </label>\n      </div>\n      <button type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<!-- TODO: export, import, delete -->\n"
+module.exports = "<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div\n          *ngFor=\"let module of modules\"\n          class=\"list-group-item list-group-item-action\"\n          (click)=\"selectModule(module)\"\n          [class.active]=\"module.module_id == selected_module.module_id\"\n          >\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">Add new tool</button>\n    <button class=\"btn\" (click)=\"importModule()\">Import tool</button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <!-- <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/> -->\n          <!-- <label class=\"form-check-label\" for=\"{{input.identifier}}\" class=\"input-label\"  [class.form-check-label]=\"input.type=='checkbox'\"> -->\n            <!-- {{input.label}} -->\n          <!-- </label> -->\n          <!-- <input class=\"form-control\" type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">Form json</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <!-- <input type=\"text\" [(ngModel)]=\"filter.value\"/> -->\n            <div class=\"form-group my-auto\">\n              <!-- <label>Name</label> -->\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <!-- <input type=\"text\" [(ngModel)]=\"filter.value\"/> -->\n          <div class=\"form-group my-auto\">\n            <!-- <label>Name</label> -->\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"commandJson\" ></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputMultipleFiles\" [(ngModel)]=\"selected_module.multifile\">\n            <label class=\"form-check-label\" for=\"inputMultipleFiles\">Run on multiple files</label>\n          </div>\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">Delete</button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\">\n          {{fileName}}\n        </label>\n      </div>\n      <button type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<!-- TODO: export, import, delete -->\n"
 
 /***/ }),
 
@@ -336,7 +334,7 @@ module.exports = "<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.input-label {\n  width: 100%; }\n\n.Error-text {\n  color: red; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n\ntextarea {\n  width: 100%; }\n\n.allow-scroll-beneath-page-end {\n  height: 300px; }\n\n.card {\n  margin-bottom: 10px; }\n\n.form-row div, .form-row select {\n  margin-right: 5px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.input-label {\n  width: 100%; }\n\n.Error-text {\n  color: red; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n\ntextarea {\n  width: 100%; }\n\n.allow-scroll-beneath-page-end {\n  height: 300px; }\n\n.card {\n  margin-bottom: 10px; }\n\n.form-row div, .form-row select {\n  margin-right: 5px; }\n"
 
 /***/ }),
 
@@ -387,6 +385,7 @@ var AdminModulesComponent = /** @class */ (function () {
         this.newResultFilter = { type: 'Containing', value: '' };
         this.modalactive = false;
         this.fileName = "Select file...";
+        this.messageVisible = false;
     }
     AdminModulesComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -507,6 +506,7 @@ var AdminModulesComponent = /** @class */ (function () {
         }
         if (this.selected_module.module_id != -2) {
             this.moduleService.saveData(this.selected_module.module_id, data).subscribe(function (data) {
+                _this.messageVisible = true;
                 for (var i in _this.modules) {
                     var m = _this.modules[i];
                     if (m.module_id == data["module_id"]) {
@@ -519,6 +519,7 @@ var AdminModulesComponent = /** @class */ (function () {
         else {
             delete this.selected_module.module_id;
             this.moduleService.createModule(data).subscribe(function (data) {
+                _this.messageVisible = true;
                 _this.setModule(data);
                 _this.modules.push(data);
                 _this.modules = _this.modules.sort(function (a, b) {
@@ -619,7 +620,7 @@ module.exports = "\n.placeholder {\n  opacity: 0.4;\n}\n"
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n      <h4>Modules to be run before each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 0)\"\n          (drop)=\"onDrop($event, 0)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"startTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'startTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 0)\"\n                    (dragover)=\"allowDrop($event, process.order, 0)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 0)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < startTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 0)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 0)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n      <h4>Modules to be run after each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 1)\"\n          (drop)=\"onDrop($event, 1)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"endTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'endTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 1)\"\n                    (dragover)=\"allowDrop($event, process.order, 1)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 1)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < endTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 1)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 1)\">delete</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header company-table-head\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n      <h4>Modules to be run before each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 0)\"\n          (drop)=\"onDrop($event, 0)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"startTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'startTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 0)\"\n                    (dragover)=\"allowDrop($event, process.order, 0)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 0)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < startTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 0)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 0)\">delete</i>\n                      <i class=\"material-icons drag-handle\">drag_handle</i>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n      <h4>Modules to be run after each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 1)\"\n          (drop)=\"onDrop($event, 1)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"endTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'endTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 1)\"\n                    (dragover)=\"allowDrop($event, process.order, 1)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 1)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < endTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 1)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 1)\">delete</i>\n                      <i class=\"material-icons drag-handle\">drag_handle</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header company-table-head\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                  <i class=\"material-icons drag-handle\">drag_handle</i>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -682,6 +683,15 @@ var AdminProcessesComponent = /** @class */ (function () {
             this.selected_process = undefined;
             this.selected_process_id = -1;
         }
+    };
+    AdminProcessesComponent.prototype.setProcessValue = function (id, value) {
+        var values = this.selected_process.value;
+        values[id] = value;
+        var data = { "value": values };
+        this.moduleService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
+            console.log('data chagned');
+            console.log(data);
+        });
     };
     AdminProcessesComponent.prototype.deleteProcess = function (process, template_id) {
         this.moduleService.deleteProcess(process.process_id).subscribe(function (data) {
@@ -962,7 +972,7 @@ var AdminProcessesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Templates</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n  </div>\n  <!-- <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div> -->\n</div>\n"
+module.exports = "<div class=\"row\">\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i>\n    The template could not be removed since it is in use by one or more packages.\n  </message>\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n\n</div>\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\"\n          (dragover)=\"allowDropTop($event)\"\n          (drop)=\"onDrop($event)\"\n        >\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div\n              draggable=\"true\"\n              (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\"\n              (drop)=\"onDrop($event)\"\n              (dragover)=\"allowDrop($event, process.order)\"\n              class=\"list-group-item list-group-item-action\"\n              [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p\n              style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                <form *ngIf=\"process.form.length>0\">\n                        <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                          {{input.label}}\n                          <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                          <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                          <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                        </label>\n                </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header company-table-head\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                  <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                  <i class=\"material-icons drag-handle\">drag_handle</i>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n\n<modal *ngIf=\"selected_template_id != -1\" [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -973,7 +983,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Templ
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n\n.placeholder {\n  opacity: 0.4; }\n"
 
 /***/ }),
 
@@ -1003,22 +1013,369 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var AdminTemplatesComponent = /** @class */ (function () {
     function AdminTemplatesComponent(moduleService) {
         this.moduleService = moduleService;
+        this.selected_template_id = -1;
+        this.selected_template = undefined;
+        this.selected_process_id = -1;
+        this.selected_process = undefined;
+        this.createModalActive = false;
+        this.newTemplateName = "";
+        this.messageVisible = false;
+        this.errorVisible = false;
     }
     AdminTemplatesComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.moduleService.getTemplates().subscribe(function (data) {
             _this.templates = data;
             console.log(data);
-            // this.setModule(this.modules[this.modules.length-1]);
+            //TODO remove auto select template:
+            _this.selectTemplate(data[1]);
+        });
+        this.moduleService.getModules().subscribe(function (data) {
+            _this.modules = data;
+        });
+    };
+    AdminTemplatesComponent.prototype.createTemplateModal = function () {
+        //modal active
+        this.createModalActive = true;
+        this.newTemplateName = "";
+    };
+    AdminTemplatesComponent.prototype.createNewTemplate = function () {
+        var _this = this;
+        //actuall creation of new template
+        var data = { 'templateName': this.newTemplateName };
+        this.moduleService.createNewTemplate(data).subscribe(function (data) {
+            console.log(data);
+            _this.templates.push(data);
+            _this.newTemplateName = "";
+            _this.createModalActive = false;
+        });
+    };
+    AdminTemplatesComponent.prototype.save = function () {
+        var _this = this;
+        var data = { 'templateName': this.selected_template.name, 'template_id': this.selected_template_id };
+        this.moduleService.createNewTemplate(data).subscribe(function (data) {
+            _this.messageVisible = true;
+            for (var i in _this.templates) {
+                var temp = _this.templates[i];
+                if (temp.template_id == _this.selected_template_id) {
+                    _this.templates[i].name = _this.selected_template.name;
+                }
+            }
+        });
+    };
+    AdminTemplatesComponent.prototype.deleteTemplate = function (template) {
+        var _this = this;
+        this.moduleService.deleteTemplate(template.template_id).subscribe(function (data) {
+            // console.log(data);
+            _this.templates = _this.templates.filter(function (item) {
+                if (item.template_id == template.template_id) {
+                    return false;
+                }
+                return true;
+            });
+            _this.selected_process = undefined;
+            _this.selected_process_id = -1;
+        }, function (error) {
+            console.log(error);
+            if (error.status == 409) {
+                console.log('409 error, display error message');
+                _this.errorVisible = true;
+            }
         });
     };
     AdminTemplatesComponent.prototype.selectTemplate = function (template) {
+        var _this = this;
         if (this.selected_template_id != template.template_id) {
             this.selected_template_id = template.template_id;
+            this.selected_template = template;
+            //Download tempalte data
+            this.moduleService.getTemplate(this.selected_template_id).subscribe(function (data) {
+                console.log(data);
+                _this.selected_template = data;
+            });
         }
         else {
             this.selected_template_id = -1;
+            this.selected_template = undefined;
         }
+    };
+    AdminTemplatesComponent.prototype.selectProcess = function (process) {
+        if (this.selected_process_id != process.process_id) {
+            this.selected_process = process;
+            this.selected_process_id = process.process_id;
+        }
+        else {
+            this.selected_process = undefined;
+            this.selected_process_id = -1;
+        }
+    };
+    AdminTemplatesComponent.prototype.setProcessValue = function (id, value) {
+        var values = this.selected_process.value;
+        values[id] = value;
+        var data = { "value": values };
+        this.moduleService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
+            console.log('data chagned');
+            console.log(data);
+        });
+    };
+    AdminTemplatesComponent.prototype.deleteProcess = function (process) {
+        console.log(process);
+        this.moduleService.deleteProcess(process.process_id).subscribe(function (data) {
+        });
+        this.selected_template.processes = this.selected_template.processes.filter(function (item) {
+            return item.process_id != process.process_id;
+        });
+        // move up all processes below
+        var data = [];
+        for (var index in this.selected_template.processes) {
+            var item = this.selected_template.processes[index];
+            if (item.type != 'placeholder' && item.order > process.order) {
+                item.order -= 1;
+                data.push({ "order": item.order, "process_id": item.process_id });
+            }
+        }
+        this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            // console.log(data);
+        });
+        this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    AdminTemplatesComponent.prototype.addProcessLast = function (module_id) {
+        var _this = this;
+        var order = 0;
+        if (this.selected_template.processes.length > 0) {
+            order = this.selected_template.processes[this.selected_template.processes.length - 1].order + 1;
+        }
+        this.moduleService.addProcess({ "order": order, "module": module_id, "template": this.selected_template_id }).subscribe(function (data) {
+            console.log(data);
+            _this.selected_template.processes = data;
+        });
+    };
+    //dragging:
+    AdminTemplatesComponent.prototype.moveUp = function (process) {
+        var data = [];
+        data.push({ "order": (process.order - 1), "process_id": process.process_id });
+        //find the one below
+        // console.table(this.package.processes);
+        var below;
+        for (var i = 0; i < this.selected_template.processes.length; i++) {
+            var p = this.selected_template.processes[i];
+            if (p.order == process.order - 1) {
+                data.push({ "order": (p.order + 1), "process_id": p.process_id });
+                // console.log(i);/
+                this.selected_template.processes[i].order += 1;
+                this.selected_template.processes[i + 1].order -= 1;
+                break;
+            }
+        }
+        this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            console.log(data);
+        });
+        this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    AdminTemplatesComponent.prototype.moveDown = function (process) {
+        var data = [];
+        data.push({ "order": (process.order + 1), "process_id": process.process_id });
+        //find the one below
+        // console.table(this.package.processes);
+        var below;
+        for (var i = 0; i < this.selected_template.processes.length; i++) {
+            var p = this.selected_template.processes[i];
+            if (p.order == process.order + 1) {
+                data.push({ "order": (p.order - 1), "process_id": p.process_id });
+                this.selected_template.processes[i].order -= 1;
+                this.selected_template.processes[i - 1].order += 1;
+                break;
+            }
+        }
+        this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            console.log(data);
+        });
+        this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
+    };
+    AdminTemplatesComponent.prototype.dragStart = function (e, id, type, name) {
+        console.log('drag start: ' + e);
+        // console.log(id);
+        e.dataTransfer.setData('id', id);
+        e.dataTransfer.setData('type', type);
+        e.dataTransfer.setData('name', name);
+    };
+    AdminTemplatesComponent.prototype.onDrop = function (e) {
+        var _this = this;
+        console.group('dropEvent');
+        // console.log('drop: ' + e);
+        // console.log(e.dataTransfer.getData('id'));
+        // console.log(e.dataTransfer.getData('type'));
+        // console.log(this.placeholderLocation);
+        // if this.placeholderLocation == -0.5, insert first
+        // if this.placeholderLocation == 0.5, insert afeter first
+        var dropOrder = Math.ceil(this.placeholderLocation);
+        if (dropOrder < 0) {
+            dropOrder = 0;
+        }
+        // console.log(dropOrder);
+        if (e.dataTransfer.getData('type') == 'module') {
+            var data = [];
+            // move down all items under existingIndex
+            for (var index in this.selected_template.processes) {
+                var item = this.selected_template.processes[index];
+                // console.log(this.package.processes[index]);
+                if (item.type != 'placeholder' && item.order >= dropOrder) {
+                    item.order += 1;
+                    data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
+                }
+            }
+            // console.log(data);
+            //submit reorder:
+            this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+                console.log(data);
+            });
+            //add process
+            var newProcess = {
+                "order": dropOrder,
+                "process_id": 100,
+                "module": e.dataTransfer.getData('id'),
+                "name": e.dataTransfer.getData('name')
+            };
+            this.selected_template.processes.splice(dropOrder, 0, newProcess);
+            this.moduleService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "template": this.selected_template_id }).subscribe(function (data) {
+                // console.log(data);
+                _this.selected_template.processes = data;
+                _this.selected_process = undefined;
+                _this.selected_process_id = -1;
+            });
+            // console.log(this.package.processes);
+        }
+        else {
+            var startOrder = -1;
+            var movedProcessIndex;
+            var data = [];
+            for (var index in this.selected_template.processes) {
+                var item = this.selected_template.processes[index];
+                if (item.process_id == e.dataTransfer.getData('id')) {
+                    startOrder = item.order;
+                    movedProcessIndex = index;
+                }
+            }
+            if (startOrder > dropOrder) {
+                for (var index in this.selected_template.processes) {
+                    var item = this.selected_template.processes[index];
+                    if (item.type != 'placeholder' && item.order < startOrder && item.order >= dropOrder) {
+                        item.order += 1;
+                        data.push({ "order": item.order, "process_id": item.process_id });
+                    }
+                }
+                this.selected_template.processes[movedProcessIndex].order = dropOrder;
+                data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
+            }
+            else {
+                for (var index in this.selected_template.processes) {
+                    var item = this.selected_template.processes[index];
+                    if (item.type != 'placeholder' && item.order > startOrder && item.order < dropOrder) {
+                        item.order -= 1;
+                        data.push({ "order": item.order, "process_id": item.process_id });
+                    }
+                }
+                this.selected_template.processes[movedProcessIndex].order = dropOrder - 1;
+                data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
+            }
+            // push changes to api
+            this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+                console.log(data);
+            });
+            this.onRelease(undefined);
+            this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
+                if (a.order > b.order) {
+                    return 1;
+                }
+                return -1;
+            });
+        }
+        console.groupEnd();
+    };
+    AdminTemplatesComponent.prototype.onRelease = function (e) {
+        //reset
+        this.selected_template.processes = this.selected_template.processes.filter(function (item) {
+            return item['type'] != 'placeholder';
+        });
+    };
+    //set ghost image to show where you will drop.
+    AdminTemplatesComponent.prototype.allowDrop = function (e, index) {
+        e.preventDefault();
+        // console.log(index);
+        var element = e.target;
+        // console.log(e.pageY);
+        // console.log(e.pageY - element.getBoundingClientRect().top);
+        if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
+            return;
+        }
+        if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
+            // drop below elements
+            // console.log('s');
+            var ind = index + 0.5;
+            if (ind != this.placeholderLocation) {
+                // console.log(ind);
+                // console.log(index);
+                // console.log(this.placeholderLocation);
+                this.placeholderLocation = ind;
+                // this.package.processes = this.package.processes.filter((item) => {
+                //   return item.type != 'placeholder'
+                // });
+                this.onRelease(undefined);
+                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+                this.selected_template.processes.splice(index + 1, 0, temp);
+            }
+        }
+        else {
+            //drop above element.
+            // this.placeholderLocation = index + 0.5;
+            var ind = index - 0.5;
+            if (ind != this.placeholderLocation) {
+                // console.log(ind);
+                // console.log(index);
+                // console.log(this.placeholderLocation);
+                this.placeholderLocation = ind;
+                this.onRelease(undefined);
+                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+                this.selected_template.processes.splice(index, 0, temp);
+            }
+        }
+        this.placeholderTemplate = this.selected_template_id;
+        // console.log(element.offsetHeight);
+        // e.preventDefault();
+    };
+    AdminTemplatesComponent.prototype.allowDropTop = function (e) {
+        e.preventDefault();
+        //calculate order. Order will be 0.5 lower than first visible.
+        var order = -0.5;
+        this.placeholderLocation = order;
+        this.placeholderTemplate = this.selected_template_id;
+        this.onRelease(undefined);
+        // this.templates[template_id].processes = this.package.processes.filter((item) => {
+        // return item.type != 'placeholder'
+        // });
+        var temp = { type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
+        this.selected_template.processes.push(temp);
+        this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
+            if (a.order > b.order) {
+                return 1;
+            }
+            return -1;
+        });
     };
     AdminTemplatesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1072,6 +1429,12 @@ var ModuleService = /** @class */ (function () {
     ModuleService.prototype.getTemplate = function (id) {
         return this.http.get('/api/template/' + id + '/');
     };
+    ModuleService.prototype.createNewTemplate = function (data) {
+        return this.http.post('/api/template/', data);
+    };
+    ModuleService.prototype.deleteTemplate = function (template_id) {
+        return this.http.delete('/api/template/' + template_id + '/');
+    };
     // getPackage(id: number) {
     //   return this.http.get(this.packagesURL + id + '/');
     // }
@@ -1109,6 +1472,9 @@ var ModuleService = /** @class */ (function () {
     ModuleService.prototype.setVariables = function (data) {
         return this.http.post('/api/variables/global/', data);
     };
+    ModuleService.prototype.saveProcess = function (data, id) {
+        return this.http.put('/api/process/' + id + '/', data);
+    };
     ModuleService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
@@ -1127,7 +1493,7 @@ var ModuleService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"alert alert-success\" [@visibilityChanged]=\"visiblityState\" role=\"alert\">\n  <ng-content></ng-content>\n</div>\n"
+module.exports = "<div class=\"alert {{type}}\" [@visibilityChanged]=\"visiblityState\" role=\"alert\">\n  <ng-content></ng-content>\n</div>\n"
 
 /***/ }),
 
@@ -1172,6 +1538,7 @@ var MessageComponent = /** @class */ (function () {
         // @Input() active: boolean = false;
         // @Output() activeChange = new EventEmitter<boolean>();
         this.duration = 3000;
+        this.type = 'alert-success';
         this._active = false;
         this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         // close() {
@@ -1202,6 +1569,10 @@ var MessageComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Number)
     ], MessageComponent.prototype, "duration", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], MessageComponent.prototype, "type", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
@@ -1926,7 +2297,7 @@ module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div cla
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -2418,7 +2789,7 @@ var NotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <small>{{process.status}}</small>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n\n<modal [(active)]=\"modalActive\" title=\"Save as template\">\n  <div modal-body>\n    <label class=\"input-label\">\n      Name of new template:\n      <input type=\"text\" [(ngModel)]=\"templateName\"/>\n    </label>\n  </div>\n  <div modal-footer>\n    <button type=\"button\" class=\"btn btn-success\" (click)=\"saveNewTemplate()\">Save</button>\n  </div>\n</modal>\n"
+module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n              <!-- <small>{{process.status}}</small> -->\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n\n<modal [(active)]=\"modalActive\" title=\"Save as template\">\n  <div modal-body>\n    <label class=\"input-label\">\n      Name of new template:\n      <input type=\"text\" [(ngModel)]=\"templateName\"/>\n    </label>\n  </div>\n  <div modal-footer>\n    <button type=\"button\" class=\"btn btn-success\" (click)=\"saveNewTemplate()\">Save</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -2429,7 +2800,7 @@ module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Curre
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
 
 /***/ }),
 
@@ -2961,7 +3332,7 @@ module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-s
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -3230,7 +3601,7 @@ module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.sh
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
 
 /***/ }),
 
@@ -3457,7 +3828,7 @@ var PackageStatusComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <!-- <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a> -->\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\" *ngIf=\"template.template_id!=2\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <!-- <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a> -->\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -4342,7 +4713,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/processes\">\n                  <i class=\"material-icons\">layers</i>\n                  Default processes\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n    <router-outlet></router-outlet>\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <!-- <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/processes\">\n                  <i class=\"material-icons\">layers</i>\n                  Default processes\n                </a>\n          </li> -->\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n    <router-outlet></router-outlet>\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -4353,7 +4724,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n    <n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
 
 /***/ }),
 

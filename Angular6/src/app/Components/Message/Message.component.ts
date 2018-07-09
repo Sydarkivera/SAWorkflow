@@ -20,6 +20,7 @@ export class MessageComponent {
     // @Input() active: boolean = false;
     // @Output() activeChange = new EventEmitter<boolean>();
     @Input() duration: number = 3000;
+    @Input() type: string = 'alert-success'
 
     private _active: boolean = false;
     @Output() activeChange = new EventEmitter<boolean>();

@@ -346,13 +346,27 @@ def template_list(request):
     list templates.
     """
     if request.method == 'GET':
-        templates = Template.objects.all()
+        templates = Template.objects.all().order_by('template_id')
         serializer = TemplateListSerializer(templates, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
         # create a new template
         if 'package_id' not in request.data:
-            return Response('package_id is required to save a new template', status=status.HTTP_400_BAD_REQUEST)
+            # check if it can be created as a completely new template
+            if 'template_id' in request.data:
+                # update template_id with the data from package_id.
+                template = get_object_or_404(Template, pk=request.data['template_id'])
+                template.name = request.data['templateName']
+                template.save()
+                serializer = TemplateDetailSerializer(template)
+                return Response(serializer.data)
+            else:
+                if 'templateName' in request.data:
+                    template = Template(name=request.data['templateName'])
+                    template.save()
+                    serializer = TemplateDetailSerializer(template)
+                    return Response(serializer.data)
+                return Response('package_id or templateName is required to save a new template', status=status.HTTP_400_BAD_REQUEST)
         package = get_object_or_404(Package, pk=request.data['package_id'])
         if 'template_id' in request.data:
             # update template_id with the data from package_id.
@@ -393,7 +407,7 @@ def template_list(request):
 
 
 
-@api_view(['GET'])
+@api_view(['GET', 'DELETE'])
 def template_detail(request, template_id):
     """
     display a single template.
@@ -402,6 +416,12 @@ def template_detail(request, template_id):
     if request.method == 'GET':
         serializer = TemplateDetailSerializer(template)
         return Response(serializer.data)
+    elif request.method == 'DELETE':
+        if not template.packages.all().exists():
+            template.delete()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=409)
 
 @api_view(['GET', 'PUT'])
 def template_process_list(request, template_id):

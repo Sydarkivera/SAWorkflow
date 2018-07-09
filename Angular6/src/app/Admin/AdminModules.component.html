@@ -63,6 +63,7 @@
         <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
       </div>
       <div class="card-body">
+        <message duration="3000" [(active)]="messageVisible">All changes have been saved!</message>
         <div class="form-group">
           <label for="inputName">Name</label>
           <input type="text" class="form-control" id="inputName" placeholder="Virus scan ClamAV" [(ngModel)]="selected_module.name">
@@ -127,6 +128,8 @@
         <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
       </div>
       <div class="card-body">
+
+        <message duration="3000" [(active)]="messageVisible">All changes have been saved!</message>
         <label class="input-label">
           Type:
           <select class="custom-select col-sm-3 my-1 my-auto" [(ngModel)]="selected_module.type">

@@ -24,6 +24,7 @@ export class AdminModulesComponent {
   modalactive = false;
   file: any;
   fileName = "Select file..."
+  messageVisible = false
 
   constructor(private packageService: PackageDetailService, private moduleService: ModuleService) {
   }
@@ -153,6 +154,7 @@ export class AdminModulesComponent {
 
     if (this.selected_module.module_id != -2) {
       this.moduleService.saveData(this.selected_module.module_id, data).subscribe((data) => {
+        this.messageVisible = true
         for (let i in this.modules) {
           let m = this.modules[i];
           if (m.module_id == data["module_id"]) {
@@ -164,6 +166,7 @@ export class AdminModulesComponent {
     } else {
       delete this.selected_module.module_id
       this.moduleService.createModule(data).subscribe((data) => {
+        this.messageVisible = true
         this.setModule(data);
         this.modules.push(data);
         this.modules = this.modules.sort((a, b) => {

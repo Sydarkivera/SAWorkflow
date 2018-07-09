@@ -58,6 +58,16 @@ export class AdminProcessesComponent {
     }
   }
 
+  setProcessValue(id, value) {
+      let values = this.selected_process.value;
+      values[id] = value;
+      let data = {"value": values};
+      this.moduleService.saveProcess(data, this.selected_process_id).subscribe((data) => {
+        console.log('data chagned')
+        console.log(data);
+      })
+  }
+
   deleteProcess(process, template_id) {
     this.moduleService.deleteProcess(process.process_id).subscribe((data) => {
     });

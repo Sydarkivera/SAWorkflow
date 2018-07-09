@@ -19,6 +19,14 @@ export class ModuleService {
     return this.http.get('/api/template/' + id + '/');
   }
 
+  createNewTemplate(data) {
+    return this.http.post('/api/template/', data);
+  }
+
+  deleteTemplate(template_id) {
+    return this.http.delete('/api/template/' + template_id + '/');
+  }
+
   // getPackage(id: number) {
   //   return this.http.get(this.packagesURL + id + '/');
   // }
@@ -65,10 +73,10 @@ export class ModuleService {
     return this.http.post('/api/variables/global/', data);
   }
 
-  //
-  // saveProcess(data, id) {
-  //   return this.http.put('/api/process/'+id+'/', data);
-  // }
+
+  saveProcess(data, id) {
+    return this.http.put('/api/process/'+id+'/', data);
+  }
   //
   // getLogFile(path, process_id) {
   //   return this.http.get('/process/'+process_id+'/'+path, { responseType: 'text' });

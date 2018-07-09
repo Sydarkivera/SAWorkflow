@@ -33,7 +33,7 @@
                       <i *ngIf="process.order != 0" class="material-icons icon-button" (click)="moveUp(process, 0)">keyboard_arrow_up</i>
                       <i *ngIf="process.order < startTemplate.processes.length-1" class="material-icons icon-button" (click)="moveDown(process, 0)">keyboard_arrow_down</i>
                       <i class="material-icons icon-button" (click)="deleteProcess(process, 0)">delete</i>
-                      <small>{{process.status}}</small>
+                      <i class="material-icons drag-handle">drag_handle</i>
                   </div>
                   <ng-template [ngIf]="process.process_id==selected_process_id">
                       <form *ngIf="process.form.length>0">
@@ -82,6 +82,7 @@
                       <i *ngIf="process.order != 0" class="material-icons icon-button" (click)="moveUp(process, 1)">keyboard_arrow_up</i>
                       <i *ngIf="process.order < endTemplate.processes.length-1" class="material-icons icon-button" (click)="moveDown(process, 1)">keyboard_arrow_down</i>
                       <i class="material-icons icon-button" (click)="deleteProcess(process, 1)">delete</i>
+                      <i class="material-icons drag-handle">drag_handle</i>
                       <small>{{process.status}}</small>
                   </div>
                   <ng-template [ngIf]="process.process_id==selected_process_id">
@@ -114,6 +115,7 @@
                <div draggable="true" (dragstart)="dragStart($event, module.module_id, 'module', module.name)" (dragend)="onRelease($event)" class="list-group-item list-group-item-action">
                  <div class="d-flex w-100 justify-content-between">
                   <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
+                  <i class="material-icons drag-handle">drag_handle</i>
                  </div>
               </div>
            </div>

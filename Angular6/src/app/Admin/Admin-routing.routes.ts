@@ -19,7 +19,7 @@ export const adminRoutes: Routes = [
     { path: '', redirectTo: 'modules', pathMatch: 'full' },
     { path: 'modules', component: AdminModulesComponent},
     { path: 'global', component: AdminGlobalComponent},
-    { path: 'processes', component: AdminProcessesComponent},
+    // { path: 'processes', component: AdminProcessesComponent},
     { path: 'templates', component: AdminTemplatesComponent},
     // { path: 'status', component: PackageStatusComponent}
   ]}
