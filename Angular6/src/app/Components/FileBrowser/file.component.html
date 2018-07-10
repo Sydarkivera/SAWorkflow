@@ -1,5 +1,5 @@
 
-<div class="file-header" (click)="expanded = !expanded">
+<div class="file-header noselect" (click)="expanded = !expanded">
   <ng-template [ngIf]="file.type == 'folder'">
     <i *ngIf="!expanded" class="material-icons file-float">arrow_right</i>
     <i *ngIf="expanded" class="material-icons file-float">arrow_drop_down</i>

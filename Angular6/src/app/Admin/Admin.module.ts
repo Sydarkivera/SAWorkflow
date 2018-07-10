@@ -6,9 +6,9 @@ import { FormsModule }    from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
 //imports
-import { TooltipModule } from '../Tooltip/Tooltip.module';
-import { NavbarModule } from '../Navbar/Navbar.module';
-import { ModalModule } from '../Modal/Modal.module';
+import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
+import { NavbarModule } from '../Components/Navbar/Navbar.module';
+import { ModalModule } from '../Components/Modal/Modal.module';
 import { MessageModule } from '../Components/Message/Message.module';
 
 //declarations

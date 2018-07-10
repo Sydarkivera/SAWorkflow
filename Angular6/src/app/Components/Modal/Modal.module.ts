@@ -1,4 +1,3 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -8,8 +7,6 @@ import { FormsModule }    from '@angular/forms';
 
 //declarations
 import { ModalComponent } from '../Modal/Modal.component';
-
-//providers
 
 @NgModule({
   imports: [

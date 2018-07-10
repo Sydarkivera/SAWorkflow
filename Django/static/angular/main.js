@@ -70,9 +70,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
 /* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
-/* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
+/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Components/Modal/Modal.module */ "./src/app/Components/Modal/Modal.module.ts");
 /* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
 /* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
 /* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
@@ -113,9 +113,9 @@ var AdminModule = /** @class */ (function () {
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
-                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
-                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"],
+                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
+                _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"],
                 _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__["MessageModule"]
             ],
             declarations: [
@@ -644,7 +644,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
         var _this = this;
         //actuall creation of new template
         var data = { 'templateName': this.newTemplateName };
-        this.apiService.createNewTemplate(data).subscribe(function (data) {
+        this.apiService.postTemplate(data).subscribe(function (data) {
             // console.log(data);
             _this.templates.push(data);
             _this.newTemplateName = "";
@@ -655,7 +655,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
         var _this = this;
         //save the changes made in a template to the server
         var data = { 'templateName': this.selected_template.name, 'template_id': this.selected_template_id };
-        this.apiService.createNewTemplate(data).subscribe(function (data) {
+        this.apiService.postTemplate(data).subscribe(function (data) {
             _this.messageVisible = true;
             for (var i in _this.templates) {
                 var temp = _this.templates[i];
@@ -966,6 +966,225 @@ var AdminTemplatesComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Components/FileBrowser/File.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/Components/FileBrowser/File.component.ts ***!
+  \**********************************************************/
+/*! exports provided: FileComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileComponent", function() { return FileComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var FileComponent = /** @class */ (function () {
+    function FileComponent() {
+        this.expanded = false;
+    }
+    FileComponent.prototype.ngOnInit = function () {
+    };
+    FileComponent.prototype.select = function () {
+        if (this.file.selected) {
+            this.file.selected = false;
+        }
+        else {
+            this.file.selected = true;
+        }
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], FileComponent.prototype, "file", void 0);
+    FileComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'file',
+            template: __webpack_require__(/*! ./file.component.html */ "./src/app/Components/FileBrowser/file.component.html"),
+            styles: [__webpack_require__(/*! ./file.component.sass */ "./src/app/Components/FileBrowser/file.component.sass")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], FileComponent);
+    return FileComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/FileBrowser/FileBrowser.component.html":
+/*!*******************************************************************!*\
+  !*** ./src/app/Components/FileBrowser/FileBrowser.component.html ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div *ngFor=\"let file of files\">\n          <file [file]=\"file\"></file>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"closeModal()\"></div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/FileBrowser/FileBrowser.component.sass":
+/*!*******************************************************************!*\
+  !*** ./src/app/Components/FileBrowser/FileBrowser.component.sass ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".modal.active {\n  display: block !important; }\n\n.modal-dialog, .modal-content {\n  height: 95%; }\n\n.modal-body {\n  overflow-y: scroll; }\n\n.modal-background {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/FileBrowser/FileBrowser.component.ts":
+/*!*****************************************************************!*\
+  !*** ./src/app/Components/FileBrowser/FileBrowser.component.ts ***!
+  \*****************************************************************/
+/*! exports provided: FileBrowserComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileBrowserComponent", function() { return FileBrowserComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var FileBrowserComponent = /** @class */ (function () {
+    function FileBrowserComponent(apiService) {
+        this.apiService = apiService;
+        this.active = false;
+        this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.selectedFiles = undefined;
+        this.files = [];
+    }
+    FileBrowserComponent.prototype.closeModal = function () {
+        this.active = false;
+        this.activeChange.emit(this.active);
+    };
+    FileBrowserComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.apiService.getFiles(this.package_id).subscribe(function (data) {
+            _this.files = data;
+        });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], FileBrowserComponent.prototype, "package_id", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], FileBrowserComponent.prototype, "active", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], FileBrowserComponent.prototype, "activeChange", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], FileBrowserComponent.prototype, "selectedFiles", void 0);
+    FileBrowserComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'FileBrowser',
+            template: __webpack_require__(/*! ./FileBrowser.component.html */ "./src/app/Components/FileBrowser/FileBrowser.component.html"),
+            styles: [__webpack_require__(/*! ./FileBrowser.component.sass */ "./src/app/Components/FileBrowser/FileBrowser.component.sass")]
+        }),
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
+    ], FileBrowserComponent);
+    return FileBrowserComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/FileBrowser/FileBrowser.module.ts":
+/*!**************************************************************!*\
+  !*** ./src/app/Components/FileBrowser/FileBrowser.module.ts ***!
+  \**************************************************************/
+/*! exports provided: FileBrowserModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileBrowserModule", function() { return FileBrowserModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _FileBrowser_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FileBrowser.component */ "./src/app/Components/FileBrowser/FileBrowser.component.ts");
+/* harmony import */ var _File_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./File.component */ "./src/app/Components/FileBrowser/File.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+//angular modules
+
+
+//declarations
+
+
+var FileBrowserModule = /** @class */ (function () {
+    function FileBrowserModule() {
+    }
+    FileBrowserModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+            ],
+            declarations: [
+                _FileBrowser_component__WEBPACK_IMPORTED_MODULE_2__["FileBrowserComponent"],
+                _File_component__WEBPACK_IMPORTED_MODULE_3__["FileComponent"]
+            ],
+            providers: [],
+            exports: [_FileBrowser_component__WEBPACK_IMPORTED_MODULE_2__["FileBrowserComponent"]]
+        })
+    ], FileBrowserModule);
+    return FileBrowserModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/FileBrowser/file.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/Components/FileBrowser/file.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\n<div class=\"file-header noselect\" (click)=\"expanded = !expanded\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n  <!-- <i class=\"material-icons file-float\">indeterminate_check_box</i> -->\n</div>\n<i *ngIf=\"file.selected == true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Deselect this file\" tooltipPlacement=\"right\">check_box</i>\n<i *ngIf=\"file.selected != true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Select this file\" tooltipPlacement=\"right\">check_box_outline_blank</i>\n<i *ngIf=\"file.type == 'folder'\" class=\"material-icons file-float\" tooltip=\"Set a filter for items in folder\" tooltipPlacement=\"right\">filter_list</i>\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of file.children\" [file]=\"f\"></file>\n  <!-- </div> -->\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/FileBrowser/file.component.sass":
+/*!************************************************************!*\
+  !*** ./src/app/Components/FileBrowser/file.component.sass ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".file-header {\n  cursor: pointer; }\n\n.file-children {\n  margin-left: 15px;\n  clear: both; }\n\n.file-float {\n  float: left; }\n\n.tooltip {\n  background-color: red; }\n"
+
+/***/ }),
+
 /***/ "./src/app/Components/Message/Message.component.html":
 /*!***********************************************************!*\
   !*** ./src/app/Components/Message/Message.component.html ***!
@@ -1096,9 +1315,134 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageModule", function() { return MessageModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _Message_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message.component */ "./src/app/Components/Message/Message.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+//angular modules
+
+
+//declarations
+
+var MessageModule = /** @class */ (function () {
+    function MessageModule() {
+    }
+    MessageModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+            ],
+            declarations: [
+                _Message_component__WEBPACK_IMPORTED_MODULE_2__["MessageComponent"]
+            ],
+            providers: [],
+            exports: [_Message_component__WEBPACK_IMPORTED_MODULE_2__["MessageComponent"]]
+        })
+    ], MessageModule);
+    return MessageModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Modal/Modal.component.html":
+/*!*******************************************************!*\
+  !*** ./src/app/Components/Modal/Modal.component.html ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"modal active\" *ngIf=\"active\" id=\"modal\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">{{title}}</h5>\n        <button type=\"button\" class=\"close\" (click)=\"close()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-content select=\"[modal-body]\"></ng-content>\n      </div>\n      <div class=\"modal-footer\">\n        <ng-content select=\"[modal-footer]\"></ng-content>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"close()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"close()\"></div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/Modal/Modal.component.sass":
+/*!*******************************************************!*\
+  !*** ./src/app/Components/Modal/Modal.component.sass ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".modal {\n  max-height: 95%;\n  display: block !important; }\n\n.modal-dialog {\n  height: 100%;\n  max-width: 90%; }\n\n.modal-content {\n  max-height: 95%; }\n\n.modal-body {\n  margin-top: 5px;\n  overflow-y: scroll; }\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/Modal/Modal.component.ts":
+/*!*****************************************************!*\
+  !*** ./src/app/Components/Modal/Modal.component.ts ***!
+  \*****************************************************/
+/*! exports provided: ModalComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalComponent", function() { return ModalComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ModalComponent = /** @class */ (function () {
+    function ModalComponent() {
+        this.title = 'Title';
+        this.active = false;
+        this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    ModalComponent.prototype.close = function () {
+        this.active = false;
+        this.activeChange.emit(this.active);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ModalComponent.prototype, "title", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], ModalComponent.prototype, "active", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], ModalComponent.prototype, "activeChange", void 0);
+    ModalComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'modal',
+            template: __webpack_require__(/*! ./Modal.component.html */ "./src/app/Components/Modal/Modal.component.html"),
+            styles: [__webpack_require__(/*! ./Modal.component.sass */ "./src/app/Components/Modal/Modal.component.sass")]
+        })
+    ], ModalComponent);
+    return ModalComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Modal/Modal.module.ts":
+/*!**************************************************!*\
+  !*** ./src/app/Components/Modal/Modal.module.ts ***!
+  \**************************************************/
+/*! exports provided: ModalModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalModule", function() { return ModalModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _Message_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Message.component */ "./src/app/Components/Message/Message.component.ts");
+/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Components/Modal/Modal.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1112,11 +1456,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 //imports
 //declarations
 
-//providers
-var MessageModule = /** @class */ (function () {
-    function MessageModule() {
+var ModalModule = /** @class */ (function () {
+    function ModalModule() {
     }
-    MessageModule = __decorate([
+    ModalModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
@@ -1124,13 +1467,518 @@ var MessageModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
             ],
             declarations: [
-                _Message_component__WEBPACK_IMPORTED_MODULE_4__["MessageComponent"]
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
             ],
             providers: [],
-            exports: [_Message_component__WEBPACK_IMPORTED_MODULE_4__["MessageComponent"]]
+            exports: [
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
+            ]
         })
-    ], MessageModule);
-    return MessageModule;
+    ], ModalModule);
+    return ModalModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Navbar/Navbar.component.html":
+/*!*********************************************************!*\
+  !*** ./src/app/Components/Navbar/Navbar.component.html ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Login</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Register</a>\n    </li>\n  </ul>\n</nav>\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/Navbar/Navbar.component.sass":
+/*!*********************************************************!*\
+  !*** ./src/app/Components/Navbar/Navbar.component.sass ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  width: 220px;\n  min-width: 220px;\n  max-width: 220px; }\n\n.nav-user {\n  color: white; }\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/Navbar/Navbar.component.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/Components/Navbar/Navbar.component.ts ***!
+  \*******************************************************/
+/*! exports provided: NavbarComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var NavbarComponent = /** @class */ (function () {
+    function NavbarComponent() {
+    }
+    NavbarComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'navbar',
+            template: __webpack_require__(/*! ./Navbar.component.html */ "./src/app/Components/Navbar/Navbar.component.html"),
+            styles: [__webpack_require__(/*! ./Navbar.component.sass */ "./src/app/Components/Navbar/Navbar.component.sass")]
+        })
+    ], NavbarComponent);
+    return NavbarComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Navbar/Navbar.module.ts":
+/*!****************************************************!*\
+  !*** ./src/app/Components/Navbar/Navbar.module.ts ***!
+  \****************************************************/
+/*! exports provided: NavbarModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarModule", function() { return NavbarModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _Navbar_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navbar.component */ "./src/app/Components/Navbar/Navbar.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+//components
+
+var NavbarModule = /** @class */ (function () {
+    function NavbarModule() {
+    }
+    NavbarModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]
+            ],
+            declarations: [
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
+            ],
+            exports: [
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
+            ],
+            entryComponents: [
+                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
+            ]
+        })
+    ], NavbarModule);
+    return NavbarModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Tooltip/Tooltip.component.sass":
+/*!***********************************************************!*\
+  !*** ./src/app/Components/Tooltip/Tooltip.component.sass ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".tooltip {\n  opacity: 0.5; }\n"
+
+/***/ }),
+
+/***/ "./src/app/Components/Tooltip/Tooltip.component.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/Components/Tooltip/Tooltip.component.ts ***!
+  \*********************************************************/
+/*! exports provided: TooltipComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TooltipComponent", function() { return TooltipComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var TooltipComponent = /** @class */ (function () {
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+    function TooltipComponent(element, cdr) {
+        this.element = element;
+        this.cdr = cdr;
+        this.placement = "bottom";
+        this.animation = true;
+        this.opacity = 0.5;
+        // -------------------------------------------------------------------------
+        // Properties
+        // -------------------------------------------------------------------------
+        this.top = -100000;
+        this.left = -100000;
+        this.isIn = false;
+        this.isFade = false;
+    }
+    // -------------------------------------------------------------------------
+    // Lifecycle callbacks
+    // -------------------------------------------------------------------------
+    TooltipComponent.prototype.ngAfterViewInit = function () {
+        this.show();
+        this.cdr.detectChanges();
+    };
+    // -------------------------------------------------------------------------
+    // Public Methods
+    // -------------------------------------------------------------------------
+    TooltipComponent.prototype.show = function () {
+        if (!this.hostElement)
+            return;
+        var p = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
+        this.top = p.top;
+        this.left = p.left;
+        this.isIn = true;
+        if (this.animation)
+            this.isFade = true;
+    };
+    TooltipComponent.prototype.hide = function () {
+        this.top = -100000;
+        this.left = -100000;
+        this.isIn = true;
+        if (this.animation)
+            this.isFade = false;
+    };
+    // -------------------------------------------------------------------------
+    // Private Methods
+    // -------------------------------------------------------------------------
+    TooltipComponent.prototype.positionElements = function (hostEl, targetEl, positionStr, appendToBody) {
+        if (appendToBody === void 0) { appendToBody = false; }
+        var positionStrParts = positionStr.split("-");
+        var pos0 = positionStrParts[0];
+        var pos1 = positionStrParts[1] || "center";
+        var hostElPos = appendToBody ? this.offset(hostEl) : this.position(hostEl);
+        var targetElWidth = targetEl.offsetWidth;
+        var targetElHeight = targetEl.offsetHeight;
+        var shiftWidth = {
+            center: function () {
+                return hostElPos.left + hostElPos.width / 2 - targetElWidth / 2;
+            },
+            left: function () {
+                return hostElPos.left;
+            },
+            right: function () {
+                return hostElPos.left + hostElPos.width;
+            }
+        };
+        var shiftHeight = {
+            center: function () {
+                return hostElPos.top + hostElPos.height / 2 - targetElHeight / 2;
+            },
+            top: function () {
+                return hostElPos.top;
+            },
+            bottom: function () {
+                return hostElPos.top + hostElPos.height;
+            }
+        };
+        var targetElPos;
+        switch (pos0) {
+            case "right":
+                targetElPos = {
+                    top: shiftHeight[pos1](),
+                    left: shiftWidth[pos0]()
+                };
+                break;
+            case "left":
+                targetElPos = {
+                    top: shiftHeight[pos1](),
+                    left: hostElPos.left - targetElWidth
+                };
+                break;
+            case "bottom":
+                targetElPos = {
+                    top: shiftHeight[pos0](),
+                    left: shiftWidth[pos1]()
+                };
+                break;
+            default:
+                targetElPos = {
+                    top: hostElPos.top - targetElHeight,
+                    left: shiftWidth[pos1]()
+                };
+                break;
+        }
+        return targetElPos;
+    };
+    TooltipComponent.prototype.position = function (nativeEl) {
+        var offsetParentBCR = { top: 0, left: 0 };
+        var elBCR = this.offset(nativeEl);
+        var offsetParentEl = this.parentOffsetEl(nativeEl);
+        if (offsetParentEl !== window.document) {
+            offsetParentBCR = this.offset(offsetParentEl);
+            offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
+            offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
+        }
+        var boundingClientRect = nativeEl.getBoundingClientRect();
+        return {
+            width: boundingClientRect.width || nativeEl.offsetWidth,
+            height: boundingClientRect.height || nativeEl.offsetHeight,
+            top: elBCR.top - offsetParentBCR.top,
+            left: elBCR.left - offsetParentBCR.left
+        };
+    };
+    TooltipComponent.prototype.offset = function (nativeEl) {
+        var boundingClientRect = nativeEl.getBoundingClientRect();
+        return {
+            width: boundingClientRect.width || nativeEl.offsetWidth,
+            height: boundingClientRect.height || nativeEl.offsetHeight,
+            top: boundingClientRect.top + (window.pageYOffset || window.document.documentElement.scrollTop),
+            left: boundingClientRect.left + (window.pageXOffset || window.document.documentElement.scrollLeft)
+        };
+    };
+    TooltipComponent.prototype.getStyle = function (nativeEl, cssProp) {
+        if (nativeEl.currentStyle)
+            return nativeEl.currentStyle[cssProp];
+        if (window.getComputedStyle)
+            return window.getComputedStyle(nativeEl)[cssProp];
+        // finally try and get inline style
+        return nativeEl.style[cssProp];
+    };
+    TooltipComponent.prototype.isStaticPositioned = function (nativeEl) {
+        return (this.getStyle(nativeEl, "position") || "static") === "static";
+    };
+    TooltipComponent.prototype.parentOffsetEl = function (nativeEl) {
+        var offsetParent = nativeEl.offsetParent || window.document;
+        while (offsetParent && offsetParent !== window.document && this.isStaticPositioned(offsetParent)) {
+            offsetParent = offsetParent.offsetParent;
+        }
+        return offsetParent || window.document;
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", HTMLElement)
+    ], TooltipComponent.prototype, "hostElement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], TooltipComponent.prototype, "content", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], TooltipComponent.prototype, "placement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], TooltipComponent.prototype, "animation", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], TooltipComponent.prototype, "opacity", void 0);
+    TooltipComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: "tooltip-content",
+            styles: [__webpack_require__(/*! ./Tooltip.component.sass */ "./src/app/Components/Tooltip/Tooltip.component.sass")],
+            template: "\n<div class=\"tooltip {{ placement }}\"\n     [style.top]=\"top + 'px'\"\n     [style.left]=\"left + 'px'\"\n     [style.opacity]=\"opacity\"\n     [class.in]=\"isIn\"\n     [class.fade]=\"isFade\"\n     role=\"Atooltip\">\n    <div class=\"tooltip-arrow\"></div>\n    <div class=\"tooltip-inner\">\n        <ng-content></ng-content>\n        {{ content }}\n    </div>\n</div>\n"
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
+    ], TooltipComponent);
+    return TooltipComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Tooltip/Tooltip.directive.ts":
+/*!*********************************************************!*\
+  !*** ./src/app/Components/Tooltip/Tooltip.directive.ts ***!
+  \*********************************************************/
+/*! exports provided: Tooltip */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return Tooltip; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Tooltip_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tooltip.component */ "./src/app/Components/Tooltip/Tooltip.component.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var Tooltip = /** @class */ (function () {
+    // -------------------------------------------------------------------------
+    // Constructor
+    // -------------------------------------------------------------------------
+    function Tooltip(viewContainerRef, resolver) {
+        this.viewContainerRef = viewContainerRef;
+        this.resolver = resolver;
+        this.tooltipAnimation = true;
+        this.tooltipPlacement = "bottom";
+    }
+    // -------------------------------------------------------------------------
+    // Public Methods
+    // -------------------------------------------------------------------------
+    Tooltip.prototype.show = function () {
+        if (this.tooltipDisabled || this.visible)
+            return;
+        this.visible = true;
+        if (typeof this.content === "string") {
+            var factory = this.resolver.resolveComponentFactory(_Tooltip_component__WEBPACK_IMPORTED_MODULE_1__["TooltipComponent"]);
+            if (!this.visible)
+                return;
+            this.tooltip = this.viewContainerRef.createComponent(factory);
+            this.tooltip.instance.hostElement = this.viewContainerRef.element.nativeElement;
+            this.tooltip.instance.content = this.content;
+            this.tooltip.instance.placement = this.tooltipPlacement;
+            this.tooltip.instance.animation = this.tooltipAnimation;
+            this.tooltip.instance.opacity = this.tooltipOpacity;
+        }
+        else {
+            var tooltip = this.content;
+            tooltip.hostElement = this.viewContainerRef.element.nativeElement;
+            tooltip.placement = this.tooltipPlacement;
+            tooltip.animation = this.tooltipAnimation;
+            tooltip.opacity = this.tooltipOpacity;
+            tooltip.show();
+        }
+    };
+    Tooltip.prototype.hide = function () {
+        if (!this.visible)
+            return;
+        this.visible = false;
+        if (this.tooltip)
+            this.tooltip.destroy();
+        if (this.content instanceof _Tooltip_component__WEBPACK_IMPORTED_MODULE_1__["TooltipComponent"])
+            this.content.hide();
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])("tooltip"),
+        __metadata("design:type", Object)
+    ], Tooltip.prototype, "content", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], Tooltip.prototype, "tooltipDisabled", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], Tooltip.prototype, "tooltipAnimation", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], Tooltip.prototype, "tooltipPlacement", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Number)
+    ], Tooltip.prototype, "tooltipOpacity", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusin"),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseenter"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], Tooltip.prototype, "show", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusout"),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseleave"),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], Tooltip.prototype, "hide", null);
+    Tooltip = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
+            selector: "[tooltip]"
+        }),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]])
+    ], Tooltip);
+    return Tooltip;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Components/Tooltip/Tooltip.module.ts":
+/*!******************************************************!*\
+  !*** ./src/app/Components/Tooltip/Tooltip.module.ts ***!
+  \******************************************************/
+/*! exports provided: TooltipModule, Tooltip, TooltipComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TooltipModule", function() { return TooltipModule; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tooltip.directive */ "./src/app/Components/Tooltip/Tooltip.directive.ts");
+/* harmony import */ var _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Tooltip.component */ "./src/app/Components/Tooltip/Tooltip.component.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TooltipComponent", function() { return _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"]; });
+
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+
+
+
+
+var TooltipModule = /** @class */ (function () {
+    function TooltipModule() {
+    }
+    TooltipModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+            ],
+            declarations: [
+                _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"],
+                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"],
+            ],
+            exports: [
+                _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"],
+                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"],
+            ],
+            entryComponents: [
+                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"]
+            ]
+        })
+    ], TooltipModule);
+    return TooltipModule;
 }());
 
 
@@ -1148,9 +1996,8 @@ var MessageModule = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../PackageDetail/PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
-/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utilities */ "./src/app/Utilities.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Utilities */ "./src/app/Utilities.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1163,19 +2010,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
-
 var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(packageService, route, router) {
-        // Object.assign(this, {single, multi})
-        this.packageService = packageService;
-        this.route = route;
-        this.router = router;
+    function DashboardComponent(apiService) {
+        this.apiService = apiService;
         this.stats = undefined;
         // options
         this.showLegend = true;
         this.colorScheme = {
-            domain: _Utilities__WEBPACK_IMPORTED_MODULE_3__["GraphColors"]
+            domain: _Utilities__WEBPACK_IMPORTED_MODULE_2__["GraphColors"]
         };
         // pie
         this.showLabels = true;
@@ -1195,10 +2037,11 @@ var DashboardComponent = /** @class */ (function () {
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.packageService.getStatsDashboard().subscribe(function (data) {
-            console.log(data);
+        // load the data from the server and reorder it for the various graphs.
+        this.apiService.getStatsDashboard().subscribe(function (data) {
+            // console.log(data)
             _this.stats = data;
-            _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_3__["formatBytes"])(data['total_size']);
+            _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_2__["formatBytes"])(data['total_size']);
             _this.total_number_of_files = data['total_number_of_files'];
             _this.total_number_of_errors = data['total_number_of_errors'];
             _this.total_number_of_packages = data['total_number_of_packages'];
@@ -1221,7 +2064,6 @@ var DashboardComponent = /** @class */ (function () {
                 var value = _this.stats.graphData[key];
                 counts.push({ "name": value['date'], "value": value['count'] });
                 sizes.push({ "name": value['date'], "value": value['size'] });
-                // this.fileTypes.push({"name":value['name'].toUpperCase(), "value":value['total']});
             }
             _this.graphDataSize = [
                 {
@@ -1235,17 +2077,8 @@ var DashboardComponent = /** @class */ (function () {
                     "series": counts
                 }
             ];
-            // this.graphDataSize = [
-            //   {
-            //     "name": "size",
-            //     "series": sizes
-            //   }
-            // ];
             _this.dataLoaded = true;
         });
-    };
-    DashboardComponent.prototype.onSelect = function (event) {
-        console.log(event);
     };
     DashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -1253,7 +2086,7 @@ var DashboardComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/Dashboard/dashboard.component.html"),
             styles: [__webpack_require__(/*! ./dashboard.component.sass */ "./src/app/Dashboard/dashboard.component.sass")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
     ], DashboardComponent);
     return DashboardComponent;
 }());
@@ -1766,7 +2599,7 @@ var ComboChartComponent = /** @class */ (function (_super) {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div class=\"col-md-3 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Packages:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_packages}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Errors:\n    </p>\n    <p class=\"number errors\">\n      {{total_number_of_errors}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n</div>\n\n<div class=\"row  half-graph\">\n<!-- <div class=\"card\">\n  <combo-chart-component\n    *ngIf=\"dataLoaded\"\n    [view]=\"view\"\n    [scheme]=\"colorScheme\"\n    [results]=\"graphData\"\n    xAxis=\"true\"\n    yAxis=\"true\"\n    [gradient]=\"gradient\"\n    schemeType=\"ordinal\">\n  </combo-chart-component>\n</div> -->\n  <div class=\"card col-md-6\">\n    <div class=\"card-title\">\n      Number of files\n    </div>\n    <div class=\"card-body\">\n      <combo-chart-component\n        [results]=\"graphDataCount\"\n        xAxis=\"true\"\n        yAxis=\"true\"\n        >\n      </combo-chart-component>\n    </div>\n  </div>\n  <div class=\"card col-md-6\">\n    <div class=\"card-title\">\n      Total size of all files\n    </div>\n    <div class=\"card-body\">\n      <combo-chart-component\n        [results]=\"graphDataSize\"\n        xAxis=\"true\"\n        yAxis=\"true\"\n        [yAxisTickFormatting]=\"formatBytes\">\n      </combo-chart-component>\n    </div>\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Filetypes\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypesErrors\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Errors per Filetype\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n"
+module.exports = "<navbar></navbar>\n\n<!-- To row of important numbers -->\n<div class=\"row numberRow\">\n  <div class=\"col-md-3 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Packages:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_packages}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Errors:\n    </p>\n    <p class=\"number errors\">\n      {{total_number_of_errors}}\n    </p>\n  </div>\n  <div class=\"col-md-3 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n</div>\n\n<!-- Line graphs -->\n<div class=\"row  half-graph\">\n  <div class=\"card col-md-6\">\n    <div class=\"card-title\">\n      Number of files\n    </div>\n    <div class=\"card-body\">\n      <combo-chart-component\n        [results]=\"graphDataCount\"\n        xAxis=\"true\"\n        yAxis=\"true\"\n        >\n      </combo-chart-component>\n    </div>\n  </div>\n  <div class=\"card col-md-6\">\n    <div class=\"card-title\">\n      Total size of all files\n    </div>\n    <div class=\"card-body\">\n      <combo-chart-component\n        [results]=\"graphDataSize\"\n        xAxis=\"true\"\n        yAxis=\"true\"\n        [yAxisTickFormatting]=\"formatBytes\">\n      </combo-chart-component>\n    </div>\n  </div>\n</div>\n\n<!-- Pie charts -->\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    label=\"Filetypes\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypesErrors\"\n    [gradient]=\"gradient\"\n    label=\"Errors per Filetype\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n"
 
 /***/ }),
 
@@ -1778,451 +2611,6 @@ module.exports = "<navbar></navbar>\n\n<div class=\"row numberRow\">\n  <div cla
 /***/ (function(module, exports) {
 
 module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
-
-/***/ }),
-
-/***/ "./src/app/FileBrowser/File.component.ts":
-/*!***********************************************!*\
-  !*** ./src/app/FileBrowser/File.component.ts ***!
-  \***********************************************/
-/*! exports provided: FileComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileComponent", function() { return FileComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var FileComponent = /** @class */ (function () {
-    function FileComponent() {
-        this.fileName = 'demoFile';
-        this.expanded = false;
-    }
-    FileComponent.prototype.ngOnInit = function () {
-        // this.http.get('/api/package/'+this.package_id+'/files/').subscribe((data) => {
-        //   console.log(data);
-        // });
-    };
-    FileComponent.prototype.select = function () {
-        console.log(this.file.selected);
-        if (this.file.selected) {
-            this.file.selected = false;
-        }
-        else {
-            this.file.selected = true;
-        }
-        // for (f of file.children) {
-        //
-        // }
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], FileComponent.prototype, "file", void 0);
-    FileComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'file',
-            template: __webpack_require__(/*! ./file.component.html */ "./src/app/FileBrowser/file.component.html"),
-            styles: [__webpack_require__(/*! ./file.component.css */ "./src/app/FileBrowser/file.component.css")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], FileComponent);
-    return FileComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/FileBrowser/FileBrowser.component.css":
-/*!*******************************************************!*\
-  !*** ./src/app/FileBrowser/FileBrowser.component.css ***!
-  \*******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".Amodal {\n  /* position: fixed; */\n  /* top: 50%; */\n  /* left: 50%; */\n  /* transform: translate(-50%, -50%); */\n  /* width: 80%; */\n  /* max-width: 100%; */\n  /* height: 98%; */\n  /* max-height: 100%; */\n  /* overflow-y: scroll; */\n  /* background-color: white; */\n}\n\n.Amodal.active {\n  display: block !important;\n}\n\n.modal-dialog,\n.modal-content {\n    /* 80% of window height */\n    height: 95%;\n}\n\n.modal-body {\n    /* 100% = dialog height, 120px = header + footer */\n    /* max-height: calc(100% + 120px); */\n    overflow-y: scroll;\n}\n\n.modal-background {\n        /* modal background fixed across whole screen */\n        position: fixed;\n        top: 0;\n        right: 0;\n        bottom: 0;\n        left: 0;\n        /* semi-transparent black  */\n        background-color: #000;\n        opacity: 0.75;\n\n        /* z-index must be below .modal and above everything else  */\n        z-index: -1;\n    }\n"
-
-/***/ }),
-
-/***/ "./src/app/FileBrowser/FileBrowser.component.html":
-/*!********************************************************!*\
-  !*** ./src/app/FileBrowser/FileBrowser.component.html ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"modal Amodal\" [class.active]=\"active\" id=\"modal\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div *ngFor=\"let file of files\">\n          <file [file]=\"file\"></file>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\n        <!-- <button type=\"button\" class=\"btn btn-primary\">Save changes</button> -->\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"closeModal()\"></div>\n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/FileBrowser/FileBrowser.component.ts":
-/*!******************************************************!*\
-  !*** ./src/app/FileBrowser/FileBrowser.component.ts ***!
-  \******************************************************/
-/*! exports provided: FileBrowserComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileBrowserComponent", function() { return FileBrowserComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var FileBrowserComponent = /** @class */ (function () {
-    function FileBrowserComponent(http) {
-        this.http = http;
-        this.active = false;
-        this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-        this.selectedFiles = undefined;
-        this.files = [];
-    }
-    FileBrowserComponent.prototype.getSelectedFilesForChild = function (child) {
-        // if (!this.selectedFiles) {
-        //   return undefined;
-        // }
-        // if (this.selectedFiles.type == "all") {
-        //   return {"type": "all"}
-        // } else if (this.selectedFiles.type == "selected") {
-        //   // var exists = false;
-        //   // for (let c of this.selectedFiles.children) {
-        //   //   if (c.name == child) {
-        //   //
-        //   //   }
-        //   // }
-        //   // if (this.selectedFiles.children) {
-        //   //
-        //   // }
-        // }
-    };
-    FileBrowserComponent.prototype.closeModal = function () {
-        this.active = false;
-        this.activeChange.emit(this.active);
-    };
-    FileBrowserComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.http.get('/api/package/' + this.package_id + '/files/').subscribe(function (data) {
-            console.log(data);
-            _this.files = data;
-        });
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Number)
-    ], FileBrowserComponent.prototype, "package_id", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
-    ], FileBrowserComponent.prototype, "active", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
-        __metadata("design:type", Object)
-    ], FileBrowserComponent.prototype, "activeChange", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], FileBrowserComponent.prototype, "selectedFiles", void 0);
-    FileBrowserComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'FileBrowser',
-            template: __webpack_require__(/*! ./FileBrowser.component.html */ "./src/app/FileBrowser/FileBrowser.component.html"),
-            styles: [__webpack_require__(/*! ./FileBrowser.component.css */ "./src/app/FileBrowser/FileBrowser.component.css")]
-        }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], FileBrowserComponent);
-    return FileBrowserComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/FileBrowser/file.component.css":
-/*!************************************************!*\
-  !*** ./src/app/FileBrowser/file.component.css ***!
-  \************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".file-header {\n  -webkit-user-select: none;\n\t-moz-user-select: none;\n\t-o-user-select: none;\n  -ms-user-select: none;\n\t    user-select: none;\n  cursor: pointer;\n}\n\n.file-children {\n  margin-left: 15px;\n  clear: both;\n}\n\n.file-float {\n  float:left;\n}\n\n:host {\n  clear: both;\n  display: block;\n}\n"
-
-/***/ }),
-
-/***/ "./src/app/FileBrowser/file.component.html":
-/*!*************************************************!*\
-  !*** ./src/app/FileBrowser/file.component.html ***!
-  \*************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n<div class=\"file-header\" (click)=\"expanded = !expanded\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n  <!-- <i class=\"material-icons file-float\">indeterminate_check_box</i> -->\n</div>\n<i *ngIf=\"file.selected == true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Deselect this file\" tooltipPlacement=\"right\">check_box</i>\n<i *ngIf=\"file.selected != true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Select this file\" tooltipPlacement=\"right\">check_box_outline_blank</i>\n<i *ngIf=\"file.type == 'folder'\" class=\"material-icons file-float\" tooltip=\"Set a filter for items in folder\" tooltipPlacement=\"right\">filter_list</i>\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of file.children\" [file]=\"f\"></file>\n  <!-- </div> -->\n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/Modal/Modal.component.css":
-/*!*******************************************!*\
-  !*** ./src/app/Modal/Modal.component.css ***!
-  \*******************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".modal {\n  max-height: 95%;\n  display: block !important;\n}\n\n.modal-dialog {\n  height: 100%;\n  max-width: 90%;\n}\n\n.modal-content {\n  max-height: 95%;\n}\n\n.modal-body {\n  margin-top: 5px;\n    overflow-y: scroll;\n}\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black  */\n  background-color: #000;\n  opacity: 0.75;\n\n  /* z-index must be below .modal and above everything else  */\n  z-index: -1;\n}\n"
-
-/***/ }),
-
-/***/ "./src/app/Modal/Modal.component.html":
-/*!********************************************!*\
-  !*** ./src/app/Modal/Modal.component.html ***!
-  \********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"modal active\" *ngIf=\"active\" id=\"modal\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\">{{title}}</h5>\n        <button type=\"button\" class=\"close\" (click)=\"close()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <ng-content select=\"[modal-body]\"></ng-content>\n      </div>\n      <div class=\"modal-footer\">\n        <ng-content select=\"[modal-footer]\"></ng-content>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"close()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"close()\"></div>\n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/Modal/Modal.component.ts":
-/*!******************************************!*\
-  !*** ./src/app/Modal/Modal.component.ts ***!
-  \******************************************/
-/*! exports provided: ModalComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalComponent", function() { return ModalComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var ModalComponent = /** @class */ (function () {
-    function ModalComponent() {
-        this.title = 'Title';
-        this.active = false;
-        this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-    }
-    // @Output() active = new EventEmitter<boolean>();
-    // @Input() footer: string = 'this is footer';
-    ModalComponent.prototype.close = function () {
-        this.active = false;
-        this.activeChange.emit(this.active);
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], ModalComponent.prototype, "title", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
-    ], ModalComponent.prototype, "active", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
-        __metadata("design:type", Object)
-    ], ModalComponent.prototype, "activeChange", void 0);
-    ModalComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'modal',
-            template: __webpack_require__(/*! ./Modal.component.html */ "./src/app/Modal/Modal.component.html"),
-            styles: [__webpack_require__(/*! ./Modal.component.css */ "./src/app/Modal/Modal.component.css")]
-        })
-    ], ModalComponent);
-    return ModalComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Modal/Modal.module.ts":
-/*!***************************************!*\
-  !*** ./src/app/Modal/Modal.module.ts ***!
-  \***************************************/
-/*! exports provided: ModalModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModalModule", function() { return ModalModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Modal/Modal.component.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-//imports
-//declarations
-
-//providers
-var ModalModule = /** @class */ (function () {
-    function ModalModule() {
-    }
-    ModalModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
-            ],
-            declarations: [
-                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
-            ],
-            providers: [],
-            exports: [
-                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
-            ]
-        })
-    ], ModalModule);
-    return ModalModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Navbar/Navbar.component.html":
-/*!**********************************************!*\
-  !*** ./src/app/Navbar/Navbar.component.html ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n    <!-- <li class=\"nav-item active\">\n      <a class=\"nav-link\" href=\"#\">Home <span class=\"sr-only\">(current)</span></a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Features</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Pricingg</a>\n    </li> -->\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Login</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Register</a>\n    </li>\n  </ul>\n</nav>\n"
-
-/***/ }),
-
-/***/ "./src/app/Navbar/Navbar.component.sass":
-/*!**********************************************!*\
-  !*** ./src/app/Navbar/Navbar.component.sass ***!
-  \**********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  width: 220px;\n  min-width: 220px;\n  max-width: 220px; }\n\n.nav-user {\n  color: white; }\n"
-
-/***/ }),
-
-/***/ "./src/app/Navbar/Navbar.component.ts":
-/*!********************************************!*\
-  !*** ./src/app/Navbar/Navbar.component.ts ***!
-  \********************************************/
-/*! exports provided: NavbarComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent() {
-    }
-    NavbarComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'navbar',
-            template: __webpack_require__(/*! ./Navbar.component.html */ "./src/app/Navbar/Navbar.component.html"),
-            styles: [__webpack_require__(/*! ./Navbar.component.sass */ "./src/app/Navbar/Navbar.component.sass")]
-        })
-    ], NavbarComponent);
-    return NavbarComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Navbar/Navbar.module.ts":
-/*!*****************************************!*\
-  !*** ./src/app/Navbar/Navbar.module.ts ***!
-  \*****************************************/
-/*! exports provided: NavbarModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarModule", function() { return NavbarModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _Navbar_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Navbar.component */ "./src/app/Navbar/Navbar.component.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-// import {Tooltip} from "./Tooltip.directive";
-// import {TooltipComponent} from "./Tooltip.component";
-// export * from "./Tooltip.directive";
-// export * from "./Tooltip.component";
-
-var NavbarModule = /** @class */ (function () {
-    function NavbarModule() {
-    }
-    NavbarModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"]
-            ],
-            declarations: [
-                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
-            ],
-            exports: [
-                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
-            ],
-            entryComponents: [
-                _Navbar_component__WEBPACK_IMPORTED_MODULE_3__["NavbarComponent"]
-            ]
-        })
-    ], NavbarModule);
-    return NavbarModule;
-}());
-
-
 
 /***/ }),
 
@@ -2268,7 +2656,7 @@ var NotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n              </div> -->\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n              <!-- <small>{{process.status}}</small> -->\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                  {{input.label}}\n                                  <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                  <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                                </label>\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n\n      </div>\n    </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsTemplate()\">Save as template</button>\n    <button class=\"btn btn-secondary float-right\" (click)=\"saveAsSameTemplate()\">Modify template</button>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n\n<modal [(active)]=\"modalActive\" title=\"Save as template\">\n  <div modal-body>\n    <label class=\"input-label\">\n      Name of new template:\n      <input type=\"text\" [(ngModel)]=\"templateName\"/>\n    </label>\n  </div>\n  <div modal-footer>\n    <button type=\"button\" class=\"btn btn-success\" (click)=\"saveNewTemplate()\">Save</button>\n  </div>\n</modal>\n"
+module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label>\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2295,7 +2683,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageComponent", function() { return PackageComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2308,11 +2696,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-// import { PackagesService } from './Packages.service'
+//services
 
 var PackageComponent = /** @class */ (function () {
-    function PackageComponent(packageService, route, router) {
-        this.packageService = packageService;
+    function PackageComponent(apiService, route, router) {
+        this.apiService = apiService;
         this.route = route;
         this.router = router;
         this.placeholderLocation = -1;
@@ -2327,59 +2715,37 @@ var PackageComponent = /** @class */ (function () {
     }
     PackageComponent.prototype.ngOnInit = function () {
         var _this = this;
+        // when id exists, load the package
         this.route.parent.params.subscribe(function (params) {
-            _this.id = +params['id'];
-            _this.packageService.getPackage(_this.id).subscribe(function (data) {
-                console.log(data);
-                console.log(data['processes']);
+            _this.id = params['id'];
+            _this.apiService.getPackage(_this.id).subscribe(function (data) {
                 _this.package = data;
             });
         });
-        this.packageService.getModules().subscribe(function (data) {
-            console.log(data);
-            // this.package = data;
+        // load modules right away
+        this.apiService.getModules().subscribe(function (data) {
             _this.modules = data;
         });
-        // this.client.fetch('/api/module/')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         this.modules = data;
-        //
-        //     });
     };
-    PackageComponent.prototype.saveAsTemplate = function () {
-        this.modalActive = true;
-    };
-    PackageComponent.prototype.saveNewTemplate = function () {
-        //backendcall with package_id and templateName.
-        var data = { "package_id": this.package.package_id, "templateName": this.templateName };
-        this.packageService.postTemplate(data).subscribe(function (data) {
-            console.log(data);
-            // this.package = data;
-            // this.modules = data as [any];
-        });
-        this.package.template_name = this.templateName;
-        this.modalActive = false;
-    };
+    //exectute the workflow
     PackageComponent.prototype.startWorkflow = function () {
-        this.packageService.startWorkflow(this.package.package_id);
+        this.apiService.startWorkflow(this.package.package_id);
         this.router.navigate(['packages', this.package.package_id, 'status']);
     };
+    //select a process. If it is alreade selected, deselect it.
     PackageComponent.prototype.selectProcess = function (process) {
         if (this.selected_process_id != process.process_id) {
             this.selected_process_id = process.process_id;
             this.selected_process = process;
-            // this.active_process_values = process.value;
-            console.log(process.value);
         }
         else {
             this.selected_process_id = -1;
             this.selected_process = undefined;
         }
-        // console.log(this.selected_process_id);
     };
+    // delete process
     PackageComponent.prototype.deleteProcess = function (process) {
-        this.packageService.deleteProcess(process.process_id).subscribe(function (data) {
+        this.apiService.deleteProcess(process.process_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.filter(function (item) {
             return item.process_id != process.process_id;
@@ -2393,8 +2759,7 @@ var PackageComponent = /** @class */ (function () {
                 data.push({ "order": item.order, "process_id": item.process_id });
             }
         }
-        this.packageService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
-            // console.log(data);
+        this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -2403,34 +2768,26 @@ var PackageComponent = /** @class */ (function () {
             return -1;
         });
     };
+    // add a new process to bottom of the list
     PackageComponent.prototype.addProcessLast = function (module_id) {
         var _this = this;
         var order = 0;
         if (this.package.processes.length > 0) {
             order = this.package.processes[this.package.processes.length - 1].order + 1;
         }
-        this.packageService.addProcess({ "order": order, "module": module_id, "package": this.package.package_id }).subscribe(function (data) {
-            console.log(data);
+        this.apiService.addProcess({ "order": order, "module": module_id, "package": this.package.package_id }).subscribe(function (data) {
             _this.package.processes = data;
         });
     };
+    // modify a process form value
     PackageComponent.prototype.setProcessValue = function (id, value) {
         var values = this.selected_process.value;
         values[id] = value;
         var data = { "value": values };
-        this.packageService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
-            console.log('data chagned');
-            console.log(data);
+        this.apiService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
         });
-        // this.client.fetch('/api/process/'+this.selected_process+'/', {
-        //     method: "PUT",
-        //     body: json(val),
-        // }).then(response => response.json())
-        // .then(data => {
-        //     this.package.processes.splice(process_index, 1, data);
-        // });
-        // this.selected_process = -1;
     };
+    //check if the list of processes is empty
     PackageComponent.prototype.isListEmpty = function () {
         if (this.package == undefined || this.package.processes == undefined) {
             return true;
@@ -2443,26 +2800,22 @@ var PackageComponent = /** @class */ (function () {
         }
         return true;
     };
+    // move up a process on step
     PackageComponent.prototype.moveUp = function (process) {
         var data = [];
         data.push({ "order": (process.order - 1), "process_id": process.process_id });
         //find the one below
-        // console.table(this.package.processes);
         var below;
         for (var i = 0; i < this.package.processes.length; i++) {
             var p = this.package.processes[i];
             if (p.order == process.order - 1) {
                 data.push({ "order": (p.order + 1), "process_id": p.process_id });
-                // console.log(i);/
                 this.package.processes[i].order += 1;
                 this.package.processes[i + 1].order -= 1;
                 break;
             }
         }
-        // console.table(data);
-        // console.table(this.package.processes);
-        this.packageService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
-            // console.log(data);
+        this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -2471,11 +2824,11 @@ var PackageComponent = /** @class */ (function () {
             return -1;
         });
     };
+    // move down a process on step
     PackageComponent.prototype.moveDown = function (process) {
         var data = [];
         data.push({ "order": (process.order + 1), "process_id": process.process_id });
         //find the one below
-        // console.table(this.package.processes);
         var below;
         for (var i = 0; i < this.package.processes.length; i++) {
             var p = this.package.processes[i];
@@ -2487,10 +2840,7 @@ var PackageComponent = /** @class */ (function () {
                 break;
             }
         }
-        // console.table(data);
-        // console.table(this.package.processes);
-        this.packageService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
-            // console.log(data);
+        this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -2499,44 +2849,35 @@ var PackageComponent = /** @class */ (function () {
             return -1;
         });
     };
+    // store info about the moving object in the event
     PackageComponent.prototype.dragStart = function (e, id, type, name) {
-        console.log('drag start: ' + e);
-        // console.log(id);
         e.dataTransfer.setData('id', id);
         e.dataTransfer.setData('type', type);
         e.dataTransfer.setData('name', name);
     };
+    // drop the element
     PackageComponent.prototype.onDrop = function (e) {
         var _this = this;
-        console.group('dropEvent');
-        // console.log('drop: ' + e);
-        // console.log(e.dataTransfer.getData('id'));
-        // console.log(e.dataTransfer.getData('type'));
-        // console.log(this.placeholderLocation);
-        // if this.placeholderLocation == -0.5, insert first
-        // if this.placeholderLocation == 0.5, insert afeter first
+        // calculate where to drop the new element
         var dropOrder = Math.ceil(this.placeholderLocation);
         if (dropOrder < 0) {
             dropOrder = 0;
         }
-        // console.log(dropOrder);
+        // if the element is a module, create a new process
         if (e.dataTransfer.getData('type') == 'module') {
             var data = [];
             // move down all items under existingIndex
             for (var index in this.package.processes) {
                 var item = this.package.processes[index];
-                // console.log(this.package.processes[index]);
                 if (item.type != 'placeholder' && item.order >= dropOrder) {
                     item.order += 1;
                     data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
                 }
             }
-            // console.log(data);
             //submit reorder:
-            this.packageService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
-                console.log(data);
+            this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
             });
-            //add process
+            //add temporary process
             var newProcess = {
                 "order": dropOrder,
                 "process_id": 100,
@@ -2544,13 +2885,12 @@ var PackageComponent = /** @class */ (function () {
                 "name": e.dataTransfer.getData('name')
             };
             this.package.processes.splice(dropOrder, 0, newProcess);
-            this.packageService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "package": this.package.package_id }).subscribe(function (data) {
-                // console.log(data);
+            this.apiService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "package": this.package.package_id }).subscribe(function (data) {
                 _this.package.processes = data;
             });
-            // console.log(this.package.processes);
         }
         else {
+            // if the elemenet is a process, move around the processes
             var startOrder = -1;
             var movedProcessIndex;
             var data = [];
@@ -2584,8 +2924,7 @@ var PackageComponent = /** @class */ (function () {
                 data.push({ "order": this.package.processes[movedProcessIndex].order, "process_id": this.package.processes[movedProcessIndex].process_id });
             }
             // push changes to api
-            this.packageService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
-                console.log(data);
+            this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
             });
             this.package.processes = this.package.processes.filter(function (item) {
                 return item['type'] != 'placeholder';
@@ -2596,48 +2935,24 @@ var PackageComponent = /** @class */ (function () {
                 return -1;
             });
         }
-        //changing order:
-        // let p1 = this.processes[processindex-1];
-        // let p2 = this.processes[processindex];
-        // let temp = p1.order;
-        // p1.order = p2.order;
-        // p2.order = temp;
-        // this.processes.sort(function(a, b) {
-        //     return a.order - b.order;
-        // });
-        // //upload change to server.
-        // let data = [{"order":p2.order, "process_id":p2.process_id}, {"order":p1.order, "process_id":p1.process_id}];
-        // this.client.fetch('/api/package/'+package_id+'/process/', {
-        //     method: "PUT",
-        //     body: json(data)
-        // })
-        console.groupEnd();
     };
     PackageComponent.prototype.onRelease = function (e) {
-        //reset
+        //remove placeholder
         this.package.processes = this.package.processes.filter(function (item) {
             return item['type'] != 'placeholder';
         });
     };
     //set ghost image to show where you will drop.
     PackageComponent.prototype.allowDrop = function (e, index) {
-        console.log(index);
         e.preventDefault();
-        // console.log(index);
         var element = e.target;
-        // console.log(e.pageY);
-        // console.log(e.pageY - element.getBoundingClientRect().top);
         if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
             return;
         }
         if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
             // drop below elements
-            // console.log('s');
             var ind = index + 0.5;
             if (ind != this.placeholderLocation) {
-                // console.log(ind);
-                // console.log(index);
-                // console.log(this.placeholderLocation);
                 this.placeholderLocation = ind;
                 this.package.processes = this.package.processes.filter(function (item) {
                     return item.type != 'placeholder';
@@ -2648,12 +2963,8 @@ var PackageComponent = /** @class */ (function () {
         }
         else {
             //drop above element.
-            // this.placeholderLocation = index + 0.5;
             var ind = index - 0.5;
             if (ind != this.placeholderLocation) {
-                // console.log(ind);
-                // console.log(index);
-                // console.log(this.placeholderLocation);
                 this.placeholderLocation = ind;
                 this.package.processes = this.package.processes.filter(function (item) {
                     return item.type != 'placeholder';
@@ -2662,8 +2973,6 @@ var PackageComponent = /** @class */ (function () {
                 this.package.processes.splice(index, 0, temp);
             }
         }
-        // console.log(element.offsetHeight);
-        // e.preventDefault();
     };
     PackageComponent.prototype.allowDropTop = function (e) {
         e.preventDefault();
@@ -2697,7 +3006,7 @@ var PackageComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./Package.component.html */ "./src/app/PackageDetail/Package.component.html"),
             styles: [__webpack_require__(/*! ./Package.component.sass */ "./src/app/PackageDetail/Package.component.sass")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageComponent);
     return PackageComponent;
 }());
@@ -2727,12 +3036,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./PackageStatus.component */ "./src/app/PackageDetail/PackageStatus.component.ts");
 /* harmony import */ var _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./PackageTemplate.component */ "./src/app/PackageDetail/PackageTemplate.component.ts");
 /* harmony import */ var _PackageHeader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./PackageHeader.component */ "./src/app/PackageDetail/PackageHeader.component.ts");
-/* harmony import */ var _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../FileBrowser/FileBrowser.component */ "./src/app/FileBrowser/FileBrowser.component.ts");
-/* harmony import */ var _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../FileBrowser/File.component */ "./src/app/FileBrowser/File.component.ts");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
-/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
-/* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
+/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ../Components/Modal/Modal.module */ "./src/app/Components/Modal/Modal.module.ts");
+/* harmony import */ var _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Components/FileBrowser/FileBrowser.module */ "./src/app/Components/FileBrowser/FileBrowser.module.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2744,20 +3052,19 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+// components
 
 
 
 
 
+//modules
 
 
 
-// import { ModuleService } from '../Admin/Module.service';
 
+//services
 
-
-// import { HeroDetailComponent }  from './hero-detail.component';
-// import { HeroService } from './hero.service';
 var PackageModule = /** @class */ (function () {
     function PackageModule() {
     }
@@ -2768,21 +3075,19 @@ var PackageModule = /** @class */ (function () {
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
-                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__["NavbarModule"],
-                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_15__["ModalModule"],
+                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_10__["TooltipModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_11__["NavbarModule"],
+                _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_12__["ModalModule"],
+                _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_13__["FileBrowserModule"]
             ],
             declarations: [
                 _Package_component__WEBPACK_IMPORTED_MODULE_5__["PackageComponent"],
                 _PackageDashboard_component__WEBPACK_IMPORTED_MODULE_6__["PackageDashboardComponent"],
                 _PackageHeader_component__WEBPACK_IMPORTED_MODULE_9__["PackageHeaderComponent"],
                 _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__["PackageStatusComponent"],
-                _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__["PackageTemplateComponent"],
-                _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__["FileBrowserComponent"],
-                _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__["FileComponent"]
+                _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__["PackageTemplateComponent"]
             ],
-            // bootstrap: [PackageHeaderComponent] s
-            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__["PackageDetailService"]],
+            providers: [_Services_api_service__WEBPACK_IMPORTED_MODULE_14__["APIService"]]
         })
     ], PackageModule);
     return PackageModule;
@@ -2799,7 +3104,7 @@ var PackageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <!-- <p class=\"numberTitle\">\n      Browse:\n    </p> -->\n    <button class=\"btn btn-success browse\" (click)=\"startWorkflow()\">Browse package</button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div\n    *ngFor=\"let process of package.processes\"\n    class=\"progress-bar text-dark text-center\"\n    [style.width]=\"process.progress/package.processes.length + '%'\"\n    [class.bg-success]=\"process.status == 'Done'\"\n    [class.bg-danger]=\"process.status == 'Error'\"\n    [class.progress-bar-animated]=\"process.status == 'Running'\"\n    [class.progress-bar-striped]=\"process.status == 'Running'\"\n    >\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Files\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<!-- <div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypesErrors\"\n    [gradient]=\"gradient\"\n    (select)=\"onSelect($event)\"\n    label=\"Errors per Filetype\">\n  </ngx-charts-advanced-pie-chart>\n</div> -->\n\n\n\n<!-- <ngx-charts-advanced-pie-chart\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"fileTypes\"\n  [gradient]=\"gradient\"\n  (select)=\"onSelect($event)\"\n  label=\"Filetypes\">\n</ngx-charts-advanced-pie-chart> -->\n\n<!-- <ngx-charts-gauge\n  [view]=\"view\"\n  [scheme]=\"colorScheme\"\n  [results]=\"single\"\n  [min]=\"0\"\n  [max]=\"100\"\n  [angleSpan]=\"240\"\n  [startAngle]=\"-120\"\n  [units]=\"'alerts'\"\n  [bigSegments]=\"10\"\n  [smallSegments]=\"5\"\n  (select)=\"onSelect($event)\">\n</ngx-charts-gauge> -->\n"
+module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <button class=\"btn btn-success browse\" (click)=\"startWorkflow()\">Browse package</button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div\n    *ngFor=\"let process of package.processes\"\n    class=\"progress-bar text-dark text-center\"\n    [style.width]=\"process.progress/package.processes.length + '%'\"\n    [class.bg-success]=\"process.status == 'Done'\"\n    [class.bg-danger]=\"process.status == 'Error'\"\n    [class.progress-bar-animated]=\"process.status == 'Running'\"\n    [class.progress-bar-striped]=\"process.status == 'Running'\"\n    >\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    label=\"Files\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n"
 
 /***/ }),
 
@@ -2826,8 +3131,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageDashboardComponent", function() { return PackageDashboardComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
-/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Utilities */ "./src/app/Utilities.ts");
+/* harmony import */ var _Utilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Utilities */ "./src/app/Utilities.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2840,29 +3145,16 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-// import { PackagesService } from './Packages.service'
 
-// import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
-// import { PackagesService } from './Packages.service'
 
 var PackageDashboardComponent = /** @class */ (function () {
-    function PackageDashboardComponent(packageService, route, router) {
-        // Object.assign(this, {single, multi})
-        this.packageService = packageService;
+    function PackageDashboardComponent(apiService, route, router) {
+        this.apiService = apiService;
         this.route = route;
         this.router = router;
         this.id = -1;
         this.package = { processes: [] };
         this.fileTypes = [];
-        //   {
-        //     "name":'pdf',
-        //     "value":10
-        //   },
-        //   {
-        //     "name":"xml",
-        //     "value":3
-        //   }
-        // ];
         this.title = 'new title';
         this.single = [
             {
@@ -2878,12 +3170,11 @@ var PackageDashboardComponent = /** @class */ (function () {
                 "value": 7200000
             }
         ];
-        // multi: any[];
         this.view = [700, 400];
         // options
         this.showLegend = false;
         this.colorScheme = {
-            domain: _Utilities__WEBPACK_IMPORTED_MODULE_3__["GraphColors"]
+            domain: _Utilities__WEBPACK_IMPORTED_MODULE_2__["GraphColors"]
         };
         // pie
         this.showLabels = true;
@@ -2899,8 +3190,7 @@ var PackageDashboardComponent = /** @class */ (function () {
         var _this = this;
         this.route.parent.params.subscribe(function (params) {
             _this.id = +params['id'];
-            _this.packageService.getPackage(_this.id).subscribe(function (data) {
-                console.log(data);
+            _this.apiService.getPackage(_this.id).subscribe(function (data) {
                 _this.package = data;
                 var res = [];
                 for (var key in _this.package.statistics.fileTypes) {
@@ -2911,7 +3201,7 @@ var PackageDashboardComponent = /** @class */ (function () {
                     temp['value'] = value;
                     res.push({ "name": key.toUpperCase(), "value": value });
                 }
-                _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_3__["formatBytes"])(_this.package.statistics.total_size);
+                _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_2__["formatBytes"])(_this.package.statistics.total_size);
                 _this.total_number_of_files = _this.package.statistics.total_number_of_files;
                 _this.fileTypes = res.slice();
                 //calculate total progress
@@ -2924,16 +3214,13 @@ var PackageDashboardComponent = /** @class */ (function () {
             });
         });
     };
-    PackageDashboardComponent.prototype.onSelect = function (event) {
-        console.log(event);
-    };
     PackageDashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'packageDashboard',
             template: __webpack_require__(/*! ./PackageDashboard.component.html */ "./src/app/PackageDetail/PackageDashboard.component.html"),
             styles: [__webpack_require__(/*! ./PackageDashboard.component.sass */ "./src/app/PackageDetail/PackageDashboard.component.sass")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_3__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageDashboardComponent);
     return PackageDashboardComponent;
 }());
@@ -2975,92 +3262,6 @@ var packageRoutes = [
 
 /***/ }),
 
-/***/ "./src/app/PackageDetail/PackageDetail.service.ts":
-/*!********************************************************!*\
-  !*** ./src/app/PackageDetail/PackageDetail.service.ts ***!
-  \********************************************************/
-/*! exports provided: PackageDetailService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageDetailService", function() { return PackageDetailService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var PackageDetailService = /** @class */ (function () {
-    function PackageDetailService(http) {
-        this.http = http;
-        this.packagesURL = '/api/package/';
-    }
-    PackageDetailService.prototype.getAllPackages = function () {
-        return this.http.get(this.packagesURL);
-    };
-    PackageDetailService.prototype.getPackage = function (id) {
-        return this.http.get(this.packagesURL + id + '/');
-    };
-    PackageDetailService.prototype.setActiveTemplate = function (template_id, package_id, data) {
-        return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
-    };
-    PackageDetailService.prototype.getModules = function () {
-        return this.http.get('/api/module/');
-    };
-    PackageDetailService.prototype.addProcess = function (process) {
-        return this.http.post('/api/process/', process);
-    };
-    PackageDetailService.prototype.reorderProcesses = function (data, package_id) {
-        return this.http.put('/api/package/' + package_id + '/process/', data);
-    };
-    PackageDetailService.prototype.deleteProcess = function (id) {
-        return this.http.delete('/api/process/' + id + '/');
-    };
-    PackageDetailService.prototype.saveProcess = function (data, id) {
-        return this.http.put('/api/process/' + id + '/', data);
-    };
-    PackageDetailService.prototype.getLogFile = function (path, process_id) {
-        return this.http.get('/process/' + process_id + '/' + path, { responseType: 'text' });
-    };
-    PackageDetailService.prototype.startWorkflow = function (package_id) {
-        this.http.post('/api/package/' + package_id + '/execute/', {}).subscribe(function () {
-        });
-    };
-    PackageDetailService.prototype.finishPackage = function (package_id) {
-        this.http.post('/api/package/' + package_id + '/finish/', {}).subscribe(function () {
-        });
-    };
-    PackageDetailService.prototype.removePackage = function (id) {
-        return this.http.delete('/api/package/' + id + '/');
-    };
-    PackageDetailService.prototype.getTemplates = function () {
-        return this.http.get('/api/template/');
-    };
-    PackageDetailService.prototype.postTemplate = function (data) {
-        return this.http.post('/api/template/', data);
-    };
-    PackageDetailService.prototype.getStatsDashboard = function () {
-        return this.http.get('/api/stats/dashboard/');
-    };
-    PackageDetailService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], PackageDetailService);
-    return PackageDetailService;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/PackageDetail/PackageHeader.component.html":
 /*!************************************************************!*\
   !*** ./src/app/PackageDetail/PackageHeader.component.html ***!
@@ -3068,7 +3269,7 @@ var PackageDetailService = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.show]=\"showDropDown\">\n    <p class=\"navbar-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </p>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-item\"  routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['template']\" [class.disabled]=\"status==6\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-item disabled\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"bottom\" tooltipOpacity=\"0.8\">\n    <a class=\"nav-link disabled noselect\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['edit']\" [class.disabled]=\"status==6\">Workflow</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n\n<!-- <ul class=\"nav nav-tabs\">\n  <li class=\"nav-item dropdown\" [class.show]=\"showDropDown\">\n    <a class=\"nav-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </a>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-link\"  routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['template']\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-link\" routerLinkActive=\"active\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"top\">\n    <a class=\"navbar-link disabled\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['edit']\">Workflow</a>\n  </li>\n  <li class=\"nav-link\" routerLinkActive=\"active\">\n    <a class=\"navbar-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</ul> -->\n<router-outlet></router-outlet>\n"
+module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.show]=\"showDropDown\">\n    <p class=\"navbar-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </p>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-item\"  routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['template']\" [class.disabled]=\"status==6\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-item disabled\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"bottom\" tooltipOpacity=\"0.8\">\n    <a class=\"nav-link disabled noselect\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['edit']\" [class.disabled]=\"status==6\">Workflow</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -3095,7 +3296,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageHeaderComponent", function() { return PackageHeaderComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3107,40 +3308,31 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
-// import { PackagesService } from './Packages.service'
 
 var PackageHeaderComponent = /** @class */ (function () {
-    function PackageHeaderComponent(packageService, route, router) {
-        this.packageService = packageService;
+    function PackageHeaderComponent(apiService, route, router) {
+        this.apiService = apiService;
         this.route = route;
         this.router = router;
-        this.title = 'new title';
         this.name = "";
         this.showDropDown = false;
         this.status = -1;
     }
     PackageHeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
-        // console.log(this.router.url);
-        // console.log(this.route);
-        this.sub = this.route.params.subscribe(function (params) {
-            _this.id = +params['id'];
-            _this.packageService.getPackage(_this.id).subscribe(function (data) {
-                // console.log(data);
+        this.route.params.subscribe(function (params) {
+            _this.id = params['id'];
+            _this.apiService.getPackage(_this.id).subscribe(function (data) {
                 _this.active_template = data['active_template'];
                 _this.name = data['name'];
                 _this.status = data['status'];
             });
         });
-        this.packageService.getAllPackages().subscribe(function (data) {
-            // console.log(data);
+        this.apiService.getPackages().subscribe(function (data) {
             _this.packages = data;
-            // this.name = data['name'];
         });
     };
     PackageHeaderComponent.prototype.navigateTo = function (package_id) {
-        // console.log(this.router.url);
-        // console.log(this.route);
         var topPath = this.router.url.split("/").pop();
         this.router.navigate(['../', package_id, topPath], { relativeTo: this.route });
         this.showDropDown = false;
@@ -3151,7 +3343,7 @@ var PackageHeaderComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageHeader.component.html */ "./src/app/PackageDetail/PackageHeader.component.html"),
             styles: [__webpack_require__(/*! ./PackageHeader.component.sass */ "./src/app/PackageDetail/PackageHeader.component.sass")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageHeaderComponent);
     return PackageHeaderComponent;
 }());
@@ -3167,7 +3359,7 @@ var PackageHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\" *ngIf=\"package.status != 6\">Start</button>\n<button class=\"btn btn-warning float-right\" (click)=\"finishPackage()\" *ngIf=\"package.status != 6\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div>\n    <div *ngIf=\"modalType == 'error'\" class=\"list-group\">\n      <div *ngFor=\"let error of modalProcess.errors\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.Error)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
+module.exports = "<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.err_path == '' || process.status != 'Error'\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\" *ngIf=\"package.status != 6\">Start</button>\n<button class=\"btn btn-warning float-right\" (click)=\"finishPackage()\" *ngIf=\"package.status != 6\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n<!-- Modal for logfile display -->\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div>\n    <div *ngIf=\"modalType == 'error'\" class=\"list-group\">\n      <div *ngFor=\"let error of modalProcess.errors\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.Error)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -3178,7 +3370,7 @@ module.exports = "<table class=\"table table-striped table-hover\" style=\"backg
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".Amodal.active {\n  display: block !important; }\n\n.modal-dialog,\n.modal-content {\n  /* 80% of window height */\n  height: 95%; }\n\n.modal-body {\n  /* 100% = dialog height, 120px = header + footer */\n  /* max-height: calc(100% + 120px) */\n  overflow-y: scroll; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit; }\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  /* semi-transparent black */\n  background-color: #000;\n  opacity: 0.75;\n  /* z-index must be below .modal and above everything else */\n  z-index: -1; }\n\n.loading {\n  border: 6px solid #f3f3f3;\n  border-top: 6px solid #3498db;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  -webkit-animation: spin 1.5s linear infinite;\n          animation: spin 1.5s linear infinite; }\n\n@-webkit-keyframes spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@keyframes spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n"
+module.exports = ".Amodal.active {\n  display: block !important; }\n\n.modal-dialog, .modal-content {\n  height: 95%; }\n\n.modal-body {\n  overflow-y: scroll; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  float: right;\n  color: inherit; }\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n\n.loading {\n  border: 6px solid #f3f3f3;\n  border-top: 6px solid #3498db;\n  border-radius: 50%;\n  width: 50px;\n  height: 50px;\n  -webkit-animation: spin 1.5s linear infinite;\n          animation: spin 1.5s linear infinite; }\n\n@-webkit-keyframes spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n\n@keyframes spin {\n  0% {\n    -webkit-transform: rotate(0deg);\n            transform: rotate(0deg); }\n  100% {\n    -webkit-transform: rotate(360deg);\n            transform: rotate(360deg); } }\n"
 
 /***/ }),
 
@@ -3194,7 +3386,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageStatusComponent", function() { return PackageStatusComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3207,15 +3399,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-// import { PackagesService } from './Packages.service'
 
 var PackageStatusComponent = /** @class */ (function () {
-    function PackageStatusComponent(packageService, route, router) {
+    function PackageStatusComponent(apiService, route, router) {
         var _this = this;
-        this.packageService = packageService;
+        this.apiService = apiService;
         this.route = route;
         this.router = router;
-        this.logActive = true;
         this.modalActive = false;
         this.modalData = '';
         this.modalactive = false;
@@ -3242,14 +3432,13 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.showModal = function (process, type) {
         var _this = this;
-        // this.modalActive = true;
         //load data fromserver...
         this.modalactive = true;
         this.modalLoading = true;
         this.modalData = "";
         if (type == 'info_log') {
             this.modalType = 'info';
-            this.packageService.getLogFile(type, process.process_id).subscribe(function (data) {
+            this.apiService.getLogFile(type, process.process_id).subscribe(function (data) {
                 _this.modalLoading = false;
                 _this.modalData = _this.sanitizeLog(data);
             });
@@ -3261,27 +3450,26 @@ var PackageStatusComponent = /** @class */ (function () {
         }
     };
     PackageStatusComponent.prototype.startWorkflow = function () {
-        this.packageService.startWorkflow(this.package.package_id);
+        this.apiService.startWorkflow(this.package.package_id);
         this.updateData();
     };
     PackageStatusComponent.prototype.finishPackage = function () {
-        this.packageService.finishPackage(this.package.package_id);
+        this.apiService.finishPackage(this.package.package_id);
         this.updateData();
     };
     PackageStatusComponent.prototype.updateData = function () {
         var _this = this;
-        this.packageService.getPackage(this.id).subscribe(function (data) {
-            // console.log(data);
+        this.apiService.getPackage(this.id).subscribe(function (data) {
             _this.package = data;
         });
     };
     PackageStatusComponent.prototype.removePackage = function () {
-        this.packageService.removePackage(this.id).subscribe(function (data) {
-            // console.log(data);
+        this.apiService.removePackage(this.id).subscribe(function (data) {
         });
         this.router.navigate(['packages']);
     };
     PackageStatusComponent.prototype.sanitizeLog = function (data) {
+        // convert the file to html friendly text
         return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
     };
     PackageStatusComponent = __decorate([
@@ -3290,7 +3478,7 @@ var PackageStatusComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageStatus.component.html */ "./src/app/PackageDetail/PackageStatus.component.html"),
             styles: [__webpack_require__(/*! ./PackageStatus.component.sass */ "./src/app/PackageDetail/PackageStatus.component.sass")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageStatusComponent);
     return PackageStatusComponent;
 }());
@@ -3306,7 +3494,7 @@ var PackageStatusComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <!-- <a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a> -->\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -3317,7 +3505,7 @@ module.exports = "<h4>Select a template to set as a startingpoint for this packa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n\n.selected {\n  background-color: #aaa;\n  color: white; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n\n.selected {\n  background-color: #aaa;\n  color: white; }\n"
 
 /***/ }),
 
@@ -3333,7 +3521,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageTemplateComponent", function() { return PackageTemplateComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3346,11 +3534,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-// import { PackagesService } from './Packages.service'
 
 var PackageTemplateComponent = /** @class */ (function () {
-    function PackageTemplateComponent(packageService, route, router) {
-        this.packageService = packageService;
+    function PackageTemplateComponent(apiService, route, router) {
+        this.apiService = apiService;
         this.route = route;
         this.router = router;
         this.active_template = -1;
@@ -3360,15 +3547,12 @@ var PackageTemplateComponent = /** @class */ (function () {
         this.route.parent.params.subscribe(function (params) {
             _this.package_id = +params['id'];
             // get package
-            _this.packageService.getPackage(_this.package_id).subscribe(function (data) {
+            _this.apiService.getPackage(_this.package_id).subscribe(function (data) {
                 _this.package = data;
                 _this.active_template = data['active_template'];
-                console.log(data);
             });
         });
-        this.packageService.getTemplates().subscribe(function (data) {
-            console.log(data);
-            // this.package = data;
+        this.apiService.getTemplates().subscribe(function (data) {
             var res = data;
             _this.templates = res.filter(function (item) {
                 if (item.template_id > 1) {
@@ -3382,9 +3566,7 @@ var PackageTemplateComponent = /** @class */ (function () {
         var _this = this;
         // api call to set the template for package.
         var data = { "active_template": template.template_id };
-        this.packageService.setActiveTemplate(template.template_id, this.package_id, data).subscribe(function (res) {
-            console.log(res);
-            // this.router.navigate(['packages', this.package_id, 'edit']);
+        this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe(function (res) {
             window.location.href = '/packages/' + _this.package_id + '/edit';
         });
     };
@@ -3394,7 +3576,7 @@ var PackageTemplateComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageTemplate.component.html */ "./src/app/PackageDetail/PackageTemplate.component.html"),
             styles: [__webpack_require__(/*! ./PackageTemplate.component.sass */ "./src/app/PackageDetail/PackageTemplate.component.sass")]
         }),
-        __metadata("design:paramtypes", [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_2__["PackageDetailService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageTemplateComponent);
     return PackageTemplateComponent;
 }());
@@ -3410,7 +3592,7 @@ var PackageTemplateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<!-- <div class=\"row\"> -->\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<navbar></navbar>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -3436,7 +3618,7 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageListComponent", function() { return PackageListComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Packages_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Packages.service */ "./src/app/Packages/Packages.service.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3449,9 +3631,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var PackageListComponent = /** @class */ (function () {
-    function PackageListComponent(packagesService) {
-        this.packagesService = packagesService;
-        this.title = 'new title';
+    function PackageListComponent(apiService) {
+        this.apiService = apiService;
         this.packages = [];
     }
     PackageListComponent.prototype.ngOnInit = function () {
@@ -3459,8 +3640,7 @@ var PackageListComponent = /** @class */ (function () {
     };
     PackageListComponent.prototype.updateData = function () {
         var _this = this;
-        this.packagesService.getPackages().subscribe(function (data) {
-            console.log(data);
+        this.apiService.getPackages().subscribe(function (data) {
             _this.packages = data;
         });
     };
@@ -3470,7 +3650,7 @@ var PackageListComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageList.component.html */ "./src/app/Packages/PackageList.component.html"),
             styles: [__webpack_require__(/*! ./PackageList.component.sass */ "./src/app/Packages/PackageList.component.sass")]
         }),
-        __metadata("design:paramtypes", [_Packages_service__WEBPACK_IMPORTED_MODULE_1__["PackagesService"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
     ], PackageListComponent);
     return PackageListComponent;
 }());
@@ -3503,11 +3683,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-// import { PackageComponent }    from './Package.component';
-// import { PackageHeaderComponent }    from './PackageHeader.component';
 
-// import { PackageDashboardComponent } from './PackageDashboard.component';
-// import { HeroDetailComponent }  from './hero-detail.component';
 
 var packagesRoutes = [
     { path: 'packages', component: _Packages_component__WEBPACK_IMPORTED_MODULE_2__["PackagesComponent"], children: [
@@ -3566,10 +3742,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-// import { PackagesService } from './Packages.service'
 var PackagesComponent = /** @class */ (function () {
     function PackagesComponent() {
-        this.title = 'new title';
         this.packages = [];
     }
     PackagesComponent = __decorate([
@@ -3599,12 +3773,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _Packages_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Packages-routing.module */ "./src/app/Packages/Packages-routing.module.ts");
-/* harmony import */ var _Packages_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Packages.component */ "./src/app/Packages/Packages.component.ts");
-/* harmony import */ var _Packages_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Packages.service */ "./src/app/Packages/Packages.service.ts");
-/* harmony import */ var _PackageList_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./PackageList.component */ "./src/app/Packages/PackageList.component.ts");
-/* harmony import */ var _PackageDetail_Package_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../PackageDetail/Package.module */ "./src/app/PackageDetail/Package.module.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Packages_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Packages.component */ "./src/app/Packages/Packages.component.ts");
+/* harmony import */ var _PackageList_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./PackageList.component */ "./src/app/Packages/PackageList.component.ts");
+/* harmony import */ var _PackageDetail_Package_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../PackageDetail/Package.module */ "./src/app/PackageDetail/Package.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _Packages_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Packages-routing.module */ "./src/app/Packages/Packages-routing.module.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3614,16 +3788,14 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+// components
+
+
+// modules
 
 
 
-// import { PackageComponent }    from './Package.component';
-
-// import { PackageHeaderComponent }    from './PackageHeader.component';
-// import { PackageDashboardComponent } from './PackageDashboard.component';
-
-// import { HeroDetailComponent }  from './hero-detail.component';
-// import { HeroService } from './hero.service';
+//services
 
 var PackagesModule = /** @class */ (function () {
     function PackagesModule() {
@@ -3633,62 +3805,18 @@ var PackagesModule = /** @class */ (function () {
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
-                _PackageDetail_Package_module__WEBPACK_IMPORTED_MODULE_7__["PackageModule"],
-                _Packages_routing_module__WEBPACK_IMPORTED_MODULE_3__["PackagesRoutingModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_8__["NavbarModule"],
+                _PackageDetail_Package_module__WEBPACK_IMPORTED_MODULE_5__["PackageModule"],
+                _Packages_routing_module__WEBPACK_IMPORTED_MODULE_7__["PackagesRoutingModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
             ],
             declarations: [
-                _Packages_component__WEBPACK_IMPORTED_MODULE_4__["PackagesComponent"],
-                // PackageComponent,
-                // PackageHeaderComponent,
-                _PackageList_component__WEBPACK_IMPORTED_MODULE_6__["PackageListComponent"],
+                _Packages_component__WEBPACK_IMPORTED_MODULE_3__["PackagesComponent"],
+                _PackageList_component__WEBPACK_IMPORTED_MODULE_4__["PackageListComponent"],
             ],
-            providers: [_Packages_service__WEBPACK_IMPORTED_MODULE_5__["PackagesService"]],
+            providers: [_Services_api_service__WEBPACK_IMPORTED_MODULE_8__["APIService"]],
         })
     ], PackagesModule);
     return PackagesModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Packages/Packages.service.ts":
-/*!**********************************************!*\
-  !*** ./src/app/Packages/Packages.service.ts ***!
-  \**********************************************/
-/*! exports provided: PackagesService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackagesService", function() { return PackagesService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var PackagesService = /** @class */ (function () {
-    function PackagesService(http) {
-        this.http = http;
-        this.packagesURL = '/api/package/';
-    }
-    PackagesService.prototype.getPackages = function () {
-        return this.http.get(this.packagesURL);
-    };
-    PackagesService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], PackagesService);
-    return PackagesService;
 }());
 
 
@@ -3722,21 +3850,7 @@ var APIService = /** @class */ (function () {
     function APIService(http) {
         this.http = http;
     }
-    APIService.prototype.saveData = function (id, data) {
-        return this.http.post('/api/module/' + id + '/', data);
-    };
-    APIService.prototype.getTemplates = function () {
-        return this.http.get('/api/template/');
-    };
-    APIService.prototype.getTemplate = function (id) {
-        return this.http.get('/api/template/' + id + '/');
-    };
-    APIService.prototype.createNewTemplate = function (data) {
-        return this.http.post('/api/template/', data);
-    };
-    APIService.prototype.deleteTemplate = function (template_id) {
-        return this.http.delete('/api/template/' + template_id + '/');
-    };
+    //Modules
     APIService.prototype.getModules = function () {
         return this.http.get('/api/module/');
     };
@@ -3746,6 +3860,32 @@ var APIService = /** @class */ (function () {
     APIService.prototype.deleteModule = function (module_id) {
         return this.http.delete('/api/module/' + module_id + '/');
     };
+    APIService.prototype.saveData = function (id, data) {
+        return this.http.post('/api/module/' + id + '/', data);
+    };
+    APIService.prototype.importModule = function (formData) {
+        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/module/import/', formData, {
+            reportProgress: true
+        });
+        return this.http.request(req);
+    };
+    //templates
+    APIService.prototype.getTemplates = function () {
+        return this.http.get('/api/template/');
+    };
+    APIService.prototype.getTemplate = function (id) {
+        return this.http.get('/api/template/' + id + '/');
+    };
+    APIService.prototype.postTemplate = function (data) {
+        return this.http.post('/api/template/', data);
+    };
+    APIService.prototype.deleteTemplate = function (template_id) {
+        return this.http.delete('/api/template/' + template_id + '/');
+    };
+    APIService.prototype.setActiveTemplate = function (template_id, package_id, data) {
+        return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
+    };
+    //processes
     APIService.prototype.addProcess = function (process) {
         return this.http.post('/api/process/', process);
     };
@@ -3755,420 +3895,49 @@ var APIService = /** @class */ (function () {
     APIService.prototype.deleteProcess = function (id) {
         return this.http.delete('/api/process/' + id + '/');
     };
-    APIService.prototype.importModule = function (formData) {
-        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/module/import/', formData, {
-            reportProgress: true
-        });
-        return this.http.request(req);
+    APIService.prototype.saveProcess = function (data, id) {
+        return this.http.put('/api/process/' + id + '/', data);
     };
+    APIService.prototype.getLogFile = function (path, process_id) {
+        return this.http.get('/process/' + process_id + '/' + path, { responseType: 'text' });
+    };
+    //variables
     APIService.prototype.getVariables = function () {
         return this.http.get('/api/variables/global/');
     };
     APIService.prototype.setVariables = function (data) {
         return this.http.post('/api/variables/global/', data);
     };
-    APIService.prototype.saveProcess = function (data, id) {
-        return this.http.put('/api/process/' + id + '/', data);
+    //stats
+    APIService.prototype.getStatsDashboard = function () {
+        return this.http.get('/api/stats/dashboard/');
+    };
+    //package
+    APIService.prototype.getPackages = function () {
+        return this.http.get('/api/package/');
+    };
+    APIService.prototype.getPackage = function (id) {
+        return this.http.get('/api/package/' + id + '/');
+    };
+    APIService.prototype.getFiles = function (package_id) {
+        return this.http.get('/api/package/' + package_id + '/files/');
+    };
+    APIService.prototype.removePackage = function (id) {
+        return this.http.delete('/api/package/' + id + '/');
+    };
+    APIService.prototype.startWorkflow = function (package_id) {
+        this.http.post('/api/package/' + package_id + '/execute/', {}).subscribe(function () {
+        });
+    };
+    APIService.prototype.finishPackage = function (package_id) {
+        this.http.post('/api/package/' + package_id + '/finish/', {}).subscribe(function () {
+        });
     };
     APIService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], APIService);
     return APIService;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Tooltip/Tooltip.component.css":
-/*!***********************************************!*\
-  !*** ./src/app/Tooltip/Tooltip.component.css ***!
-  \***********************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".tooltip {\n\n  /* @extend .tooltip; */\n  /* z-index: 1000 !important; */\n    /* position: fixed; */\n    /* display: block; */\n    /* display: block; */\n    opacity: 0.5;\n}\n"
-
-/***/ }),
-
-/***/ "./src/app/Tooltip/Tooltip.component.ts":
-/*!**********************************************!*\
-  !*** ./src/app/Tooltip/Tooltip.component.ts ***!
-  \**********************************************/
-/*! exports provided: TooltipComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TooltipComponent", function() { return TooltipComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-var TooltipComponent = /** @class */ (function () {
-    // -------------------------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------------------------
-    function TooltipComponent(element, cdr) {
-        this.element = element;
-        this.cdr = cdr;
-        this.placement = "bottom";
-        this.animation = true;
-        this.opacity = 0.5;
-        // -------------------------------------------------------------------------
-        // Properties
-        // -------------------------------------------------------------------------
-        this.top = -100000;
-        this.left = -100000;
-        this.isIn = false;
-        this.isFade = false;
-    }
-    // -------------------------------------------------------------------------
-    // Lifecycle callbacks
-    // -------------------------------------------------------------------------
-    TooltipComponent.prototype.ngAfterViewInit = function () {
-        this.show();
-        this.cdr.detectChanges();
-    };
-    // -------------------------------------------------------------------------
-    // Public Methods
-    // -------------------------------------------------------------------------
-    TooltipComponent.prototype.show = function () {
-        if (!this.hostElement)
-            return;
-        var p = this.positionElements(this.hostElement, this.element.nativeElement.children[0], this.placement);
-        this.top = p.top;
-        this.left = p.left;
-        this.isIn = true;
-        if (this.animation)
-            this.isFade = true;
-    };
-    TooltipComponent.prototype.hide = function () {
-        this.top = -100000;
-        this.left = -100000;
-        this.isIn = true;
-        if (this.animation)
-            this.isFade = false;
-    };
-    // -------------------------------------------------------------------------
-    // Private Methods
-    // -------------------------------------------------------------------------
-    TooltipComponent.prototype.positionElements = function (hostEl, targetEl, positionStr, appendToBody) {
-        if (appendToBody === void 0) { appendToBody = false; }
-        var positionStrParts = positionStr.split("-");
-        var pos0 = positionStrParts[0];
-        var pos1 = positionStrParts[1] || "center";
-        var hostElPos = appendToBody ? this.offset(hostEl) : this.position(hostEl);
-        var targetElWidth = targetEl.offsetWidth;
-        var targetElHeight = targetEl.offsetHeight;
-        var shiftWidth = {
-            center: function () {
-                return hostElPos.left + hostElPos.width / 2 - targetElWidth / 2;
-            },
-            left: function () {
-                return hostElPos.left;
-            },
-            right: function () {
-                return hostElPos.left + hostElPos.width;
-            }
-        };
-        var shiftHeight = {
-            center: function () {
-                return hostElPos.top + hostElPos.height / 2 - targetElHeight / 2;
-            },
-            top: function () {
-                return hostElPos.top;
-            },
-            bottom: function () {
-                return hostElPos.top + hostElPos.height;
-            }
-        };
-        var targetElPos;
-        switch (pos0) {
-            case "right":
-                targetElPos = {
-                    top: shiftHeight[pos1](),
-                    left: shiftWidth[pos0]()
-                };
-                break;
-            case "left":
-                targetElPos = {
-                    top: shiftHeight[pos1](),
-                    left: hostElPos.left - targetElWidth
-                };
-                break;
-            case "bottom":
-                targetElPos = {
-                    top: shiftHeight[pos0](),
-                    left: shiftWidth[pos1]()
-                };
-                break;
-            default:
-                targetElPos = {
-                    top: hostElPos.top - targetElHeight,
-                    left: shiftWidth[pos1]()
-                };
-                break;
-        }
-        return targetElPos;
-    };
-    TooltipComponent.prototype.position = function (nativeEl) {
-        var offsetParentBCR = { top: 0, left: 0 };
-        var elBCR = this.offset(nativeEl);
-        var offsetParentEl = this.parentOffsetEl(nativeEl);
-        if (offsetParentEl !== window.document) {
-            offsetParentBCR = this.offset(offsetParentEl);
-            offsetParentBCR.top += offsetParentEl.clientTop - offsetParentEl.scrollTop;
-            offsetParentBCR.left += offsetParentEl.clientLeft - offsetParentEl.scrollLeft;
-        }
-        var boundingClientRect = nativeEl.getBoundingClientRect();
-        return {
-            width: boundingClientRect.width || nativeEl.offsetWidth,
-            height: boundingClientRect.height || nativeEl.offsetHeight,
-            top: elBCR.top - offsetParentBCR.top,
-            left: elBCR.left - offsetParentBCR.left
-        };
-    };
-    TooltipComponent.prototype.offset = function (nativeEl) {
-        var boundingClientRect = nativeEl.getBoundingClientRect();
-        return {
-            width: boundingClientRect.width || nativeEl.offsetWidth,
-            height: boundingClientRect.height || nativeEl.offsetHeight,
-            top: boundingClientRect.top + (window.pageYOffset || window.document.documentElement.scrollTop),
-            left: boundingClientRect.left + (window.pageXOffset || window.document.documentElement.scrollLeft)
-        };
-    };
-    TooltipComponent.prototype.getStyle = function (nativeEl, cssProp) {
-        if (nativeEl.currentStyle)
-            return nativeEl.currentStyle[cssProp];
-        if (window.getComputedStyle)
-            return window.getComputedStyle(nativeEl)[cssProp];
-        // finally try and get inline style
-        return nativeEl.style[cssProp];
-    };
-    TooltipComponent.prototype.isStaticPositioned = function (nativeEl) {
-        return (this.getStyle(nativeEl, "position") || "static") === "static";
-    };
-    TooltipComponent.prototype.parentOffsetEl = function (nativeEl) {
-        var offsetParent = nativeEl.offsetParent || window.document;
-        while (offsetParent && offsetParent !== window.document && this.isStaticPositioned(offsetParent)) {
-            offsetParent = offsetParent.offsetParent;
-        }
-        return offsetParent || window.document;
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", HTMLElement)
-    ], TooltipComponent.prototype, "hostElement", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], TooltipComponent.prototype, "content", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], TooltipComponent.prototype, "placement", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
-    ], TooltipComponent.prototype, "animation", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Number)
-    ], TooltipComponent.prototype, "opacity", void 0);
-    TooltipComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: "tooltip-content",
-            styles: [__webpack_require__(/*! ./Tooltip.component.css */ "./src/app/Tooltip/Tooltip.component.css")],
-            template: "\n<div class=\"tooltip {{ placement }}\"\n     [style.top]=\"top + 'px'\"\n     [style.left]=\"left + 'px'\"\n     [style.opacity]=\"opacity\"\n     [class.in]=\"isIn\"\n     [class.fade]=\"isFade\"\n     role=\"Atooltip\">\n    <div class=\"tooltip-arrow\"></div>\n    <div class=\"tooltip-inner\">\n        <ng-content></ng-content>\n        {{ content }}\n    </div>\n</div>\n"
-        }),
-        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
-    ], TooltipComponent);
-    return TooltipComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Tooltip/Tooltip.directive.ts":
-/*!**********************************************!*\
-  !*** ./src/app/Tooltip/Tooltip.directive.ts ***!
-  \**********************************************/
-/*! exports provided: Tooltip */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return Tooltip; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Tooltip_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tooltip.component */ "./src/app/Tooltip/Tooltip.component.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var Tooltip = /** @class */ (function () {
-    // -------------------------------------------------------------------------
-    // Constructor
-    // -------------------------------------------------------------------------
-    function Tooltip(viewContainerRef, resolver) {
-        this.viewContainerRef = viewContainerRef;
-        this.resolver = resolver;
-        this.tooltipAnimation = true;
-        this.tooltipPlacement = "bottom";
-    }
-    // -------------------------------------------------------------------------
-    // Public Methods
-    // -------------------------------------------------------------------------
-    Tooltip.prototype.show = function () {
-        if (this.tooltipDisabled || this.visible)
-            return;
-        this.visible = true;
-        if (typeof this.content === "string") {
-            var factory = this.resolver.resolveComponentFactory(_Tooltip_component__WEBPACK_IMPORTED_MODULE_1__["TooltipComponent"]);
-            if (!this.visible)
-                return;
-            this.tooltip = this.viewContainerRef.createComponent(factory);
-            this.tooltip.instance.hostElement = this.viewContainerRef.element.nativeElement;
-            this.tooltip.instance.content = this.content;
-            this.tooltip.instance.placement = this.tooltipPlacement;
-            this.tooltip.instance.animation = this.tooltipAnimation;
-            this.tooltip.instance.opacity = this.tooltipOpacity;
-        }
-        else {
-            var tooltip = this.content;
-            tooltip.hostElement = this.viewContainerRef.element.nativeElement;
-            tooltip.placement = this.tooltipPlacement;
-            tooltip.animation = this.tooltipAnimation;
-            tooltip.opacity = this.tooltipOpacity;
-            tooltip.show();
-        }
-    };
-    Tooltip.prototype.hide = function () {
-        if (!this.visible)
-            return;
-        this.visible = false;
-        if (this.tooltip)
-            this.tooltip.destroy();
-        if (this.content instanceof _Tooltip_component__WEBPACK_IMPORTED_MODULE_1__["TooltipComponent"])
-            this.content.hide();
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])("tooltip"),
-        __metadata("design:type", Object)
-    ], Tooltip.prototype, "content", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
-    ], Tooltip.prototype, "tooltipDisabled", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
-    ], Tooltip.prototype, "tooltipAnimation", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], Tooltip.prototype, "tooltipPlacement", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Number)
-    ], Tooltip.prototype, "tooltipOpacity", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusin"),
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseenter"),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], Tooltip.prototype, "show", null);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("focusout"),
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("mouseleave"),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", []),
-        __metadata("design:returntype", void 0)
-    ], Tooltip.prototype, "hide", null);
-    Tooltip = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
-            selector: "[tooltip]"
-        }),
-        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewContainerRef"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ComponentFactoryResolver"]])
-    ], Tooltip);
-    return Tooltip;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Tooltip/Tooltip.module.ts":
-/*!*******************************************!*\
-  !*** ./src/app/Tooltip/Tooltip.module.ts ***!
-  \*******************************************/
-/*! exports provided: TooltipModule, Tooltip, TooltipComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TooltipModule", function() { return TooltipModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Tooltip.directive */ "./src/app/Tooltip/Tooltip.directive.ts");
-/* harmony import */ var _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Tooltip.component */ "./src/app/Tooltip/Tooltip.component.ts");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Tooltip", function() { return _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TooltipComponent", function() { return _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"]; });
-
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-
-
-
-
-var TooltipModule = /** @class */ (function () {
-    function TooltipModule() {
-    }
-    TooltipModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
-            ],
-            declarations: [
-                _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"],
-                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"],
-            ],
-            exports: [
-                _Tooltip_directive__WEBPACK_IMPORTED_MODULE_2__["Tooltip"],
-                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"],
-            ],
-            entryComponents: [
-                _Tooltip_component__WEBPACK_IMPORTED_MODULE_3__["TooltipComponent"]
-            ]
-        })
-    ], TooltipModule);
-    return TooltipModule;
 }());
 
 
@@ -4281,7 +4050,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\nbody {\n  font-size: .875rem; }\n\n/*\n * Sidebar\n */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: .5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: .75rem;\n  text-transform: uppercase; }\n\n/*\n * Content\n */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/*\n * Navbar\n */\n\n/* .navbar-brand\n  padding-top: .75rem\n  padding-bottom: .75rem\n  font-size: 1rem\n  margin: 0\n  margin-top: -10px\n  background-color: rgba(0, 0, 0, .75)\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: .75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/*\n * Utilities\n */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\nbody {\n  font-size: 0.875rem; }\n\n/* Sidebar */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: 0.5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: 0.75rem;\n  text-transform: uppercase; }\n\n/* Content */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/* Navbar */\n\n/* .navbar-brand\n * padding-top: .75rem\n * padding-bottom: .75rem\n * font-size: 1rem\n * margin: 0\n * margin-top: -10px\n * background-color: rgba(0, 0, 0, .75)\n * box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: 0.75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/* Utilities */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
 
 /***/ }),
 
@@ -4344,8 +4113,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
 /* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
 /* harmony import */ var _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Admin/Admin.module */ "./src/app/Admin/Admin.module.ts");
-/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4384,8 +4153,8 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_9__["NgxChartsModule"],
-                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__["NavbarModule"],
+                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__["NavbarModule"],
                 _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_11__["PackagesModule"],
                 _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_12__["AdminModule"],
                 _app_routing_module__WEBPACK_IMPORTED_MODULE_10__["AppRoutingModule"]

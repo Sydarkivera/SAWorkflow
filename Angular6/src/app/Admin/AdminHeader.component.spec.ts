@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { AdminHeaderComponent } from './AdminHeader.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { NavbarModule } from '../Navbar/Navbar.module';
+import { NavbarModule } from '../Components/Navbar/Navbar.module';
 
 
 describe('AdminHeader', () => {

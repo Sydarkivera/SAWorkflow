@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { PackagesService } from './Packages.service'
+import { APIService } from '../Services/api.service';
 
 @Component({
   selector: 'packages',
@@ -8,10 +8,9 @@ import { PackagesService } from './Packages.service'
   styleUrls: ['./PackageList.component.sass']
 })
 export class PackageListComponent {
-  title = 'new title';
   packages = [];
 
-  constructor(private packagesService: PackagesService) {
+  constructor(private apiService: APIService) {
 
   }
 
@@ -20,8 +19,7 @@ export class PackageListComponent {
   }
 
   updateData() {
-    this.packagesService.getPackages().subscribe((data) => {
-      console.log(data);
+    this.apiService.getPackages().subscribe((data) => {
       this.packages = data as [any];
     });
   }

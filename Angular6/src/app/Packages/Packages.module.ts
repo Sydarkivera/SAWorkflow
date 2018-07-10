@@ -3,19 +3,17 @@ import { NgModule } from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 
+// components
+import { PackagesComponent }    from './Packages.component';
+import { PackageListComponent }    from './PackageList.component';
+
+// modules
+import { PackageModule } from '../PackageDetail/Package.module';
+import { NavbarModule } from '../Components/Navbar/Navbar.module';
 import { PackagesRoutingModule } from './Packages-routing.module';
 
-import { PackagesComponent }    from './Packages.component';
-import { PackagesService } from './Packages.service';
-// import { PackageComponent }    from './Package.component';
-import { PackageListComponent }    from './PackageList.component';
-// import { PackageHeaderComponent }    from './PackageHeader.component';
-// import { PackageDashboardComponent } from './PackageDashboard.component';
-import { PackageModule } from '../PackageDetail/Package.module';
-// import { HeroDetailComponent }  from './hero-detail.component';
-
-// import { HeroService } from './hero.service';
-import { NavbarModule } from '../Navbar/Navbar.module';
+//services
+import { APIService } from '../Services/api.service';
 
 @NgModule({
   imports: [
@@ -27,12 +25,8 @@ import { NavbarModule } from '../Navbar/Navbar.module';
   ],
   declarations: [
     PackagesComponent,
-    // PackageComponent,
-    // PackageHeaderComponent,
     PackageListComponent,
-    // PackageDashboardComponent
   ],
-  providers: [PackagesService],
-  // providers: [ HeroService ]
+  providers: [APIService],
 })
 export class PackagesModule {}

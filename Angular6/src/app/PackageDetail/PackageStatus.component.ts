@@ -2,12 +2,10 @@ import { Component, HostListener } from '@angular/core';
 import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Router } from "@angular/router";
 
-// import { PackagesService } from './Packages.service'
-import { PackageDetailService } from './PackageDetail.service';
+import { APIService } from '../Services/api.service';
 
 @Component({
   selector: 'packageStatus',
-  // template: '<p>PackageDetail</p>'
   templateUrl: './PackageStatus.component.html',
 
   styleUrls: ['./PackageStatus.component.sass']
@@ -15,7 +13,6 @@ import { PackageDetailService } from './PackageDetail.service';
 export class PackageStatusComponent {
   id: number;
   package: any;
-  logActive = true;
   modalActive = false;
   modalData = '';
   interval;
@@ -24,7 +21,7 @@ export class PackageStatusComponent {
   modalType = 'info';
   modalProcess = undefined;
 
-  constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
+  constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router) {
     this.package = {
       name: "Name"
     };
@@ -46,14 +43,13 @@ export class PackageStatusComponent {
   }
 
   showModal(process, type) {
-    // this.modalActive = true;
     //load data fromserver...
     this.modalactive = true;
     this.modalLoading = true;
     this.modalData = "";
     if (type == 'info_log') {
       this.modalType = 'info';
-      this.packageService.getLogFile(type, process.process_id).subscribe((data) => {
+      this.apiService.getLogFile(type, process.process_id).subscribe((data) => {
         this.modalLoading = false;
         this.modalData = this.sanitizeLog(data);
       });
@@ -65,30 +61,29 @@ export class PackageStatusComponent {
   }
 
   startWorkflow() {
-    this.packageService.startWorkflow(this.package.package_id);
+    this.apiService.startWorkflow(this.package.package_id);
     this.updateData();
   }
 
   finishPackage() {
-    this.packageService.finishPackage(this.package.package_id);
+    this.apiService.finishPackage(this.package.package_id);
     this.updateData();
   }
 
   updateData() {
-    this.packageService.getPackage(this.id).subscribe((data) => {
-      // console.log(data);
+    this.apiService.getPackage(this.id).subscribe((data) => {
       this.package = data;
     });
   }
 
   removePackage() {
-    this.packageService.removePackage(this.id).subscribe((data) => {
-      // console.log(data);
+    this.apiService.removePackage(this.id).subscribe((data) => {
     });
     this.router.navigate(['packages']);
   }
 
   sanitizeLog(data) {
+    // convert the file to html friendly text
     return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
   }
 }

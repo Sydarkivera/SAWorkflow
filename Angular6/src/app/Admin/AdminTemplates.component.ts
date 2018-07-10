@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from "@angular/router";
 
-import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
 import { APIService } from '../Services/api.service';
 
 interface Placeholder {
@@ -52,7 +51,7 @@ export class AdminTemplatesComponent {
   createNewTemplate() {
     //actuall creation of new template
     let data = { 'templateName': this.newTemplateName }
-    this.apiService.createNewTemplate(data).subscribe((data) => {
+    this.apiService.postTemplate(data).subscribe((data) => {
       // console.log(data);
       this.templates.push(data);
       this.newTemplateName = "";
@@ -63,7 +62,7 @@ export class AdminTemplatesComponent {
   save() {
     //save the changes made in a template to the server
     let data = { 'templateName': this.selected_template.name, 'template_id': this.selected_template_id }
-    this.apiService.createNewTemplate(data).subscribe((data) => {
+    this.apiService.postTemplate(data).subscribe((data) => {
       this.messageVisible = true
       for (let i in this.templates) {
         let temp = this.templates[i]

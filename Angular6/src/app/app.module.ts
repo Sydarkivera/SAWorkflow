@@ -13,8 +13,8 @@ import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { AppRoutingModule } from './app-routing.module';
 import { PackagesModule } from './Packages/Packages.module';
 import { AdminModule } from './Admin/Admin.module';
-import { TooltipModule } from './Tooltip/Tooltip.module';
-import { NavbarModule } from './Navbar/Navbar.module';
+import { TooltipModule } from './Components/Tooltip/Tooltip.module';
+import { NavbarModule } from './Components/Navbar/Navbar.module';
 
 @NgModule({
   declarations: [

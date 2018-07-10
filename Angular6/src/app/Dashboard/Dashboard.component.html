@@ -1,5 +1,6 @@
 <navbar></navbar>
 
+<!-- To row of important numbers -->
 <div class="row numberRow">
   <div class="col-md-3 col-sm-4 col-xs-6">
     <p class="numberTitle">
@@ -35,19 +36,8 @@
   </div>
 </div>
 
+<!-- Line graphs -->
 <div class="row  half-graph">
-<!-- <div class="card">
-  <combo-chart-component
-    *ngIf="dataLoaded"
-    [view]="view"
-    [scheme]="colorScheme"
-    [results]="graphData"
-    xAxis="true"
-    yAxis="true"
-    [gradient]="gradient"
-    schemeType="ordinal">
-  </combo-chart-component>
-</div> -->
   <div class="card col-md-6">
     <div class="card-title">
       Number of files
@@ -76,12 +66,12 @@
   </div>
 </div>
 
+<!-- Pie charts -->
 <div class="card filetypes">
   <ngx-charts-advanced-pie-chart
     [scheme]="colorScheme"
     [results]="fileTypes"
     [gradient]="gradient"
-    (select)="onSelect($event)"
     label="Filetypes">
   </ngx-charts-advanced-pie-chart>
 </div>
@@ -91,7 +81,6 @@
     [scheme]="colorScheme"
     [results]="fileTypesErrors"
     [gradient]="gradient"
-    (select)="onSelect($event)"
     label="Errors per Filetype">
   </ngx-charts-advanced-pie-chart>
 </div>

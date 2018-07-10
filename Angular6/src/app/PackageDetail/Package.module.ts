@@ -1,3 +1,4 @@
+// Angular component
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CommonModule }   from '@angular/common';
@@ -5,22 +6,21 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }    from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
+// components
 import { PackageComponent }    from './Package.component';
 import { PackageDashboardComponent }    from './PackageDashboard.component';
 import { PackageStatusComponent }    from './PackageStatus.component';
 import { PackageTemplateComponent }    from './PackageTemplate.component';
 import { PackageHeaderComponent } from './PackageHeader.component';
-import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
-import { FileComponent } from '../FileBrowser/File.component';
 
-import { PackageDetailService } from './PackageDetail.service';
-// import { ModuleService } from '../Admin/Module.service';
-import { TooltipModule } from '../Tooltip/Tooltip.module';
-import { NavbarModule } from '../Navbar/Navbar.module';
-import { ModalModule } from '../Modal/Modal.module';
-// import { HeroDetailComponent }  from './hero-detail.component';
+//modules
+import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
+import { NavbarModule } from '../Components/Navbar/Navbar.module';
+import { ModalModule } from '../Components/Modal/Modal.module';
+import { FileBrowserModule } from '../Components/FileBrowser/FileBrowser.module';
 
-// import { HeroService } from './hero.service';
+//services
+import { APIService } from '../Services/api.service';
 
 @NgModule({
   imports: [
@@ -31,19 +31,15 @@ import { ModalModule } from '../Modal/Modal.module';
     TooltipModule,
     NavbarModule,
     ModalModule,
-    // PackageRoutingModule
+    FileBrowserModule
   ],
   declarations: [
     PackageComponent,
     PackageDashboardComponent,
     PackageHeaderComponent,
     PackageStatusComponent,
-    PackageTemplateComponent,
-    FileBrowserComponent,
-    FileComponent
+    PackageTemplateComponent
   ],
-  // bootstrap: [PackageHeaderComponent] s
-  providers: [PackageDetailService],
-  // providers: [ HeroService ]
+  providers: [APIService]
 })
 export class PackageModule {}

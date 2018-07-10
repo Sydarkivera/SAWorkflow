@@ -4,8 +4,8 @@ import { defer } from 'rxjs'
 
 import { AdminTemplatesComponent } from './AdminTemplates.component';
 
-import { NavbarModule } from '../Navbar/Navbar.module';
-import { ModalModule } from '../Modal/Modal.module';
+import { NavbarModule } from '../Components/Navbar/Navbar.module';
+import { ModalModule } from '../Components/Modal/Modal.module';
 import { MessageModule } from '../Components/Message/Message.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';

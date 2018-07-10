@@ -1,34 +1,20 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from "@angular/router";
-
-// import { PackagesService } from './Packages.service'
-import { PackageDetailService } from './PackageDetail.service';
-// import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
-
-// import { PackagesService } from './Packages.service'
-
 import { GraphColors, formatBytes } from '../Utilities';
+
+import { APIService } from '../Services/api.service';
+
 
 @Component({
   selector: 'packageDashboard',
   templateUrl: './PackageDashboard.component.html',
-  // template: '<p>Package Dashboard</p>'
   styleUrls: ['./PackageDashboard.component.sass']
 })
 export class PackageDashboardComponent {
   id: number = -1;
   package: any = {processes: []}
   fileTypes = []
-  //   {
-  //     "name":'pdf',
-  //     "value":10
-  //   },
-  //   {
-  //     "name":"xml",
-  //     "value":3
-  //   }
-  // ];
 
   title = 'new title';
   single = [
@@ -45,7 +31,6 @@ export class PackageDashboardComponent {
     "value": 7200000
   }
 ];
-  // multi: any[];
 
   view: any[] = [700, 400];
 
@@ -68,16 +53,13 @@ export class PackageDashboardComponent {
   progress = 0
 
 
-  constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
-    // Object.assign(this, {single, multi})
-
+  constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router) {
   }
 
   ngOnInit() {
     this.route.parent.params.subscribe(params => {
        this.id = +params['id'];
-       this.packageService.getPackage(this.id).subscribe((data) => {
-         console.log(data);
+       this.apiService.getPackage(this.id).subscribe((data) => {
          this.package = data;
          let res = []
          for (let key in this.package.statistics.fileTypes) {
@@ -99,9 +81,5 @@ export class PackageDashboardComponent {
           this.progress = this.progress / this.package.processes.length;
        });
     });
-  }
-
-  onSelect(event) {
-    console.log(event);
   }
 }

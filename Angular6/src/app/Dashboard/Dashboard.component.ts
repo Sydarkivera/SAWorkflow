@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from "@angular/router";
 
-import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
+import { APIService } from '../Services/api.service';
 
 import { GraphColors, formatBytes } from '../Utilities';
 
@@ -49,14 +47,13 @@ export class DashboardComponent {
 
   dataLoaded = false;
 
-  constructor(private packageService: PackageDetailService, private route: ActivatedRoute, private router: Router) {
-    // Object.assign(this, {single, multi})
-
+  constructor(private apiService: APIService) {
   }
 
   ngOnInit() {
-       this.packageService.getStatsDashboard().subscribe((data) => {
-         console.log(data);
+      // load the data from the server and reorder it for the various graphs.
+       this.apiService.getStatsDashboard().subscribe((data) => {
+         // console.log(data)
          this.stats = data;
          this.total_size = formatBytes(data['total_size']);
          this.total_number_of_files = data['total_number_of_files'];
@@ -81,7 +78,6 @@ export class DashboardComponent {
              let value = this.stats.graphData[key];
              counts.push({"name": value['date'], "value": value['count']});
              sizes.push({"name": value['date'], "value": value['size']});
-             // this.fileTypes.push({"name":value['name'].toUpperCase(), "value":value['total']});
            }
           this.graphDataSize = [
             {
@@ -95,17 +91,7 @@ export class DashboardComponent {
               "series": counts
             }
           ];
-          // this.graphDataSize = [
-          //   {
-          //     "name": "size",
-          //     "series": sizes
-          //   }
-          // ];
           this.dataLoaded = true;
        });
-  }
-
-  onSelect(event) {
-    console.log(event);
   }
 }

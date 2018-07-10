@@ -2,7 +2,7 @@ import {Component, Input, AfterViewInit, ElementRef, ChangeDetectorRef} from "@a
 
 @Component({
     selector: "tooltip-content",
-    styleUrls: ['./Tooltip.component.css'],
+    styleUrls: ['./Tooltip.component.sass'],
     template: `
 <div class="tooltip {{ placement }}"
      [style.top]="top + 'px'"

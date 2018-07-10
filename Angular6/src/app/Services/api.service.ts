@@ -6,25 +6,8 @@ export class APIService {
 
   constructor(private http: HttpClient) { }
 
-  saveData(id, data) {
-    return this.http.post('/api/module/' + id + '/', data);
-  }
+  //Modules
 
-  getTemplates() {
-    return this.http.get('/api/template/');
-  }
-
-  getTemplate(id) {
-    return this.http.get('/api/template/' + id + '/');
-  }
-
-  createNewTemplate(data) {
-    return this.http.post('/api/template/', data);
-  }
-
-  deleteTemplate(template_id) {
-    return this.http.delete('/api/template/' + template_id + '/');
-  }
   getModules() {
     return this.http.get('/api/module/');
   }
@@ -37,16 +20,8 @@ export class APIService {
     return this.http.delete('/api/module/' + module_id + '/');
   }
 
-  addProcess(process) {
-    return this.http.post('/api/process/', process);
-  }
-
-  reorderProcesses(data, template_id) {
-    return this.http.put('/api/template/'+template_id+'/process/', data);
-  }
-
-  deleteProcess(id) {
-    return this.http.delete('/api/process/'+id+'/');
+  saveData(id, data) {
+    return this.http.post('/api/module/' + id + '/', data);
   }
 
   importModule(formData) {
@@ -56,6 +31,52 @@ export class APIService {
     return this.http.request(req);
   }
 
+  //templates
+
+  getTemplates() {
+    return this.http.get('/api/template/');
+  }
+
+  getTemplate(id) {
+    return this.http.get('/api/template/' + id + '/');
+  }
+
+  postTemplate(data) {
+    return this.http.post('/api/template/', data);
+  }
+
+  deleteTemplate(template_id) {
+    return this.http.delete('/api/template/' + template_id + '/');
+  }
+
+  setActiveTemplate(template_id: number, package_id: number, data) {
+    return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
+  }
+
+  //processes
+
+  addProcess(process) {
+    return this.http.post('/api/process/', process);
+  }
+
+  reorderProcesses(data, template_id) {
+    return this.http.put('/api/template/' + template_id + '/process/', data);
+  }
+
+  deleteProcess(id) {
+    return this.http.delete('/api/process/' + id + '/');
+  }
+
+  saveProcess(data, id) {
+    return this.http.put('/api/process/' + id + '/', data);
+  }
+
+  getLogFile(path, process_id) {
+    return this.http.get('/process/' + process_id + '/' + path, { responseType: 'text' });
+  }
+
+  //variables
+
   getVariables() {
     return this.http.get('/api/variables/global/');
   }
@@ -64,8 +85,38 @@ export class APIService {
     return this.http.post('/api/variables/global/', data);
   }
 
+  //stats
 
-  saveProcess(data, id) {
-    return this.http.put('/api/process/'+id+'/', data);
+  getStatsDashboard() {
+    return this.http.get('/api/stats/dashboard/');
+  }
+
+  //package
+
+  getPackages() {
+    return this.http.get('/api/package/');
+  }
+
+  getPackage(id: number) {
+    return this.http.get('/api/package/' + id + '/');
+  }
+
+  getFiles(package_id) {
+    return this.http.get('/api/package/' + package_id + '/files/');
+  }
+
+  removePackage(id) {
+    return this.http.delete('/api/package/' + id + '/');
+  }
+
+  startWorkflow(package_id) {
+    this.http.post('/api/package/' + package_id + '/execute/', {}).subscribe(() => {
+    });
+  }
+
+  finishPackage(package_id) {
+    this.http.post('/api/package/' + package_id + '/finish/', {}).subscribe(() => {
+
+    });
   }
 }

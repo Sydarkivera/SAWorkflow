@@ -13,7 +13,6 @@
         {{template.name}}
       </td>
       <td class="small-column" [class.selected]="active_template==template.template_id">
-        <!-- <a [routerLink]="[package.package_id, 'status']">{{package.status}}</a> -->
         <button class="btn btn-success" *ngIf="active_template != template.template_id" [class.btn-warning]="active_template != undefined" (click)="selectTemplate(template)">Select</button>
         <button class="btn btn-success">Start</button>
       </td>
