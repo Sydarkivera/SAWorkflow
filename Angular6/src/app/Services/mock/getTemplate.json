@@ -1,0 +1,55 @@
+{
+  "name": "Default Start",
+  "template_id": 0,
+  "processes": [
+    {
+      "process_id": 641,
+      "order": 0,
+      "name": "Setup workdir",
+      "type": "Python module",
+      "form": [],
+      "value": {},
+      "status": "New",
+      "log_path": "",
+      "err_path": "",
+      "module": 0,
+      "package": null,
+      "hidden": true,
+      "filter": "*",
+      "progress": "0.00000",
+      "template": 0,
+      "errors": []
+    },
+    {
+      "process_id": 642,
+      "order": 1,
+      "name": "Untar archive",
+      "type": "Python module",
+      "form": [
+        {
+          "identifier": "verbose",
+          "label": "Verbose",
+          "type": "checkbox"
+        },
+        {
+          "identifier": "delete_archive",
+          "label": "Deleta archive after",
+          "type": "checkbox"
+        }
+      ],
+      "value": {
+        "verbose": true
+      },
+      "status": "Edited",
+      "log_path": "",
+      "err_path": "",
+      "module": 1,
+      "package": null,
+      "hidden": true,
+      "filter": "*",
+      "progress": "0.00000",
+      "template": 0,
+      "errors": []
+    }
+  ]
+}

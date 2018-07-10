@@ -77,9 +77,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
 /* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
 /* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminProcesses.component */ "./src/app/Admin/AdminProcesses.component.ts");
-/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -97,7 +96,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //declarations
-
 
 
 
@@ -124,11 +122,10 @@ var AdminModule = /** @class */ (function () {
                 _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__["AdminHeaderComponent"],
                 _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__["AdminModulesComponent"],
                 _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_11__["AdminGlobalComponent"],
-                _AdminProcesses_component__WEBPACK_IMPORTED_MODULE_12__["AdminProcessesComponent"],
-                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__["AdminTemplatesComponent"]
+                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__["AdminTemplatesComponent"]
             ],
             providers: [
-                _Services_api_service__WEBPACK_IMPORTED_MODULE_14__["APIService"]
+                _Services_api_service__WEBPACK_IMPORTED_MODULE_13__["APIService"]
             ],
         })
     ], AdminModule);
@@ -571,369 +568,6 @@ var AdminModulesComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Admin/AdminProcesses.component.css":
-/*!****************************************************!*\
-  !*** ./src/app/Admin/AdminProcesses.component.css ***!
-  \****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\n.placeholder {\n  opacity: 0.4;\n}\n"
-
-/***/ }),
-
-/***/ "./src/app/Admin/AdminProcesses.component.html":
-/*!*****************************************************!*\
-  !*** ./src/app/Admin/AdminProcesses.component.html ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"row\">\n  <div class=\"col-lg-6\">\n      <h4>Modules to be run before each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 0)\"\n          (drop)=\"onDrop($event, 0)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"startTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'startTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 0)\"\n                    (dragover)=\"allowDrop($event, process.order, 0)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 0)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < startTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 0)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 0)\">delete</i>\n                      <i class=\"material-icons drag-handle\">drag_handle</i>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n      <h4>Modules to be run after each package</h4>\n      <div class=\"card\">\n          <div class=\"card-header  company-table-head\"\n          (dragover)=\"allowDropTop($event, 1)\"\n          (drop)=\"onDrop($event, 1)\">\n              Module Name\n          </div>\n          <div class=\"list-group list-group-flush\">\n            <!-- <div *ngIf=\"placeholderLocation==0.5\" class=\"list-group-item list-group-item-action\">\n            </div> -->\n              <ng-template\n              ngFor\n              let-process\n              [ngForOf]=\"endTemplate.processes\"\n              >\n                <div\n                    draggable=\"true\"\n                    (dragstart)=\"dragStart($event, process.process_id, 'endTemplate', process.name)\"\n                    (drop)=\"onDrop($event, 1)\"\n                    (dragover)=\"allowDrop($event, process.order, 1)\"\n                    class=\"list-group-item list-group-item-action\"\n                    [class.active]=\"process.process_id==selected_process_id\"\n                    [class.placeholder]=\"process.type=='placeholder'\"\n                  >\n                  <div class=\"d-flex w-100 justify-content-between\">\n                      <p\n                      style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                        {{process.name}}\n                      </p>\n                      <!-- <i class=\"material-icons\">arrow_back</i> -->\n                      <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process, 1)\">keyboard_arrow_up</i>\n                      <i *ngIf=\"process.order < endTemplate.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process, 1)\">keyboard_arrow_down</i>\n                      <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process, 1)\">delete</i>\n                      <i class=\"material-icons drag-handle\">drag_handle</i>\n                      <small>{{process.status}}</small>\n                  </div>\n                  <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                      <form *ngIf=\"process.form.length>0\">\n                              <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                                {{input.label}}\n                                <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                                <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                                <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                              </label>\n                      </form>\n                  </ng-template>\n                </div>\n              </ng-template>\n          </div>\n      </div>\n  </div>\n  <div class=\"col-lg-6\" data-query=\"view(Mooo)\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header company-table-head\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                  <i class=\"material-icons drag-handle\">drag_handle</i>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n"
-
-/***/ }),
-
-/***/ "./src/app/Admin/AdminProcesses.component.ts":
-/*!***************************************************!*\
-  !*** ./src/app/Admin/AdminProcesses.component.ts ***!
-  \***************************************************/
-/*! exports provided: AdminProcessesComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminProcessesComponent", function() { return AdminProcessesComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-// import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
-
-var AdminProcessesComponent = /** @class */ (function () {
-    function AdminProcessesComponent(moduleService) {
-        this.moduleService = moduleService;
-        this.workDir = "";
-        this.startTemplate = { processes: [] };
-        this.endTemplate = { processes: [] };
-        this.selected_process_id = -1;
-        this.templates = [undefined, undefined];
-    }
-    AdminProcessesComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.moduleService.getTemplate(0).subscribe(function (data) {
-            console.log(data);
-            _this.startTemplate = data;
-            _this.templates[0] = data;
-        });
-        this.moduleService.getTemplate(1).subscribe(function (data) {
-            console.log(data);
-            _this.endTemplate = data;
-            _this.templates[1] = data;
-        });
-        this.moduleService.getModules().subscribe(function (data) {
-            _this.modules = data;
-            // this.setModule(this.modules[this.modules.length-1]);
-        });
-    };
-    AdminProcessesComponent.prototype.selectProcess = function (process) {
-        if (this.selected_process_id != process.process_id) {
-            this.selected_process = process;
-            this.selected_process_id = process.process_id;
-        }
-        else {
-            this.selected_process = undefined;
-            this.selected_process_id = -1;
-        }
-    };
-    AdminProcessesComponent.prototype.setProcessValue = function (id, value) {
-        var values = this.selected_process.value;
-        values[id] = value;
-        var data = { "value": values };
-        this.moduleService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
-            console.log('data chagned');
-            console.log(data);
-        });
-    };
-    AdminProcessesComponent.prototype.deleteProcess = function (process, template_id) {
-        this.moduleService.deleteProcess(process.process_id).subscribe(function (data) {
-        });
-        this.templates[template_id].processes = this.templates[template_id].processes.filter(function (item) {
-            return item.process_id != process.process_id;
-        });
-        // move up all processes below
-        var data = [];
-        for (var index in this.templates[template_id].processes) {
-            var item = this.templates[template_id].processes[index];
-            if (item.type != 'placeholder' && item.order > process.order) {
-                item.order -= 1;
-                data.push({ "order": item.order, "process_id": item.process_id });
-            }
-        }
-        this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
-            // console.log(data);
-        });
-        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
-            if (a.order > b.order) {
-                return 1;
-            }
-            return -1;
-        });
-    };
-    //dragging:
-    AdminProcessesComponent.prototype.moveUp = function (process, template_id) {
-        var data = [];
-        data.push({ "order": (process.order - 1), "process_id": process.process_id });
-        //find the one below
-        // console.table(this.package.processes);
-        var below;
-        for (var i = 0; i < this.templates[template_id].processes.length; i++) {
-            var p = this.templates[template_id].processes[i];
-            if (p.order == process.order - 1) {
-                data.push({ "order": (p.order + 1), "process_id": p.process_id });
-                // console.log(i);/
-                this.templates[template_id].processes[i].order += 1;
-                this.templates[template_id].processes[i + 1].order -= 1;
-                break;
-            }
-        }
-        // console.table(data);
-        // console.table(this.package.processes);
-        // this.packageService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
-        //   // console.log(data);
-        // });
-        this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
-            console.log(data);
-        });
-        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
-            if (a.order > b.order) {
-                return 1;
-            }
-            return -1;
-        });
-    };
-    AdminProcessesComponent.prototype.moveDown = function (process, template_id) {
-        var data = [];
-        data.push({ "order": (process.order + 1), "process_id": process.process_id });
-        //find the one below
-        // console.table(this.package.processes);
-        var below;
-        for (var i = 0; i < this.templates[template_id].processes.length; i++) {
-            var p = this.templates[template_id].processes[i];
-            if (p.order == process.order + 1) {
-                data.push({ "order": (p.order - 1), "process_id": p.process_id });
-                // console.log(i);/
-                this.templates[template_id].processes[i].order -= 1;
-                this.templates[template_id].processes[i - 1].order += 1;
-                break;
-            }
-        }
-        // console.table(data);
-        // console.table(this.package.processes);
-        // this.packageService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
-        //   // console.log(data);
-        // });
-        this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
-            console.log(data);
-        });
-        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
-            if (a.order > b.order) {
-                return 1;
-            }
-            return -1;
-        });
-    };
-    AdminProcessesComponent.prototype.dragStart = function (e, id, type, name) {
-        console.log('drag start: ' + e);
-        // console.log(id);
-        e.dataTransfer.setData('id', id);
-        e.dataTransfer.setData('type', type);
-        e.dataTransfer.setData('name', name);
-    };
-    AdminProcessesComponent.prototype.onDrop = function (e, template_id) {
-        console.group('dropEvent');
-        // console.log('drop: ' + e);
-        // console.log(e.dataTransfer.getData('id'));
-        // console.log(e.dataTransfer.getData('type'));
-        // console.log(this.placeholderLocation);
-        // if this.placeholderLocation == -0.5, insert first
-        // if this.placeholderLocation == 0.5, insert afeter first
-        var dropOrder = Math.ceil(this.placeholderLocation);
-        if (dropOrder < 0) {
-            dropOrder = 0;
-        }
-        // console.log(dropOrder);
-        if (e.dataTransfer.getData('type') == 'module') {
-            var data = [];
-            // move down all items under existingIndex
-            for (var index in this.templates[template_id].processes) {
-                var item = this.templates[template_id].processes[index];
-                // console.log(this.package.processes[index]);
-                if (item.type != 'placeholder' && item.order >= dropOrder) {
-                    item.order += 1;
-                    data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
-                }
-            }
-            // console.log(data);
-            //submit reorder:
-            this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
-                console.log(data);
-            });
-            //add process
-            var newProcess = {
-                "order": dropOrder,
-                "process_id": 100,
-                "module": e.dataTransfer.getData('id'),
-                "name": e.dataTransfer.getData('name')
-            };
-            this.templates[template_id].processes.splice(dropOrder, 0, newProcess);
-            this.moduleService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "template": template_id }).subscribe(function (data) {
-                console.log(data);
-            });
-            // console.log(this.package.processes);
-        }
-        else {
-            var startOrder = -1;
-            var movedProcessIndex;
-            var data = [];
-            for (var index in this.templates[template_id].processes) {
-                var item = this.templates[template_id].processes[index];
-                if (item.process_id == e.dataTransfer.getData('id')) {
-                    startOrder = item.order;
-                    movedProcessIndex = index;
-                }
-            }
-            if (startOrder > dropOrder) {
-                for (var index in this.templates[template_id].processes) {
-                    var item = this.templates[template_id].processes[index];
-                    if (item.type != 'placeholder' && item.order < startOrder && item.order >= dropOrder) {
-                        item.order += 1;
-                        data.push({ "order": item.order, "process_id": item.process_id });
-                    }
-                }
-                this.templates[template_id].processes[movedProcessIndex].order = dropOrder;
-                data.push({ "order": this.templates[template_id].processes[movedProcessIndex].order, "process_id": this.templates[template_id].processes[movedProcessIndex].process_id });
-            }
-            else {
-                for (var index in this.templates[template_id].processes) {
-                    var item = this.templates[template_id].processes[index];
-                    if (item.type != 'placeholder' && item.order > startOrder && item.order < dropOrder) {
-                        item.order -= 1;
-                        data.push({ "order": item.order, "process_id": item.process_id });
-                    }
-                }
-                this.templates[template_id].processes[movedProcessIndex].order = dropOrder - 1;
-                data.push({ "order": this.templates[template_id].processes[movedProcessIndex].order, "process_id": this.templates[template_id].processes[movedProcessIndex].process_id });
-            }
-            // push changes to api
-            this.moduleService.reorderProcesses(data, template_id).subscribe(function (data) {
-                console.log(data);
-            });
-            this.onRelease(undefined);
-            this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
-                if (a.order > b.order) {
-                    return 1;
-                }
-                return -1;
-            });
-        }
-        console.groupEnd();
-    };
-    AdminProcessesComponent.prototype.onRelease = function (e) {
-        //reset
-        this.templates[0].processes = this.templates[0].processes.filter(function (item) {
-            return item['type'] != 'placeholder';
-        });
-        this.templates[1].processes = this.templates[1].processes.filter(function (item) {
-            return item['type'] != 'placeholder';
-        });
-    };
-    //set ghost image to show where you will drop.
-    AdminProcessesComponent.prototype.allowDrop = function (e, index, template_id) {
-        e.preventDefault();
-        // console.log(index);
-        var element = e.target;
-        // console.log(e.pageY);
-        // console.log(e.pageY - element.getBoundingClientRect().top);
-        if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
-            return;
-        }
-        if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
-            // drop below elements
-            // console.log('s');
-            var ind = index + 0.5;
-            if (ind != this.placeholderLocation) {
-                // console.log(ind);
-                // console.log(index);
-                // console.log(this.placeholderLocation);
-                this.placeholderLocation = ind;
-                // this.package.processes = this.package.processes.filter((item) => {
-                //   return item.type != 'placeholder'
-                // });
-                this.onRelease(undefined);
-                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
-                this.templates[template_id].processes.splice(index + 1, 0, temp);
-            }
-        }
-        else {
-            //drop above element.
-            // this.placeholderLocation = index + 0.5;
-            var ind = index - 0.5;
-            if (ind != this.placeholderLocation) {
-                // console.log(ind);
-                // console.log(index);
-                // console.log(this.placeholderLocation);
-                this.placeholderLocation = ind;
-                this.onRelease(undefined);
-                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
-                this.templates[template_id].processes.splice(index, 0, temp);
-            }
-        }
-        this.placeholderTemplate = template_id;
-        // console.log(element.offsetHeight);
-        // e.preventDefault();
-    };
-    AdminProcessesComponent.prototype.allowDropTop = function (e, template_id) {
-        e.preventDefault();
-        //calculate order. Order will be 0.5 lower than first visible.
-        var order = -0.5;
-        this.placeholderLocation = order;
-        this.placeholderTemplate = template_id;
-        this.onRelease(undefined);
-        // this.templates[template_id].processes = this.package.processes.filter((item) => {
-        // return item.type != 'placeholder'
-        // });
-        var temp = { type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
-        this.templates[template_id].processes.push(temp);
-        this.templates[template_id].processes = this.templates[template_id].processes.sort(function (a, b) {
-            if (a.order > b.order) {
-                return 1;
-            }
-            return -1;
-        });
-    };
-    AdminProcessesComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'admin',
-            template: __webpack_require__(/*! ./AdminProcesses.component.html */ "./src/app/Admin/AdminProcesses.component.html"),
-            styles: [__webpack_require__(/*! ./AdminProcesses.component.css */ "./src/app/Admin/AdminProcesses.component.css")]
-        }),
-        __metadata("design:paramtypes", [_Module_service__WEBPACK_IMPORTED_MODULE_1__["ModuleService"]])
-    ], AdminProcessesComponent);
-    return AdminProcessesComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/Admin/AdminTemplates.component.html":
 /*!*****************************************************!*\
   !*** ./src/app/Admin/AdminTemplates.component.html ***!
@@ -941,7 +575,7 @@ var AdminProcessesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i>\n    The template could not be removed since it is in use by one or more packages.\n  </message>\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n\n</div>\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\"\n          (dragover)=\"allowDropTop($event)\"\n          (drop)=\"onDrop($event)\"\n        >\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div\n              draggable=\"true\"\n              (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\"\n              (drop)=\"onDrop($event)\"\n              (dragover)=\"allowDrop($event, process.order)\"\n              class=\"list-group-item list-group-item-action\"\n              [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p\n              style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n                <form *ngIf=\"process.form.length>0\">\n                        <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                          {{input.label}}\n                          <!-- <input type=\"text\" *ngIf=\"input.type=='text'\" [id]=\"input.identifier\" [value]=\"process.values[input.identifier]\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\"/> -->\n                          <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                          <!-- <button class=\"btn\" (click)=\"openFileBrowser()\">Files: All</button> -->\n                        </label>\n                </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n      <h4>Avaliable Tools</h4>\n      <div class=\"card\">\n           <div class=\"card-header company-table-head\">\n              Name\n           </div>\n           <ng-template\n           ngFor\n           let-module\n           [ngForOf]=\"modules\"\n           >\n           <div class=\"list-group list-group-flush\">\n               <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n                 <div class=\"d-flex w-100 justify-content-between\">\n                  <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n                  <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n                  <i class=\"material-icons drag-handle\">drag_handle</i>\n                 </div>\n              </div>\n           </div>\n         </ng-template>\n      </div>\n  </div>\n</div>\n\n<modal *ngIf=\"selected_template_id != -1\" [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
+module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label>\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal *ngIf=\"selected_template_id != -1\" [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -967,7 +601,7 @@ module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-se
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminTemplatesComponent", function() { return AdminTemplatesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Module_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Module.service */ "./src/app/Admin/Module.service.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -980,8 +614,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var AdminTemplatesComponent = /** @class */ (function () {
-    function AdminTemplatesComponent(moduleService) {
-        this.moduleService = moduleService;
+    function AdminTemplatesComponent(apiService) {
+        this.apiService = apiService;
         this.selected_template_id = -1;
         this.selected_template = undefined;
         this.selected_process_id = -1;
@@ -991,20 +625,18 @@ var AdminTemplatesComponent = /** @class */ (function () {
         this.messageVisible = false;
         this.errorVisible = false;
     }
+    // load templates and modules at init
     AdminTemplatesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.moduleService.getTemplates().subscribe(function (data) {
+        this.apiService.getTemplates().subscribe(function (data) {
             _this.templates = data;
-            console.log(data);
-            //TODO remove auto select template:
-            _this.selectTemplate(data[1]);
         });
-        this.moduleService.getModules().subscribe(function (data) {
+        this.apiService.getModules().subscribe(function (data) {
             _this.modules = data;
         });
     };
     AdminTemplatesComponent.prototype.createTemplateModal = function () {
-        //modal active
+        //Activate modal for creation of a new template
         this.createModalActive = true;
         this.newTemplateName = "";
     };
@@ -1012,8 +644,8 @@ var AdminTemplatesComponent = /** @class */ (function () {
         var _this = this;
         //actuall creation of new template
         var data = { 'templateName': this.newTemplateName };
-        this.moduleService.createNewTemplate(data).subscribe(function (data) {
-            console.log(data);
+        this.apiService.createNewTemplate(data).subscribe(function (data) {
+            // console.log(data);
             _this.templates.push(data);
             _this.newTemplateName = "";
             _this.createModalActive = false;
@@ -1021,8 +653,9 @@ var AdminTemplatesComponent = /** @class */ (function () {
     };
     AdminTemplatesComponent.prototype.save = function () {
         var _this = this;
+        //save the changes made in a template to the server
         var data = { 'templateName': this.selected_template.name, 'template_id': this.selected_template_id };
-        this.moduleService.createNewTemplate(data).subscribe(function (data) {
+        this.apiService.createNewTemplate(data).subscribe(function (data) {
             _this.messageVisible = true;
             for (var i in _this.templates) {
                 var temp = _this.templates[i];
@@ -1032,9 +665,10 @@ var AdminTemplatesComponent = /** @class */ (function () {
             }
         });
     };
+    // delete a template
     AdminTemplatesComponent.prototype.deleteTemplate = function (template) {
         var _this = this;
-        this.moduleService.deleteTemplate(template.template_id).subscribe(function (data) {
+        this.apiService.deleteTemplate(template.template_id).subscribe(function (data) {
             // console.log(data);
             _this.templates = _this.templates.filter(function (item) {
                 if (item.template_id == template.template_id) {
@@ -1052,14 +686,14 @@ var AdminTemplatesComponent = /** @class */ (function () {
             }
         });
     };
+    // select a template. If it is already selected, unselect it
     AdminTemplatesComponent.prototype.selectTemplate = function (template) {
         var _this = this;
         if (this.selected_template_id != template.template_id) {
             this.selected_template_id = template.template_id;
             this.selected_template = template;
-            //Download tempalte data
-            this.moduleService.getTemplate(this.selected_template_id).subscribe(function (data) {
-                console.log(data);
+            //Download template data
+            this.apiService.getTemplate(this.selected_template_id).subscribe(function (data) {
                 _this.selected_template = data;
             });
         }
@@ -1068,6 +702,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
             this.selected_template = undefined;
         }
     };
+    // select a process. If it is already selected, unselect it
     AdminTemplatesComponent.prototype.selectProcess = function (process) {
         if (this.selected_process_id != process.process_id) {
             this.selected_process = process;
@@ -1078,18 +713,19 @@ var AdminTemplatesComponent = /** @class */ (function () {
             this.selected_process_id = -1;
         }
     };
+    // update a value for one of the processes (it's form value)
     AdminTemplatesComponent.prototype.setProcessValue = function (id, value) {
         var values = this.selected_process.value;
         values[id] = value;
         var data = { "value": values };
-        this.moduleService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
-            console.log('data chagned');
-            console.log(data);
+        this.apiService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
+            // console.log('data chagned')
+            // console.log(data);
         });
     };
+    // Delete a process
     AdminTemplatesComponent.prototype.deleteProcess = function (process) {
-        console.log(process);
-        this.moduleService.deleteProcess(process.process_id).subscribe(function (data) {
+        this.apiService.deleteProcess(process.process_id).subscribe(function (data) {
         });
         this.selected_template.processes = this.selected_template.processes.filter(function (item) {
             return item.process_id != process.process_id;
@@ -1103,9 +739,10 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 data.push({ "order": item.order, "process_id": item.process_id });
             }
         }
-        this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+        this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
             // console.log(data);
         });
+        // update the visuals
         this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
             if (a.order > b.order) {
                 return 1;
@@ -1113,24 +750,22 @@ var AdminTemplatesComponent = /** @class */ (function () {
             return -1;
         });
     };
+    // Simply add a process to the bottom of the list
     AdminTemplatesComponent.prototype.addProcessLast = function (module_id) {
         var _this = this;
         var order = 0;
         if (this.selected_template.processes.length > 0) {
             order = this.selected_template.processes[this.selected_template.processes.length - 1].order + 1;
         }
-        this.moduleService.addProcess({ "order": order, "module": module_id, "template": this.selected_template_id }).subscribe(function (data) {
-            console.log(data);
+        this.apiService.addProcess({ "order": order, "module": module_id, "template": this.selected_template_id }).subscribe(function (data) {
             _this.selected_template.processes = data;
         });
     };
-    //dragging:
+    // ---------------- (( Dragging)) ---------------- //
     AdminTemplatesComponent.prototype.moveUp = function (process) {
         var data = [];
         data.push({ "order": (process.order - 1), "process_id": process.process_id });
-        //find the one below
-        // console.table(this.package.processes);
-        var below;
+        // swap places of process and the one above
         for (var i = 0; i < this.selected_template.processes.length; i++) {
             var p = this.selected_template.processes[i];
             if (p.order == process.order - 1) {
@@ -1141,8 +776,8 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 break;
             }
         }
-        this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
-            console.log(data);
+        this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            // console.log(data);
         });
         this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -1154,9 +789,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
     AdminTemplatesComponent.prototype.moveDown = function (process) {
         var data = [];
         data.push({ "order": (process.order + 1), "process_id": process.process_id });
-        //find the one below
-        // console.table(this.package.processes);
-        var below;
+        // swap places of process and the one below
         for (var i = 0; i < this.selected_template.processes.length; i++) {
             var p = this.selected_template.processes[i];
             if (p.order == process.order + 1) {
@@ -1166,8 +799,8 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 break;
             }
         }
-        this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
-            console.log(data);
+        this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            // console.log(data);
         });
         this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -1176,27 +809,20 @@ var AdminTemplatesComponent = /** @class */ (function () {
             return -1;
         });
     };
+    // store the data of the dragged object in the event
     AdminTemplatesComponent.prototype.dragStart = function (e, id, type, name) {
-        console.log('drag start: ' + e);
-        // console.log(id);
         e.dataTransfer.setData('id', id);
         e.dataTransfer.setData('type', type);
         e.dataTransfer.setData('name', name);
     };
     AdminTemplatesComponent.prototype.onDrop = function (e) {
         var _this = this;
-        console.group('dropEvent');
-        // console.log('drop: ' + e);
-        // console.log(e.dataTransfer.getData('id'));
-        // console.log(e.dataTransfer.getData('type'));
-        // console.log(this.placeholderLocation);
-        // if this.placeholderLocation == -0.5, insert first
-        // if this.placeholderLocation == 0.5, insert afeter first
+        // calculate the new order for the dropped element
         var dropOrder = Math.ceil(this.placeholderLocation);
         if (dropOrder < 0) {
             dropOrder = 0;
         }
-        // console.log(dropOrder);
+        // if the dropped element is a module, add it
         if (e.dataTransfer.getData('type') == 'module') {
             var data = [];
             // move down all items under existingIndex
@@ -1208,12 +834,11 @@ var AdminTemplatesComponent = /** @class */ (function () {
                     data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
                 }
             }
-            // console.log(data);
             //submit reorder:
-            this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
-                console.log(data);
+            this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+                // console.log(data);
             });
-            //add process
+            //add process temporarily until the request is completed
             var newProcess = {
                 "order": dropOrder,
                 "process_id": 100,
@@ -1221,15 +846,14 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 "name": e.dataTransfer.getData('name')
             };
             this.selected_template.processes.splice(dropOrder, 0, newProcess);
-            this.moduleService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "template": this.selected_template_id }).subscribe(function (data) {
-                // console.log(data);
+            this.apiService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "template": this.selected_template_id }).subscribe(function (data) {
                 _this.selected_template.processes = data;
                 _this.selected_process = undefined;
                 _this.selected_process_id = -1;
             });
-            // console.log(this.package.processes);
         }
         else {
+            // else if the dropped element is a process, reorder the elements in the list
             var startOrder = -1;
             var movedProcessIndex;
             var data = [];
@@ -1263,8 +887,8 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
             }
             // push changes to api
-            this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
-                console.log(data);
+            this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+                // console.log(data);
             });
             this.onRelease(undefined);
             this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
@@ -1274,36 +898,25 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 return -1;
             });
         }
-        console.groupEnd();
     };
     AdminTemplatesComponent.prototype.onRelease = function (e) {
-        //reset
+        // remove the placeholder
         this.selected_template.processes = this.selected_template.processes.filter(function (item) {
             return item['type'] != 'placeholder';
         });
     };
-    //set ghost image to show where you will drop.
     AdminTemplatesComponent.prototype.allowDrop = function (e, index) {
+        //set ghost image to show where you will drop.
         e.preventDefault();
-        // console.log(index);
         var element = e.target;
-        // console.log(e.pageY);
-        // console.log(e.pageY - element.getBoundingClientRect().top);
         if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
             return;
         }
         if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
             // drop below elements
-            // console.log('s');
             var ind = index + 0.5;
             if (ind != this.placeholderLocation) {
-                // console.log(ind);
-                // console.log(index);
-                // console.log(this.placeholderLocation);
                 this.placeholderLocation = ind;
-                // this.package.processes = this.package.processes.filter((item) => {
-                //   return item.type != 'placeholder'
-                // });
                 this.onRelease(undefined);
                 var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
                 this.selected_template.processes.splice(index + 1, 0, temp);
@@ -1311,12 +924,8 @@ var AdminTemplatesComponent = /** @class */ (function () {
         }
         else {
             //drop above element.
-            // this.placeholderLocation = index + 0.5;
             var ind = index - 0.5;
             if (ind != this.placeholderLocation) {
-                // console.log(ind);
-                // console.log(index);
-                // console.log(this.placeholderLocation);
                 this.placeholderLocation = ind;
                 this.onRelease(undefined);
                 var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
@@ -1324,19 +933,15 @@ var AdminTemplatesComponent = /** @class */ (function () {
             }
         }
         this.placeholderTemplate = this.selected_template_id;
-        // console.log(element.offsetHeight);
-        // e.preventDefault();
     };
     AdminTemplatesComponent.prototype.allowDropTop = function (e) {
+        // create a placeholder at the correct place
         e.preventDefault();
         //calculate order. Order will be 0.5 lower than first visible.
         var order = -0.5;
         this.placeholderLocation = order;
         this.placeholderTemplate = this.selected_template_id;
         this.onRelease(undefined);
-        // this.templates[template_id].processes = this.package.processes.filter((item) => {
-        // return item.type != 'placeholder'
-        // });
         var temp = { type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
         this.selected_template.processes.push(temp);
         this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
@@ -1352,103 +957,9 @@ var AdminTemplatesComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./AdminTemplates.component.html */ "./src/app/Admin/AdminTemplates.component.html"),
             styles: [__webpack_require__(/*! ./AdminTemplates.component.sass */ "./src/app/Admin/AdminTemplates.component.sass")]
         }),
-        __metadata("design:paramtypes", [_Module_service__WEBPACK_IMPORTED_MODULE_1__["ModuleService"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
     ], AdminTemplatesComponent);
     return AdminTemplatesComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Admin/Module.service.ts":
-/*!*****************************************!*\
-  !*** ./src/app/Admin/Module.service.ts ***!
-  \*****************************************/
-/*! exports provided: ModuleService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ModuleService", function() { return ModuleService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var ModuleService = /** @class */ (function () {
-    function ModuleService(http) {
-        this.http = http;
-        this.packagesURL = '/api/module/';
-    }
-    ModuleService.prototype.saveData = function (id, data) {
-        return this.http.post(this.packagesURL + id + '/', data);
-    };
-    ModuleService.prototype.getTemplates = function () {
-        return this.http.get('/api/template/');
-    };
-    ModuleService.prototype.getTemplate = function (id) {
-        return this.http.get('/api/template/' + id + '/');
-    };
-    ModuleService.prototype.createNewTemplate = function (data) {
-        return this.http.post('/api/template/', data);
-    };
-    ModuleService.prototype.deleteTemplate = function (template_id) {
-        return this.http.delete('/api/template/' + template_id + '/');
-    };
-    // getPackage(id: number) {
-    //   return this.http.get(this.packagesURL + id + '/');
-    // }
-    //
-    ModuleService.prototype.getModules = function () {
-        return this.http.get('/api/module/');
-    };
-    ModuleService.prototype.createModule = function (data) {
-        console.log(data);
-        return this.http.put(this.packagesURL, data);
-    };
-    ModuleService.prototype.deleteModule = function (module_id) {
-        return this.http.delete(this.packagesURL + module_id + '/');
-    };
-    ModuleService.prototype.addProcess = function (process) {
-        return this.http.post('/api/process/', process);
-    };
-    ModuleService.prototype.reorderProcesses = function (data, template_id) {
-        return this.http.put('/api/template/' + template_id + '/process/', data);
-    };
-    ModuleService.prototype.deleteProcess = function (id) {
-        return this.http.delete('/api/process/' + id + '/');
-    };
-    ModuleService.prototype.importModule = function (formData) {
-        // create a http-post request and pass the form
-        // tell it to report the upload progress
-        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/module/import/', formData, {
-            reportProgress: true
-        });
-        return this.http.request(req);
-    };
-    ModuleService.prototype.getVariables = function () {
-        return this.http.get('/api/variables/global/');
-    };
-    ModuleService.prototype.setVariables = function (data) {
-        return this.http.post('/api/variables/global/', data);
-    };
-    ModuleService.prototype.saveProcess = function (data, id) {
-        return this.http.put('/api/process/' + id + '/', data);
-    };
-    ModuleService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
-    ], ModuleService);
-    return ModuleService;
 }());
 
 
@@ -3219,10 +2730,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FileBrowser_FileBrowser_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../FileBrowser/FileBrowser.component */ "./src/app/FileBrowser/FileBrowser.component.ts");
 /* harmony import */ var _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../FileBrowser/File.component */ "./src/app/FileBrowser/File.component.ts");
 /* harmony import */ var _PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./PackageDetail.service */ "./src/app/PackageDetail/PackageDetail.service.ts");
-/* harmony import */ var _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Admin/Module.service */ "./src/app/Admin/Module.service.ts");
-/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
-/* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
+/* harmony import */ var _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Tooltip/Tooltip.module */ "./src/app/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Navbar/Navbar.module */ "./src/app/Navbar/Navbar.module.ts");
+/* harmony import */ var _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Modal/Modal.module */ "./src/app/Modal/Modal.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3242,7 +2752,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
+// import { ModuleService } from '../Admin/Module.service';
 
 
 
@@ -3258,9 +2768,9 @@ var PackageModule = /** @class */ (function () {
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
-                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_14__["TooltipModule"],
-                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_15__["NavbarModule"],
-                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_16__["ModalModule"],
+                _Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
+                _Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__["NavbarModule"],
+                _Modal_Modal_module__WEBPACK_IMPORTED_MODULE_15__["ModalModule"],
             ],
             declarations: [
                 _Package_component__WEBPACK_IMPORTED_MODULE_5__["PackageComponent"],
@@ -3272,7 +2782,7 @@ var PackageModule = /** @class */ (function () {
                 _FileBrowser_File_component__WEBPACK_IMPORTED_MODULE_11__["FileComponent"]
             ],
             // bootstrap: [PackageHeaderComponent] s
-            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__["PackageDetailService"], _Admin_Module_service__WEBPACK_IMPORTED_MODULE_13__["ModuleService"]],
+            providers: [_PackageDetail_service__WEBPACK_IMPORTED_MODULE_12__["PackageDetailService"]],
         })
     ], PackageModule);
     return PackageModule;

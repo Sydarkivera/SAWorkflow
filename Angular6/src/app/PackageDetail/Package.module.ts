@@ -14,7 +14,7 @@ import { FileBrowserComponent } from '../FileBrowser/FileBrowser.component';
 import { FileComponent } from '../FileBrowser/File.component';
 
 import { PackageDetailService } from './PackageDetail.service';
-import { ModuleService } from '../Admin/Module.service';
+// import { ModuleService } from '../Admin/Module.service';
 import { TooltipModule } from '../Tooltip/Tooltip.module';
 import { NavbarModule } from '../Navbar/Navbar.module';
 import { ModalModule } from '../Modal/Modal.module';
@@ -43,7 +43,7 @@ import { ModalModule } from '../Modal/Modal.module';
     FileComponent
   ],
   // bootstrap: [PackageHeaderComponent] s
-  providers: [PackageDetailService, ModuleService],
+  providers: [PackageDetailService],
   // providers: [ HeroService ]
 })
 export class PackageModule {}

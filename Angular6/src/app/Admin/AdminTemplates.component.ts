@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from "@angular/router";
 
 import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
-import { ModuleService } from './Module.service';
+import { APIService } from '../Services/api.service';
 
 interface Placeholder {
-    type: string;
-    order: number;
-    name: string;
+  type: string;
+  order: number;
+  name: string;
 }
 
 @Component({
@@ -30,32 +30,30 @@ export class AdminTemplatesComponent {
   messageVisible = false;
   errorVisible = false;
 
-  constructor(private moduleService: ModuleService) {
+  constructor(private apiService: APIService) {
   }
 
+  // load templates and modules at init
   ngOnInit() {
-    this.moduleService.getTemplates().subscribe((data) => {
+    this.apiService.getTemplates().subscribe((data) => {
       this.templates = data as [any];
-      console.log(data);
-      //TODO remove auto select template:
-      this.selectTemplate(data[1])
     });
-    this.moduleService.getModules().subscribe((data) => {
+    this.apiService.getModules().subscribe((data) => {
       this.modules = data as [any];
     });
   }
 
   createTemplateModal() {
-    //modal active
+    //Activate modal for creation of a new template
     this.createModalActive = true;
     this.newTemplateName = "";
   }
 
   createNewTemplate() {
     //actuall creation of new template
-    let data = {'templateName': this.newTemplateName}
-    this.moduleService.createNewTemplate(data).subscribe((data) => {
-      console.log(data);
+    let data = { 'templateName': this.newTemplateName }
+    this.apiService.createNewTemplate(data).subscribe((data) => {
+      // console.log(data);
       this.templates.push(data);
       this.newTemplateName = "";
       this.createModalActive = false;
@@ -63,8 +61,9 @@ export class AdminTemplatesComponent {
   }
 
   save() {
-    let data = {'templateName': this.selected_template.name, 'template_id': this.selected_template_id}
-    this.moduleService.createNewTemplate(data).subscribe((data) => {
+    //save the changes made in a template to the server
+    let data = { 'templateName': this.selected_template.name, 'template_id': this.selected_template_id }
+    this.apiService.createNewTemplate(data).subscribe((data) => {
       this.messageVisible = true
       for (let i in this.templates) {
         let temp = this.templates[i]
@@ -75,11 +74,12 @@ export class AdminTemplatesComponent {
     })
   }
 
+  // delete a template
   deleteTemplate(template) {
-    this.moduleService.deleteTemplate(template.template_id).subscribe((data) => {
+    this.apiService.deleteTemplate(template.template_id).subscribe((data) => {
       // console.log(data);
       this.templates = this.templates.filter((item) => {
-        if(item.template_id == template.template_id) {
+        if (item.template_id == template.template_id) {
           return false;
         }
         return true;
@@ -95,13 +95,13 @@ export class AdminTemplatesComponent {
     })
   }
 
+  // select a template. If it is already selected, unselect it
   selectTemplate(template) {
     if (this.selected_template_id != template.template_id) {
       this.selected_template_id = template.template_id;
       this.selected_template = template;
-      //Download tempalte data
-      this.moduleService.getTemplate(this.selected_template_id).subscribe((data) => {
-        console.log(data);
+      //Download template data
+      this.apiService.getTemplate(this.selected_template_id).subscribe((data) => {
         this.selected_template = data;
       });
     } else {
@@ -110,6 +110,7 @@ export class AdminTemplatesComponent {
     }
   }
 
+  // select a process. If it is already selected, unselect it
   selectProcess(process) {
     if (this.selected_process_id != process.process_id) {
       this.selected_process = process;
@@ -120,19 +121,20 @@ export class AdminTemplatesComponent {
     }
   }
 
+  // update a value for one of the processes (it's form value)
   setProcessValue(id, value) {
-      let values = this.selected_process.value;
-      values[id] = value;
-      let data = {"value": values};
-      this.moduleService.saveProcess(data, this.selected_process_id).subscribe((data) => {
-        console.log('data chagned')
-        console.log(data);
-      })
+    let values = this.selected_process.value;
+    values[id] = value;
+    let data = { "value": values };
+    this.apiService.saveProcess(data, this.selected_process_id).subscribe((data) => {
+      // console.log('data chagned')
+      // console.log(data);
+    })
   }
 
+  // Delete a process
   deleteProcess(process) {
-    console.log(process)
-    this.moduleService.deleteProcess(process.process_id).subscribe((data) => {
+    this.apiService.deleteProcess(process.process_id).subscribe((data) => {
     });
     this.selected_template.processes = this.selected_template.processes.filter((item) => {
       return item.process_id != process.process_id;
@@ -143,10 +145,49 @@ export class AdminTemplatesComponent {
       let item = this.selected_template.processes[index];
       if (item.type != 'placeholder' && item.order > process.order) {
         item.order -= 1;
-        data.push({"order": item.order, "process_id":item.process_id});
+        data.push({ "order": item.order, "process_id": item.process_id });
       }
     }
-    this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+    this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+      // console.log(data);
+    });
+    // update the visuals
+    this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+      return -1;
+    });
+  }
+
+  // Simply add a process to the bottom of the list
+  addProcessLast(module_id) {
+    var order = 0;
+    if (this.selected_template.processes.length > 0) {
+      order = this.selected_template.processes[this.selected_template.processes.length - 1].order + 1;
+    }
+    this.apiService.addProcess({ "order": order, "module": module_id, "template": this.selected_template_id }).subscribe((data) => {
+      this.selected_template.processes = data;
+    });
+  }
+
+// ---------------- (( Dragging)) ---------------- //
+
+  moveUp(process) {
+    let data = [];
+    data.push({ "order": (process.order - 1), "process_id": process.process_id });
+    // swap places of process and the one above
+    for (let i = 0; i < this.selected_template.processes.length; i++) {
+      let p = this.selected_template.processes[i];
+      if (p.order == process.order - 1) {
+        data.push({ "order": (p.order + 1), "process_id": p.process_id });
+        // console.log(i);/
+        this.selected_template.processes[i].order += 1;
+        this.selected_template.processes[i + 1].order -= 1;
+        break;
+      }
+    }
+    this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
       // console.log(data);
     });
 
@@ -154,266 +195,191 @@ export class AdminTemplatesComponent {
       if (a.order > b.order) {
         return 1;
       }
-       return -1;
+      return -1;
     });
   }
 
-  addProcessLast(module_id) {
-    var order = 0;
-    if (this.selected_template.processes.length > 0) {
-      order = this.selected_template.processes[this.selected_template.processes.length-1].order + 1;
+  moveDown(process) {
+    let data = [];
+    data.push({ "order": (process.order + 1), "process_id": process.process_id });
+    // swap places of process and the one below
+    for (let i = 0; i < this.selected_template.processes.length; i++) {
+      let p = this.selected_template.processes[i];
+      if (p.order == process.order + 1) {
+        data.push({ "order": (p.order - 1), "process_id": p.process_id });
+        this.selected_template.processes[i].order -= 1;
+        this.selected_template.processes[i - 1].order += 1;
+        break;
+      }
     }
-    this.moduleService.addProcess({"order": order, "module": module_id, "template": this.selected_template_id}).subscribe((data) => {
-      console.log(data);
-      this.selected_template.processes = data;
+    this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+      // console.log(data);
+    });
+
+    this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+      return -1;
     });
   }
 
+  // store the data of the dragged object in the event
+  dragStart(e, id, type, name) {
+    e.dataTransfer.setData('id', id);
+    e.dataTransfer.setData('type', type);
+    e.dataTransfer.setData('name', name);
+  }
 
-    //dragging:
-    moveUp(process) {
+  onDrop(e) {
+
+    // calculate the new order for the dropped element
+    let dropOrder = Math.ceil(this.placeholderLocation);
+    if (dropOrder < 0) {
+      dropOrder = 0;
+    }
+
+    // if the dropped element is a module, add it
+    if (e.dataTransfer.getData('type') == 'module') {
+
       let data = [];
-      data.push({"order": (process.order - 1), "process_id": process.process_id});
-      //find the one below
-      // console.table(this.package.processes);
-      var below;
-      for (let i = 0; i < this.selected_template.processes.length ; i++) {
-        let p = this.selected_template.processes[i];
-        if (p.order == process.order - 1) {
-          data.push({"order": (p.order + 1), "process_id": p.process_id});
-          // console.log(i);/
-          this.selected_template.processes[i].order += 1;
-          this.selected_template.processes[i + 1].order -= 1;
-          break;
+      // move down all items under existingIndex
+      for (let index in this.selected_template.processes) {
+        let item = this.selected_template.processes[index];
+        // console.log(this.package.processes[index]);
+        if (item.type != 'placeholder' && item.order >= dropOrder) {
+          item.order += 1;
+          data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
         }
       }
-      this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
-        console.log(data);
+
+      //submit reorder:
+      this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+        // console.log(data);
       });
+
+      //add process temporarily until the request is completed
+      let newProcess = {
+        "order": dropOrder,
+        "process_id": 100,
+        "module": e.dataTransfer.getData('id'),
+        "name": e.dataTransfer.getData('name')
+      }
+
+      this.selected_template.processes.splice(dropOrder, 0, newProcess);
+
+      this.apiService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "template": this.selected_template_id }).subscribe((data) => {
+        this.selected_template.processes = data;
+        this.selected_process = undefined;
+        this.selected_process_id = -1;
+      });
+    } else {
+      // else if the dropped element is a process, reorder the elements in the list
+      let startOrder = -1;
+      var movedProcessIndex;
+      let data = [];
+      for (let index in this.selected_template.processes) {
+        let item = this.selected_template.processes[index];
+        if (item.process_id == e.dataTransfer.getData('id')) {
+          startOrder = item.order;
+          movedProcessIndex = index;
+        }
+      }
+
+      if (startOrder > dropOrder) { // the item was dragged up. items from dropOrder to startOrder should be moved down.
+        for (let index in this.selected_template.processes) {
+          let item = this.selected_template.processes[index];
+          if (item.type != 'placeholder' && item.order < startOrder && item.order >= dropOrder) {
+            item.order += 1;
+            data.push({ "order": item.order, "process_id": item.process_id });
+          }
+        }
+        this.selected_template.processes[movedProcessIndex].order = dropOrder;
+        data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
+      } else { // the item was dragged down. items smaller than startOrder and larger than dropOrder shall be moved up.
+        for (let index in this.selected_template.processes) {
+          let item = this.selected_template.processes[index];
+          if (item.type != 'placeholder' && item.order > startOrder && item.order < dropOrder) {
+            item.order -= 1;
+            data.push({ "order": item.order, "process_id": item.process_id });
+          }
+        }
+        this.selected_template.processes[movedProcessIndex].order = dropOrder - 1;
+        data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
+      }
+      // push changes to api
+      this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+        // console.log(data);
+      });
+      this.onRelease(undefined);
 
       this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
         if (a.order > b.order) {
           return 1;
         }
-         return -1;
+        return -1;
       });
+
     }
+  }
 
-    moveDown(process) {
-      let data = [];
-      data.push({"order": (process.order + 1), "process_id": process.process_id});
-      //find the one below
-      // console.table(this.package.processes);
-      var below;
-      for (let i = 0; i < this.selected_template.processes.length ; i++) {
-        let p = this.selected_template.processes[i];
-        if (p.order == process.order + 1) {
-          data.push({"order": (p.order - 1), "process_id": p.process_id});
-          this.selected_template.processes[i].order -= 1;
-          this.selected_template.processes[i - 1].order += 1;
-          break;
-        }
-      }
-      this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
-        console.log(data);
-      });
+  onRelease(e) {
+    // remove the placeholder
+    this.selected_template.processes = this.selected_template.processes.filter((item) => {
+      return item['type'] != 'placeholder'
+    });
+  }
 
-      this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
-        if (a.order > b.order) {
-          return 1;
-        }
-         return -1;
-      });
-    }
-
-
-      dragStart(e, id, type, name) {
-        console.log('drag start: ' + e);
-        // console.log(id);
-        e.dataTransfer.setData('id', id);
-        e.dataTransfer.setData('type', type);
-        e.dataTransfer.setData('name', name);
-      }
-
-      onDrop(e) {
-        console.group('dropEvent');
-        // console.log('drop: ' + e);
-        // console.log(e.dataTransfer.getData('id'));
-        // console.log(e.dataTransfer.getData('type'));
-        // console.log(this.placeholderLocation);
-
-        // if this.placeholderLocation == -0.5, insert first
-        // if this.placeholderLocation == 0.5, insert afeter first
-
-        let dropOrder = Math.ceil(this.placeholderLocation);
-        if (dropOrder < 0) {
-          dropOrder = 0;
-        }
-        // console.log(dropOrder);
-
-        if (e.dataTransfer.getData('type') == 'module') {
-
-          let data = [];
-          // move down all items under existingIndex
-          for (let index in this.selected_template.processes) {
-            let item = this.selected_template.processes[index];
-            // console.log(this.package.processes[index]);
-            if (item.type != 'placeholder' && item.order >= dropOrder) {
-              item.order += 1;
-              data.push({"order": item.order, "process_id":item.process_id}); // updates to push to backend
-            }
-          }
-          // console.log(data);
-
-          //submit reorder:
-          this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
-            console.log(data);
-          });
-
-          //add process
-          let newProcess = {
-            "order": dropOrder,
-            "process_id": 100,
-            "module": e.dataTransfer.getData('id'),
-            "name": e.dataTransfer.getData('name')
-          }
-
-          this.selected_template.processes.splice(dropOrder, 0, newProcess);
-
-          this.moduleService.addProcess({"order": dropOrder, "module": e.dataTransfer.getData('id'), "template": this.selected_template_id}).subscribe((data) => {
-            // console.log(data);
-            this.selected_template.processes = data;
-            this.selected_process = undefined;
-            this.selected_process_id = -1;
-
-          });
-
-          // console.log(this.package.processes);
-        } else {
-
-          let startOrder = -1;
-          var movedProcessIndex;
-          let data = [];
-          for (let index in this.selected_template.processes) {
-            let item = this.selected_template.processes[index];
-            if (item.process_id == e.dataTransfer.getData('id')) {
-              startOrder = item.order;
-              movedProcessIndex = index;
-            }
-          }
-
-          if (startOrder > dropOrder) { // the item was dragged up. items from dropOrder to startOrder should be moved down.
-            for (let index in this.selected_template.processes) {
-              let item = this.selected_template.processes[index];
-              if (item.type != 'placeholder' && item.order < startOrder && item.order >= dropOrder) {
-                item.order += 1;
-                data.push({"order": item.order, "process_id":item.process_id});
-              }
-            }
-            this.selected_template.processes[movedProcessIndex].order = dropOrder;
-            data.push({"order": this.selected_template.processes[movedProcessIndex].order, "process_id":this.selected_template.processes[movedProcessIndex].process_id});
-          } else { // the item was dragged down. items smaller than startOrder and larger than dropOrder shall be moved up.
-            for (let index in this.selected_template.processes) {
-              let item = this.selected_template.processes[index];
-              if (item.type != 'placeholder' && item.order > startOrder && item.order < dropOrder) {
-                item.order -= 1;
-                data.push({"order": item.order, "process_id":item.process_id});
-              }
-            }
-            this.selected_template.processes[movedProcessIndex].order = dropOrder - 1;
-            data.push({"order": this.selected_template.processes[movedProcessIndex].order, "process_id":this.selected_template.processes[movedProcessIndex].process_id});
-          }
-          // push changes to api
-          this.moduleService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
-            console.log(data);
-          });
-          this.onRelease(undefined);
-
-          this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
-            if (a.order > b.order) {
-              return 1;
-            }
-             return -1;
-          });
-
-        }
-        console.groupEnd();
-      }
-
-      onRelease(e) {
-        //reset
-        this.selected_template.processes = this.selected_template.processes.filter((item) => {
-          return item['type'] != 'placeholder'
-        });
-      }
+  allowDrop(e, index: number) {
     //set ghost image to show where you will drop.
-      allowDrop(e, index: number) {
-        e.preventDefault();
-        // console.log(index);
-        var element = e.target as HTMLElement;
-        // console.log(e.pageY);
-        // console.log(e.pageY - element.getBoundingClientRect().top);
-        if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
-          return
-        }
-        if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
-          // drop below elements
-          // console.log('s');
+    e.preventDefault();
+    var element = e.target as HTMLElement;
 
-          var ind = index + 0.5;
-          if (ind != this.placeholderLocation) {
-            // console.log(ind);
-            // console.log(index);
-            // console.log(this.placeholderLocation);
-            this.placeholderLocation = ind;
-            // this.package.processes = this.package.processes.filter((item) => {
-            //   return item.type != 'placeholder'
-            // });
-            this.onRelease(undefined)
-            let temp = <Placeholder> {type: "placeholder", order: ind, name: e.dataTransfer.getData('name')};
-            this.selected_template.processes.splice(index + 1, 0, temp);
-          }
+    if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
+      return
+    }
+    if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
+      // drop below elements
 
-        } else {
-          //drop above element.
-          // this.placeholderLocation = index + 0.5;
-          var ind = index - 0.5;
-          if (ind != this.placeholderLocation) {
-            // console.log(ind);
-            // console.log(index);
-            // console.log(this.placeholderLocation);
-            this.placeholderLocation = ind;
-            this.onRelease(undefined)
-            let temp = <Placeholder> {type: "placeholder", order: ind, name: e.dataTransfer.getData('name')};
-            this.selected_template.processes.splice(index, 0, temp);
-          }
-        }
-        this.placeholderTemplate = this.selected_template_id;
-        // console.log(element.offsetHeight);
-
-
-        // e.preventDefault();
+      var ind = index + 0.5;
+      if (ind != this.placeholderLocation) {
+        this.placeholderLocation = ind;
+        this.onRelease(undefined)
+        let temp = <Placeholder>{ type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+        this.selected_template.processes.splice(index + 1, 0, temp);
       }
 
-      allowDropTop(e) {
-        e.preventDefault();
-        //calculate order. Order will be 0.5 lower than first visible.
-        var order = -0.5;
-        this.placeholderLocation = order;
-        this.placeholderTemplate = this.selected_template_id;
-        this.onRelease(undefined);
-        // this.templates[template_id].processes = this.package.processes.filter((item) => {
-          // return item.type != 'placeholder'
-        // });
-        let temp = <Placeholder> {type: "placeholder", order: order, name: e.dataTransfer.getData('name')};
-        this.selected_template.processes.push(temp);
-        this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
-          if (a.order > b.order) {
-            return 1;
-          }
-           return -1;
-        });
-
+    } else {
+      //drop above element.
+      var ind = index - 0.5;
+      if (ind != this.placeholderLocation) {
+        this.placeholderLocation = ind;
+        this.onRelease(undefined)
+        let temp = <Placeholder>{ type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+        this.selected_template.processes.splice(index, 0, temp);
       }
+    }
+    this.placeholderTemplate = this.selected_template_id;
+  }
+
+  allowDropTop(e) {
+    // create a placeholder at the correct place
+    e.preventDefault();
+    //calculate order. Order will be 0.5 lower than first visible.
+    var order = -0.5;
+    this.placeholderLocation = order;
+    this.placeholderTemplate = this.selected_template_id;
+    this.onRelease(undefined);
+
+    let temp = <Placeholder>{ type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
+    this.selected_template.processes.push(temp);
+    this.selected_template.processes = this.selected_template.processes.sort((a, b) => {
+      if (a.order > b.order) {
+        return 1;
+      }
+      return -1;
+    });
+
+  }
 
 }

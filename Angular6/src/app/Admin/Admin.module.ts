@@ -15,7 +15,6 @@ import { MessageModule } from '../Components/Message/Message.module';
 import { AdminHeaderComponent }    from './AdminHeader.component';
 import { AdminModulesComponent }    from './AdminModules.component';
 import { AdminGlobalComponent }    from './AdminGlobal.component';
-import { AdminProcessesComponent } from './AdminProcesses.component';
 import { AdminTemplatesComponent } from './AdminTemplates.component';
 
 //providers
@@ -37,7 +36,6 @@ import { APIService } from '../Services/api.service';
     AdminHeaderComponent,
     AdminModulesComponent,
     AdminGlobalComponent,
-    AdminProcessesComponent,
     AdminTemplatesComponent
   ],
   providers: [
