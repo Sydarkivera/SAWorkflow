@@ -105,8 +105,11 @@ def module(request, id):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
-        module.delete()
-        return HttpResponse(status=204)
+        if not module.processes.all().exists():
+            module.delete()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=409)
 
 @api_view(['GET'])
 def module_export(request, module_id):

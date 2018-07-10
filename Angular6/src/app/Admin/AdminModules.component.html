@@ -1,3 +1,7 @@
+<!-- Error message displayed if the module could not be removed -->
+<message duration="10000" [(active)]="errorVisible" type="alert-danger">
+  <i class="material-icons align-middle">warning</i> The tool could not be removed since it is in use by one or more packages or templates.
+</message>
 <div class="row">
 
   <!-- Existing tools, left side -->
@@ -8,12 +12,7 @@
         Name
       </div>
       <div class="list-group list-group-flush">
-        <div
-          *ngFor="let module of modules"
-          class="list-group-item list-group-item-action"
-          (click)="selectModule(module)"
-          [class.active]="module.module_id == selected_module.module_id"
-          >
+        <div *ngFor="let module of modules" class="list-group-item list-group-item-action" (click)="selectModule(module)" [class.active]="module.module_id == selected_module.module_id">
           <div class="d-flex w-100 justify-content-between">
             <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{module.name}}</p>
             <i class="material-icons icon-button" (click)="deleteModule(module)">delete</i>
@@ -37,13 +36,8 @@
       </div>
       <div class="card-body">
         <div class="form-group" *ngFor="let input of selected_module.form">
-          <!-- <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/> -->
-          <!-- <label class="form-check-label" for="{{input.identifier}}" class="input-label"  [class.form-check-label]="input.type=='checkbox'"> -->
-            <!-- {{input.label}} -->
-          <!-- </label> -->
-          <!-- <input class="form-control" type="text" *ngIf="input.type=='text'" [id]="input.identifier" [value]="input.default ? input.default : ''" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)"/> -->
           <div class="form-check" *ngIf="input.type=='checkbox'">
-            <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)"/>
+            <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)" />
             <label class="form-check-label" for="{{input.identifier}}">
               {{input.label}}
             </label>
@@ -96,9 +90,7 @@
               <option value="Containing">Containing</option>
               <option value="Not containing">Not containing</option>
             </select>
-            <!-- <input type="text" [(ngModel)]="filter.value"/> -->
             <div class="form-group my-auto">
-              <!-- <label>Name</label> -->
               <input type="text" class="form-control" placeholder="[\w\W]*pattern[\w\W]*" [(ngModel)]="filter.value">
             </div>
             <i class="material-icons icon-button my-auto" (click)="removeResultFilter(filter)">delete</i>
@@ -111,9 +103,7 @@
             <option value="Containing">Containing</option>
             <option value="Not containing">Not containing</option>
           </select>
-          <!-- <input type="text" [(ngModel)]="filter.value"/> -->
           <div class="form-group my-auto">
-            <!-- <label>Name</label> -->
             <input type="text" class="form-control" placeholder="[\w\W]*pattern[\w\W]*" [(ngModel)]="newResultFilter.value">
           </div>
           <i class="material-icons icon-button my-auto" (click)="addResultFilter(filter)">add</i>
@@ -139,7 +129,7 @@
         </label>
         <div class="form-group" *ngIf="selected_module.type == 'Command'">
           <label for="inputForm">Command</label>
-          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="commandJson" ></textarea>
+          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="commandJson"></textarea>
         </div>
         <div class="form-group" *ngIf="selected_module.type == 'Python module'">
           <label for="inputName">Python Module</label>
@@ -167,13 +157,11 @@
     <form method="post" enctype="multipart/form-data">
       <div class="custom-file" id="customFile" lang="en">
         <input type="file" class="custom-file-input" id="exampleInputFile" (change)="fileSelected($event)" name="import.tar">
-        <label class="custom-file-label" for="exampleInputFile">
+        <label class="custom-file-label" for="exampleInputFile" [class.border-success]="fileStatus==2" [class.border-danger]="fileStatus==1">
           {{fileName}}
         </label>
       </div>
-      <button type="submit" (click)="uploadFile()">Upload</button>
+      <button class="btn btn-success" type="submit" (click)="uploadFile()">Upload</button>
     </form>
   </div>
 </modal>
-
-<!-- TODO: export, import, delete -->

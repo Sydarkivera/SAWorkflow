@@ -1,5 +1,7 @@
 <div class="container-fluid">
   <div class="row">
+
+    <!-- A sidebar with global navigation -->
     <nav class="col-md-2 d-md-block bg-light sidebar">
       <div class="sidebar-sticky">
         <ul class="nav flex-column">
@@ -36,12 +38,6 @@
                   Global Settings
                 </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link company" routerLinkActive="active" routerLink="admin/processes">
-                  <i class="material-icons">layers</i>
-                  Default processes
-                </a>
-          </li> -->
           <li class="nav-item">
             <a class="nav-link company" routerLinkActive="active" routerLink="admin/templates">
                   <i class="material-icons">format_list_numbered</i>
@@ -51,7 +47,8 @@
         </ul>
       </div>
     </nav>
-    <router-outlet></router-outlet>
+
+    <!-- Main window, all content will be located inside <router-outlet> -->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4 main-view">
       <router-outlet></router-outlet>
     </main>

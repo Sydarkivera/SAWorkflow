@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from "@angular/router";
 
-import { PackageDetailService } from '../PackageDetail/PackageDetail.service';
-import { ModuleService } from './Module.service';
+import { APIService } from '../Services/api.service';
 
 
 @Component({
@@ -24,27 +23,31 @@ export class AdminModulesComponent {
   modalactive = false;
   file: any;
   fileName = "Select file..."
+  fileStatus = 0;
   messageVisible = false
+  errorVisible = false
 
-  constructor(private packageService: PackageDetailService, private moduleService: ModuleService) {
+  constructor(private apiService: APIService) {
   }
 
   ngOnInit() {
-    this.packageService.getModules().subscribe((data) => {
+    //load initial data from server, module list
+    this.apiService.getModules().subscribe((data) => {
       this.modules = data as [any];
-      this.setModule(this.modules[this.modules.length - 1]);
     });
   }
 
   setModule(mod) {
-    console.log(mod);
+    // sets the data needed for a module change
     this.selected_module = JSON.parse(JSON.stringify(mod));
     this.title = this.selected_module.name;
+    // store the jsonfields as string temporarily to allow for
     this.formJson = this.getJson(this.selected_module.form);
     this.commandJson = this.getJson(this.selected_module.command);
   }
 
   addNewModule() {
+    // Adding a new module only resets the data in all forms, saving the changes then creates a new module.
     this.selected_module = { module_id: -2, form: [], type: "Command" };
     this.title = "New module";
     this.formJson = "[]";
@@ -52,8 +55,9 @@ export class AdminModulesComponent {
   }
 
   deleteModule(dmodule) {
-    if(confirm("Are you sure to delete " + dmodule.name)) {
-      this.moduleService.deleteModule(dmodule.module_id).subscribe((data) => {
+    // Before a module can be deleted a confirmation is displayed, warning the user of the risks.
+    if(confirm("Are you sure to delete " + dmodule.name + "\n This action is irreversible")) {
+      this.apiService.deleteModule(dmodule.module_id).subscribe((data) => {
         this.modules = this.modules.filter((item) => {
           if (item.module_id == dmodule.module_id) {
             return false;
@@ -61,11 +65,16 @@ export class AdminModulesComponent {
           return true;
         });
         this.selected_module = { module_id: -1 };
+      }, (error) => {
+        if (error.status == 409) {
+          this.errorVisible = true;
+        }
       })
     }
   }
 
   selectModule(mod) {
+    // if this module isn't selected already, select it. Else deselect.
     if (!this.selected_module || this.selected_module.module_id != mod.module_id) {
       this.setModule(mod);
     } else {
@@ -73,23 +82,14 @@ export class AdminModulesComponent {
     }
   }
 
-  renderCommand() {
-    var res = '';
-
-    for (let cp of this.selected_module.command) {
-      res += cp.value + ' ';
-    }
-
-    return res;
-  }
-
   getJson(data) {
     return JSON.stringify(data, null, 4);
   }
 
   save() {
-    //validate first!
+    // Save the changes from the huge form.
 
+    //validate form json input
     try {
       this.selected_module.form = JSON.parse(this.formJson);
       this.formJsonError = "";
@@ -99,6 +99,7 @@ export class AdminModulesComponent {
       return false;
     }
 
+    //validate command json input
     try {
       this.selected_module.command = JSON.parse(this.commandJson);
       this.commandJsonError = "";
@@ -108,6 +109,7 @@ export class AdminModulesComponent {
       return false;
     }
 
+    //only pass the values that are defined to the server.
     let data = {};
     if (this.selected_module.name != undefined) {
       data["name"] = this.selected_module.name;
@@ -137,9 +139,7 @@ export class AdminModulesComponent {
       data["resultFilter"] = this.selected_module.resultFilter;
     }
 
-    console.log(this.selected_module.type)
-    console.log(this.selected_module.command)
-    console.log(this.selected_module.python_module)
+    //verfiy that the tools action is implemented
     if (this.selected_module.type == 'Command') {
       if (!this.selected_module.command || this.selected_module.command.length <= 0) {
         this.commandJsonError = "to save a new tool, the command needs to be configured";
@@ -152,8 +152,9 @@ export class AdminModulesComponent {
       }
     }
 
+    // if the id isn't -2, this is an existing module which should be updated
     if (this.selected_module.module_id != -2) {
-      this.moduleService.saveData(this.selected_module.module_id, data).subscribe((data) => {
+      this.apiService.saveData(this.selected_module.module_id, data).subscribe((data) => {
         this.messageVisible = true
         for (let i in this.modules) {
           let m = this.modules[i];
@@ -164,8 +165,9 @@ export class AdminModulesComponent {
         }
       });
     } else {
+      // else this is a new module which has not been saved before.
       delete this.selected_module.module_id
-      this.moduleService.createModule(data).subscribe((data) => {
+      this.apiService.createModule(data).subscribe((data) => {
         this.messageVisible = true
         this.setModule(data);
         this.modules.push(data);
@@ -179,28 +181,31 @@ export class AdminModulesComponent {
     }
   }
 
+  //activate modal for selecting a file to import
   importModule() {
     this.modalactive = true;
   }
 
+  //validate the selected file, if it's a tar accept it, else return error.
   fileSelected(e) {
-    // console.log(e)
     if (e.target.files.length > 0) {
       //check fileFormat
       if (!e.target.files[0].name.endsWith('.tar')) {
-        console.log('error, wrong fileType');
+        console.error('error, wrong fileType');
         this.fileName = "Select file...";
+        this.fileStatus = 1;
       } else {
         this.file = e.target.files[0]
         this.fileName = this.file.name;
+        this.fileStatus = 2;
       }
     }
   }
 
   uploadFile() {
-    // console.log('upload');
+    // a file is selectd, and the user has pressed upload. Submit the data to the backend.
     if (!this.file.name.endsWith('.tar')) {
-      console.log('error, wrong fileType');
+      console.error('error, wrong fileType');
       return;
     }
     this.modalactive = false;
@@ -209,34 +214,22 @@ export class AdminModulesComponent {
     const formData: FormData = new FormData();
     formData.append('file', this.file, 'import.tar');
 
-    this.moduleService.importModule(formData).subscribe((data) => {
+    this.apiService.importModule(formData).subscribe((data) => {
       if (data.type == 4) {
-        // console.log(data['body']);
         this.modules = data['body'] as [any];
       }
-      // this.setModule(this.modules[this.modules.length - 1]);
 
     })
   }
 
-  setJSONForm(event) {
-    // console.log(event)
-
-    try {
-      this.selected_module.form = JSON.parse(event)
-    } catch (e) {
-      console.log("Error", e.message);
-      return false;
-    }
-
-  }
-
   addResultFilter() {
+    // add another filter for scanning the log files
     this.selected_module.resultFilter.push({ ...this.newResultFilter });
     this.newResultFilter = { type: 'Containing', value: '' }
   }
 
   removeResultFilter(filter) {
+    // remove a filter for scanning the log files
     var index = this.selected_module.resultFilter.indexOf(filter);
     if (index > -1) {
       this.selected_module.resultFilter.splice(index, 1);

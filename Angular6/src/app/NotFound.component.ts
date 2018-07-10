@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 
+// S simple component to let the user know that the path they tried to navigate to does not exist.
 @Component({
   selector: 'notFound',
-  // templateUrl: './dashboard.component.html',
   template: "<h1>Path not found </h1>"
-  // styleUrls: ['./packages.component.css']
 })
 export class NotFoundComponent {
 

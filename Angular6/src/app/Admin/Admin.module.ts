@@ -4,6 +4,7 @@ import { CommonModule }   from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule }    from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+
 //imports
 import { TooltipModule } from '../Tooltip/Tooltip.module';
 import { NavbarModule } from '../Navbar/Navbar.module';
@@ -18,7 +19,8 @@ import { AdminProcessesComponent } from './AdminProcesses.component';
 import { AdminTemplatesComponent } from './AdminTemplates.component';
 
 //providers
-import { ModuleService } from './Module.service';
+// import { ModuleService } from './Module.service';
+import { APIService } from '../Services/api.service';
 
 @NgModule({
   imports: [
@@ -38,6 +40,8 @@ import { ModuleService } from './Module.service';
     AdminProcessesComponent,
     AdminTemplatesComponent
   ],
-  providers: [ModuleService],
+  providers: [
+    APIService
+  ],
 })
 export class AdminModule {}

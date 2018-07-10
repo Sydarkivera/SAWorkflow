@@ -6,12 +6,7 @@
     <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
   </div>
   <div class="card-body">
-
-    <!-- <div class="alert alert-success" [@visibilityChanged]="visiblityState" role="alert">
-      All changes have been saved!
-    </div> -->
     <message duration="3000" [(active)]="messageVisible">All changes have been saved!</message>
-
     <div class="form-group">
       <label for="inputName">Working directory</label>
       <input type="text" class="form-control"  [(ngModel)]="work_dir_path" tooltip="A directory for temporary project files to be stored while they are in use in A.P.P" tooltipPlacement="bottom" placeholder="/code/workdir">
