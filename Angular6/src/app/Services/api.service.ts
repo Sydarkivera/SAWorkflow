@@ -129,4 +129,14 @@ export class APIService {
   deleteFile(path, specific) {
     return this.http.delete(path + "?path=" + specific);
   }
+
+  uploadFile(path, formData) {
+    const req = new HttpRequest('POST', path, formData, {
+    });
+    return this.http.request(req);
+  }
+
+  createFolder(path, specific) {
+    return this.http.put(path, {'path': specific});
+  }
 }

@@ -176,12 +176,10 @@ def module_export(request, module_id):
     #
 
 
-@api_view(['GET', 'DELETE', 'PUT'])
+@api_view(['GET', 'DELETE', 'PUT', 'POST'])
 def module_files(request, module_id):
     """
-    Get all files in tool as a json.
-    needed functions:
-    delete, rename, upload file...(POST), download, create folder
+    All functions for handling the filebrowser in ui
     """
     module = get_object_or_404(Module, pk=module_id)
     tools_path = Variable.objects.get(name="tools_path").data
@@ -205,10 +203,10 @@ def module_files(request, module_id):
         # delete either the file of folder at GET['path']
         folderName = os.path.join(tools_path, module.tool_folder_name, specific_path)
         if os.path.exists(folderName):
-            # if os.path.isdir(folderName):
-            #     shutil.rmtree(folderName)
-            # else:
-            #     os.remove(folderName)
+            if os.path.isdir(folderName):
+                shutil.rmtree(folderName)
+            else:
+                os.remove(folderName)
 
             # return updated folder:
             newPath, _  = os.path.split(folderName)
@@ -218,21 +216,42 @@ def module_files(request, module_id):
 
     elif request.method == 'POST':
         # file upload. save the file/files at POST['path']
-        pass
+        file = request.FILES['file']
+        newPath = os.path.join(tools_path, module.tool_folder_name, request.data['path'])
+        logger.info(request.data['path'])
+        logger.info(newPath)
+        #verify that newPath doesn't exist
+        if not os.path.exists(newPath):
+            with open(newPath, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+
+        else:
+            return Response("The path does already exist: " + newPath, status=status.HTTP_400_BAD_REQUEST)
+        logger.info(newPath)
+        p, _ = os.path.split(newPath)
+        logger.info(p)
+        return JsonResponse(getFilesAtPath(p), safe=False)
+
     elif request.method == 'PUT':
         path = os.path.join(tools_path, module.tool_folder_name, request.data['path'])
-        newName = request.data['name']
-        head, tail = os.path.split(request.data['path'])
-        newName = os.path.join(head, newName)
-        newPath = os.path.join(tools_path, module.tool_folder_name, newName)
 
         if os.path.exists(path):
+            newName = request.data['name']
+            head, tail = os.path.split(request.data['path'])
+            newName = os.path.join(head, newName)
+            newPath = os.path.join(tools_path, module.tool_folder_name, newName)
             shutil.move(path, newPath)
+            return JsonResponse(getFilesAtPath(os.path.join(tools_path, module.tool_folder_name, head)), safe=False)
         else:
-            #create folder TODO fix if sadfa
-            os.mkdir(newPath)
-        return JsonResponse(getFilesAtPath(os.path.join(tools_path, module.tool_folder_name, head)), safe=False)
+            #create folder if the file did not exist.
+            os.mkdir(path)
+            p, _ = os.path.split(path)
+            return JsonResponse(getFilesAtPath(p), safe=False)
+
     return HttpResponse(status=200)
+
+
 
 
 # ------------- (( Helper functions )) ------------- #
@@ -243,10 +262,10 @@ def getFilesAtPath(path):
         ff = os.path.join(path, f)
         if os.path.isdir(ff):
             res.append({"type": "folder", "name": f});
-            logger.info("folder: " + f)
+            # logger.info("folder: " + f)
         else:
             res.append({"type": "file", "name": f});
-            logger.info("file: " + f)
+            # logger.info("file: " + f)
     return res
 
 def downloadFolderAsTar(path):

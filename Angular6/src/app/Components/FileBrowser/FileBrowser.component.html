@@ -26,16 +26,10 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="closeModal()">Upload file</button>
+        <button type="button" class="btn btn-success" (click)="openUploadModal()">Upload file</button>
         <button *ngIf="selectedFile != undefined" type="button" class="btn btn-warning" (click)="openRenameModal()">Rename</button>
         <button *ngIf="selectedFile != undefined" type="button" class="btn btn-danger" (click)="openDeleteModal()">Delete</button>
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
-        <div class="custom-file" id="customFile" lang="en">
-          <input type="file" class="custom-file-input" id="exampleInputFile" (change)="fileSelected($event)" name="import.tar">
-          <label class="custom-file-label" for="exampleInputFile" [class.border-success]="fileStatus==2" [class.border-danger]="fileStatus==1">
-            {{fileName}}
-          </label>
-        </div>
       </div>
     </div>
 
@@ -44,7 +38,10 @@
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+            <h5 *ngIf="innerModalType == 'delete'" class="modal-title">Delete</h5>
+            <h5 *ngIf="innerModalType == 'rename'" class="modal-title">Rename</h5>
+            <h5 *ngIf="innerModalType == 'create'" class="modal-title">Create new folder</h5>
+            <h5 *ngIf="innerModalType == 'upload'" class="modal-title">Upload a file</h5>
             <button type="button" class="close" (click)="closeInnerModal()">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -55,12 +52,24 @@
             </p>
             <div class="form-group" *ngIf="innerModalType == 'rename'">
               <label for="inputName">New name</label>
-              <input type="text" class="form-control" id="inputName" placeholder="new file name" [(ngModel)]="innerModalValue">
+              <input type="text" class="form-control" id="inputName" placeholder="New file name" [(ngModel)]="innerModalValue">
+            </div>
+            <div class="form-group" *ngIf="innerModalType == 'create'">
+              <label for="inputName">Folder name</label>
+              <input type="text" class="form-control" id="inputName" placeholder="Folder name" [(ngModel)]="innerModalValue">
+            </div>
+            <div *ngIf="innerModalType == 'upload'" class="custom-file" id="customFile" lang="en">
+              <input type="file" class="custom-file-input" id="exampleInputFile" (change)="onFileSelected($event)" name="import">
+              <label class="custom-file-label" for="exampleInputFile" >
+                {{innerModalValue}}
+              </label>
             </div>
           </div>
           <div class="modal-footer justify-content-between">
             <button *ngIf="innerModalType == 'delete'" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
             <button *ngIf="innerModalType == 'rename'" type="button" class="btn btn-success" (click)="rename()">Rename</button>
+            <button *ngIf="innerModalType == 'create'" type="button" class="btn btn-success" (click)="create()">Create</button>
+            <button *ngIf="innerModalType == 'upload'" type="button" class="btn btn-success" (click)="uploadFile()">Upload</button>
             <button type="button" class="btn btn-secondary" (click)="closeInnerModal()">Cancel</button>
           </div>
         </div>
@@ -82,7 +91,7 @@
     <a class="dropdown-item" (click)="openRenameModal()">Rename</a>
     <a class="dropdown-item" [href]="getDownloadPath()">Download</a>
     <a class="dropdown-item" (click)="openDeleteModal()">Delete</a>
-    <a class="dropdown-item" (click)="rename()">upload file</a>
-    <a class="dropdown-item" (click)="rename()">Create folder</a>
+    <a class="dropdown-item" (click)="openUploadModal()">upload file</a>
+    <a class="dropdown-item" (click)="openCreateFolderModal()">Create folder</a>
   </div>
 </div>

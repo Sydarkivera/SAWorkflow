@@ -26,6 +26,7 @@ export class FileBrowserComponent {
   innerModalVisible = false
   innerModalValue = "";
   innerModalType = "";
+  innerModalFile: any;
 
   @HostListener('document:click', ['$event'])
   clickedOutside($event){
@@ -103,7 +104,6 @@ export class FileBrowserComponent {
     body['path'] = this.calculatePath(this.selectedLevel, this.selectedFile);
     body['name'] = this.innerModalValue;
     this.apiService.renameFile(this.path, body).subscribe((data) => {
-      console.log(data)
       this.selectedFile.name = this.innerModalValue;
       this.levels.pop();
       if (this.selectedFile.type == 'folder') {
@@ -113,7 +113,7 @@ export class FileBrowserComponent {
         this.selectedLevel = -1
       }
       this.levels.push(data);
-      this.innerModalVisible = false;
+      this.closeInnerModal()
     })
   }
 
@@ -145,6 +145,95 @@ export class FileBrowserComponent {
       this.selectedLevel -= 1;
       this.closeInnerModal()
     });
+  }
+
+  openUploadModal() {
+    this.innerModalVisible = true;
+    this.innerModalType =  'upload';
+    this.innerModalValue = "";
+  }
+
+  openCreateFolderModal() {
+    this.innerModalVisible = true;
+    this.innerModalType =  'create';
+    this.innerModalValue = "";
+  }
+
+  onFileSelected(e) {
+    if (e.target.files.length > 0) {
+      //check fileFormat
+      // if (!e.target.files[0].name.endsWith('.tar')) {
+      //   console.error('error, wrong fileType');
+      //   this.innerModalValue = "Select file...";
+      //   // this.fileStatus = 1;
+      // } else {
+        this.innerModalFile = e.target.files[0]
+        this.innerModalValue = this.innerModalFile.name;
+        // this.fileStatus = 2;
+      // }
+    }
+  }
+
+  uploadFile() {
+    console.log('upload')
+    if (!this.innerModalFile) {
+      console.error('no file selected');
+      return;
+    }
+    // this.modalactive = false;
+    // this.fileName = "Select file...";
+
+    const formData: FormData = new FormData();
+    formData.append('file', this.innerModalFile, this.innerModalValue);
+
+    //calculate the final path:
+    let path = this.calculatePath(this.selectedLevel, this.selectedFile);
+    let newPath = ""
+    if (this.selectedFile.type == "folder") {
+      //create the new folder inside this.
+      newPath = path + "/" + this.innerModalValue;
+    } else {
+      // create the new folder in this folder.
+      let prev = path.substr(0, path.lastIndexOf('/'));
+      if (prev != "") {
+        prev += "/"
+      }
+      newPath = prev + this.innerModalValue;
+    }
+    formData.append('path', newPath)
+    // console.log(this.innerModalValue)
+    this.apiService.uploadFile(this.path, formData).subscribe((data) => {
+      if (data.type == 4) {
+        this.levels.pop();
+        this.levels.push(data['body']);
+        this.closeInnerModal()
+      }
+    })
+  }
+
+  create() {
+    if (!this.selectedFile) {
+      return;
+    }
+    let path = this.calculatePath(this.selectedLevel, this.selectedFile);
+    let newPath = ""
+    if (this.selectedFile.type == "folder") {
+      //create the new folder inside this.
+      newPath = path + "/" + this.innerModalValue;
+    } else {
+      // create the new folder in this folder.
+      let prev = path.substr(0, path.lastIndexOf('/'));
+      if (prev != "") {
+        prev += "/"
+      }
+      newPath = prev + this.innerModalValue;
+    }
+    this.apiService.createFolder(this.path, newPath).subscribe((data) => {
+      this.levels.pop();
+      this.levels.push(data);
+      this.closeInnerModal()
+    });
+
   }
 
   closeInnerModal() {
