@@ -16,6 +16,8 @@ from django.contrib.auth.models import User
 from api.models import *
 import datetime
 
+print('populate_databse starting')
+
 # delete all old objects, if there are any.
 Package.objects.all().delete()
 Process.objects.all().delete()
@@ -28,35 +30,51 @@ GraphData.objects.all().delete()
 # create new module
 module1 = Module(name="Setup workdir",
                  type='1',
-                 python_module='tools.setupWorkDir',
+                 python_module='tools.Setup_workdir.setupWorkDir',
                  hidden=True,
                  module_id=0,
+                 tool_folder_name="Setup_workdir"
                  )
 module1.save()
 module2 = Module(name="Untar archive",
                  type='1',
                  form='[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}]',
-                 python_module='tools.untar',
+                 python_module='tools.Untar_archive.untar',
                  hidden=True,
                  module_id=1,
+                 tool_folder_name="Untar_archive"
                  )
 module2.save()
 module3 = Module(name="ClamAV",
                  type='0',
-                 form='[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove"}]',
-                 command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
+                 form='[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found", "value":"-i"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove", "value":"--remove"}]',
+                 # command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
+                 command="clamscan -r #only_found #remove #file",
                  module_id=2,
+                 tool_folder_name="ClamAV"
                  )
 module3.save()
 module4 = Module(name="VeraPDF validate pdf1/a",
                  type='0',
                  form='[]',
-                 command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+                 command="verapdf #file",
                  module_id=3,
                  filter='.*(\.pdf)',
-                 resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]'
+                 resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]',
+                 tool_folder_name="VeraPDF_validate_pdf1/a"
                  )
 module4.save()
+module5 = Module(name="DROID",
+                 type='2',
+                 form='[]',
+                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+                 # command="",
+                 module_id=4,
+                 filter='.*',
+                 tool_folder_name="DROID"
+                 )
+module5.save()
 # module4 = Module(name="Untar cmd",
 #                  type='0',
 #                  form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"}]',
@@ -103,6 +121,8 @@ var = Variable(name="work_dir_path", data="/code/workdir")
 var.save()
 var = Variable(name="packages_path", data="/code/test_packages")
 var.save()
+var = Variable(name="tools_path", data="/code/tools")
+var.save()
 var = Variable(name="premis_file_name", data="app_log.xml")
 var.save()
 
@@ -140,6 +160,9 @@ user = User.objects.create_user('admin', 'simon@axenu.com', 'admin')
 user.is_superuser = True
 user.is_staff = True
 user.save()
+
+
+print('populate_databse finished')
 
 #create new package.
 # package1 = Package(name="demo paket 1", path="/Users/axenu/Sydarkivera/toolbox/paket/af268c33-5ba8-4af5-9a44-039b10126835.tar", file_name="af268c33-5ba8-4af5-9a44-039b10126835.tar", status=0)

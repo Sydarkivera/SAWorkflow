@@ -101,10 +101,6 @@ export class APIService {
     return this.http.get('/api/package/' + id + '/');
   }
 
-  getFiles(package_id) {
-    return this.http.get('/api/package/' + package_id + '/files/');
-  }
-
   removePackage(id) {
     return this.http.delete('/api/package/' + id + '/');
   }
@@ -118,5 +114,19 @@ export class APIService {
     this.http.post('/api/package/' + package_id + '/finish/', {}).subscribe(() => {
 
     });
+  }
+
+  //files
+
+  getFiles(path, specific="") {
+    return this.http.get(path + "?path=" + specific);
+  }
+
+  renameFile(path, body) {
+    return this.http.put(path, body);
+  }
+
+  deleteFile(path, specific) {
+    return this.http.delete(path + "?path=" + specific);
   }
 }

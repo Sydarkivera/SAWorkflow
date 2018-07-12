@@ -34,6 +34,11 @@ ADD ./viewtar.c /viewtar.c
 
 RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre
 RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+RUN apk update
+RUN apk add docker
+#RUN service docker enable
+
 
 #insatll verapdf
 RUN curl -L http://downloads.verapdf.org/rel/verapdf-pdfbox-installer.zip -o /tmp/verapdf-installer.zip

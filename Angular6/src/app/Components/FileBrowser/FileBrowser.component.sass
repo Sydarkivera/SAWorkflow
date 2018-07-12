@@ -1,13 +1,54 @@
+@import ../../../Styles
+
 .modal.active
   display: block !important
 
-
-.modal-dialog, .modal-content
-  height: 95%
+.main-modal
+  &.modal-dialog, .modal-content
+    height: 95%
 
 
 .modal-body
-  overflow-y: scroll
+  overflow-x: scroll
+  display: flex
+  flex-direction: row
+  flex-wrap: nowrap
+  padding: 0
+  // overflow: auto
+
+
+
+  .level
+    float: left
+    width: 200px
+    min-width: 200px
+    height: 100%
+    overflow-y: scroll
+    overflow-x: hidden
+    border-right: 1px solid #e9ecef
+    padding-left: 0
+
+    .file
+      clear: both
+      flex-wrap: nowrap
+      display: flex
+      padding-left: 10px
+      align-items: center
+
+      p
+        white-space: nowrap
+        float: left
+        vertical-align: middle
+        margin: 5px
+
+      i
+        float: left
+        color: rgba($company-color-primary, 0.5)
+
+      &.selected
+        background-color: $company-color-primary
+        p, i
+          color: white
 
 
 .modal-background
@@ -19,3 +60,32 @@
   background-color: #000
   opacity: 0.75
   z-index: -1
+
+
+.contextMenu
+  // width: 100px
+  // height: 100px
+  position: fixed
+  // background-color: red
+  z-index: 10000
+
+  .dropdown-menu
+    display: block
+
+    .dropdown-header
+      padding: 0
+      padding-left: 10px
+      padding-top: 5px
+
+      p
+        margin-left: 5px
+
+    .dropdown-divider
+      clear: both
+
+
+.popUpQuestion
+  display: block
+
+  .modal-body
+    padding: 10px

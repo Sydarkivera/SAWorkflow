@@ -44,8 +44,10 @@ services:
       - "./Django/core:/code/core"
       - "./Django/static:/code/static"
       - "./Django/workdir:/code/workdir"
+      # - "./Django/tools:/code/tools"
       - "./Django/test_packages:/code/test_packages"
       - "./Django/populate_database.py:/code/populate_database.py"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 #      - "./django/populate_database.py:/populate_database.py"
 #       - "./Django:/code"
     ports:
@@ -72,6 +74,7 @@ services:
       - "./Django/static:/code/static"
       - "./Django/workdir:/code/workdir"
       - "./Django/test_packages:/code/test_packages"
+      # - "./Django/tools:/code/tools"
 #       - "./Django:/code"
     links:
       - db

@@ -18,6 +18,7 @@ import os
 import subprocess
 import pwd
 import re
+import docker
 
 from celery import Celery
 from celery.schedules import crontab
@@ -82,19 +83,28 @@ class pythonModuleBase:
 class bashModule(pythonModuleBase):
 
     def run(self, values, process):
-        args = []
-        for arg in process.module.command:
-            if arg['type'] == "text":
-                args += [arg['value']]
-            elif arg['type'] == 'var':
-                if arg['name'] in values:
-                    if 'value' in arg:
-                        if values[arg['name']] == True:
-                            args += [arg['value']]
-                    else:
-                        args += [values[arg['name']]]
-            else:
-                self.logger.error('unknown type: ' + str(arg['type']))
+        args = process.module.command.split(' ')
+        for i in range(len(args)):
+            arg = args[i]
+            if arg[0] == '#':
+                # a variable is identified, resolve it.
+                if arg[1:] in values:
+                    args[i] = values[arg[1:]]
+                else:
+                    args[i] = ""
+        # args = []
+        # for arg in process.module.command:
+        #     if arg['type'] == "text":
+        #         args += [arg['value']]
+        #     elif arg['type'] == 'var':
+        #         if arg['name'] in values:
+        #             if 'value' in arg:
+        #                 if values[arg['name']] == True:
+        #                     args += [arg['value']]
+        #             else:
+        #                 args += [values[arg['name']]]
+        #     else:
+        #         self.logger.error('unknown type: ' + str(arg['type']))
 
         p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
 
@@ -135,7 +145,18 @@ class bashModule(pythonModuleBase):
         values['tar_path'] = os.path.join(package.workdir, package.file_name)
         values['workdir'] = package.workdir
         values['file_name'] = package.file_name
-        values.update(process.value)
+        # values.update(process.value)
+        #update values with data from form:
+        for key, val in process.value.items():
+            if isinstance(val, bool):
+                if val == True:
+                    # get value from form instead
+                    for item in process.module.form:
+                        if item['identifier'] == key:
+                            values[key] = item['value']
+            else:
+                values[key] = val
+
         filter = process.module.filter
         if filter == '':
             res, errorText = self.run(values, process)
@@ -194,6 +215,7 @@ class bashModule(pythonModuleBase):
 def executeProcessFlow(package_id):
     # get list of all processes in package.
     # execute the processes one by one.
+
     try:
         package = Package.objects.get(pk=package_id)
     except ObjectDoesNotExist:
@@ -204,61 +226,65 @@ def executeProcessFlow(package_id):
         if process.status != Process.PROCESS_STATUS_DONE:
             process.status=Process.PROCESS_STATUS_RUNNING
             process.save()
+
+            obj = None
+            res = -1
             if process.module.type == Module.MODULE_TYPE_PYTHON:
                 # time.sleep(10)
-                logger.debug('importing module')
+                # logger.debug('importing module')
                 module = importlib.import_module(process.module.python_module)
-                res = -1
                 try:
                     obj = module.task()
-                    obj.setupLogging(process, package)
-                    res = obj.execute(process, package)
-                    obj.teardownLogging()
                 except Exception as e:
-                    logger.error('Running module: %s failed' % process.module.python_module)
-                    logger.error(traceback.format_exc())
-                    process.status = Process.PROCESS_STATUS_ERROR
-                    package.status = Package.PACKAGE_STATUS_ERROR
-                    process.save()
-                    break
-                if res == 1:
-                    process.status=Process.PROCESS_STATUS_DONE
-                    process.progress=100
-                    process.save()
-                else:
-                    process.status = Process.PROCESS_STATUS_ERROR
-                    package.status = Package.PACKAGE_STATUS_ERROR
-                    process.save()
+                    moduleFailed(process.module.name, process, package)
                     break
             elif process.module.type == Module.MODULE_TYPE_COMMAND:
-                res = -1
                 try:
                     obj = bashModule()
-                    obj.setupLogging(process, package)
-                    res = obj.execute(process, package)
-                    obj.teardownLogging()
                 except Exception as e:
-                    logger.error('Running module: %s failed' % process.module.python_module)
-                    logger.error(traceback.format_exc())
-                    process.status = Process.PROCESS_STATUS_ERROR
-                    package.status = Package.PACKAGE_STATUS_ERROR
-                    process.save()
+                    moduleFailed(process.module.name, process, package)
                     break
-                if res == 1:
-                    process.status=Process.PROCESS_STATUS_DONE
-                    process.progress=100
-                    process.save()
-                else:
-                    process.status = Process.PROCESS_STATUS_ERROR
-                    package.status = Package.PACKAGE_STATUS_ERROR
-                    process.save()
-                    break
+            elif process.module.type == Module.MODULE_TYPE_DOCKER:
+                # create a docker Module
+
+                # 1. check if Dockerfile is present
+                dockerFilePath = os.path.join(process.module.tool_folder_name, 'Dockerfile')
+                if os.path.exists(dockerFilePath) and os.path.isfile(dockerFilePath):
+                    client = docker.from_env()
+                    (image, buildLogs) = client.images.build(dockerFilePath)
+
+                pass
+
+            # execute the module
+            try:
+                obj.setupLogging(process, package)
+                res = obj.execute(process, package)
+                obj.teardownLogging()
+            except Exception as e:
+                moduleFailed(process.module.name, process, package)
+                break
+            if res == 1:
+                process.status=Process.PROCESS_STATUS_DONE
+                process.progress=100
+                process.save()
+            else:
+                process.status = Process.PROCESS_STATUS_ERROR
+                package.status = Package.PACKAGE_STATUS_ERROR
+                process.save()
+                break
 
 
     if package.status != Package.PACKAGE_STATUS_ERROR:
         package.status = Package.PACKAGE_STATUS_DONE
 
     package.save()
+
+def moduleFailed(name, process, package):
+    logger.error('Running module: %s failed' % name)
+    logger.error(traceback.format_exc())
+    process.status = Process.PROCESS_STATUS_ERROR
+    package.status = Package.PACKAGE_STATUS_ERROR
+    process.save()
 
 # @app.on_after_configure.connect
 @periodic_task(run_every=timedelta(seconds=20))

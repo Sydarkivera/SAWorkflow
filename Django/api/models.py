@@ -66,22 +66,27 @@ class Package(models.Model):
 class Module(models.Model):
     MODULE_TYPE_COMMAND = 0
     MODULE_TYPE_PYTHON = 1
+    MODULE_TYPE_DOCKER = 2
     MODULE_TYPES = (
-        (0, 'Command'),
-        (1, 'Python module'),
-        (2, 'bash script'),
+        (MODULE_TYPE_COMMAND, 'Command'),
+        (MODULE_TYPE_PYTHON, 'Python module'),
+        (MODULE_TYPE_DOCKER, 'Docker Container'),
     )
     module_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, default='')
     type = models.IntegerField(choices=MODULE_TYPES, default=0, blank=True)
     form = JSONField(default=[], blank=True)
-    python_module = models.CharField(max_length=100, default='', blank=True)
     hidden = models.BooleanField(default=False, blank=True)
-    command = JSONField(default=[], blank=True)
+    python_module = models.CharField(max_length=100, default='', blank=True)
+    command = models.CharField(max_length=10000, default='', blank=True)
+    tool_folder_name = models.CharField(max_length=100, default='', blank=True)
+
+    #For docker, save some settings, like if it is a dockerfile or an image, where to mount workdir/files
+    docker = JSONField(default='{"dockerfile":"1", "image": "", "workdir_mount_point": "", "file_mount_point": "/file.pdf"}', blank=True)
 
     # for handling mulitfile tools:
     # multifile = models.BooleanField(default=False)
-    filter = models.CharField(max_length=200, default='*', blank=True)
+    filter = models.CharField(max_length=200, default='.*', blank=True)
     resultFilter = JSONField(default=[], blank=True)
 
     class Meta:

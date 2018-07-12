@@ -1,5 +1,5 @@
 <div class="modal" [class.active]="active" id="modal">
-  <div class="modal-dialog modal-lg" role="document">
+  <div class="main-modal modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">FileBrowser</h5>
@@ -8,14 +8,81 @@
         </button>
       </div>
       <div class="modal-body">
-        <div *ngFor="let file of files">
-          <file [file]="file"></file>
+        <div *ngFor="let level of levels; let i = index" class="level">
+          <div
+            *ngFor="let file of level"
+            class="file"
+            [class.selected]="i == selectedLevel && file.name == selectedFile.name"
+            (contextmenu)="openContextMenu($event, i, file)"
+            (click)="openNewLevel(i, file)"
+            >
+            <!-- <file [file]="file" [path]="path" [specific_path]="file.name + '/'"></file> -->
+            <i class="material-icons align-middle" *ngIf="file.type == 'folder'">folder</i>
+            <i class="material-icons align-middle" *ngIf="file.type == 'file'">insert_drive_file</i>
+            <p class="align-middle">
+              {{file.name}}
+            </p>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-success" (click)="closeModal()">Upload file</button>
+        <button *ngIf="selectedFile != undefined" type="button" class="btn btn-warning" (click)="openRenameModal()">Rename</button>
+        <button *ngIf="selectedFile != undefined" type="button" class="btn btn-danger" (click)="openDeleteModal()">Delete</button>
         <button type="button" class="btn btn-secondary" (click)="closeModal()">Close</button>
+        <div class="custom-file" id="customFile" lang="en">
+          <input type="file" class="custom-file-input" id="exampleInputFile" (change)="fileSelected($event)" name="import.tar">
+          <label class="custom-file-label" for="exampleInputFile" [class.border-success]="fileStatus==2" [class.border-danger]="fileStatus==1">
+            {{fileName}}
+          </label>
+        </div>
       </div>
+    </div>
+
+    <!-- Popup window inside modal -->
+    <div class="popUpQuestion modal" *ngIf="innerModalVisible">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Delete</h5>
+            <button type="button" class="close" (click)="closeInnerModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p *ngIf="innerModalType == 'delete'">
+              Are you sure you want to delete "{{selectedFile.name}}"? All it's content will permanently be deleted.
+            </p>
+            <div class="form-group" *ngIf="innerModalType == 'rename'">
+              <label for="inputName">New name</label>
+              <input type="text" class="form-control" id="inputName" placeholder="new file name" [(ngModel)]="innerModalValue">
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button *ngIf="innerModalType == 'delete'" type="button" class="btn btn-danger" (click)="delete()">Delete</button>
+            <button *ngIf="innerModalType == 'rename'" type="button" class="btn btn-success" (click)="rename()">Rename</button>
+            <button type="button" class="btn btn-secondary" (click)="closeInnerModal()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-background" (click)="closeInnerModal()"></div>
     </div>
   </div>
   <div class="modal-background" (click)="closeModal()"></div>
+</div>
+
+<div class="contextMenu" *ngIf="contextMenuPos.x != -1" [ngStyle]="{'left.px': contextMenuPos.x, 'top.px': contextMenuPos.y}">
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <div class="dropdown-header">
+      <i class="material-icons align-middle float-left" *ngIf="selectedFile.type == 'folder'">folder</i>
+      <i class="material-icons align-middle float-left" *ngIf="selectedFile.type == 'file'">insert_drive_file</i>
+      <p class="float-left">{{selectedFile.name}}</p>
+    </div>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" (click)="openRenameModal()">Rename</a>
+    <a class="dropdown-item" [href]="getDownloadPath()">Download</a>
+    <a class="dropdown-item" (click)="openDeleteModal()">Delete</a>
+    <a class="dropdown-item" (click)="rename()">upload file</a>
+    <a class="dropdown-item" (click)="rename()">Create folder</a>
+  </div>
 </div>

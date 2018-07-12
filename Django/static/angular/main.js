@@ -74,11 +74,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
 /* harmony import */ var _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Components/Modal/Modal.module */ "./src/app/Components/Modal/Modal.module.ts");
 /* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
-/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
-/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
-/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Components/FileBrowser/FileBrowser.module */ "./src/app/Components/FileBrowser/FileBrowser.module.ts");
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -91,6 +92,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //imports
+
 
 
 
@@ -116,16 +118,17 @@ var AdminModule = /** @class */ (function () {
                 _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
                 _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
                 _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"],
-                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__["MessageModule"]
+                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__["MessageModule"],
+                _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_9__["FileBrowserModule"]
             ],
             declarations: [
-                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_9__["AdminHeaderComponent"],
-                _AdminModules_component__WEBPACK_IMPORTED_MODULE_10__["AdminModulesComponent"],
-                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_11__["AdminGlobalComponent"],
-                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_12__["AdminTemplatesComponent"]
+                _AdminHeader_component__WEBPACK_IMPORTED_MODULE_10__["AdminHeaderComponent"],
+                _AdminModules_component__WEBPACK_IMPORTED_MODULE_11__["AdminModulesComponent"],
+                _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_12__["AdminGlobalComponent"],
+                _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__["AdminTemplatesComponent"]
             ],
             providers: [
-                _Services_api_service__WEBPACK_IMPORTED_MODULE_13__["APIService"]
+                _Services_api_service__WEBPACK_IMPORTED_MODULE_14__["APIService"]
             ],
         })
     ], AdminModule);
@@ -294,7 +297,7 @@ var AdminHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Error message displayed if the module could not be removed -->\n<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\" [class.active]=\"module.module_id == selected_module.module_id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">Add new tool</button>\n    <button class=\"btn\" (click)=\"importModule()\">Import tool</button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\" />\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">Form json</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <div class=\"form-group my-auto\">\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <div class=\"form-group my-auto\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"commandJson\"></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputMultipleFiles\" [(ngModel)]=\"selected_module.multifile\">\n            <label class=\"form-check-label\" for=\"inputMultipleFiles\">Run on multiple files</label>\n          </div>\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">Delete</button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n          {{fileName}}\n        </label>\n      </div>\n      <button class=\"btn btn-success\" type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n"
+module.exports = "<!-- Error message displayed if the module could not be removed -->\n<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\" [class.active]=\"module.module_id == selected_module.module_id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">Add new tool</button>\n    <button class=\"btn\" (click)=\"importModule()\">Import tool</button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\" />\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\" (keyup)=\"setProcessValue(input.identifier, $event.target.value)\" (change)=\"setProcessValue(input.identifier, $event.target.value)\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">Form json</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <div class=\"form-group my-auto\">\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <div class=\"form-group my-auto\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"commandJson\"></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputMultipleFiles\" [(ngModel)]=\"selected_module.multifile\">\n            <label class=\"form-check-label\" for=\"inputMultipleFiles\">Run on multiple files</label>\n          </div>\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">Delete</button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n          {{fileName}}\n        </label>\n      </div>\n      <button class=\"btn btn-success\" type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<filebrowser [(active)]=\"browserActive\" path=\"/api/module/0/files/\"></filebrowser>\n"
 
 /***/ }),
 
@@ -356,6 +359,7 @@ var AdminModulesComponent = /** @class */ (function () {
         this.fileStatus = 0;
         this.messageVisible = false;
         this.errorVisible = false;
+        this.browserActive = true;
     }
     AdminModulesComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -977,6 +981,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileComponent", function() { return FileComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -987,31 +992,52 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var FileComponent = /** @class */ (function () {
-    function FileComponent() {
+    function FileComponent(apiService) {
+        this.apiService = apiService;
         this.expanded = false;
     }
     FileComponent.prototype.ngOnInit = function () {
     };
-    FileComponent.prototype.select = function () {
-        if (this.file.selected) {
-            this.file.selected = false;
+    FileComponent.prototype.expand = function () {
+        if (this.expanded) {
+            this.expanded = false;
         }
         else {
-            this.file.selected = true;
+            this.expanded = true;
+            if (this.file.type == "folder") {
+                this.fetchFiles();
+            }
         }
+    };
+    FileComponent.prototype.fetchFiles = function () {
+        var _this = this;
+        console.log(this.specific_path);
+        this.apiService.getFiles(this.path, this.specific_path).subscribe(function (data) {
+            console.log(data);
+            _this.children = data;
+        });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
     ], FileComponent.prototype, "file", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], FileComponent.prototype, "path", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], FileComponent.prototype, "specific_path", void 0);
     FileComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'file',
             template: __webpack_require__(/*! ./file.component.html */ "./src/app/Components/FileBrowser/file.component.html"),
             styles: [__webpack_require__(/*! ./file.component.sass */ "./src/app/Components/FileBrowser/file.component.sass")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
     ], FileComponent);
     return FileComponent;
 }());
@@ -1027,7 +1053,7 @@ var FileComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n  <div class=\"modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div *ngFor=\"let file of files\">\n          <file [file]=\"file\"></file>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\n      </div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"closeModal()\"></div>\n</div>\n"
+module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n  <div class=\"main-modal modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div *ngFor=\"let level of levels; let i = index\" class=\"level\">\n          <div\n            *ngFor=\"let file of level\"\n            class=\"file\"\n            [class.selected]=\"i == selectedLevel && file.name == selectedFile.name\"\n            (contextmenu)=\"openContextMenu($event, i, file)\"\n            (click)=\"openNewLevel(i, file)\"\n            >\n            <!-- <file [file]=\"file\" [path]=\"path\" [specific_path]=\"file.name + '/'\"></file> -->\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'folder'\">folder</i>\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'file'\">insert_drive_file</i>\n            <p class=\"align-middle\">\n              {{file.name}}\n            </p>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"closeModal()\">Upload file</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-warning\" (click)=\"openRenameModal()\">Rename</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-danger\" (click)=\"openDeleteModal()\">Delete</button>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\n        <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n          <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n          <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n            {{fileName}}\n          </label>\n        </div>\n      </div>\n    </div>\n\n    <!-- Popup window inside modal -->\n    <div class=\"popUpQuestion modal\" *ngIf=\"innerModalVisible\">\n      <div class=\"modal-dialog modal-dialog-centered\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h5 class=\"modal-title\" id=\"exampleModalLabel\">Delete</h5>\n            <button type=\"button\" class=\"close\" (click)=\"closeInnerModal()\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            <p *ngIf=\"innerModalType == 'delete'\">\n              Are you sure you want to delete \"{{selectedFile.name}}\"? All it's content will permanently be deleted.\n            </p>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'rename'\">\n              <label for=\"inputName\">New name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"new file name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n          </div>\n          <div class=\"modal-footer justify-content-between\">\n            <button *ngIf=\"innerModalType == 'delete'\" type=\"button\" class=\"btn btn-danger\" (click)=\"delete()\">Delete</button>\n            <button *ngIf=\"innerModalType == 'rename'\" type=\"button\" class=\"btn btn-success\" (click)=\"rename()\">Rename</button>\n            <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeInnerModal()\">Cancel</button>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-background\" (click)=\"closeInnerModal()\"></div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"closeModal()\"></div>\n</div>\n\n<div class=\"contextMenu\" *ngIf=\"contextMenuPos.x != -1\" [ngStyle]=\"{'left.px': contextMenuPos.x, 'top.px': contextMenuPos.y}\">\n  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n    <div class=\"dropdown-header\">\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'folder'\">folder</i>\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'file'\">insert_drive_file</i>\n      <p class=\"float-left\">{{selectedFile.name}}</p>\n    </div>\n    <div class=\"dropdown-divider\"></div>\n    <a class=\"dropdown-item\" (click)=\"openRenameModal()\">Rename</a>\n    <a class=\"dropdown-item\" [href]=\"getDownloadPath()\">Download</a>\n    <a class=\"dropdown-item\" (click)=\"openDeleteModal()\">Delete</a>\n    <a class=\"dropdown-item\" (click)=\"rename()\">upload file</a>\n    <a class=\"dropdown-item\" (click)=\"rename()\">Create folder</a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1038,7 +1064,7 @@ module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".modal.active {\n  display: block !important; }\n\n.modal-dialog, .modal-content {\n  height: 95%; }\n\n.modal-body {\n  overflow-y: scroll; }\n\n.modal-background {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.modal.active {\n  display: block !important; }\n\n.main-modal.modal-dialog, .main-modal .modal-content {\n  height: 95%; }\n\n.modal-body {\n  overflow-x: scroll;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  padding: 0; }\n\n.modal-body .level {\n    float: left;\n    width: 200px;\n    min-width: 200px;\n    height: 100%;\n    overflow-y: scroll;\n    overflow-x: hidden;\n    border-right: 1px solid #e9ecef;\n    padding-left: 0; }\n\n.modal-body .level .file {\n      clear: both;\n      flex-wrap: nowrap;\n      display: flex;\n      padding-left: 10px;\n      align-items: center; }\n\n.modal-body .level .file p {\n        white-space: nowrap;\n        float: left;\n        vertical-align: middle;\n        margin: 5px; }\n\n.modal-body .level .file i {\n        float: left;\n        color: rgba(188, 4, 78, 0.5); }\n\n.modal-body .level .file.selected {\n        background-color: #bc044e; }\n\n.modal-body .level .file.selected p, .modal-body .level .file.selected i {\n          color: white; }\n\n.modal-background {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n\n.contextMenu {\n  position: fixed;\n  z-index: 10000; }\n\n.contextMenu .dropdown-menu {\n    display: block; }\n\n.contextMenu .dropdown-menu .dropdown-header {\n      padding: 0;\n      padding-left: 10px;\n      padding-top: 5px; }\n\n.contextMenu .dropdown-menu .dropdown-header p {\n        margin-left: 5px; }\n\n.contextMenu .dropdown-menu .dropdown-divider {\n      clear: both; }\n\n.popUpQuestion {\n  display: block; }\n\n.popUpQuestion .modal-body {\n    padding: 10px; }\n"
 
 /***/ }),
 
@@ -1071,22 +1097,130 @@ var FileBrowserComponent = /** @class */ (function () {
         this.active = false;
         this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.selectedFiles = undefined;
-        this.files = [];
+        this.levels = [[]];
+        this.fullPath = [];
+        this.selectedLevel = -1;
+        this.selectedFile = undefined;
+        this.contextMenuPos = { x: -1, y: -1 };
+        this.innerModalVisible = false;
+        this.innerModalValue = "";
+        this.innerModalType = "";
     }
+    FileBrowserComponent.prototype.clickedOutside = function ($event) {
+        // here you can hide your menu
+        if ($event.button == 0) {
+            this.contextMenuPos['x'] = -1;
+            this.contextMenuPos['y'] = -1;
+        }
+    };
     FileBrowserComponent.prototype.closeModal = function () {
         this.active = false;
         this.activeChange.emit(this.active);
     };
     FileBrowserComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.apiService.getFiles(this.package_id).subscribe(function (data) {
-            _this.files = data;
+        // root level files is fetched from path input
+        this.apiService.getFiles(this.path).subscribe(function (data) {
+            _this.levels[0] = data;
         });
+    };
+    FileBrowserComponent.prototype.calculatePath = function (index, file) {
+        var path = "";
+        for (var i = 0; i < index; i++) {
+            path += this.fullPath[i] + '/';
+        }
+        path += file.name;
+        return path;
+    };
+    FileBrowserComponent.prototype.openNewLevel = function (index, file) {
+        var _this = this;
+        // event.preventDefault();
+        // event.stopPropagation();
+        this.selectedLevel = index;
+        this.selectedFile = file;
+        while (this.levels.length > index + 1) {
+            this.levels.pop();
+            this.fullPath.pop();
+        }
+        if (file.type == "folder") {
+            var path = this.calculatePath(index, file);
+            this.apiService.getFiles(this.path, path).subscribe(function (data) {
+                _this.levels.push(data);
+                _this.fullPath.push(file.name);
+            });
+        }
+    };
+    FileBrowserComponent.prototype.openContextMenu = function (event, index, file) {
+        event.preventDefault();
+        event.stopPropagation();
+        this.contextMenuPos['x'] = event.clientX;
+        this.contextMenuPos['y'] = event.clientY;
+        //select the rightclicked item:
+        this.openNewLevel(index, file);
+    };
+    FileBrowserComponent.prototype.openRenameModal = function () {
+        this.innerModalValue = this.selectedFile.name;
+        this.innerModalType = 'rename';
+        this.innerModalVisible = true;
+    };
+    FileBrowserComponent.prototype.rename = function () {
+        var _this = this;
+        var body = {};
+        body['path'] = this.calculatePath(this.selectedLevel, this.selectedFile);
+        body['name'] = this.innerModalValue;
+        this.apiService.renameFile(this.path, body).subscribe(function (data) {
+            console.log(data);
+            _this.selectedFile.name = _this.innerModalValue;
+            _this.levels.pop();
+            if (_this.selectedFile.type == 'folder') {
+                _this.levels.pop();
+                _this.fullPath[_this.fullPath.length - 1] = _this.innerModalValue;
+                _this.selectedFile = undefined;
+                _this.selectedLevel = -1;
+            }
+            _this.levels.push(data);
+            _this.innerModalVisible = false;
+        });
+    };
+    FileBrowserComponent.prototype.getDownloadPath = function () {
+        var path = this.calculatePath(this.selectedLevel, this.selectedFile);
+        return this.path + "?path=" + path + "&download";
+    };
+    FileBrowserComponent.prototype.openDeleteModal = function () {
+        this.innerModalVisible = true;
+        this.innerModalType = 'delete';
+    };
+    FileBrowserComponent.prototype.delete = function () {
+        var _this = this;
+        if (!this.selectedFile) {
+            return;
+        }
+        var path = this.calculatePath(this.selectedLevel, this.selectedFile);
+        this.apiService.deleteFile(this.path, path).subscribe(function (data) {
+            if (_this.selectedFile.type == 'folder') {
+                _this.fullPath.pop();
+                _this.levels.pop();
+            }
+            _this.levels.pop();
+            _this.levels.push(data);
+            _this.selectedFile.name = _this.fullPath[_this.fullPath.length - 1];
+            _this.selectedFile.type = 'folder';
+            _this.selectedLevel -= 1;
+            _this.closeInnerModal();
+        });
+    };
+    FileBrowserComponent.prototype.closeInnerModal = function () {
+        console.log('close inner modeal');
+        this.innerModalVisible = false;
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Number)
     ], FileBrowserComponent.prototype, "package_id", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], FileBrowserComponent.prototype, "path", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Boolean)
@@ -1099,9 +1233,15 @@ var FileBrowserComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
     ], FileBrowserComponent.prototype, "selectedFiles", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('document:click', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], FileBrowserComponent.prototype, "clickedOutside", null);
     FileBrowserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'FileBrowser',
+            selector: 'filebrowser',
             template: __webpack_require__(/*! ./FileBrowser.component.html */ "./src/app/Components/FileBrowser/FileBrowser.component.html"),
             styles: [__webpack_require__(/*! ./FileBrowser.component.sass */ "./src/app/Components/FileBrowser/FileBrowser.component.sass")]
         }),
@@ -1126,8 +1266,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileBrowserModule", function() { return FileBrowserModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _FileBrowser_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FileBrowser.component */ "./src/app/Components/FileBrowser/FileBrowser.component.ts");
-/* harmony import */ var _File_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./File.component */ "./src/app/Components/FileBrowser/File.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _FileBrowser_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FileBrowser.component */ "./src/app/Components/FileBrowser/FileBrowser.component.ts");
+/* harmony import */ var _File_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./File.component */ "./src/app/Components/FileBrowser/File.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1135,6 +1276,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 //angular modules
+
 
 
 //declarations
@@ -1146,14 +1288,15 @@ var FileBrowserModule = /** @class */ (function () {
     FileBrowserModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"]
             ],
             declarations: [
-                _FileBrowser_component__WEBPACK_IMPORTED_MODULE_2__["FileBrowserComponent"],
-                _File_component__WEBPACK_IMPORTED_MODULE_3__["FileComponent"]
+                _FileBrowser_component__WEBPACK_IMPORTED_MODULE_3__["FileBrowserComponent"],
+                _File_component__WEBPACK_IMPORTED_MODULE_4__["FileComponent"]
             ],
             providers: [],
-            exports: [_FileBrowser_component__WEBPACK_IMPORTED_MODULE_2__["FileBrowserComponent"]]
+            exports: [_FileBrowser_component__WEBPACK_IMPORTED_MODULE_3__["FileBrowserComponent"]]
         })
     ], FileBrowserModule);
     return FileBrowserModule;
@@ -1170,7 +1313,7 @@ var FileBrowserModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"file-header noselect\" (click)=\"expanded = !expanded\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n  <!-- <i class=\"material-icons file-float\">indeterminate_check_box</i> -->\n</div>\n<i *ngIf=\"file.selected == true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Deselect this file\" tooltipPlacement=\"right\">check_box</i>\n<i *ngIf=\"file.selected != true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Select this file\" tooltipPlacement=\"right\">check_box_outline_blank</i>\n<i *ngIf=\"file.type == 'folder'\" class=\"material-icons file-float\" tooltip=\"Set a filter for items in folder\" tooltipPlacement=\"right\">filter_list</i>\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of file.children\" [file]=\"f\"></file>\n  <!-- </div> -->\n</div>\n"
+module.exports = "\n<div class=\"file-header noselect d-flex\" (click)=\"expand()\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n  <!-- <i class=\"material-icons file-float\">indeterminate_check_box</i> -->\n</div>\n<!-- <i *ngIf=\"file.selected == true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Deselect this file\" tooltipPlacement=\"right\">check_box</i> -->\n<!-- <i *ngIf=\"file.selected != true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Select this file\" tooltipPlacement=\"right\">check_box_outline_blank</i> -->\n<!-- <i *ngIf=\"file.type == 'folder'\" class=\"material-icons file-float\" tooltip=\"Set a filter for items in folder\" tooltipPlacement=\"right\">filter_list</i> -->\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of children\" [file]=\"f\" [specific_path]=\"specific_path + f.name + '/'\" [path]=\"path\"></file>\n  <!-- </div> -->\n</div>\n"
 
 /***/ }),
 
@@ -1181,7 +1324,7 @@ module.exports = "\n<div class=\"file-header noselect\" (click)=\"expanded = !ex
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".file-header {\n  cursor: pointer; }\n\n.file-children {\n  margin-left: 15px;\n  clear: both; }\n\n.file-float {\n  float: left; }\n\n.tooltip {\n  background-color: red; }\n"
+module.exports = ".file-header {\n  cursor: pointer; }\n\n.file-children {\n  margin-left: 15px;\n  clear: both; }\n\n.tooltip {\n  background-color: red; }\n"
 
 /***/ }),
 
@@ -3919,9 +4062,6 @@ var APIService = /** @class */ (function () {
     APIService.prototype.getPackage = function (id) {
         return this.http.get('/api/package/' + id + '/');
     };
-    APIService.prototype.getFiles = function (package_id) {
-        return this.http.get('/api/package/' + package_id + '/files/');
-    };
     APIService.prototype.removePackage = function (id) {
         return this.http.delete('/api/package/' + id + '/');
     };
@@ -3932,6 +4072,17 @@ var APIService = /** @class */ (function () {
     APIService.prototype.finishPackage = function (package_id) {
         this.http.post('/api/package/' + package_id + '/finish/', {}).subscribe(function () {
         });
+    };
+    //files
+    APIService.prototype.getFiles = function (path, specific) {
+        if (specific === void 0) { specific = ""; }
+        return this.http.get(path + "?path=" + specific);
+    };
+    APIService.prototype.renameFile = function (path, body) {
+        return this.http.put(path, body);
+    };
+    APIService.prototype.deleteFile = function (path, specific) {
+        return this.http.delete(path + "?path=" + specific);
     };
     APIService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),

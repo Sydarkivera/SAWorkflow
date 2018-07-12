@@ -10,6 +10,7 @@ import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
 import { NavbarModule } from '../Components/Navbar/Navbar.module';
 import { ModalModule } from '../Components/Modal/Modal.module';
 import { MessageModule } from '../Components/Message/Message.module';
+import { FileBrowserModule } from '../Components/FileBrowser/FileBrowser.module';
 
 //declarations
 import { AdminHeaderComponent }    from './AdminHeader.component';
@@ -30,7 +31,8 @@ import { APIService } from '../Services/api.service';
     TooltipModule,
     NavbarModule,
     ModalModule,
-    MessageModule
+    MessageModule,
+    FileBrowserModule
   ],
   declarations: [
     AdminHeaderComponent,

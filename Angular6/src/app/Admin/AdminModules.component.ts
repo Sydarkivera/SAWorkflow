@@ -27,6 +27,8 @@ export class AdminModulesComponent {
   messageVisible = false
   errorVisible = false
 
+  browserActive = true;
+
   constructor(private apiService: APIService) {
   }
 
