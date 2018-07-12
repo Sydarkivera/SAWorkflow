@@ -122,9 +122,10 @@
         <message duration="3000" [(active)]="messageVisible">All changes have been saved!</message>
         <label class="input-label">
           Type:
-          <select class="custom-select col-sm-3 my-1 my-auto" [(ngModel)]="selected_module.type">
+          <select class="custom-select my-1 my-auto" [(ngModel)]="selected_module.type">
             <option value="Command">Command</option>
             <option value="Python module">Python module</option>
+            <option value="Docker Container">Docker Container</option>
           </select>
         </label>
         <div class="form-group" *ngIf="selected_module.type == 'Command'">
@@ -135,6 +136,20 @@
           <label for="inputName">Python Module</label>
           <input type="text" class="form-control" id="inputName" placeholder="Path to python file" [(ngModel)]="selected_module.python_module">
         </div>
+        <!-- If command type is docker -->
+        <ng-template [ngIf]="selected_module.type == 'Docker Container'">
+          <label class="input-label">
+            Docker image:
+            <select class="custom-select my-1 my-auto" [(ngModel)]="selected_module.dockerImage">
+              <option *ngFor="let image of images" value="{{image.id}}">{{image.name}}</option>
+            </select>
+          </label>
+          <!-- <button class="btn btn-success" (click)="uploadDockerImage">Upload Docker Image</button> -->
+          <!-- <div class="form-group">
+            <label for="inputName">Mount point for files/folder</label>
+            <input type="text" class="form-control" id="inputName">
+          </div> -->
+        </ng-template>
         <p class="Error-text">{{commandJsonError}}</p>
         <div class="form-group">
           <div class="form-check">
@@ -142,8 +157,9 @@
             <label class="form-check-label" for="inputMultipleFiles">Run on multiple files</label>
           </div>
         </div>
-        <button class="btn btn-success" (click)="save()">Save changes</button>
-        <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p>
+        <button class="btn btn-success" (click)="openFileBrowser()">Browse files</button>
+        <!-- <button class="btn btn-success" (click)="save()">Save changes</button> -->
+        <!-- <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p> -->
       </div>
     </div>
     <a class="btn btn-secondary" href="/api/module/{{selected_module.module_id}}/export/">Export tool</a>
@@ -166,4 +182,4 @@
   </div>
 </modal>
 
-<filebrowser [(active)]="browserActive" path="/api/module/0/files/"></filebrowser>
+<filebrowser [(active)]="browserActive" [path]="browserPath"></filebrowser>

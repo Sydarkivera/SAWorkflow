@@ -31,5 +31,8 @@ urlpatterns = [
 
     url(r'^stats/dashboard/$', views.dashboardStats),
 
-    url(r'^variables/global/$', views.variables_global)
+    url(r'^variables/global/$', views.variables_global),
+
+    #containers (docker)
+    url(r'^image/', include('api.images.urls')),
 ]

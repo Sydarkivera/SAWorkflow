@@ -245,15 +245,18 @@ def executeProcessFlow(package_id):
                     moduleFailed(process.module.name, process, package)
                     break
             elif process.module.type == Module.MODULE_TYPE_DOCKER:
+                # run the specified image.
+                client = docker.from_env()
+                client.containers.run(process.module.dockerImage.name, 'echo hello world')
+
                 # create a docker Module
-
                 # 1. check if Dockerfile is present
-                dockerFilePath = os.path.join(process.module.tool_folder_name, 'Dockerfile')
-                if os.path.exists(dockerFilePath) and os.path.isfile(dockerFilePath):
-                    client = docker.from_env()
-                    (image, buildLogs) = client.images.build(dockerFilePath)
-
-                pass
+                # dockerFilePath = os.path.join(process.module.tool_folder_name, 'Dockerfile')
+                # if os.path.exists(dockerFilePath) and os.path.isfile(dockerFilePath):
+                #     client = docker.from_env()
+                #     (image, buildLogs) = client.images.build(dockerFilePath)
+                #
+                # pass
 
             # execute the module
             try:

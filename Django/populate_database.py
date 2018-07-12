@@ -26,6 +26,7 @@ Template.objects.all().delete()
 FileType.objects.all().delete()
 Variable.objects.all().delete()
 GraphData.objects.all().delete()
+DockerImage.objects.all().delete()
 
 # create new module
 module1 = Module(name="Setup workdir",
@@ -152,6 +153,10 @@ graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=7)), siz
 graph.save()
 graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
 graph.save()
+
+#create default docker images
+image = DockerImage(id=0, name="droid", mountpoint="/workdir")
+image.save()
 
 
 # create default admin users

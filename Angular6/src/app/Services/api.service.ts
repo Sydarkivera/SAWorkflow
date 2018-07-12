@@ -139,4 +139,9 @@ export class APIService {
   createFolder(path, specific) {
     return this.http.put(path, {'path': specific});
   }
+
+  //docker
+  getDockerImages() {
+    return this.http.get('/api/image/');
+  }
 }

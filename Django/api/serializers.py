@@ -94,7 +94,7 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Module
-        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'filter', 'resultFilter')
+        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'filter', 'resultFilter', 'dockerImage')
 
     def get_type(self,obj):
         return obj.get_type_display()
@@ -134,3 +134,9 @@ class VariableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Variable
         fields = ('id', 'name', 'data')
+
+class DockerImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DockerImage
+        fields = ('id', 'name', 'mountpoint')

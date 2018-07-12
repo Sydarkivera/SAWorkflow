@@ -12,6 +12,7 @@ import { APIService } from '../Services/api.service';
 })
 export class AdminModulesComponent {
   modules: any[];
+  images: any[];
   selected_module: any = { module_id: -1 };
   title: string = "";
   formJson: string = "";
@@ -27,7 +28,8 @@ export class AdminModulesComponent {
   messageVisible = false
   errorVisible = false
 
-  browserActive = true;
+  browserActive = false;
+  browserPath = "";
 
   constructor(private apiService: APIService) {
   }
@@ -36,7 +38,12 @@ export class AdminModulesComponent {
     //load initial data from server, module list
     this.apiService.getModules().subscribe((data) => {
       this.modules = data as [any];
+      console.log(this.modules)
     });
+
+    this.apiService.getDockerImages().subscribe((data) => {
+      this.images = data as [any]
+    })
   }
 
   setModule(mod) {
@@ -140,6 +147,9 @@ export class AdminModulesComponent {
     if (this.selected_module.resultFilter != undefined) {
       data["resultFilter"] = this.selected_module.resultFilter;
     }
+    if (this.selected_module.dockerImage != undefined) {
+      data["dockerImage"] = this.selected_module.dockerImage;
+    }
 
     //verfiy that the tools action is implemented
     if (this.selected_module.type == 'Command') {
@@ -236,6 +246,11 @@ export class AdminModulesComponent {
     if (index > -1) {
       this.selected_module.resultFilter.splice(index, 1);
     }
+  }
+
+  openFileBrowser() {
+    this.browserPath = "/api/module/"+this.selected_module.module_id+"/files/"
+    this.browserActive = true;
   }
 
 
