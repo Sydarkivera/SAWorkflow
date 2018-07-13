@@ -12,10 +12,10 @@ import { APIService } from '../Services/api.service';
 })
 export class AdminModulesComponent {
   modules: any[];
+  images: any[];
   selected_module: any = { module_id: -1 };
   title: string = "";
   formJson: string = "";
-  commandJson: string = "";
   formJsonError = "";
   commandJsonError = "";
   resultFilters = [];
@@ -27,7 +27,10 @@ export class AdminModulesComponent {
   messageVisible = false
   errorVisible = false
 
-  browserActive = true;
+  browserActive = false;
+  browserPath = "";
+
+  docsActive = false;
 
   constructor(private apiService: APIService) {
   }
@@ -36,7 +39,12 @@ export class AdminModulesComponent {
     //load initial data from server, module list
     this.apiService.getModules().subscribe((data) => {
       this.modules = data as [any];
+      console.log(this.modules)
     });
+
+    this.apiService.getDockerImages().subscribe((data) => {
+      this.images = data as [any]
+    })
   }
 
   setModule(mod) {
@@ -45,7 +53,6 @@ export class AdminModulesComponent {
     this.title = this.selected_module.name;
     // store the jsonfields as string temporarily to allow for
     this.formJson = this.getJson(this.selected_module.form);
-    this.commandJson = this.getJson(this.selected_module.command);
   }
 
   addNewModule() {
@@ -53,7 +60,6 @@ export class AdminModulesComponent {
     this.selected_module = { module_id: -2, form: [], type: "Command" };
     this.title = "New module";
     this.formJson = "[]";
-    this.commandJson = "[]";
   }
 
   deleteModule(dmodule) {
@@ -102,14 +108,14 @@ export class AdminModulesComponent {
     }
 
     //validate command json input
-    try {
-      this.selected_module.command = JSON.parse(this.commandJson);
-      this.commandJsonError = "";
-    } catch (e) {
-      console.log("Error", e.message);
-      this.commandJsonError = e.message;
-      return false;
-    }
+    // try {
+    //   this.selected_module.command = JSON.parse(this.commandJson);
+    //   this.commandJsonError = "";
+    // } catch (e) {
+    //   console.log("Error", e.message);
+    //   this.commandJsonError = e.message;
+    //   return false;
+    // }
 
     //only pass the values that are defined to the server.
     let data = {};
@@ -139,6 +145,9 @@ export class AdminModulesComponent {
     }
     if (this.selected_module.resultFilter != undefined) {
       data["resultFilter"] = this.selected_module.resultFilter;
+    }
+    if (this.selected_module.dockerImage != undefined) {
+      data["dockerImage"] = this.selected_module.dockerImage;
     }
 
     //verfiy that the tools action is implemented
@@ -238,5 +247,13 @@ export class AdminModulesComponent {
     }
   }
 
+  openFileBrowser() {
+    this.browserPath = "/api/module/"+this.selected_module.module_id+"/files/"
+    this.browserActive = true;
+  }
+
+  openFormJsonDocs() {
+    this.docsActive = true;
+  }
 
 }

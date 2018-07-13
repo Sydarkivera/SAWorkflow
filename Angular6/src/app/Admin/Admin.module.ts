@@ -17,6 +17,7 @@ import { AdminHeaderComponent }    from './AdminHeader.component';
 import { AdminModulesComponent }    from './AdminModules.component';
 import { AdminGlobalComponent }    from './AdminGlobal.component';
 import { AdminTemplatesComponent } from './AdminTemplates.component';
+import { AdminContainersComponent } from './AdminContainers.component';
 
 //providers
 // import { ModuleService } from './Module.service';
@@ -38,7 +39,8 @@ import { APIService } from '../Services/api.service';
     AdminHeaderComponent,
     AdminModulesComponent,
     AdminGlobalComponent,
-    AdminTemplatesComponent
+    AdminTemplatesComponent,
+    AdminContainersComponent
   ],
   providers: [
     APIService

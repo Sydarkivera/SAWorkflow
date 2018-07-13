@@ -34,6 +34,11 @@ class Template(models.Model):
         return '%d: %d' % (self.template_id, self.name)
 
 
+class DockerImage(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, default='')
+    mountpoint = models.CharField(max_length=100, blank=True, default='') # example, mount at /workdir in conainer
+
 class Package(models.Model):
     PACKAGE_STATUS_NEW = 0
     PACKAGE_STATUS_WAITING = 1
@@ -51,10 +56,10 @@ class Package(models.Model):
         (PACKAGE_STATUS_EDITED, 'Edited'),
         (PACKAGE_STATUS_FINISHED, 'Finished'),
     )
-    package_id = models.AutoField(primary_key=True)
-    name = models.TextField()
-    path = models.TextField()
-    file_name = models.TextField()
+    package_id = models.AutoField(primary_key=True) # Example: 1
+    name = models.TextField() # Example: Ljungby uttag 1
+    path = models.TextField() # Example: /code/test_packages/af268c33-5ba8-4af5-9a44-039b10126835.tar
+    file_name = models.TextField() # Example: af268c33-5ba8-4af5-9a44-039b10126835.tar
     status = models.IntegerField(choices=PACKAGE_STATUS, default=0)
     workdir = models.TextField()
     logdir = models.TextField()
@@ -80,9 +85,11 @@ class Module(models.Model):
     python_module = models.CharField(max_length=100, default='', blank=True)
     command = models.CharField(max_length=10000, default='', blank=True)
     tool_folder_name = models.CharField(max_length=100, default='', blank=True)
+    docker_mount_point = models.CharField(max_length=100, default='', blank=True)
 
     #For docker, save some settings, like if it is a dockerfile or an image, where to mount workdir/files
-    docker = JSONField(default='{"dockerfile":"1", "image": "", "workdir_mount_point": "", "file_mount_point": "/file.pdf"}', blank=True)
+    # docker = JSONField(default='{"dockerfile":"1", "image": "", "workdir_mount_point": "", "file_mount_point": "/file.pdf"}', blank=True)
+    dockerImage = models.ForeignKey(DockerImage, related_name='modules', on_delete=models.PROTECT, blank = True, null=True)
 
     # for handling mulitfile tools:
     # multifile = models.BooleanField(default=False)

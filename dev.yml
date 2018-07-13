@@ -74,6 +74,7 @@ services:
       - "./Django/static:/code/static"
       - "./Django/workdir:/code/workdir"
       - "./Django/test_packages:/code/test_packages"
+      - "/var/run/docker.sock:/var/run/docker.sock"
       # - "./Django/tools:/code/tools"
 #       - "./Django:/code"
     links:

@@ -36,7 +36,7 @@ class task(pythonModuleBase):
 
         super(task, self).setupLogging(process, package)
 
-    def execute(self, process, package):
+    def execute(self, process, package, values):
 
         self.logger.info('Loggfiles and project directory created')
 
@@ -44,8 +44,8 @@ class task(pythonModuleBase):
             copy(package.path, package.workdir)
         except IOError:
             self.logger.error("I/O error({0}): {1}".format(e.errno, e.strerror))
-            return -1
+            return (-1, "I/O error({0}): {1}".format(e.errno, e.strerror))
 
         self.logger.info('Package copied to workdir')
 
-        return 1
+        return (1, "")

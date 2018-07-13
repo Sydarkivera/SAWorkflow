@@ -9,9 +9,20 @@ import { APIService } from '../../Services/api.service';
 })
 export class FileBrowserComponent {
 
+  private _active: boolean = false;
+
   @Input() package_id: number;
   @Input() path: string;
-  @Input() active: boolean = false;
+  @Input()
+  set active(active: boolean) {
+    this._active = active;
+    if (this._active) {
+      this.loadInitialData()
+    }
+  }
+  get active() {
+     return this._active
+  }
   @Output() activeChange = new EventEmitter<boolean>();
   @Input() selectedFiles: any = undefined;
 
@@ -42,12 +53,22 @@ export class FileBrowserComponent {
   }
 
   closeModal() {
-    this.active = false;
-    this.activeChange.emit(this.active);
+    this._active = false;
+    this.activeChange.emit(this._active);
   }
 
   ngOnInit() {
     // root level files is fetched from path input
+    if (this._active) {
+      this.loadInitialData();
+    }
+  }
+
+  loadInitialData() {
+    this.levels = [[]]
+    this.fullPath = []
+    this.selectedLevel = -1
+    this.selectedFile = undefined;
     this.apiService.getFiles(this.path).subscribe((data) => {
       this.levels[0] = data as [any];
     });
@@ -55,10 +76,12 @@ export class FileBrowserComponent {
 
   calculatePath(index, file) {
     let path = "";
-    for (let i = 0; i < index; i++) {
-      path += this.fullPath[i] + '/';
+    if (file) {
+      for (let i = 0; i < index; i++) {
+        path += this.fullPath[i] + '/';
+      }
+      path += file.name;
     }
-    path += file.name;
     return path
   }
 
@@ -187,19 +210,24 @@ export class FileBrowserComponent {
     formData.append('file', this.innerModalFile, this.innerModalValue);
 
     //calculate the final path:
-    let path = this.calculatePath(this.selectedLevel, this.selectedFile);
     let newPath = ""
-    if (this.selectedFile.type == "folder") {
-      //create the new folder inside this.
-      newPath = path + "/" + this.innerModalValue;
-    } else {
-      // create the new folder in this folder.
-      let prev = path.substr(0, path.lastIndexOf('/'));
-      if (prev != "") {
-        prev += "/"
+    if (this.selectedFile) {
+      let path = this.calculatePath(this.selectedLevel, this.selectedFile);
+      if (this.selectedFile.type == "folder") {
+        //create the new folder inside this.
+        newPath = path + "/" + this.innerModalValue;
+      } else {
+        // create the new folder in this folder.
+        let prev = path.substr(0, path.lastIndexOf('/'));
+        if (prev != "") {
+          prev += "/"
+        }
+        newPath = prev + this.innerModalValue;
       }
-      newPath = prev + this.innerModalValue;
+    } else {
+      newPath = this.innerModalValue;
     }
+
     formData.append('path', newPath)
     // console.log(this.innerModalValue)
     this.apiService.uploadFile(this.path, formData).subscribe((data) => {

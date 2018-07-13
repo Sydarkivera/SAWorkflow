@@ -310,11 +310,13 @@ def template_package_detail(request, template_id, package_id):
     template = get_object_or_404(Template, pk=template_id)
     package = get_object_or_404(Package, pk=package_id)
     if request.method == 'PUT':
-        package.active_template = template
         # delete old processes from package
-        for process in package.processes.all():
-            if not process.module.hidden:
-                process.delete()
+        if package.active_template != None:
+            for process in package.processes.all():
+                if not process.module.hidden:
+                    process.delete()
+                    
+        package.active_template = template
         for process in template.processes.all():
             # logger.info(process.name)
             if not process.module.hidden:
