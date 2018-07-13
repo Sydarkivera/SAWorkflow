@@ -31,7 +31,7 @@
       <td class="align-middle">
         <button class="btn btn-danger"
                 (click)="showModal(process, 'error_log')"
-                [disabled]="process.err_path == '' || process.status != 'Error'"
+                [disabled]="process.status != 'Error' && process.errors.length <= 0"
                 [class.btn-outline-danger]="process.errors.length <= 0">
                 Errors: {{process.errors.length}}
         </button>

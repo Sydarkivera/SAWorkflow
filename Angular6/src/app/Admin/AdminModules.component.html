@@ -37,14 +37,14 @@
       <div class="card-body">
         <div class="form-group" *ngFor="let input of selected_module.form">
           <div class="form-check" *ngIf="input.type=='checkbox'">
-            <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" (change)="setProcessValue(input.identifier, $event.target.checked)" />
+            <input class="form-check-input" type="checkbox" *ngIf="input.type=='checkbox'" [id]="input.identifier" [checked]="input.default" />
             <label class="form-check-label" for="{{input.identifier}}">
               {{input.label}}
             </label>
           </div>
           <ng-template [ngIf]="input.type=='text'">
             <label for="{{input.identifier}}">{{input.label}}</label>
-            <input type="text" class="form-control" [id]="input.identifier" placeholder="{{input.identifier}}" [value]="input.default ? input.default : ''" (keyup)="setProcessValue(input.identifier, $event.target.value)" (change)="setProcessValue(input.identifier, $event.target.value)">
+            <input type="text" class="form-control" [id]="input.identifier" placeholder="{{input.identifier}}" [value]="input.default ? input.default : ''">
           </ng-template>
         </div>
       </div>
@@ -73,7 +73,7 @@
           <input type="text" class="form-control" id="inputFileFilter" [(ngModel)]="selected_module.filter" placeholder=".*(\.pdf)">
         </div>
         <div class="form-group">
-          <label for="inputForm">Form json</label>
+          <label for="inputForm">Form json<i class="material-icons icon-button my-auto" (click)="openFormJsonDocs()">help</i></label>
           <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="formJson"></textarea>
         </div>
 
@@ -130,7 +130,7 @@
         </label>
         <div class="form-group" *ngIf="selected_module.type == 'Command'">
           <label for="inputForm">Command</label>
-          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="commandJson"></textarea>
+          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
         </div>
         <div class="form-group" *ngIf="selected_module.type == 'Python module'">
           <label for="inputName">Python Module</label>
@@ -144,6 +144,10 @@
               <option *ngFor="let image of images" value="{{image.id}}">{{image.name}}</option>
             </select>
           </label>
+          <div class="form-group">
+            <label for="inputForm">Command</label>
+            <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
+          </div>
           <!-- <button class="btn btn-success" (click)="uploadDockerImage">Upload Docker Image</button> -->
           <!-- <div class="form-group">
             <label for="inputName">Mount point for files/folder</label>
@@ -183,3 +187,30 @@
 </modal>
 
 <filebrowser [(active)]="browserActive" [path]="browserPath"></filebrowser>
+
+<modal [(active)]="docsActive" title="Form documentation">
+  <div modal-body>
+    <p>
+      The form is specified as a json document. The structure must be an array of dictionaries. i.e. [ {{ '{' }}...{{ '}' }}, {{ '{' }}...{{ '}' }}, ...]
+    </p>
+    <p>
+      Each dictionay specifies one field in the form.
+    </p>
+
+    <ul>
+      <li>
+        <h5>type: [string] (required)</h5>
+        <p>
+          The type specifies which kind of form element is supposed to render. Options are: 'text' or 'checkbox'
+        </p>
+      </li>
+      <li>
+        <h5>identifier: [string] (required)</h5>
+        <p>
+          Identifer is the id that will be used in a command to select the value of this field. regex for possibilities: [a-Z0-9-_]
+        </p>
+      </li>
+      <li>Milk</li>
+    </ul>
+  </div>
+</modal>

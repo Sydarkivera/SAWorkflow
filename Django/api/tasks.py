@@ -19,6 +19,7 @@ import subprocess
 import pwd
 import re
 import docker
+from docker.types import Mount
 
 from celery import Celery
 from celery.schedules import crontab
@@ -72,80 +73,22 @@ class pythonModuleBase:
         self.logger.addHandler(self.err_hdlr)
         process.save()
 
-    def execute(self, process, package):
+    def execute(self, process, package, values):
+        # execute writes to log continiously and returns error if there are any.
         pass
 
-    def teardownLogging(self):
-        self.logger.removeHandler(self.log_hdlr)
-        self.logger.removeHandler(self.err_hdlr)
-        del self.logger, self.log_hdlr, self.err_hdlr
+    def setup(self, process, package, values):
+        pass
 
-class bashModule(pythonModuleBase):
+    def run(self, process, package):
+        # do all preparations that is the same for all modules:
 
-    def run(self, values, process):
-        args = process.module.command.split(' ')
-        for i in range(len(args)):
-            arg = args[i]
-            if arg[0] == '#':
-                # a variable is identified, resolve it.
-                if arg[1:] in values:
-                    args[i] = values[arg[1:]]
-                else:
-                    args[i] = ""
-        # args = []
-        # for arg in process.module.command:
-        #     if arg['type'] == "text":
-        #         args += [arg['value']]
-        #     elif arg['type'] == 'var':
-        #         if arg['name'] in values:
-        #             if 'value' in arg:
-        #                 if values[arg['name']] == True:
-        #                     args += [arg['value']]
-        #             else:
-        #                 args += [values[arg['name']]]
-        #     else:
-        #         self.logger.error('unknown type: ' + str(arg['type']))
-
-        p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-
-        stdout, stderr = p.communicate()
-
-        #validate output, check if there are any error, or if there are errors in the info file.
-
-        if stderr:
-            self.logger.error(stderr.decode('utf-8'))
-            return (-1, stderr.decode('utf-8'))
-
-        if stdout:
-            # self.logger.info('File: ' + )
-            self.logger.info(stdout.decode('utf-8'))
-            for resFilter in process.module.resultFilter:
-                # check if the pattern exists
-                text = stdout.decode('utf-8')
-                pattern = resFilter['value']
-                # pattern = '[\s,.]*(compliant)'
-                # text = '<validationReports compliant="1" nonCompliant="0" failedJobs="0">1</validationReports>'
-                match = re.match(pattern, text)
-                # logger.info(match)
-                # logger.info('')
-
-                if match and resFilter['type'] != "Containing":
-                    # logger.info(match)
-                    # logger.info()
-                    self.logger.error(text)
-                    return (-1, text)
-                elif not match and resFilter['type'] == "Containing":
-                    self.logger.error(text)
-                    return (-1, text)
-        return (1, "")
-
-    def execute(self, process, package):
-        retval = 1
+        #set default values
         values = {}
         values['tar_path'] = os.path.join(package.workdir, package.file_name)
         values['workdir'] = package.workdir
         values['file_name'] = package.file_name
-        # values.update(process.value)
+
         #update values with data from form:
         for key, val in process.value.items():
             if isinstance(val, bool):
@@ -156,20 +99,37 @@ class bashModule(pythonModuleBase):
                             values[key] = item['value']
             else:
                 values[key] = val
+        logger.info('run values updated')
 
+        #setup extra
+        self.setup(process, package, values)
+
+        # check filter.
         filter = process.module.filter
         if filter == '':
-            res, errorText = self.run(values, process)
+            # run once.
+            logger.info('run no filter start')
+            res, errorText = self.execute(process, package, values)
+            #if there is an error, store it and return -1
             if res == -1:
+                logger.error(errorText)
+                process.errors = [{'file': 'All files', 'Error': errorText}]
+                process.save()
                 return -1
+
+            logger.info('run no filter done')
         else:
+            logger.info('run filter start')
+            #setup regex
             try:
                 pattern = re.compile(filter)
             except:
-                self.logger.error('Regex is invalid: ' + filter)
+                # self.logger.error('Regex is invalid: ' + filter)
+                logger.error('Regex is invalid: ' + filter)
                 return -1
 
-            # count number of files:
+            logger.info('run filter regex generated')
+            # calculate which files that should be run:
             allFiles = []
             errorFiles = []
             if process.allFiles == []:
@@ -178,20 +138,23 @@ class bashModule(pythonModuleBase):
                         file = os.path.join(root, name)
                         if pattern.match(file):
                             allFiles.append({"file":file, "status": False})
+                process.allFiles = allFiles
+                process.save()
             else:
                 allFiles = process.allFiles
-            # save file list? if fail, continue in the list.
 
-
-            # execute task on files
+            logger.info('run filter file list generated')
             numberOfFiles = len(allFiles)
             i = 0
+            retval = 1
             for i in range(numberOfFiles):
                 f = allFiles[i]
                 if not f['status']:
                     fileName = f['file']
                     values['file'] = fileName
-                    res, errorText = self.run(values, process)
+                    logger.info('run filter before execute')
+                    res, errorText = self.execute(process, package, values)
+                    logger.info('run filter after execute')
                     if res == -1:
                         allFiles[i]['status'] = False
                         errorDict = {}
@@ -202,13 +165,144 @@ class bashModule(pythonModuleBase):
                         retval = -1
                     else:
                         allFiles[i]['status'] = True
+                    process.errors = errorFiles
                     process.progress = (i+1)/numberOfFiles * 100
                     process.allFiles = allFiles
                     process.save()
-        process.errors = errorFiles
-        process.save()
-        # logger.info(errorDict)
+        self.teardown(process, package, values)
         return retval
+        pass
+
+    def teardown(self, process, package, values):
+        pass
+
+    def fixCommand(self, process, values):
+
+        # search with regex.
+        prog = re.compile("#[A-z0-9_-]+") # match all variables.
+        command = process.module.command
+        result = prog.search(command)
+        while result:
+            #handle match
+            var = result.group(0)
+            var = var[1:] # skip the first hashtag when searching for a match
+            if var in values:
+                command = command[:result.start(0)] + values[var] + command[result.end(0):]
+            else:
+                command = command[:result.start(0)] + command[result.end(0):]
+                # args[i] = ""
+            result = prog.search(command)
+        logger.info(command)
+        return command.split(' ')
+
+    def AnalyseLog(self, process, log):
+        for resFilter in process.module.resultFilter:
+            pattern = resFilter['value']
+            match = re.match(pattern, log)
+
+            if match and resFilter['type'] != "Containing":
+                # logger.info(match)
+                # logger.info()
+                self.logger.error(log)
+                return (-1, log)
+            elif not match and resFilter['type'] == "Containing":
+                self.logger.error(log)
+                return (-1, log)
+        return (1, "")
+
+    def teardownLogging(self):
+        self.logger.removeHandler(self.log_hdlr)
+        self.logger.removeHandler(self.err_hdlr)
+        del self.logger, self.log_hdlr, self.err_hdlr
+
+class bashModule(pythonModuleBase):
+
+    def execute(self, process, package, values):
+        args = self.fixCommand(process, values)
+        logger.info(args)
+
+        p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+        stdout, stderr = p.communicate()
+
+        #validate output, check if there are any error, or if there are errors in the info file.
+        if stderr:
+            self.logger.error(stderr.decode('utf-8'))
+            return (-1, stderr.decode('utf-8'))
+
+        if stdout:
+            # self.logger.info('File: ' + )
+            self.logger.info(stdout.decode('utf-8'))
+            res, t = self.AnalyseLog(process, stdout.decode('utf-8'))
+            if (res == -1):
+                return (res, t)
+        return (1, "")
+
+class dockerModule(pythonModuleBase):
+
+    def setup(self, process, package, values):
+        pass
+
+    def execute(self, process, package, values):
+        #TODO fix command to allow for variables.
+        #TODO allow for running per file.
+
+        # edit path to be relative in the container
+        if 'file' in values:
+            p = values['file']
+            relative = os.path.relpath(p, package.workdir)
+            values['file'] = os.path.join(process.module.docker_mount_point, relative)
+
+        client = docker.from_env()
+        logger.info(process.module)
+        logger.info(process.module.docker_mount_point)
+        logger.info(package)
+        logger.info(package.workdir)
+        # volumes = [package.workdir]
+        host_work_dir = Variable.objects.get(name="work_dir_path_host").data
+        local_work_dir = Variable.objects.get(name="work_dir_path").data
+        unique_workdir = os.path.relpath(package.workdir, local_work_dir)
+        host_path = os.path.join(host_work_dir, unique_workdir)
+        logger.info(host_work_dir)
+        logger.info(host_path)
+        logger.info(package.path)
+        logger.info(package.workdir)
+        logger.info(unique_workdir)
+        volumes = {host_path: {'bind': process.module.docker_mount_point, 'mode': 'rw'}}
+        command = self.fixCommand(process, values)
+        # host_config=client.create_host_config(binds=volume_bindings)
+        mounts=[Mount(target=process.module.docker_mount_point, source=package.workdir, read_only=False, type='bind')]
+        logger.info(command)
+        logger.info(volumes)
+
+        container = client.containers.run(process.module.dockerImage.name, command, detach=True, volumes=volumes)
+        retval = 1
+        retText = ""
+        logger.info('docker execute')
+        container.wait()
+        log = container.logs().decode('utf-8')
+        # for log in container.logs(stream=True):
+        res, t = self.AnalyseLog(process, log)
+        if res == -1:
+            retval = -1
+            retText = t
+        else:
+            self.logger.info(log)
+
+        logger.info('docker done')
+        # errorLog = container.logs(stderr=True, stdout=False)
+        # logger.info('errorLog: -------- %s', errorLog)
+        # if errorLog:
+        #     retval = -1
+        #     logger.info(errorLog)
+        #     self.logger.error(errorLog)
+        #     retText = errorLog
+        # elif retval == -1:
+            # retText = container.logs()
+
+        logger.info('docker remove')
+        container.remove()
+        return (retval, retText)
 
 # @background(schedule=1)
 @task(name="executeProcessFlow")
@@ -229,43 +323,24 @@ def executeProcessFlow(package_id):
 
             obj = None
             res = -1
-            if process.module.type == Module.MODULE_TYPE_PYTHON:
-                # time.sleep(10)
-                # logger.debug('importing module')
-                module = importlib.import_module(process.module.python_module)
-                try:
-                    obj = module.task()
-                except Exception as e:
-                    moduleFailed(process.module.name, process, package)
-                    break
-            elif process.module.type == Module.MODULE_TYPE_COMMAND:
-                try:
-                    obj = bashModule()
-                except Exception as e:
-                    moduleFailed(process.module.name, process, package)
-                    break
-            elif process.module.type == Module.MODULE_TYPE_DOCKER:
-                # run the specified image.
-                client = docker.from_env()
-                client.containers.run(process.module.dockerImage.name, 'echo hello world')
 
-                # create a docker Module
-                # 1. check if Dockerfile is present
-                # dockerFilePath = os.path.join(process.module.tool_folder_name, 'Dockerfile')
-                # if os.path.exists(dockerFilePath) and os.path.isfile(dockerFilePath):
-                #     client = docker.from_env()
-                #     (image, buildLogs) = client.images.build(dockerFilePath)
-                #
-                # pass
-
-            # execute the module
             try:
+                if process.module.type == Module.MODULE_TYPE_PYTHON:
+                    module = importlib.import_module(process.module.python_module)
+                    obj = module.task()
+                elif process.module.type == Module.MODULE_TYPE_COMMAND:
+                    obj = bashModule()
+                elif process.module.type == Module.MODULE_TYPE_DOCKER:
+                    # run the specified image.
+                    obj = dockerModule()
+                # execute
                 obj.setupLogging(process, package)
-                res = obj.execute(process, package)
+                res = obj.run(process, package)
                 obj.teardownLogging()
             except Exception as e:
                 moduleFailed(process.module.name, process, package)
                 break
+
             if res == 1:
                 process.status=Process.PROCESS_STATUS_DONE
                 process.progress=100
@@ -283,8 +358,14 @@ def executeProcessFlow(package_id):
     package.save()
 
 def moduleFailed(name, process, package):
-    logger.error('Running module: %s failed' % name)
-    logger.error(traceback.format_exc())
+    log = 'Running module: %s failed. \n %s' % (name, traceback.format_exc())
+    logger.error(log)
+
+    # save error to error log
+    errorDict = {}
+    errorDict['file'] = 'Module error'
+    errorDict['Error'] = log
+    process.errors.append(errorDict)
     process.status = Process.PROCESS_STATUS_ERROR
     package.status = Package.PACKAGE_STATUS_ERROR
     process.save()
@@ -334,7 +415,7 @@ def periodic_scan_for_new_packages(**kwargs):
                     # if module2:
                     #     process1 = Process(order=1, package=package, module=module2, value={})
                     #     process1.save()
-                    executeProcessFlow(package.package_id)
+                    executeProcessFlow.delay(package.package_id)
 
                     # calculate
                     calculateMetricsForNewPackage(package)

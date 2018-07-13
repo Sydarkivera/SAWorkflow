@@ -12,8 +12,8 @@ import json
 import subprocess
 
 class task(pythonModuleBase):
-    def execute(self, process, package):
-        retval = 1
+    def execute(self, process, package, values):
+        retval = (1, "")
         # options: verbose, remove archive, ...
         args = ['tar' ,'-x']
         if 'verbose' in process.value:
@@ -29,7 +29,7 @@ class task(pythonModuleBase):
             self.logger.info(stdout.decode('utf-8'))
         if stderr:
             self.logger.error(stderr.decode('utf-8'))
-            retval = -1
+            retval = (-1, stderr.decode('utf-8'))
 
         if 'delete_archive' in process.value:
             if process.value['delete_archive'] == True:

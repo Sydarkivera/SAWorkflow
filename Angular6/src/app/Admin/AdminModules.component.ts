@@ -16,7 +16,6 @@ export class AdminModulesComponent {
   selected_module: any = { module_id: -1 };
   title: string = "";
   formJson: string = "";
-  commandJson: string = "";
   formJsonError = "";
   commandJsonError = "";
   resultFilters = [];
@@ -30,6 +29,8 @@ export class AdminModulesComponent {
 
   browserActive = false;
   browserPath = "";
+
+  docsActive = false;
 
   constructor(private apiService: APIService) {
   }
@@ -52,7 +53,6 @@ export class AdminModulesComponent {
     this.title = this.selected_module.name;
     // store the jsonfields as string temporarily to allow for
     this.formJson = this.getJson(this.selected_module.form);
-    this.commandJson = this.getJson(this.selected_module.command);
   }
 
   addNewModule() {
@@ -60,7 +60,6 @@ export class AdminModulesComponent {
     this.selected_module = { module_id: -2, form: [], type: "Command" };
     this.title = "New module";
     this.formJson = "[]";
-    this.commandJson = "[]";
   }
 
   deleteModule(dmodule) {
@@ -109,14 +108,14 @@ export class AdminModulesComponent {
     }
 
     //validate command json input
-    try {
-      this.selected_module.command = JSON.parse(this.commandJson);
-      this.commandJsonError = "";
-    } catch (e) {
-      console.log("Error", e.message);
-      this.commandJsonError = e.message;
-      return false;
-    }
+    // try {
+    //   this.selected_module.command = JSON.parse(this.commandJson);
+    //   this.commandJsonError = "";
+    // } catch (e) {
+    //   console.log("Error", e.message);
+    //   this.commandJsonError = e.message;
+    //   return false;
+    // }
 
     //only pass the values that are defined to the server.
     let data = {};
@@ -253,5 +252,8 @@ export class AdminModulesComponent {
     this.browserActive = true;
   }
 
+  openFormJsonDocs() {
+    this.docsActive = true;
+  }
 
 }

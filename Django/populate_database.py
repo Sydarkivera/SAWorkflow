@@ -50,7 +50,7 @@ module3 = Module(name="ClamAV",
                  type='0',
                  form='[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found", "value":"-i"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove", "value":"--remove"}]',
                  # command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
-                 command="clamscan -r #only_found #remove #file",
+                 command="clamscan #only_found #remove #file",
                  module_id=2,
                  tool_folder_name="ClamAV"
                  )
@@ -70,10 +70,12 @@ module5 = Module(name="DROID",
                  type='2',
                  form='[]',
                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 # command="",
+                 command="/droid.sh -a #file -p /profile.txt",
+                 # command="ls -al /workdir",
                  module_id=4,
-                 filter='.*',
-                 tool_folder_name="DROID"
+                 filter='.*(\.pdf)',
+                 tool_folder_name="DROID",
+                 docker_mount_point="/workdir"
                  )
 module5.save()
 # module4 = Module(name="Untar cmd",
@@ -99,6 +101,18 @@ process2 = Process(order=1,
                    template=template1,
                    module=module2)
 process2.save()
+# process3 = Process(order=2,
+#                    template=template1,
+#                    module=module3)
+# process3.save()
+# process4 = Process(order=3,
+#                    template=template1,
+#                    module=module4)
+# process4.save()
+# process5 = Process(order=4,
+#                    template=template1,
+#                    module=module5)
+# process5.save()
 
 template2 = Template(name="Default Done",
                      template_id=1)
@@ -125,6 +139,8 @@ var.save()
 var = Variable(name="tools_path", data="/code/tools")
 var.save()
 var = Variable(name="premis_file_name", data="app_log.xml")
+var.save()
+var = Variable(name="work_dir_path_host", data="/Users/axenu/Sydarkviera/SAWorkflow/Django/workdir/")
 var.save()
 
 # default test data, TODO remove in production
@@ -155,8 +171,10 @@ graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
 graph.save()
 
 #create default docker images
-image = DockerImage(id=0, name="droid", mountpoint="/workdir")
+image = DockerImage(id=0, name="droid", mountpoint="/workdir/")
 image.save()
+module5.dockerImage = image
+module5.save()
 
 
 # create default admin users
