@@ -40,6 +40,7 @@ export class PackageComponent {
        this.id = params['id'];
        this.apiService.getPackage(this.id).subscribe((data) => {
          this.package = data;
+         console.log(data['processes'])
        });
     });
     // load modules right away
@@ -81,7 +82,7 @@ export class PackageComponent {
         data.push({"order": item.order, "process_id":item.process_id});
       }
     }
-    this.apiService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+    this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe((data) => {
     });
 
     this.package.processes = this.package.processes.sort((a, b) => {
@@ -112,6 +113,23 @@ export class PackageComponent {
       })
   }
 
+  // get a process value. use default if none are set
+  getProcessValue(id) {
+    let values = this.selected_process.value;
+    if (id in values) {
+      return values[id];
+    }
+    let form = this.selected_process.form;
+    for (let i in form) {
+      if (form[i].identifier == id) {
+        if ("default" in form[i]) {
+          return form[i].default;
+        }
+      }
+    }
+    return "";
+  }
+
   //check if the list of processes is empty
   isListEmpty() {
     if (this.package == undefined || this.package.processes == undefined) {
@@ -140,7 +158,7 @@ export class PackageComponent {
         break;
       }
     }
-    this.apiService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+    this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe((data) => {
     });
 
     this.package.processes = this.package.processes.sort((a, b) => {
@@ -167,7 +185,7 @@ export class PackageComponent {
         break;
       }
     }
-    this.apiService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+    this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe((data) => {
     });
 
     this.package.processes = this.package.processes.sort((a, b) => {
@@ -208,7 +226,7 @@ export class PackageComponent {
       }
 
       //submit reorder:
-      this.apiService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+      this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe((data) => {
       });
 
       //add temporary process
@@ -259,7 +277,7 @@ export class PackageComponent {
         data.push({"order": this.package.processes[movedProcessIndex].order, "process_id":this.package.processes[movedProcessIndex].process_id});
       }
       // push changes to api
-      this.apiService.reorderProcesses(data, this.package.package_id).subscribe((data) => {
+      this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe((data) => {
       });
 
       this.package.processes = this.package.processes.filter((item) => {

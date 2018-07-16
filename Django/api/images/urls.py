@@ -11,4 +11,7 @@ from api.images import views
 
 urlpatterns = [
     url(r'^$', views.image_list),
+    url(r'^(?P<image_id>[0-9]+)/$', views.image_detail),
+    url(r'^(?P<image_id>[0-9]+)/export/$', views.image_export),
+    url(r'^import/$', views.image_import),
 ]

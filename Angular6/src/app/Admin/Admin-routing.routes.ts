@@ -6,6 +6,7 @@ import { AdminHeaderComponent } from './AdminHeader.component';
 import { AdminModulesComponent } from './AdminModules.component';
 import { AdminGlobalComponent } from './AdminGlobal.component';
 import { AdminTemplatesComponent } from './AdminTemplates.component';
+import { AdminImagesComponent } from './AdminImages.component';
 
 
 export const adminRoutes: Routes = [
@@ -14,5 +15,6 @@ export const adminRoutes: Routes = [
     { path: 'modules', component: AdminModulesComponent},
     { path: 'global', component: AdminGlobalComponent},
     { path: 'templates', component: AdminTemplatesComponent},
+    { path: 'images', component: AdminImagesComponent},
   ]}
 ];

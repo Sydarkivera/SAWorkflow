@@ -131,6 +131,23 @@ export class AdminTemplatesComponent {
     })
   }
 
+  // get a process value. use default if none are set
+  getProcessValue(id) {
+    let values = this.selected_process.value;
+    if (id in values) {
+      return values[id];
+    }
+    let form = this.selected_process.form;
+    for (let i in form) {
+      if (form[i].identifier == id) {
+        if ("default" in form[i]) {
+          return form[i].default;
+        }
+      }
+    }
+    return "";
+  }
+
   // Delete a process
   deleteProcess(process) {
     this.apiService.deleteProcess(process.process_id).subscribe((data) => {
@@ -147,7 +164,7 @@ export class AdminTemplatesComponent {
         data.push({ "order": item.order, "process_id": item.process_id });
       }
     }
-    this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+    this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe((data) => {
       // console.log(data);
     });
     // update the visuals
@@ -186,7 +203,7 @@ export class AdminTemplatesComponent {
         break;
       }
     }
-    this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+    this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe((data) => {
       // console.log(data);
     });
 
@@ -211,7 +228,7 @@ export class AdminTemplatesComponent {
         break;
       }
     }
-    this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+    this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe((data) => {
       // console.log(data);
     });
 
@@ -253,7 +270,7 @@ export class AdminTemplatesComponent {
       }
 
       //submit reorder:
-      this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+      this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe((data) => {
         // console.log(data);
       });
 
@@ -307,7 +324,7 @@ export class AdminTemplatesComponent {
         data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
       }
       // push changes to api
-      this.apiService.reorderProcesses(data, this.selected_template_id).subscribe((data) => {
+      this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe((data) => {
         // console.log(data);
       });
       this.onRelease(undefined);

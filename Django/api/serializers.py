@@ -139,4 +139,4 @@ class DockerImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = DockerImage
-        fields = ('id', 'name', 'mountpoint')
+        fields = ('id', 'name', 'mountpoint', 'label')

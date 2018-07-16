@@ -35,6 +35,7 @@ from io import UnsupportedOperation
 import time
 import tarfile
 import docker
+from docker import APIClient
 
 
 from logging import getLogger
@@ -58,3 +59,71 @@ def image_list(request):
     return JsonResponse(serializer.data, safe=False)
     # logger.info(res)
     # return HttpResponse(status=200)
+
+@api_view(['POST', 'DELETE'])
+def image_detail(request, image_id):
+    """
+    save changes to an image
+    """
+    image = get_object_or_404(DockerImage, pk=image_id)
+    if request.method == 'POST':
+        serializer = DockerImageSerializer(image, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return HttpResponse(status=204)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method == 'DELETE':
+        if not image.modules.all().exists():
+            image.delete()
+            return HttpResponse(status=200)
+        else:
+            return HttpResponse(status=409)
+
+@api_view(['GET'])
+def image_export(request, image_id):
+    """
+    Export an image as a tar with docker save
+    """
+    image = get_object_or_404(DockerImage, pk=image_id)
+    if request.method == 'GET':
+        client = docker.from_env()
+        logger.info(client)
+        cli = APIClient(base_url='unix://var/run/docker.sock')
+        d_image = cli.get_image(image.name)
+
+        # response = HttpResponse(d_image.save(), content_type='application/x-tar')
+
+        # # response['Content-Length'] = file_size
+        # return response
+
+        response = StreamingHttpResponse(d_image)
+        response['Content-Type'] = 'application/x-tar'
+        response['Content-Disposition'] = 'attachment; filename=\"' + image.name + '.tar\"'
+        return response
+
+
+        return HttpResponse(status=204)
+        # return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def image_import(request):
+    """
+    import a docker image
+    """
+    if request.method == 'POST':
+        docker_file = request.FILES['file']
+        client = docker.from_env()
+        images = client.images.load(docker_file)
+
+        logger.info(request.data)
+
+        if len(images) > 0:
+            logger.info(images[0])
+            logger.info(images[0].tags)
+            dImage = DockerImage(name=images[0].tags[0], label=request.data['label'])
+            dImage.save()
+
+            serializer = DockerImageSerializer(dImage)
+            return JsonResponse(serializer.data, safe=False)
+
+    return Response(status=status.HTTP_400_BAD_REQUEST)

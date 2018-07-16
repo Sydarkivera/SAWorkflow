@@ -10,6 +10,7 @@ import { MessageModule } from '../Components/Message/Message.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FileBrowserModule } from '../Components/FileBrowser/FileBrowser.module';
 
 import { APIService } from '../Services/api.service';
 
@@ -21,9 +22,11 @@ describe('AdminModules', () => {
   let fixture: ComponentFixture<AdminModulesComponent>;
 
   const getModulesData = require('../Services/mock/getModules.json')
-  const apiService = jasmine.createSpyObj('APIService', ['getModules'])
+  const getDockerImagesData = [];
+  const apiService = jasmine.createSpyObj('APIService', ['getModules', 'getDockerImages'])
 
   let getModulesSpy = apiService.getModules.and.returnValue(asyncData(getModulesData))
+  let getDockerImagesSpy = apiService.getDockerImages.and.returnValue(asyncData(getDockerImagesData))
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -37,7 +40,8 @@ describe('AdminModules', () => {
         MessageModule,
         FormsModule,
         HttpClientModule,
-        BrowserAnimationsModule
+        BrowserAnimationsModule,
+        FileBrowserModule
       ],
       providers: [
         { provide: APIService, useValue: apiService }

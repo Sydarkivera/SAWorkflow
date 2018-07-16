@@ -37,7 +37,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
 /* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
 /* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _AdminImages_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AdminImages.component */ "./src/app/Admin/AdminImages.component.ts");
 // Components
+
 
 
 
@@ -48,6 +50,7 @@ var adminRoutes = [
             { path: 'modules', component: _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__["AdminModulesComponent"] },
             { path: 'global', component: _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__["AdminGlobalComponent"] },
             { path: 'templates', component: _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_3__["AdminTemplatesComponent"] },
+            { path: 'images', component: _AdminImages_component__WEBPACK_IMPORTED_MODULE_4__["AdminImagesComponent"] },
         ] }
 ];
 
@@ -79,7 +82,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
 /* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
 /* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-/* harmony import */ var _AdminContainers_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./AdminContainers.component */ "./src/app/Admin/AdminContainers.component.ts");
+/* harmony import */ var _AdminImages_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./AdminImages.component */ "./src/app/Admin/AdminImages.component.ts");
 /* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -128,7 +131,7 @@ var AdminModule = /** @class */ (function () {
                 _AdminModules_component__WEBPACK_IMPORTED_MODULE_11__["AdminModulesComponent"],
                 _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_12__["AdminGlobalComponent"],
                 _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_13__["AdminTemplatesComponent"],
-                _AdminContainers_component__WEBPACK_IMPORTED_MODULE_14__["AdminContainersComponent"]
+                _AdminImages_component__WEBPACK_IMPORTED_MODULE_14__["AdminImagesComponent"]
             ],
             providers: [
                 _Services_api_service__WEBPACK_IMPORTED_MODULE_15__["APIService"]
@@ -136,78 +139,6 @@ var AdminModule = /** @class */ (function () {
         })
     ], AdminModule);
     return AdminModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Admin/AdminContainers.component.html":
-/*!******************************************************!*\
-  !*** ./src/app/Admin/AdminContainers.component.html ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<p>\n  Containers\n</p>\n"
-
-/***/ }),
-
-/***/ "./src/app/Admin/AdminContainers.component.sass":
-/*!******************************************************!*\
-  !*** ./src/app/Admin/AdminContainers.component.sass ***!
-  \******************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n"
-
-/***/ }),
-
-/***/ "./src/app/Admin/AdminContainers.component.ts":
-/*!****************************************************!*\
-  !*** ./src/app/Admin/AdminContainers.component.ts ***!
-  \****************************************************/
-/*! exports provided: AdminContainersComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminContainersComponent", function() { return AdminContainersComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var AdminContainersComponent = /** @class */ (function () {
-    function AdminContainersComponent(apiService) {
-        this.apiService = apiService;
-        this.work_dir_path = "";
-        this.packages_path = "";
-        this.premis_file_name = "";
-        this.messageVisible = false;
-    }
-    AdminContainersComponent.prototype.ngOnInit = function () {
-        // this.apiService.getContainers().subscribe((data) => {
-        // });
-    };
-    AdminContainersComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'Admin-containers',
-            template: __webpack_require__(/*! ./AdminContainers.component.html */ "./src/app/Admin/AdminContainers.component.html"),
-            styles: [__webpack_require__(/*! ./AdminContainers.component.sass */ "./src/app/Admin/AdminContainers.component.sass")]
-        }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
-    ], AdminContainersComponent);
-    return AdminContainersComponent;
 }());
 
 
@@ -359,6 +290,164 @@ var AdminHeaderComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], AdminHeaderComponent);
     return AdminHeaderComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminImages.component.html":
+/*!**************************************************!*\
+  !*** ./src/app/Admin/AdminImages.component.html ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selected_image.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selected_image.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selected_image.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selected_image.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selected_image.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selected_image.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of forkdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selected_image.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminImages.component.sass":
+/*!**************************************************!*\
+  !*** ./src/app/Admin/AdminImages.component.sass ***!
+  \**************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n"
+
+/***/ }),
+
+/***/ "./src/app/Admin/AdminImages.component.ts":
+/*!************************************************!*\
+  !*** ./src/app/Admin/AdminImages.component.ts ***!
+  \************************************************/
+/*! exports provided: AdminImagesComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminImagesComponent", function() { return AdminImagesComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AdminImagesComponent = /** @class */ (function () {
+    function AdminImagesComponent(apiService) {
+        var _this = this;
+        this.apiService = apiService;
+        this.selected_image = { id: -1 };
+        this.label = "";
+        this.name = "";
+        this.mountpoint = "";
+        this.saveSuccess = false;
+        this.fileName = "Select file...";
+        this.fileStatus = 0;
+        this.modalactive = false;
+        this.newLabel = "";
+        this.modalMessage = false;
+        this.uploadDone = 0;
+        this.uploadTotal = 0;
+        this.errorVisible = false;
+        this.apiService.getDockerImages().subscribe(function (data) {
+            _this.images = data;
+        });
+    }
+    AdminImagesComponent.prototype.ngOnInit = function () {
+    };
+    AdminImagesComponent.prototype.selectImage = function (image) {
+        this.selected_image = image;
+    };
+    AdminImagesComponent.prototype.save = function () {
+        var _this = this;
+        this.apiService.saveDockerImage(this.selected_image.id, this.selected_image).subscribe(function (data) {
+            _this.saveSuccess = true;
+        });
+    };
+    AdminImagesComponent.prototype.openNewImageModal = function () {
+        this.modalactive = true;
+    };
+    //validate the selected file, if it's a tar accept it, else return error.
+    AdminImagesComponent.prototype.fileSelected = function (e) {
+        if (e.target.files.length > 0) {
+            //check fileFormat
+            if (!e.target.files[0].name.endsWith('.tar')) {
+                console.error('error, wrong fileType');
+                this.fileName = "Select file...";
+                this.fileStatus = 1;
+            }
+            else {
+                this.file = e.target.files[0];
+                this.fileName = this.file.name;
+                this.fileStatus = 2;
+            }
+        }
+    };
+    AdminImagesComponent.prototype.importImage = function () {
+        var _this = this;
+        // a file is selectd, and the user has pressed upload. Submit the data to the backend.
+        if (!this.file.name.endsWith('.tar')) {
+            console.error('error, wrong fileType');
+            return;
+        }
+        if (this.newLabel == "") {
+            console.error('error, no name specified');
+            return;
+        }
+        this.modalMessage = true;
+        var formData = new FormData();
+        formData.append('file', this.file, 'import.tar');
+        formData.append('label', this.newLabel);
+        this.apiService.importDockerImage(formData).subscribe(function (data) {
+            // if (data.type == 4) {
+            //   this.modules = data['body'] as [any];
+            // }
+            // console.log(data);
+            if (data.type == 4) {
+                _this.images.push(data['body']);
+                _this.modalactive = false;
+                _this.fileName = "Select file...";
+            }
+            else if (data.type == 1) {
+                _this.uploadDone = data['loaded'];
+                _this.uploadTotal = data['total'];
+            }
+        });
+    };
+    AdminImagesComponent.prototype.deleteImage = function (image) {
+        var _this = this;
+        this.apiService.deleteDockerImage(image.id).subscribe(function (data) {
+            console.log(data);
+            _this.images = _this.images.filter(function (item) {
+                if (item.id == image.id) {
+                    return false;
+                }
+                return true;
+            });
+        }, function (error) {
+            if (error.status == 409) {
+                _this.errorVisible = true;
+            }
+        });
+    };
+    AdminImagesComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'admin-images',
+            template: __webpack_require__(/*! ./AdminImages.component.html */ "./src/app/Admin/AdminImages.component.html"),
+            styles: [__webpack_require__(/*! ./AdminImages.component.sass */ "./src/app/Admin/AdminImages.component.sass")]
+        }),
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
+    ], AdminImagesComponent);
+    return AdminImagesComponent;
 }());
 
 
@@ -666,7 +755,7 @@ var AdminModulesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label>\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal *ngIf=\"selected_template_id != -1\" [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
+module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal *ngIf=\"selected_template_id != -1\" [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -814,6 +903,22 @@ var AdminTemplatesComponent = /** @class */ (function () {
             // console.log(data);
         });
     };
+    // get a process value. use default if none are set
+    AdminTemplatesComponent.prototype.getProcessValue = function (id) {
+        var values = this.selected_process.value;
+        if (id in values) {
+            return values[id];
+        }
+        var form = this.selected_process.form;
+        for (var i in form) {
+            if (form[i].identifier == id) {
+                if ("default" in form[i]) {
+                    return form[i].default;
+                }
+            }
+        }
+        return "";
+    };
     // Delete a process
     AdminTemplatesComponent.prototype.deleteProcess = function (process) {
         this.apiService.deleteProcess(process.process_id).subscribe(function (data) {
@@ -830,7 +935,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 data.push({ "order": item.order, "process_id": item.process_id });
             }
         }
-        this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+        this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe(function (data) {
             // console.log(data);
         });
         // update the visuals
@@ -867,7 +972,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 break;
             }
         }
-        this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+        this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe(function (data) {
             // console.log(data);
         });
         this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
@@ -890,7 +995,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 break;
             }
         }
-        this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+        this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe(function (data) {
             // console.log(data);
         });
         this.selected_template.processes = this.selected_template.processes.sort(function (a, b) {
@@ -926,7 +1031,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 }
             }
             //submit reorder:
-            this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe(function (data) {
                 // console.log(data);
             });
             //add process temporarily until the request is completed
@@ -978,7 +1083,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 data.push({ "order": this.selected_template.processes[movedProcessIndex].order, "process_id": this.selected_template.processes[movedProcessIndex].process_id });
             }
             // push changes to api
-            this.apiService.reorderProcesses(data, this.selected_template_id).subscribe(function (data) {
+            this.apiService.reorderTemplateProcesses(data, this.selected_template_id).subscribe(function (data) {
                 // console.log(data);
             });
             this.onRelease(undefined);
@@ -1659,7 +1764,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "MessageModule", function() { return MessageModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _Message_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Message.component */ "./src/app/Components/Message/Message.component.ts");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
+/* harmony import */ var _Message_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Message.component */ "./src/app/Components/Message/Message.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1667,6 +1773,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 //angular modules
+
 
 
 //declarations
@@ -1677,13 +1784,14 @@ var MessageModule = /** @class */ (function () {
     MessageModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"]
+                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_2__["BrowserAnimationsModule"]
             ],
             declarations: [
-                _Message_component__WEBPACK_IMPORTED_MODULE_2__["MessageComponent"]
+                _Message_component__WEBPACK_IMPORTED_MODULE_3__["MessageComponent"]
             ],
             providers: [],
-            exports: [_Message_component__WEBPACK_IMPORTED_MODULE_2__["MessageComponent"]]
+            exports: [_Message_component__WEBPACK_IMPORTED_MODULE_3__["MessageComponent"]]
         })
     ], MessageModule);
     return MessageModule;
@@ -1786,7 +1894,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Components/Modal/Modal.component.ts");
+/* harmony import */ var _Message_Message_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
+/* harmony import */ var _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Modal/Modal.component */ "./src/app/Components/Modal/Modal.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1798,6 +1907,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 //imports
+
 //declarations
 
 var ModalModule = /** @class */ (function () {
@@ -1809,13 +1919,14 @@ var ModalModule = /** @class */ (function () {
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
                 _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
+                _Message_Message_module__WEBPACK_IMPORTED_MODULE_4__["MessageModule"],
             ],
             declarations: [
-                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_5__["ModalComponent"]
             ],
             providers: [],
             exports: [
-                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_4__["ModalComponent"]
+                _Modal_Modal_component__WEBPACK_IMPORTED_MODULE_5__["ModalComponent"]
             ]
         })
     ], ModalModule);
@@ -3000,7 +3111,7 @@ var NotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label>\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n"
+module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -3064,6 +3175,7 @@ var PackageComponent = /** @class */ (function () {
             _this.id = params['id'];
             _this.apiService.getPackage(_this.id).subscribe(function (data) {
                 _this.package = data;
+                console.log(data['processes']);
             });
         });
         // load modules right away
@@ -3103,7 +3215,7 @@ var PackageComponent = /** @class */ (function () {
                 data.push({ "order": item.order, "process_id": item.process_id });
             }
         }
-        this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
+        this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -3130,6 +3242,22 @@ var PackageComponent = /** @class */ (function () {
         var data = { "value": values };
         this.apiService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
         });
+    };
+    // get a process value. use default if none are set
+    PackageComponent.prototype.getProcessValue = function (id) {
+        var values = this.selected_process.value;
+        if (id in values) {
+            return values[id];
+        }
+        var form = this.selected_process.form;
+        for (var i in form) {
+            if (form[i].identifier == id) {
+                if ("default" in form[i]) {
+                    return form[i].default;
+                }
+            }
+        }
+        return "";
     };
     //check if the list of processes is empty
     PackageComponent.prototype.isListEmpty = function () {
@@ -3159,7 +3287,7 @@ var PackageComponent = /** @class */ (function () {
                 break;
             }
         }
-        this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
+        this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -3184,7 +3312,7 @@ var PackageComponent = /** @class */ (function () {
                 break;
             }
         }
-        this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
+        this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
         });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -3219,7 +3347,7 @@ var PackageComponent = /** @class */ (function () {
                 }
             }
             //submit reorder:
-            this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
+            this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
             });
             //add temporary process
             var newProcess = {
@@ -3268,7 +3396,7 @@ var PackageComponent = /** @class */ (function () {
                 data.push({ "order": this.package.processes[movedProcessIndex].order, "process_id": this.package.processes[movedProcessIndex].process_id });
             }
             // push changes to api
-            this.apiService.reorderProcesses(data, this.package.package_id).subscribe(function (data) {
+            this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
             });
             this.package.processes = this.package.processes.filter(function (item) {
                 return item['type'] != 'placeholder';
@@ -4233,8 +4361,11 @@ var APIService = /** @class */ (function () {
     APIService.prototype.addProcess = function (process) {
         return this.http.post('/api/process/', process);
     };
-    APIService.prototype.reorderProcesses = function (data, template_id) {
+    APIService.prototype.reorderTemplateProcesses = function (data, template_id) {
         return this.http.put('/api/template/' + template_id + '/process/', data);
+    };
+    APIService.prototype.reorderPackageProcesses = function (data, package_id) {
+        return this.http.put('/api/package/' + package_id + '/process/', data);
     };
     APIService.prototype.deleteProcess = function (id) {
         return this.http.delete('/api/process/' + id + '/');
@@ -4295,6 +4426,18 @@ var APIService = /** @class */ (function () {
     //docker
     APIService.prototype.getDockerImages = function () {
         return this.http.get('/api/image/');
+    };
+    APIService.prototype.saveDockerImage = function (image_id, data) {
+        return this.http.post('/api/image/' + image_id + '/', data);
+    };
+    APIService.prototype.importDockerImage = function (formData) {
+        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/image/import/', formData, {
+            reportProgress: true
+        });
+        return this.http.request(req);
+    };
+    APIService.prototype.deleteDockerImage = function (image_id) {
+        return this.http.delete('/api/image/' + image_id + '/');
     };
     APIService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
@@ -4402,7 +4545,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <!-- A sidebar with global navigation -->\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n\n    <!-- Main window, all content will be located inside <router-outlet> -->\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <!-- A sidebar with global navigation -->\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/images\">\n                  <i class=\"material-icons\">view_list</i>\n                  Docker images\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n\n    <!-- Main window, all content will be located inside <router-outlet> -->\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
 
 /***/ }),
 

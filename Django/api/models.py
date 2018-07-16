@@ -37,6 +37,7 @@ class Template(models.Model):
 class DockerImage(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, default='')
+    label = models.CharField(max_length=100, blank=True, default='')
     mountpoint = models.CharField(max_length=100, blank=True, default='') # example, mount at /workdir in conainer
 
 class Package(models.Model):

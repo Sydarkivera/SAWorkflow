@@ -59,8 +59,12 @@ export class APIService {
     return this.http.post('/api/process/', process);
   }
 
-  reorderProcesses(data, template_id) {
+  reorderTemplateProcesses(data, template_id) {
     return this.http.put('/api/template/' + template_id + '/process/', data);
+  }
+
+  reorderPackageProcesses(data, package_id) {
+    return this.http.put('/api/package/'+package_id+'/process/', data);
   }
 
   deleteProcess(id) {
@@ -143,5 +147,20 @@ export class APIService {
   //docker
   getDockerImages() {
     return this.http.get('/api/image/');
+  }
+
+  saveDockerImage(image_id, data) {
+    return this.http.post('/api/image/' + image_id + '/', data);
+  }
+
+  importDockerImage(formData) {
+    const req = new HttpRequest('POST', '/api/image/import/', formData, {
+      reportProgress: true
+    });
+    return this.http.request(req);
+  }
+
+  deleteDockerImage(image_id) {
+    return this.http.delete('/api/image/' + image_id + '/');
   }
 }

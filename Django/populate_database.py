@@ -171,7 +171,7 @@ graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
 graph.save()
 
 #create default docker images
-image = DockerImage(id=0, name="droid", mountpoint="/workdir/")
+image = DockerImage(id=0, name="droid", mountpoint="/workdir/", label="Droid check")
 image.save()
 module5.dockerImage = image
 module5.save()
