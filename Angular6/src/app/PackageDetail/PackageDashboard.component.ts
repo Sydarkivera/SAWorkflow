@@ -60,6 +60,7 @@ export class PackageDashboardComponent {
     this.route.parent.params.subscribe(params => {
        this.id = +params['id'];
        this.apiService.getPackage(this.id).subscribe((data) => {
+         console.log(data)
          this.package = data;
          let res = []
          for (let key in this.package.statistics.fileTypes) {

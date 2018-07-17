@@ -21,6 +21,9 @@ export class PackageStatusComponent {
   modalType = 'info';
   modalProcess = undefined;
 
+  messageActive = false;
+  messageText = "";
+
   constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router) {
     this.package = {
       name: "Name"
@@ -62,10 +65,14 @@ export class PackageStatusComponent {
 
   startWorkflow() {
     this.apiService.startWorkflow(this.package.package_id);
+    this.messageActive = true;
+    this.messageText = "Workflow is now started"
     this.updateData();
   }
 
   finishPackage() {
+    this.messageActive = true;
+    this.messageText = "Package is now marked as finished. Depending on your configuration is is now safe to delete it"
     this.apiService.finishPackage(this.package.package_id);
     this.updateData();
   }
@@ -73,13 +80,20 @@ export class PackageStatusComponent {
   updateData() {
     this.apiService.getPackage(this.id).subscribe((data) => {
       this.package = data;
+      console.log(data);
     });
   }
 
   removePackage() {
-    this.apiService.removePackage(this.id).subscribe((data) => {
-    });
-    this.router.navigate(['packages']);
+    if (confirm("Are you sure to delete \"" + this.package.name + "\"\n This action is irreversible")) {
+      this.apiService.removePackage(this.id).subscribe((data) => {
+        this.messageActive = true;
+        this.messageText = "Package was successfully deleted. You will now be redirected to packagelist"
+      });
+      setTimeout(() => {
+        this.router.navigate(['packages']);
+      }, 2000)
+    }
   }
 
   sanitizeLog(data) {

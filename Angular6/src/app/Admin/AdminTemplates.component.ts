@@ -75,23 +75,25 @@ export class AdminTemplatesComponent {
 
   // delete a template
   deleteTemplate(template) {
-    this.apiService.deleteTemplate(template.template_id).subscribe((data) => {
-      // console.log(data);
-      this.templates = this.templates.filter((item) => {
-        if (item.template_id == template.template_id) {
-          return false;
+    if (confirm("Are you sure to delete \"" + template.name + "\"\n This action is irreversible")) {
+      this.apiService.deleteTemplate(template.template_id).subscribe((data) => {
+        // console.log(data);
+        this.templates = this.templates.filter((item) => {
+          if (item.template_id == template.template_id) {
+            return false;
+          }
+          return true;
+        })
+        this.selected_process = undefined;
+        this.selected_process_id = -1;
+      }, (error) => {
+        console.log(error)
+        if (error.status == 409) {
+          console.log('409 error, display error message')
+          this.errorVisible = true;
         }
-        return true;
       })
-      this.selected_process = undefined;
-      this.selected_process_id = -1;
-    }, (error) => {
-      console.log(error)
-      if (error.status == 409) {
-        console.log('409 error, display error message')
-        this.errorVisible = true;
-      }
-    })
+    }
   }
 
   // select a template. If it is already selected, unselect it

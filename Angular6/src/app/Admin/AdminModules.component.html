@@ -141,7 +141,7 @@
           <label class="input-label">
             Docker image:
             <select class="custom-select my-1 my-auto" [(ngModel)]="selected_module.dockerImage">
-              <option *ngFor="let image of images" value="{{image.id}}">{{image.name}}</option>
+              <option *ngFor="let image of images" value="{{image.id}}">{{image.label}}</option>
             </select>
           </label>
           <div class="form-group">

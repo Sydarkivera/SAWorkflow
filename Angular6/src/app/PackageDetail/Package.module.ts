@@ -18,6 +18,7 @@ import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
 import { NavbarModule } from '../Components/Navbar/Navbar.module';
 import { ModalModule } from '../Components/Modal/Modal.module';
 import { FileBrowserModule } from '../Components/FileBrowser/FileBrowser.module';
+import { MessageModule } from '../Components/Message/Message.module';
 
 //services
 import { APIService } from '../Services/api.service';
@@ -31,7 +32,8 @@ import { APIService } from '../Services/api.service';
     TooltipModule,
     NavbarModule,
     ModalModule,
-    FileBrowserModule
+    FileBrowserModule,
+    MessageModule
   ],
   declarations: [
     PackageComponent,

@@ -105,19 +105,21 @@ export class AdminImagesComponent {
   }
 
   deleteImage(image) {
-    this.apiService.deleteDockerImage(image.id).subscribe((data) => {
-      console.log(data);
-      this.images = this.images.filter((item) => {
-        if (item.id == image.id) {
-          return false;
+    if (confirm("Are you sure to delete " + image.label + "\n This action is irreversible")) {
+      this.apiService.deleteDockerImage(image.id).subscribe((data) => {
+        console.log(data);
+        this.images = this.images.filter((item) => {
+          if (item.id == image.id) {
+            return false;
+          }
+          return true;
+        });
+      }, (error) => {
+        if (error.status == 409) {
+          this.errorVisible = true;
         }
-        return true;
       });
-    }, (error) => {
-      if (error.status == 409) {
-        this.errorVisible = true;
-      }
-    });
+    }
   }
 
 }

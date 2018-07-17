@@ -20,6 +20,8 @@ import pwd
 import re
 import docker
 from docker.types import Mount
+import uuid
+import shutil
 
 from celery import Celery
 from celery.schedules import crontab
@@ -244,8 +246,6 @@ class dockerModule(pythonModuleBase):
         pass
 
     def execute(self, process, package, values):
-        #TODO fix command to allow for variables.
-        #TODO allow for running per file.
 
         # edit path to be relative in the container
         if 'file' in values:
@@ -254,26 +254,14 @@ class dockerModule(pythonModuleBase):
             values['file'] = os.path.join(process.module.docker_mount_point, relative)
 
         client = docker.from_env()
-        logger.info(process.module)
-        logger.info(process.module.docker_mount_point)
-        logger.info(package)
-        logger.info(package.workdir)
-        # volumes = [package.workdir]
+
         host_work_dir = Variable.objects.get(name="work_dir_path_host").data
         local_work_dir = Variable.objects.get(name="work_dir_path").data
         unique_workdir = os.path.relpath(package.workdir, local_work_dir)
         host_path = os.path.join(host_work_dir, unique_workdir)
-        logger.info(host_work_dir)
-        logger.info(host_path)
-        logger.info(package.path)
-        logger.info(package.workdir)
-        logger.info(unique_workdir)
+
         volumes = {host_path: {'bind': process.module.docker_mount_point, 'mode': 'rw'}}
         command = self.fixCommand(process, values)
-        # host_config=client.create_host_config(binds=volume_bindings)
-        mounts=[Mount(target=process.module.docker_mount_point, source=package.workdir, read_only=False, type='bind')]
-        logger.info(command)
-        logger.info(volumes)
 
         container = client.containers.run(process.module.dockerImage.name, command, detach=True, volumes=volumes)
         retval = 1
@@ -290,15 +278,6 @@ class dockerModule(pythonModuleBase):
             self.logger.info(log)
 
         logger.info('docker done')
-        # errorLog = container.logs(stderr=True, stdout=False)
-        # logger.info('errorLog: -------- %s', errorLog)
-        # if errorLog:
-        #     retval = -1
-        #     logger.info(errorLog)
-        #     self.logger.error(errorLog)
-        #     retText = errorLog
-        # elif retval == -1:
-            # retText = container.logs()
 
         logger.info('docker remove')
         container.remove()
@@ -407,50 +386,68 @@ def periodic_scan_for_new_packages(**kwargs):
                             process.template = None
                             process.package = package
                             process.save()
-                    # module = Module.objects.get(name="Setup workdir")
-                    # if module:
-                    #     process1 = Process(order=0, package=package, module=module, value={})
-                    #     process1.save()
-                    # module2 = Module.objects.get(name="Untar archive")
-                    # if module2:
-                    #     process1 = Process(order=1, package=package, module=module2, value={})
-                    #     process1.save()
-                    executeProcessFlow.delay(package.package_id)
 
                     # calculate
                     calculateMetricsForNewPackage(package)
 
+                    executeProcessFlow.delay(package.package_id)
+
+
 
 def calculateMetricsForNewPackage(package):
+    """
+    Unpack the package to a temporary area to analyse it's content, then remove the copy
+    """
 
-    package = Package.objects.get(pk=package.package_id)
+    workdir_path = Variable.objects.get(name='work_dir_path').data
+    dest = os.path.join(workdir_path, str(uuid.uuid4()))
+
+    # copy package
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+    shutil.copy(package.path, dest)
+
+    # untar package
+    args = ['tar' ,'-x']
+    args = args + ['-f', os.path.join(dest, package.file_name)]
+    args = args + ['-C', dest]
+
+    p = subprocess.Popen(args, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
+    stdout, stderr = p.communicate()
+    if stdout:
+        self.logger.info(stdout.decode('utf-8'))
+    if stderr:
+        self.logger.error(stderr.decode('utf-8'))
+
+    os.remove(os.path.join(dest, package.file_name))
+    logger.info('Temporary directory is created: ' + dest)
 
     stats = {}
     filetypes = {}
 
-    # for file_name in os.listdir(package.path):
-    # logger.info(os.path.join(package.workdir, package.file_name.split('.')[0]))
     total_number_of_files = 0
     total_size = 0
-    for dirpath, dirs, files in os.walk(os.path.join(package.workdir, package.file_name.split('.')[0])):
-        for file in files:
-            type = file.split('.')[-1].upper()
-            # logger.info(file)
-            total_size += os.path.getsize(os.path.join(dirpath, file))
+    for dirpath, dirs, files in os.walk(os.path.join(dest, package.file_name.split('.')[0])):
+        for fileName in files:
+            type = fileName.split('.')[-1].upper()
+            # logger.info(fileName)
+            total_size += os.path.getsize(os.path.join(dirpath, fileName))
             total_number_of_files += 1
             if type in filetypes:
                 filetypes[type] += 1
             else:
                 filetypes[type] = 1
 
-    	# print files
-    # logger.info(filetypes)
     stats['fileTypes'] = filetypes
     stats['total_number_of_files'] = total_number_of_files
     stats['total_size'] = total_size
 
     package.statistics = stats
     package.save()
+
+    # delete temporary directory
+    shutil.rmtree(dest)
 
 
 @task(name="finished package")

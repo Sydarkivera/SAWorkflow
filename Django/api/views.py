@@ -315,7 +315,7 @@ def template_package_detail(request, template_id, package_id):
             for process in package.processes.all():
                 if not process.module.hidden:
                     process.delete()
-                    
+
         package.active_template = template
         for process in template.processes.all():
             # logger.info(process.name)
@@ -385,7 +385,7 @@ def variables_global(request):
     """
 
     if request.method == 'GET':
-        global_variables = ['work_dir_path', 'packages_path', 'premis_file_name']
+        global_variables = ['work_dir_path', 'packages_path', 'premis_file_name', 'tools_path', 'work_dir_path_host']
         res = {}
         for vname in global_variables:
             v = get_object_or_404(Variable, name=vname)
