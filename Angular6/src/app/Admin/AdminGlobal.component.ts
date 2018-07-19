@@ -11,11 +11,13 @@ import { APIService } from '../Services/api.service';
   styleUrls: ['./AdminGlobal.component.sass']
 })
 export class AdminGlobalComponent {
-  work_dir_path = ""
-  packages_path = ""
-  premis_file_name = ""
-  tools_path = ""
-  work_dir_path_host = ""
+  work_dir_path = "";
+  packages_path = "";
+  premis_file_name = "";
+  tools_path = "";
+  work_dir_path_host = "";
+  premis_template_path = "";
+  premis_event_template_path = "";
   messageVisible = false;
 
   constructor(private apiService: APIService) {
@@ -30,6 +32,8 @@ export class AdminGlobalComponent {
       this.premis_file_name = data['premis_file_name']
       this.tools_path = data['tools_path']
       this.work_dir_path_host = data['work_dir_path_host']
+      this.premis_template_path = data['premis_template_path']
+      this.premis_event_template_path = data['premis_event_template_path']
     });
   }
 
@@ -40,7 +44,9 @@ export class AdminGlobalComponent {
       packages_path: this.packages_path,
       premis_file_name: this.premis_file_name,
       tools_path: this.tools_path,
-      work_dir_path_host: this.work_dir_path_host
+      work_dir_path_host: this.work_dir_path_host,
+      premis_template_path: this.premis_template_path,
+      premis_event_template_path: this.premis_event_template_path
     }
 
     this.apiService.setVariables(data).subscribe((response) => {

@@ -13,14 +13,9 @@ urlpatterns = [
     # url(r'^api/$', views.snippet_list),
     #modules
     url(r'^module/', include('api.modules.urls')),
+    #packages
+    url(r'^package/', include('api.packages.urls')),
 
-    url(r'^package/$', views.package_list),
-    url(r'^package/(?P<id>[0-9]+)/files/$', views.package_file_list),
-    url(r'^package/(?P<id>[0-9]+)/$', views.package_detail),
-    url(r'^package/(?P<id>[0-9]+)/process/$', views.process_list),
-    # run workflows
-    url(r'^package/(?P<package_id>[0-9]+)/execute/$', views.package_execute),
-    url(r'^package/(?P<package_id>[0-9]+)/finish/$', views.package_finish),
     #process modification
     url(r'^process/$', views.process_add),
     url(r'^process/(?P<process_id>[0-9]+)/$', views.process_detail),

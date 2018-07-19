@@ -94,7 +94,7 @@ class ModuleSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Module
-        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'filter', 'resultFilter', 'dockerImage')
+        fields = ('module_id', 'name', 'type', 'form', 'python_module', 'command', 'hidden', 'filter', 'resultFilter', 'dockerImage', 'description')
 
     def get_type(self,obj):
         return obj.get_type_display()

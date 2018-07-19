@@ -41,6 +41,7 @@ module2 = Module(name="Untar archive",
                  type='1',
                  form='[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}]',
                  python_module='tools.Untar_archive.untar',
+                 description="Untar the package .tar into a folder with the same name",
                  hidden=True,
                  module_id=1,
                  tool_folder_name="Untar_archive"
@@ -78,6 +79,30 @@ module5 = Module(name="DROID",
                  docker_mount_point="/workdir"
                  )
 module5.save()
+
+module6 = Module(name="Unoconv",
+                 type='2',
+                 form='[]',
+                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
+                 # command="ls -al /workdir",
+                 module_id=5,
+                 filter='.*(\.doc)',
+                 tool_folder_name="unoconv",
+                 docker_mount_point="/workdir/"
+                 )
+module6.save()
+module7 = Module(name="ls",
+                 type='0',
+                 form='[]',
+                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+                 command="ls -al #workdir/docx/content",
+                 # command="ls -al /workdir",
+                 module_id=6,
+                 filter='',
+                 tool_folder_name="ls",
+                 )
+module7.save()
 # module4 = Module(name="Untar cmd",
 #                  type='0',
 #                  form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"}]',
@@ -93,10 +118,10 @@ template1 = Template(name="Default Start",
                      template_id=0)
 template1.save()
 
-process1 = Process(order=0,
-                   template=template1,
-                   module=module1)
-process1.save()
+# process1 = Process(order=0,
+#                    template=template1,
+#                    module=module1)
+# process1.save()
 process2 = Process(order=1,
                    template=template1,
                    module=module2)
@@ -122,6 +147,25 @@ template3 = Template(name="Empty template",
                      template_id=2)
 template3.save()
 
+template4 = Template(name="Convert pdf",
+                     template_id=3)
+template4.save()
+process = Process(order=1,
+                   template=template4,
+                   module=module7)
+process.save()
+process = Process(order=2,
+                   template=template4,
+                   module=module6)
+process.save()
+process = Process(order=3,
+                   template=template4,
+                   module=module7)
+process.save()
+process = Process(order=4,
+                   template=template4,
+                   module=module4)
+process.save()
 # create default variables # TODO set data to 0 for all variables
 var = Variable(name="total_number_of_files", data="134")
 var.save()
@@ -138,10 +182,17 @@ var = Variable(name="packages_path", data="/code/test_packages")
 var.save()
 var = Variable(name="tools_path", data="/code/tools")
 var.save()
-var = Variable(name="premis_file_name", data="app_log.xml")
+var = Variable(name="premis_file_name", data="log/app_log.xml")
 var.save()
-var = Variable(name="work_dir_path_host", data="/Users/axenu/Sydarkviera/SAWorkflow/Django/workdir/")
+var = Variable(name="work_dir_path_host", data="/Users/axenu/Sydarkivera/SAWorkflow/Django/workdir/")
 var.save()
+var = Variable(name="premis_template_path", data="/code/templates/premis.json")
+var.save()
+var = Variable(name="premis_event_template_path", data="/code/templates/premisEvent.json")
+var.save()
+
+
+
 
 # default test data, TODO remove in production
 ftype = FileType(name="PDF", errors=3, total=100, size=1203000)
@@ -171,10 +222,15 @@ graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
 graph.save()
 
 #create default docker images
-image = DockerImage(id=0, name="droid", mountpoint="/workdir/", label="Droid check")
+image = DockerImage(name="droid", mountpoint="/workdir/", label="Droid check")
 image.save()
 module5.dockerImage = image
 module5.save()
+
+image = DockerImage(name="unoconv", mountpoint="/workdir", label="unoconv - libreoffice")
+image.save()
+module6.dockerImage = image
+module6.save()
 
 
 # create default admin users

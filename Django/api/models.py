@@ -87,6 +87,7 @@ class Module(models.Model):
     command = models.CharField(max_length=10000, default='', blank=True)
     tool_folder_name = models.CharField(max_length=100, default='', blank=True)
     docker_mount_point = models.CharField(max_length=100, default='', blank=True)
+    description = models.CharField(max_length=400, blank=True, default='')
 
     #For docker, save some settings, like if it is a dockerfile or an image, where to mount workdir/files
     # docker = JSONField(default='{"dockerfile":"1", "image": "", "workdir_mount_point": "", "file_mount_point": "/file.pdf"}', blank=True)
@@ -94,7 +95,7 @@ class Module(models.Model):
 
     # for handling mulitfile tools:
     # multifile = models.BooleanField(default=False)
-    filter = models.CharField(max_length=200, default='.*', blank=True)
+    filter = models.CharField(max_length=200, default='', blank=True)
     resultFilter = JSONField(default=[], blank=True)
 
     class Meta:

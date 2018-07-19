@@ -145,9 +145,14 @@ export class AdminModulesComponent {
     }
     if (this.selected_module.resultFilter != undefined) {
       data["resultFilter"] = this.selected_module.resultFilter;
+    } else {
+      data["resultFilter"] = [];
     }
     if (this.selected_module.dockerImage != undefined) {
       data["dockerImage"] = this.selected_module.dockerImage;
+    }
+    if (this.selected_module.description != undefined) {
+      data["description"] = this.selected_module.description;
     }
 
     //verfiy that the tools action is implemented
@@ -163,8 +168,10 @@ export class AdminModulesComponent {
       }
     }
 
+    console.log(data);
+
     // if the id isn't -2, this is an existing module which should be updated
-    if (this.selected_module.module_id != -2) {
+    if (this.selected_module.module_id != -2 && this.selected_module.module_id ) {
       this.apiService.saveData(this.selected_module.module_id, data).subscribe((data) => {
         this.messageVisible = true
         for (let i in this.modules) {

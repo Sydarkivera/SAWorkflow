@@ -50,7 +50,10 @@ export class PackageDashboardComponent {
 // change to 0 later
   total_number_of_files = 12
   total_size = '3.45 GB'
-  progress = 0
+  progress = 0;
+
+  browserActive = false;
+  browserPath = "";
 
 
   constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router) {
@@ -71,9 +74,15 @@ export class PackageDashboardComponent {
             temp['value'] = value;
             res.push({"name":key.toUpperCase(), "value":value});
           }
+          this.fileTypes = res.sort((a, b) => {
+            if (a['value'] > b['value']) {
+              return -1
+            } else{
+              return 1
+            }
+          })
           this.total_size = formatBytes(this.package.statistics.total_size);
           this.total_number_of_files = this.package.statistics.total_number_of_files;
-          this.fileTypes = [...res]
           //calculate total progress
           this.progress = 0
           for (let process of this.package.processes) {
@@ -82,5 +91,10 @@ export class PackageDashboardComponent {
           this.progress = this.progress / this.package.processes.length;
        });
     });
+  }
+
+  openFileBrowser() {
+    this.browserPath = "/api/package/"+this.id+"/files/"
+    this.browserActive = true;
   }
 }

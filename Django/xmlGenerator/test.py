@@ -1,9 +1,9 @@
 from xmlGenerator import *
-from xmlExtensions import inlineUUIDModule, inlineDatetimeModule
+from xmlExtensions import inlineUUIDModule, inlineDatetimeModule, xmlFilesExtenstionModule
 import json
 import filecmp
 
-print 'Running tests: '
+print('Running tests: ')
 
 data = ''
 files = ''
@@ -23,9 +23,10 @@ def runTest(testname, index):
         }
     ]
     c = xmlGenerator(data, files)
+    c.addExtension(xmlFilesExtenstionModule())
+    c.addExtension(inlineUUIDModule())
+    c.addExtension(inlineDatetimeModule())
     # add all extensions so that they are loaded if needed
-    # c.addExtension(xmlFilesExtenstionModule())
-    # c.addExtension(inlineExtenstionModule())
     c.createXML()
 
     # validate the result
@@ -34,19 +35,19 @@ def runTest(testname, index):
 
     with open('./test_results/test'+index+'.xml') as f:
         if expected == f.read():
-            print 'Test: ' + testname + ' SUCCESS'
+            print('Test: ' + testname + ' \033[42m\033[37mSUCCESS\033[0m')
         else:
-            print 'Test: ' + testname + ' FAILED'
+            print('Test: ' + testname + ' \033[41m\033[37mFAILED\033[0m')
             # break
 
 
 
-# runTest('Basic test', '1')
-# runTest('Single element with single child', '2')
-# runTest('Multiple children', '3')
-# runTest('Namespace inheritance of children', '4')
-# runTest('Namespace inheritance overwriting in children', '5')
-# runTest('Full SIP generation', '6')
+runTest('Basic test', '1')
+runTest('Single element with single child', '2')
+runTest('Multiple children', '3')
+runTest('Namespace inheritance of children', '4')
+runTest('Namespace inheritance overwriting in children', '5')
+runTest('Full SIP generation', '6')
 
 
 # premis test:

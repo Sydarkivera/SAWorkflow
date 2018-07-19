@@ -29,6 +29,15 @@
       <input type="text" class="form-control"  [(ngModel)]="work_dir_path_host" tooltip="This is necessary since it is this folder that will be mounted into containers created by A.P.P" tooltipPlacement="bottom" placeholder="/Docker/APP/Django/workdir">
     </div>
 
+    <div class="form-group">
+      <label for="inputName">Json template for app log file</label>
+      <input type="text" class="form-control"  [(ngModel)]="premis_template_path" tooltip="The json document used as a template for app log." tooltipPlacement="bottom" placeholder="/code/templates/premis.json">
+    </div>
+    <div class="form-group">
+      <label for="inputName">Json template for log additions</label>
+      <input type="text" class="form-control"  [(ngModel)]="premis_event_template_path" tooltip="This should be a template for the part of the logfile that is repeated for every event" tooltipPlacement="bottom" placeholder="/code/templates/premisEvent.json">
+    </div>
+
     <button class="btn btn-success" (click)="save()">Save changes</button>
   </div>
 </div>

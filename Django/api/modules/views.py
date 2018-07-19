@@ -52,13 +52,14 @@ def module_list(request):
         serializer = ModuleSerializer(data=request.data, partial=True)
         if serializer.is_valid():
 
-            tools_path = Variable.objects.get(name="tools_path")
-            fName = serializer.data['name'].replace(' ', '_')
+            tools_path = Variable.objects.get(name="tools_path").data
+            fName = serializer.validated_data['name'].replace(' ', '_')
             #check if a tool folder can be created
             folderName = os.path.join(tools_path, fName)
-            if os.path.isdir(folderName):
+            logger.info(folderName)
+            if not os.path.isdir(folderName):
                 os.makedirs(folderName)
-                serialzer.data['tool_folder_name'] = fName
+                serializer.validated_data['tool_folder_name'] = fName
             else:
                 return Response('A tool with that name already exists. Please name it something else', status=status.HTTP_400_BAD_REQUEST)
 
@@ -117,6 +118,11 @@ def module(request, module_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         if not module.processes.all().exists():
+            # delete folder
+            tools_path = Variable.objects.get(name="tools_path").data
+            folderName = os.path.join(tools_path, module.tool_folder_name)
+            if os.path.isdir(folderName):
+                shutil.rmtree(folderName)
             module.delete()
             return HttpResponse(status=200)
         else:
@@ -181,6 +187,7 @@ def module_files(request, module_id):
     """
     All functions for handling the filebrowser in ui
     """
+    logger.info('modules files')
     module = get_object_or_404(Module, pk=module_id)
     tools_path = Variable.objects.get(name="tools_path").data
     specific_path = request.GET.get('path', '')
@@ -261,10 +268,10 @@ def getFilesAtPath(path):
     for f in os.listdir(path):
         ff = os.path.join(path, f)
         if os.path.isdir(ff):
-            res.append({"type": "folder", "name": f});
+            res.append({"type": "folder", "name": f})
             # logger.info("folder: " + f)
         else:
-            res.append({"type": "file", "name": f});
+            res.append({"type": "file", "name": f})
             # logger.info("file: " + f)
     return res
 

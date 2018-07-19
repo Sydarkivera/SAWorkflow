@@ -38,112 +38,6 @@ import tarfile
 from logging import getLogger
 logger = getLogger('django')
 
-@api_view(['GET'])
-def package_list(request):
-    """
-    List all packages.
-    """
-    if request.method == 'GET':
-        packages = Package.objects.all()
-        serializer = PackageDetailSerializer(packages, many=True)
-        # print(files)
-        return Response(serializer.data)
-
-
-@api_view(['GET'])
-def package_file_list(request, id):
-    """
-    List file in a package.
-    """
-    package = get_object_or_404(Package, pk=id)
-    if request.method == 'GET':
-        output = subprocess.check_output(
-            ['/code/tools/a.out', package.path]).decode('utf-8')
-        rows = output.split('\n')
-        res = []
-        lastPath = ''
-        temp = res
-        for row in rows:
-            if row != '':
-                parts = row.split('/')
-                if parts[-1] == '':
-                    parts = parts[:-1]
-                if '/'.join(parts[:-1]) != lastPath:
-                    # calculate path...
-                    temp = res
-                    for part in parts[:-1]:
-                        for child in temp:
-                            if child['name'] == part:
-                                temp = child['children']
-                                break
-                    lastPath = '/'.join(parts[:-1])
-
-                # logger.info(row)
-                # logger.info(parts)
-                d = {}
-                d['name'] = parts[-1]
-                d['children'] = []
-                d['path'] = '/'.join(parts)
-                d['type'] = 'folder'
-                if parts[-1].find('.') != -1:
-                    d['format'] = parts[-1][parts[-1].find('.') + 1:]
-                    d['type'] = 'file'
-                temp.append(d)
-                temp = temp[-1]['children']
-                lastPath = '/'.join(parts)
-
-        return JsonResponse(res, safe=False)
-
-        response = StreamingHttpResponse(output)
-        response['Content-Type'] = 'text/plain; charset=utf8'
-        return response
-
-
-@api_view(['GET', 'DELETE', 'PUT'])
-def package_detail(request, id):
-    """
-    Get one package or delete it.
-    """
-    package = get_object_or_404(Package, pk=id)
-    if request.method == 'GET':
-        logger.error(pwd.getpwuid(os.getuid()))
-        serializer = PackageDetailSerializer(package)
-        return Response(serializer.data)
-    elif request.method == 'DELETE':
-        if os.path.isdir(package.workdir):
-            shutil.rmtree(package.workdir)
-            logger.info('deleting package workdir: ' + package.workdir)
-        package.delete()
-        return HttpResponse(status=204)
-    elif request.method == 'PUT':
-        serializer = PackageSerializer(package, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return HttpResponse(status=204)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['GET', 'PUT'])
-def process_list(request, id):
-    """
-    List all processes of selected package.
-    """
-    package = get_object_or_404(Package, pk=id)
-    if request.method == 'GET':
-        serializer = ProcessSerializer(package.processes, many=True)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        logger.info(request.data)
-        for process in request.data:
-            p = Process.objects.get(pk=process['process_id'])
-            p.order = process['order']
-            p.status = Process.PROCESS_STATUS_EDITED
-            p.save()
-            package.status = package.PACKAGE_STATUS_EDITED
-            package.save()
-        return HttpResponse(status=204)
-
-
 @api_view(['GET', 'PUT', 'DELETE'])
 def process_detail(request, process_id):
     """
@@ -317,13 +211,16 @@ def template_package_detail(request, template_id, package_id):
                     process.delete()
 
         package.active_template = template
-        for process in template.processes.all():
-            # logger.info(process.name)
+        order = package.processes.all().order_by('order').reverse()[0].order + 1
+        for process in template.processes.all().order_by('order'):
             if not process.module.hidden:
                 process.pk = None
                 process.template = None
                 process.package = package
+                process.order = order
+                order += 1
                 process.save()
+        package.status = package.PACKAGE_STATUS_EDITED
         package.save()
     return HttpResponse(status=204)
 
@@ -354,30 +251,6 @@ def dashboardStats(request):
 
         return Response(data)
 
-
-@api_view(['POST'])
-def package_execute(request, package_id):
-    package = get_object_or_404(Package, pk=package_id)
-    if package.status != package.PACKAGE_STATUS_DONE:
-        for process in package.processes.all():
-            if process.status != Process.PROCESS_STATUS_DONE:
-                process.status = process.PROCESS_STATUS_WAITING
-                process.save()
-        package.status = package.PACKAGE_STATUS_WAITING
-        package.save()
-        executeProcessFlow.delay(package_id)
-        return HttpResponse(status=204)
-    return HttpResponseBadRequest("The specified package is not ready to be run.")
-
-
-@api_view(['POST'])
-def package_finish(request, package_id):
-    if request.method == 'POST':
-        #done buton pressed in ui.
-        finishPackage.delay(package_id)
-        return HttpResponse(status=204)
-
-
 @api_view(['GET', 'POST'])
 def variables_global(request):
     """
@@ -385,7 +258,7 @@ def variables_global(request):
     """
 
     if request.method == 'GET':
-        global_variables = ['work_dir_path', 'packages_path', 'premis_file_name', 'tools_path', 'work_dir_path_host']
+        global_variables = ['work_dir_path', 'packages_path', 'premis_file_name', 'tools_path', 'work_dir_path_host', 'premis_template_path', 'premis_event_template_path']
         res = {}
         for vname in global_variables:
             v = get_object_or_404(Variable, name=vname)

@@ -47,4 +47,11 @@ export class PackageTemplateComponent {
       window.location.href = '/packages/' + this.package_id + '/edit';
     });
   }
+
+  selectAndStart(template) {
+    let data = {"active_template": template.template_id};
+    this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe((res) => {
+        this.apiService.startWorkflow(this.package.package_id);
+    });
+  }
 }

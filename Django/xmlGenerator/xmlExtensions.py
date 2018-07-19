@@ -1,7 +1,7 @@
 import uuid, os, hashlib
 import datetime
 
-from xmlStructure import xmlExtensionModule
+from xmlGenerator.xmlStructure import xmlExtensionModule
 
 
 class xmlFilesExtenstionModule(xmlExtensionModule):
@@ -49,8 +49,8 @@ class xmlFilesExtenstionModule(xmlExtensionModule):
                     if 'children' in state.template:
                         for child in state.template['children']:
                             xmlGenerator.createXMLElement(child, state.level, state.namespace, state.local_data)
-        print 'xmlFIlesExtension parsed ' + str(numberOfFiles)
-        print 'xmlFIlesExtension parsed ' + str(totalSize) + ' bytes'
+        print('xmlFIlesExtension parsed ' + str(numberOfFiles))
+        print('xmlFIlesExtension parsed ' + str(totalSize) + ' bytes')
         return
 
     def calculateChecksum(self, filename):

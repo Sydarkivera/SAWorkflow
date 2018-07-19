@@ -22,6 +22,8 @@ import docker
 from docker.types import Mount
 import uuid
 import shutil
+from xmlGenerator.xmlGenerator import *
+from xmlGenerator.xmlExtensions import inlineUUIDModule, inlineDatetimeModule
 
 from celery import Celery
 from celery.schedules import crontab
@@ -90,6 +92,8 @@ class pythonModuleBase:
         values['tar_path'] = os.path.join(package.workdir, package.file_name)
         values['workdir'] = package.workdir
         values['file_name'] = package.file_name
+
+        retval = 1
 
         #update values with data from form:
         for key, val in process.value.items():
@@ -172,6 +176,10 @@ class pythonModuleBase:
                     process.allFiles = allFiles
                     process.save()
         self.teardown(process, package, values)
+        # calculate the new filetype split
+        package.statistics['fileTypes'], package.statistics['total_number_of_files'], package.statistics['total_size'] = calculateFileType(package.workdir)
+
+        package.save()
         return retval
         pass
 
@@ -263,6 +271,10 @@ class dockerModule(pythonModuleBase):
         volumes = {host_path: {'bind': process.module.docker_mount_point, 'mode': 'rw'}}
         command = self.fixCommand(process, values)
 
+        logger.info(host_path)
+        logger.info(volumes)
+        logger.info(command)
+
         container = client.containers.run(process.module.dockerImage.name, command, detach=True, volumes=volumes)
         retval = 1
         retText = ""
@@ -324,6 +336,30 @@ def executeProcessFlow(package_id):
                 process.status=Process.PROCESS_STATUS_DONE
                 process.progress=100
                 process.save()
+                # save to premis log
+
+                data = {
+                    "package_uuid": package.file_name.split('.')[0],
+                    "package_file": package.file_name,
+                    "outcome": "0",
+                    "label": process.module.name,
+                    "detail": process.module.description,
+                    "user": "Admin"
+                }
+
+                relLogPath = Variable.objects.get(name="premis_file_name").data
+                templatePath = Variable.objects.get(name="premis_event_template_path").data
+
+                files = [
+                    {
+                        "xmlFileName":os.path.join(package.workdir, relLogPath),
+                        "templateFileName":templatePath
+                    }
+                ]
+                c = xmlGenerator(data, files)
+                c.addExtension(inlineUUIDModule())
+                c.addExtension(inlineDatetimeModule())
+                c.appendToXML('/premis:premis/premis:event')
             else:
                 process.status = Process.PROCESS_STATUS_ERROR
                 package.status = Package.PACKAGE_STATUS_ERROR
@@ -387,8 +423,26 @@ def periodic_scan_for_new_packages(**kwargs):
                             process.package = package
                             process.save()
 
+                    # create a workdir for this package
+                    workdir_path = Variable.objects.get(name='work_dir_path').data
+                    dest = os.path.join(workdir_path, str(uuid.uuid4()))
+                    package.logdir = os.path.join(dest, 'log')
+                    try:
+                        # cant start logging before folder in place.
+                        if not os.path.exists(dest):
+                            os.makedirs(dest)
+                        if not os.path.exists(package.logdir):
+                            os.makedirs(package.logdir)
+                        package.workdir = dest
+                        package.save()
+                        shutil.copy(package.path, package.workdir)
+                    except IOError:
+                        logger.error("I/O error({0}): {1}".format(e.errno, e.strerror))
+                        return -1
+
                     # calculate
                     calculateMetricsForNewPackage(package)
+                    createLogFile(package)
 
                     executeProcessFlow.delay(package.package_id)
 
@@ -424,20 +478,11 @@ def calculateMetricsForNewPackage(package):
     logger.info('Temporary directory is created: ' + dest)
 
     stats = {}
-    filetypes = {}
+    # filetypes = calculateFileType(os.path.join(dest, package.file_name.split('.')[0]))
+    filetypes, total_number_of_files, total_size = calculateFileType(dest)
 
-    total_number_of_files = 0
-    total_size = 0
-    for dirpath, dirs, files in os.walk(os.path.join(dest, package.file_name.split('.')[0])):
-        for fileName in files:
-            type = fileName.split('.')[-1].upper()
-            # logger.info(fileName)
-            total_size += os.path.getsize(os.path.join(dirpath, fileName))
-            total_number_of_files += 1
-            if type in filetypes:
-                filetypes[type] += 1
-            else:
-                filetypes[type] = 1
+    # total_number_of_files = 0
+    # total_size = 0
 
     stats['fileTypes'] = filetypes
     stats['total_number_of_files'] = total_number_of_files
@@ -449,6 +494,37 @@ def calculateMetricsForNewPackage(package):
     # delete temporary directory
     shutil.rmtree(dest)
 
+
+def createLogFile(package):
+    """
+    Create an initial premis.xml file with one event only.
+    """
+    data = {
+        "package_uuid": package.file_name.split('.')[0],
+        "package_file": package.file_name,
+        "events": [{
+            "outcome": "0",
+            "label": "Start A.P.P processing",
+            "detail": "The package has been loaded into A.P.P",
+            "user": "Admin"
+        }]
+    }
+
+    relLogPath = Variable.objects.get(name="premis_file_name").data
+    templatePath = Variable.objects.get(name="premis_template_path").data
+
+    files = [
+        {
+            "xmlFileName":os.path.join(package.workdir, relLogPath),
+            "templateFileName":templatePath
+        }
+    ]
+    c = xmlGenerator(data, files)
+    # add all extensions so that they are loaded if needed
+    # c.addExtension(xmlFilesExtenstionModule())
+    c.addExtension(inlineUUIDModule())
+    c.addExtension(inlineDatetimeModule())
+    c.createXML()
 
 @task(name="finished package")
 def finishPackage(package_id):
@@ -502,3 +578,20 @@ def finishPackage(package_id):
     var.save()
     package.status = Package.PACKAGE_STATUS_FINISHED
     package.save()
+
+
+def calculateFileType(path):
+    filetypes = {}
+    total_number_of_files = 0
+    total_size = 0
+    for dirpath, dirs, files in os.walk(path):
+        for fileName in files:
+            type = fileName.split('.')[-1].upper()
+            # logger.info(fileName)
+            total_size += os.path.getsize(os.path.join(dirpath, fileName))
+            total_number_of_files += 1
+            if type in filetypes:
+                filetypes[type] += 1
+            else:
+                filetypes[type] = 1
+    return (filetypes, total_number_of_files, total_size)

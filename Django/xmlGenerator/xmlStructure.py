@@ -6,7 +6,7 @@ eol_ = '\n'
 
 def dlog(string):
     if debug:
-        print string
+        print(string)
 
 
 def pretty_print(fd, level, pretty):
@@ -49,7 +49,7 @@ class xmlAttribute(object):
         Print out the attribute
         """
         if self.value is not '':
-            print ' ' + self.attrName + '="' + self.value + '"',
+            print(' ' + self.attrName + '="' + self.value + '"', end="")
 
 class textElement(object):
     '''
@@ -137,12 +137,12 @@ class xmlElement(object):
             return False
         if self.printed == 0:
             pretty_print_string(level, pretty)
-            print '<' + self.completeTagName,
+            print('<' + self.completeTagName, end="")
             for a in self.attributes:
                 a.XMLToString()
         if self.children or self.value is not '' or self.containsFiles:
             if self.printed == 0:
-                print '>' + eol_,
+                print('>' + eol_, end="")
             if not self.containsFiles or self.printed == 1:
                 for child in self.children:
                     if child.XMLToString(level + 1, pretty):
@@ -150,15 +150,15 @@ class xmlElement(object):
                         return True
                 if self.value is not '':
                     pretty_print_string(level + 1, pretty)
-                    print self.value + eol_,
+                    print(self.value + eol_, end="")
                 pretty_print_string(level, pretty)
-                print '</' + self.completeTagName + '>' + eol_,
+                print('</' + self.completeTagName + '>' + eol_, end="")
                 self.printed = 2
             else:
                 self.printed = 1
                 return True
         else:
-            print '/>' + eol_,
+            print('/>' + eol_, end="")
             self.printed = 2
 
     def isEmpty(self):
@@ -174,7 +174,7 @@ class xmlElement(object):
         """
         Method for debugging only, prints out the name of the element and all children
         """
-        print self.tagName
+        print(self.tagName)
         for child in self.children:
             child.printDebug()
 

@@ -3,7 +3,7 @@ import json
 import copy
 import fileinput
 
-from xmlStructure import xmlElement, xmlAttribute, fileObject, dlog, textElement, savedState
+from xmlGenerator.xmlStructure import xmlElement, xmlAttribute, fileObject, dlog, textElement, savedState
 # from xmlExtensions import xmlFilesExtenstionModule, inlineExtenstionModule
 
 #TODO
@@ -20,7 +20,7 @@ def pretty_print_string(level):
     Print some tabs to give the xml output a better structure
     """
     res = ''
-    for idx in xrange(level):
+    for idx in range(level):
         res += '   '
     return res
 
@@ -47,27 +47,27 @@ class xmlGenerator(object):
             elif parts[0] in local_data:
                 return local_data[parts[0]]
             else:
-                print WARNING_STRING + 'missing variable "' + var_name + '" in json_data'
+                print(WARNING_STRING + 'missing variable "' + var_name + '" in json_data')
                 return ''
         elif len(parts) <= 0:
-            print ERROR_STRING + 'var can\'t be empty.'
+            print(ERROR_STRING + 'var can\'t be empty.')
         else:
             if parts[0] in local_data:
                 temp = local_data[parts[0]]
                 if parts[1] in temp:
                     return temp[parts[1]]
                 else:
-                    print WARNING_STRING + 'missing variable "' + var_name + '" in localdata[' + parts[0] + ']'
+                    print(WARNING_STRING + 'missing variable "' + var_name + '" in localdata[' + parts[0] + ']')
                     return ''
             elif parts[0] in self.json_data:
                 temp = self.json_data[parts[0]]
                 if parts[1] in temp:
                     return temp[parts[1]]
                 else:
-                    print WARNING_STRING + 'missing variable "' + var_name + '" in json_data[' + parts[0] + ']'
+                    print(WARNING_STRING + 'missing variable "' + var_name + '" in json_data[' + parts[0] + ']')
                     return ''
             else:
-                print WARNING_STRING + 'missing variable "' + var_name + '" in json_data'
+                print(WARNING_STRING + 'missing variable "' + var_name + '" in json_data')
                 return ''
 
     def resolveContent(self, content, local_data={}):
@@ -101,7 +101,7 @@ class xmlGenerator(object):
 
                         # Create new fid for further parsing
                         fileName = 'temp' + str(self.numberOfFiles) + '.txt'
-                        self.currentFileID = os.open(fileName,os.O_RDWR|os.O_CREAT)
+                        self.currentFileID = open(fileName, "w+")
                         self.currentFob.files.append(fileName)
                         self.numberOfFiles += 1
 
@@ -118,7 +118,7 @@ class xmlGenerator(object):
                                 return False
                     break
             if not foundExtension:
-                print "ERROR: Extension \"" + extension_name + "\" is not loaded"
+                print(ERROR_STRING + "Extension \"" + extension_name + "\" is not loaded")
                 return False
             return True
 
@@ -131,7 +131,7 @@ class xmlGenerator(object):
                     # print pretty_print_string(level) + text
                     return True
             else:
-                print ERROR_STRING + 'missing name on xml Element'
+                print(ERROR_STRING + 'missing name on xml Element')
             return False
 
         # calculate the min and max occurrences of this element. Start with default values then
@@ -162,7 +162,7 @@ class xmlGenerator(object):
             for attribute in template['attributes']:
                 # Every attribute needs to have a name, if it does not have a name fail early.
                 if 'name' not in attribute:
-                    print ERROR_STRING + 'missing name on xml attribute'
+                    print(ERROR_STRING + 'missing name on xml attribute')
                     return False
                 # solve text content
                 if 'content' in attribute:
@@ -187,7 +187,7 @@ class xmlGenerator(object):
                             if var_name not in local:
                                 local[var_name] = temp
                             else:
-                                print ERROR_STRING + 'Duplicate variable name "' + var_name + '" in nested loops'
+                                print(ERROR_STRING + 'Duplicate variable name "' + var_name + '" in nested loops')
                                 return False
                             if self.createXMLElement(child, level+1, namespace, local, tempString):
                                 haveChild = True
@@ -195,7 +195,7 @@ class xmlGenerator(object):
 
                             i += 1
                     else:
-                        print ERROR_STRING + 'array not found for repeat: "' + child['repeat'] + '"'
+                        print(ERROR_STRING + 'array not found for repeat: "' + child['repeat'] + '"')
                         return False
                 else:
                     if self.createXMLElement(child, level+1, namespace, local_data, tempString):
@@ -222,9 +222,9 @@ class xmlGenerator(object):
                     return True
                 # the element is totally empty which is not allowed.
                 if minCount > 0:
-                    print ERROR_STRING + 'element "' + tagName + '" may not be empty'
+                    print(ERROR_STRING + 'element "' + tagName + '" may not be empty')
                 else:
-                    print WARNING_STRING + 'element "' + tagName + '" was not redered since it does not have any children or attributes'
+                    print(WARNING_STRING + 'element "' + tagName + '" was not redered since it does not have any children or attributes')
                 return False
 
         return False
@@ -244,15 +244,15 @@ class xmlGenerator(object):
             try:
                 template = json.loads(json_template_file)#, object_pairs_hook=OrderedDict)
             except ValueError as err:
-                print err # implement logger
+                print(err) # implement logger
                 return  False
-            name, rootE = template.items()[0] # root element
-            self.currentFileID = open(xmlFileName, "wb+")
+            # name, rootE = template.items()[0] # root element
+            self.currentFileID = open(xmlFileName, "w+")
             self.currentFob = fileObject(template, self.currentFileID, xmlFileName)
             self.createdFiles.append(self.currentFob)
             self.createXMLElement(template)
 
-        for extensionName, states in self.remainingParts.iteritems():
+        for extensionName, states in self.remainingParts.items():
             extention = None
             for ext in self.extensions:
                 if ext.selector == extensionName:
@@ -264,14 +264,15 @@ class xmlGenerator(object):
 
         for fob in self.createdFiles:
             for f in fob.files:
-                fid = open(f, os.O_RDONLY)
+                fid = open(f, "r")
                 while True:
                     data = fid.read(65536)
                     if data:
                         fob.fid.write(data)
                     else:
                         break
-                os.close(fid)
+                # os.close(fid)
+                fid.close()
                 os.remove(f)
         for fob in self.createdFiles:
             fob.fid.close()
@@ -294,10 +295,10 @@ class xmlGenerator(object):
         try:
             template = json.loads(json_template_file)#, object_pairs_hook=OrderedDict)
         except ValueError as err:
-            print err # implement logger
+            print(err) # implement logger
             return  False
 
-        with open(xmlFileName, "rb+") as fd:
+        with open(xmlFileName, "r+") as fd:
             # for line in fd:
             line = fd.readline()
             while line:
