@@ -14,7 +14,10 @@
       </td>
       <td class="small-column" [class.selected]="active_template==template.template_id">
         <button class="btn btn-success" *ngIf="active_template != template.template_id" [class.btn-warning]="active_template != undefined" (click)="selectTemplate(template)">Select</button>
-        <button class="btn btn-success" (click)="selectAndStart(template)">Start</button>
+        <button class="btn btn-success" (click)="selectAndStart(template)">
+          Start
+          <i class="material-icons my-auto align-middle icon-small">play_arrow</i>
+        </button>
       </td>
     </tr>
   </tbody>

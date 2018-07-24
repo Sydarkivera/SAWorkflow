@@ -50,16 +50,22 @@ export class PackageStatusComponent {
     this.modalactive = true;
     this.modalLoading = true;
     this.modalData = "";
+
     if (type == 'info_log') {
-      this.modalType = 'info';
-      this.apiService.getLogFile(type, process.process_id).subscribe((data) => {
-        this.modalLoading = false;
-        this.modalData = this.sanitizeLog(data);
-      });
+      this.modalLoading = false;
+      this.modalData = process.logs
+      // this.modalType = 'info';
+      console.log(process.logs)
+      // this.apiService.getLogFile(type, process.process_id).subscribe((data) => {
+      //   this.modalLoading = false;
+      //   this.modalData = this.sanitizeLog(data);
+      // });
     } else {
       this.modalLoading = false;
-      this.modalType = 'error';
-      this.modalProcess = process;
+      console.log(process.errors)
+      // this.modalType = 'error';
+      // this.modalProcess = process;
+      this.modalData = process.errors
     }
   }
 
@@ -80,7 +86,7 @@ export class PackageStatusComponent {
   updateData() {
     this.apiService.getPackage(this.id).subscribe((data) => {
       this.package = data;
-      console.log(data);
+      // console.log(data);
     });
   }
 
@@ -98,6 +104,9 @@ export class PackageStatusComponent {
 
   sanitizeLog(data) {
     // convert the file to html friendly text
-    return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
+    if (data) {
+      return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
+    }
+    return "Log is empty";
   }
 }

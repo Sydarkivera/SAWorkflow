@@ -42,25 +42,34 @@
     </tr>
   </tbody>
 </table>
-<button class="btn btn-success float-right" (click)="startWorkflow()" *ngIf="package.status != 'Finished'">Start</button>
-<button class="btn btn-warning float-right" (click)="finishPackage()" *ngIf="package.status != 'Finished'">Done</button>
-<button class="btn btn-danger float-right" (click)="removePackage()">Delete</button>
+<button class="btn btn-success float-right" (click)="startWorkflow()" *ngIf="package.status != 'Finished'">
+  Start
+  <i class="material-icons my-auto align-middle icon-small">play_arrow</i>
+</button>
+<button class="btn btn-warning float-right" (click)="finishPackage()" *ngIf="package.status != 'Finished'">
+  Done
+  <!-- <i class="material-icons my-auto align-middle icon-small">done</i> -->
+</button>
+<button class="btn btn-danger float-right" (click)="removePackage()">
+  Delete
+  <i class="material-icons my-auto align-middle icon-small">delete</i>
+</button>
 
 
 <!-- Modal for logfile display -->
 <modal [(active)]="modalactive" title="Complete log">
   <div modal-body style="margin-bottom: 10px">
     <div class="loading mx-auto" *ngIf="modalLoading"></div>
-    <div *ngIf="modalType == 'info'" [innerHTML]="modalData" style="white-space: pre-wrap;"></div>
-    <div *ngIf="modalType == 'error'" class="list-group">
-      <div *ngFor="let error of modalProcess.errors" class="list-group-item list-group-item-action" (click)="error.expanded = !error.expanded">
+    <!-- <div *ngIf="modalType == 'info'" [innerHTML]="modalData" style="white-space: pre-wrap;"></div> -->
+    <div class="list-group">
+      <div *ngFor="let error of modalData" class="list-group-item list-group-item-action" (click)="error.expanded = !error.expanded">
         <div class=" d-flex justify-content-between">
           <p class="">{{error.file}}</p>
           <i *ngIf="!error.expanded" class="material-icons my-auto">keyboard_arrow_right</i>
           <i *ngIf="error.expanded" class="material-icons my-auto">keyboard_arrow_down</i>
         </div>
         <div *ngIf="error.expanded">
-          <p [innerHTML]="sanitizeLog(error.Error)" style="white-space: pre-wrap;">
+          <p [innerHTML]="sanitizeLog(error.log)" style="white-space: pre-wrap;">
           </p>
         </div>
       </div>

@@ -20,8 +20,13 @@
         </div>
       </div>
     </div>
-    <button class="btn btn-success" (click)="addNewModule()">Add new tool</button>
-    <button class="btn" (click)="importModule()">Import tool</button>
+    <button class="btn btn-success" (click)="addNewModule()">
+      Add new tool
+      <i class="material-icons my-auto align-middle">add</i>
+    </button>
+    <button class="btn" (click)="importModule()">
+      Import tool
+    </button>
   </div>
 
   <!-- Detail view of tool -->
@@ -54,7 +59,10 @@
     <div class="card">
       <div class="card-header">
         <h5 style="float:left">Settings</h5>
-        <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
+        <button class="btn btn-success" (click)="save()" style="float:right">
+          Save changes
+          <i class="material-icons my-auto align-middle icon-small">save</i>
+        </button>
       </div>
       <div class="card-body">
         <message duration="3000" [(active)]="messageVisible">All changes have been saved!</message>
@@ -77,7 +85,10 @@
           <input type="text" class="form-control" id="inputFileFilter" [(ngModel)]="selected_module.filter" placeholder=".*(\.pdf)">
         </div>
         <div class="form-group">
-          <label for="inputForm">Form json<i class="material-icons icon-button my-auto" (click)="openFormJsonDocs()">help</i></label>
+          <label for="inputForm">
+            Form json
+            <i class="material-icons icon-button my-auto icon-small" (click)="openFormJsonDocs()">help</i>
+          </label>
           <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="formJson"></textarea>
         </div>
 
@@ -119,7 +130,10 @@
     <div class="card">
       <div class="card-header">
         <h5 style="float:left">Command</h5>
-        <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
+        <button class="btn btn-success" (click)="save()" style="float:right">
+          Save changes
+          <i class="material-icons my-auto align-middle icon-small">save</i>
+        </button>
       </div>
       <div class="card-body">
 
@@ -159,13 +173,19 @@
           </div> -->
         </ng-template>
         <p class="Error-text">{{commandJsonError}}</p>
-        <button class="btn btn-success" (click)="openFileBrowser()">Browse files</button>
+        <button class="btn btn-success" (click)="openFileBrowser()">
+          Browse files
+          <i class="material-icons my-auto align-middle icon-small">folder_open</i>
+        </button>
         <!-- <button class="btn btn-success" (click)="save()">Save changes</button> -->
         <!-- <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p> -->
       </div>
     </div>
     <a class="btn btn-secondary" href="/api/module/{{selected_module.module_id}}/export/">Export tool</a>
-    <button class="btn btn-danger" (click)="deleteModule(selected_module)">Delete</button>
+    <button class="btn btn-danger" (click)="deleteModule(selected_module)">
+      Delete
+      <i class="material-icons my-auto align-middle icon-small">delete</i>
+    </button>
     <div class="allow-scroll-beneath-page-end"></div>
   </div>
 </div>

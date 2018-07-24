@@ -3,7 +3,10 @@
 <div class="card">
   <div class="card-header">
     <h5 style="float:left">Paths</h5>
-    <button class="btn btn-success" (click)="save()" style="float:right">Save changes</button>
+    <button class="btn btn-success" (click)="save()" style="float:right">
+      Save changes
+      <i class="material-icons my-auto align-middle icon-small">save</i>
+    </button>
   </div>
   <div class="card-body">
     <message duration="3000" [(active)]="messageVisible">All changes have been saved!</message>
@@ -38,6 +41,9 @@
       <input type="text" class="form-control"  [(ngModel)]="premis_event_template_path" tooltip="This should be a template for the part of the logfile that is repeated for every event" tooltipPlacement="bottom" placeholder="/code/templates/premisEvent.json">
     </div>
 
-    <button class="btn btn-success" (click)="save()">Save changes</button>
+    <button class="btn btn-success" (click)="save()">
+      Save changes
+      <i class="material-icons my-auto align-middle icon-small">save</i>
+    </button>
   </div>
 </div>

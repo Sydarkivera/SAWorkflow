@@ -30,7 +30,10 @@
     <div class="card">
       <div class="card-header">
         <h5 style="float:left">Settings</h5>
-        <button class="btn btn-success" (click)="save()" style="float:right">Save</button>
+        <button class="btn btn-success" (click)="save()" style="float:right">
+          Save
+          <i class="material-icons my-auto align-middle icon-small">save</i>
+        </button>
       </div>
       <div class="card-body">
         <message duration="3000" [(active)]="saveSuccess">All changes have been saved!</message>
@@ -46,7 +49,10 @@
           <label for="inputMount">Mount point of forkdir inside image.</label>
           <input type="text" class="form-control" id="inputMount" placeholder="/workdir/" [(ngModel)]="selected_image.mountpoint">
         </div>
-        <button class="btn btn-success" (click)="save()">Save</button>
+        <button class="btn btn-success" (click)="save()">
+          Save
+          <i class="material-icons my-auto align-middle icon-small">save</i>
+        </button>
       </div>
     </div>
   </div>
