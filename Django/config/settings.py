@@ -236,7 +236,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "statichtml")
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static/"),
-    os.path.join(BASE_DIR, "aurelia/static"),
+    # os.path.join(BASE_DIR, "aurelia/static"),
     os.path.join(BASE_DIR, "static/angular"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "static_root")

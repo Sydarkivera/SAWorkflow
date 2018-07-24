@@ -57,14 +57,15 @@ module3 = Module(name="ClamAV",
                  )
 module3.save()
 module4 = Module(name="VeraPDF validate pdf1/a",
-                 type='0',
+                 type='2',
                  form='[]',
                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
                  command="verapdf #file",
                  module_id=3,
                  filter='.*(\.pdf)',
                  resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]',
-                 tool_folder_name="VeraPDF_validate_pdf1/a"
+                 tool_folder_name="VeraPDF",
+                 docker_mount_point="/workdir"
                  )
 module4.save()
 module5 = Module(name="DROID",
@@ -222,7 +223,7 @@ graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
 graph.save()
 
 #create default docker images
-image = DockerImage(name="droid", mountpoint="/workdir/", label="Droid check")
+image = DockerImage(name="droid", mountpoint="/workdir", label="Droid check")
 image.save()
 module5.dockerImage = image
 module5.save()
@@ -231,6 +232,11 @@ image = DockerImage(name="unoconv", mountpoint="/workdir", label="unoconv - libr
 image.save()
 module6.dockerImage = image
 module6.save()
+
+image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="verapdf")
+image.save()
+module4.dockerImage = image
+module4.save()
 
 
 # create default admin users

@@ -11,3 +11,4 @@ celery
 redis
 django-tarview
 docker
+gunicorn
