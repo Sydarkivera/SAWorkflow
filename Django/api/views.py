@@ -63,6 +63,11 @@ def process_detail(request, process_id):
         if process.package != None:
             process.package.status = Package.PACKAGE_STATUS_EDITED
             process.package.save()
+            # delet old logfiles
+            if os.path.exists(process.log_path):
+                os.remove(process.log_path)
+            if os.path.exists(process.err_path):
+                os.remove(process.err_path)
         process.delete()
         return HttpResponse(status=204)
 

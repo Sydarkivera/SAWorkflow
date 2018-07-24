@@ -72,12 +72,13 @@ module5 = Module(name="DROID",
                  type='2',
                  form='[]',
                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 command="/droid.sh -a #file -p /profile.txt",
+                 command="/run.sh #file",
                  # command="ls -al /workdir",
                  module_id=4,
-                 filter='.*(\.pdf)',
+                 filter='.*',
                  tool_folder_name="DROID",
-                 docker_mount_point="/workdir"
+                 docker_mount_point="/workdir",
+                 resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
                  )
 module5.save()
 

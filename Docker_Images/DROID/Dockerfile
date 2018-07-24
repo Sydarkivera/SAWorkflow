@@ -7,3 +7,6 @@ unzip droid.zip &&\
 rm -f droid.zip
 
 RUN chmod 777 droid.sh
+
+ADD ./run.sh /run.sh
+RUN chmod 777 run.sh
