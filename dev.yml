@@ -51,7 +51,7 @@ services:
 #      - "./django/populate_database.py:/populate_database.py"
 #       - "./Django:/code"
     ports:
-      - "8000:8000"
+      - "80:8000"
     # set up links so that web knows about db, rabbit and redis
     links:
       - db

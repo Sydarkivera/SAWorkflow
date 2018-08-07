@@ -8,9 +8,11 @@ __status__ = "Development"
 
 from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import Permission
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from api.models import Module, Package, Process, Template, Variable
@@ -230,6 +232,7 @@ def template_package_detail(request, template_id, package_id):
     return HttpResponse(status=204)
 
 @api_view(['GET'])
+@permission_classes((AllowAny, ))
 def dashboardStats(request):
     """
     Get the data required for the global dashboard in one json response
@@ -283,3 +286,19 @@ def variables_global(request):
         #     else:
         #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return HttpResponse(status=200)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny, ))
+def permissions(request):
+    # logger.info(request.user)
+    if request.user.is_authenticated():
+        # username = request.user.username
+        # permissions = Permission.objects.filter(user=request.user)
+        #
+        # serializer = PermissionSerializer(permissions, many=True)
+        if (request.user.is_superuser):
+            return JsonResponse({"admin":True})
+        else:
+            return JsonResponse({"admin":False})
+    return HttpResponse(status=200)

@@ -1,0 +1,43 @@
+@import ../../styles
+
+.numberRow
+  border: 1px solid rgba(0, 0, 0, 0.125)
+  border-radius: 0.25rem
+  margin: 0
+  margin-bottom: 10px
+  padding: 10px
+
+.numberTitle
+  margin: 0
+
+.divider::before
+  content: ""
+  position: absolute
+  left: 0
+  height: 52px
+  border-left: 2px solid rgba($company-color-primary, 0.5)
+  margin-top: 10px
+
+.number
+  font-size: 2em
+  font-weight: bold
+  margin: 0
+  opacity: 0.5
+
+  &.errors
+    color: red
+
+.half-graph
+  margin: 0
+  margin-bottom: 10px
+
+  .card
+    padding-right: 40px
+
+    .card-body
+      height: 200px
+      padding: 0
+
+.filetypes
+  height: 300px
+  margin-bottom: 10px

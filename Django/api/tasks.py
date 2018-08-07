@@ -115,13 +115,16 @@ class pythonModuleBase:
         if filter == '':
             # run once.
             logger.info('run no filter start')
-            res, errorText = self.execute(process, package, values)
+            res, logText = self.execute(process, package, values)
             #if there is an error, store it and return -1
             if res == -1:
-                logger.error(errorText)
-                process.errors = [{'file': 'All files', 'Error': errorText}]
+                logger.error(logText)
+                process.errors = [{'file': 'All files', 'log': logText}]
                 process.save()
                 return -1
+            else:
+                process.logs = [{'file': 'All files', 'log': logText}]
+                process.save()
 
             logger.info('run no filter done')
         else:
@@ -138,6 +141,7 @@ class pythonModuleBase:
             # calculate which files that should be run:
             allFiles = []
             errorFiles = []
+            logs = []
             if process.allFiles == []:
                 for root, dirs, files in os.walk(package.workdir):
                     for name in files:
@@ -159,19 +163,21 @@ class pythonModuleBase:
                     fileName = f['file']
                     values['file'] = fileName
                     logger.info('run filter before execute')
-                    res, errorText = self.execute(process, package, values)
+                    res, logText = self.execute(process, package, values)
                     logger.info('run filter after execute')
                     if res == -1:
                         allFiles[i]['status'] = False
                         errorDict = {}
                         errorDict['file'] = fileName
-                        errorDict['Error'] = errorText
+                        errorDict['log'] = logText
                         errorFiles.append(errorDict)
                         errorHappend(fileName)
                         retval = -1
                     else:
                         allFiles[i]['status'] = True
+                        logs.append({'file': fileName, 'log': logText})
                     process.errors = errorFiles
+                    process.logs = logs
                     process.progress = (i+1)/numberOfFiles * 100
                     process.allFiles = allFiles
                     process.save()
@@ -237,16 +243,18 @@ class bashModule(pythonModuleBase):
 
         #validate output, check if there are any error, or if there are errors in the info file.
         if stderr:
-            self.logger.error(stderr.decode('utf-8'))
-            return (-1, stderr.decode('utf-8'))
+            error = stderr.decode('utf-8')
+            self.logger.error(error)
+            return (-1, error)
 
         if stdout:
             # self.logger.info('File: ' + )
-            self.logger.info(stdout.decode('utf-8'))
-            res, t = self.AnalyseLog(process, stdout.decode('utf-8'))
-            if (res == -1):
-                return (res, t)
-        return (1, "")
+            log = stdout.decode('utf-8')
+            self.logger.info(log)
+            res, t = self.AnalyseLog(process, log)
+            # if (res == -1):
+                # return (res, t)
+        return (1, log)
 
 class dockerModule(pythonModuleBase):
 
@@ -277,17 +285,15 @@ class dockerModule(pythonModuleBase):
 
         container = client.containers.run(process.module.dockerImage.name, command, detach=True, volumes=volumes)
         retval = 1
-        retText = ""
         logger.info('docker execute')
         container.wait()
-        log = container.logs().decode('utf-8')
+        retText = container.logs().decode('utf-8')
         # for log in container.logs(stream=True):
-        res, t = self.AnalyseLog(process, log)
+        res, t = self.AnalyseLog(process, retText)
         if res == -1:
             retval = -1
-            retText = t
         else:
-            self.logger.info(log)
+            self.logger.info(retText)
 
         logger.info('docker done')
 
@@ -379,7 +385,7 @@ def moduleFailed(name, process, package):
     # save error to error log
     errorDict = {}
     errorDict['file'] = 'Module error'
-    errorDict['Error'] = log
+    errorDict['log'] = log
     process.errors.append(errorDict)
     process.status = Process.PROCESS_STATUS_ERROR
     package.status = Package.PACKAGE_STATUS_ERROR

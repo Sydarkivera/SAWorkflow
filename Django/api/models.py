@@ -7,11 +7,33 @@ __email__ = "simon@axenu.com"
 __status__ = "Development"
 
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 from jsonfield import JSONField
 
 #cusom field for bigint
 # from django.db.models.fields import IntegerField
 # from django.conf import settings
+# 
+# class Role(models.Model):
+#     '''
+#     The Role entries are managed by the system,
+#     automatically created via a Django data migration.
+#     '''
+#     USER = 1
+#     ADMIN = 2
+#     ROLE_CHOICES = (
+#         (USER, 'Normal User'),
+#         (ADMIN, 'Admin'),
+#     )
+#
+#     id = models.PositiveSmallIntegerField(choices=ROLE_CHOICES, primary_key=True)
+#
+#     def __str__(self):
+#         return self.get_id_display()
+
+class User(AbstractUser):
+    # roles = models.ManyToManyField(Role, default=1)
+    pass
 
 class BigIntegerField(models.IntegerField):
     empty_strings_allowed=False
@@ -136,6 +158,7 @@ class Process(models.Model):
     # % complete
     progress = models.DecimalField(default=0, max_digits=10, decimal_places=5)
     allFiles = JSONField(default=[])
+    logs = JSONField(default=[])
     errors = JSONField(default=[])
 
 

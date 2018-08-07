@@ -12,7 +12,7 @@ import django
 
 django.setup()
 
-from django.contrib.auth.models import User
+from api.models import User
 from api.models import *
 import datetime
 
@@ -245,6 +245,7 @@ User.objects.all().delete()
 user = User.objects.create_user('admin', 'simon@axenu.com', 'admin')
 user.is_superuser = True
 user.is_staff = True
+# user.role = 2
 user.save()
 
 

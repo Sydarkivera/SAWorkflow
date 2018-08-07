@@ -9,6 +9,7 @@ __status__ = "Development"
 from rest_framework import serializers
 from api.models import *
 import json
+from django.contrib.auth.models import Permission
 
 class BigintSerializer(serializers.Field):
     def to_representation(self, obj):
@@ -47,6 +48,7 @@ class ProcessSerializer(serializers.ModelSerializer):
     form = JSONSerializerField(source='module.form', read_only=True)
     value = JSONSerializerField(required=False)
     errors = JSONSerializerField(required=False)
+    logs = JSONSerializerField(required=False)
     status = serializers.SerializerMethodField()
     module = serializers.PrimaryKeyRelatedField(queryset=Module.objects.all())
     package = serializers.PrimaryKeyRelatedField(queryset=Package.objects.all(), required=False)
@@ -55,7 +57,7 @@ class ProcessSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Process
-        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template', 'errors')
+        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template', 'errors', 'logs')
 
     def get_status(self,obj):
         return obj.get_status_display()
@@ -140,3 +142,9 @@ class DockerImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = DockerImage
         fields = ('id', 'name', 'mountpoint', 'label')
+
+class PermissionSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Permission
+        fields = ('name', 'codename', 'content_type')

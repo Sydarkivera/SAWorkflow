@@ -30,4 +30,6 @@ urlpatterns = [
 
     #containers (docker)
     url(r'^image/', include('api.images.urls')),
+
+    url(r'^permissions/', views.permissions),
 ]

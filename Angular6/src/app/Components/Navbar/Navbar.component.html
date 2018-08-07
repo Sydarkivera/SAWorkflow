@@ -4,11 +4,14 @@
     <ng-content></ng-content>
   </ul>
   <ul class="navbar-nav mr-2">
-    <li class="nav-item">
-      <a class="nav-link" href="#">Login</a>
+    <li class="nav-item" *ngIf="!IsAuthenticated">
+      <a class="nav-link" [routerLink]="['/login']">Sign in</a>
     </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Register</a>
+    <li class="nav-item" *ngIf="IsAuthenticated">
+      <a class="nav-link" >Welcome, {{username}}</a>
+    </li>
+    <li class="nav-item" *ngIf="IsAuthenticated">
+      <a class="nav-link" (click)="signout()">Sign out</a>
     </li>
   </ul>
 </nav>

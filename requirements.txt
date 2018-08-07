@@ -12,3 +12,4 @@ redis
 django-tarview
 docker
 gunicorn
+djangorestframework-jwt
