@@ -3,6 +3,7 @@ import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { Router } from "@angular/router";
 
 import { APIService } from '../Services/api.service';
+import { PackageService } from '../Services/package.service';
 
 @Component({
   selector: 'packageTemplate',
@@ -17,7 +18,7 @@ export class PackageTemplateComponent {
   package: any;
   active_template: number = -1
 
-  constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router) {
+  constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router, private packageService: PackageService) {
   }
 
   ngOnInit() {
@@ -44,7 +45,10 @@ export class PackageTemplateComponent {
     // api call to set the template for package.
     let data = {"active_template": template.template_id};
     this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe((res) => {
-      window.location.href = '/packages/' + this.package_id + '/edit';
+      // window.location.href = '/packages/' + this.package_id + '/edit';
+      this.packageService.updatePackageData(data);
+      //navigate
+      this.router.navigate(['../', 'edit'], { relativeTo: this.route });
     });
   }
 

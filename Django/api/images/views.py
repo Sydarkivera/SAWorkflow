@@ -10,7 +10,8 @@ from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from api.models import Module, Package, Process, Template, Variable, DockerImage
@@ -80,6 +81,7 @@ def image_detail(request, image_id):
             return HttpResponse(status=409)
 
 @api_view(['GET'])
+@permission_classes((AllowAny, ))
 def image_export(request, image_id):
     """
     Export an image as a tar with docker save

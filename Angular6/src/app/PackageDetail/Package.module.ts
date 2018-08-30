@@ -22,6 +22,7 @@ import { MessageModule } from '../Components/Message/Message.module';
 
 //services
 import { APIService } from '../Services/api.service';
+import { PackageService } from '../Services/package.service';
 
 @NgModule({
   imports: [
@@ -42,6 +43,6 @@ import { APIService } from '../Services/api.service';
     PackageStatusComponent,
     PackageTemplateComponent
   ],
-  providers: [APIService]
+  providers: [APIService, PackageService]
 })
 export class PackageModule {}

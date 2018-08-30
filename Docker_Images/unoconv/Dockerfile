@@ -21,3 +21,12 @@ RUN curl -Ls $UNO_URL -o /usr/local/bin/unoconv \
         && rm -rf /var/cache/apk/*
 
 # RUN mkdir /workdir
+
+RUN ls /usr/share/fonts
+
+WORKDIR /usr/share/fonts
+COPY ./fonts_from_win10_180824.tar .
+RUN tar xvf fonts_from_win10_180824.tar
+RUN rm fonts_from_win10_180824.tar
+RUN ls
+RUN fc-cache -f -v

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AuthenticationService } from './Services/authentication.service';
 
@@ -9,9 +10,19 @@ import { AuthenticationService } from './Services/authentication.service';
 })
 export class AppComponent {
 
+  authClass = 'none'
 
+  constructor(private authService: AuthenticationService, private router: Router) {
+    this.authClass = 'none';
+  }
 
-  constructor(private authService: AuthenticationService) {
+  ngOnInit() {
+    this.router.events
+      .subscribe((event) => {
+        this.authService.getRequestPermissions().subscribe((res) => {
+          this.authClass = this.authService.permissionClass;
+        })
+      });
   }
 
 }

@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+// import 'rxjs/add/operator/map';
+// import { map } from 'rxjs/operators';
 import { Router, ActivatedRoute } from "@angular/router";
 
 // import { AuthenticationService } from '../_services';
@@ -84,8 +86,10 @@ export class AuthenticationService {
             headers.append('Authorization', 'JWT ' + this.token);
             this.http.get('/api/permissions/', {headers: headers}).subscribe(data => {
               // console.log(data);
-              if (data['admin']) {
+              if (data != null && data['admin']) {
                 this.permissionClass = "admin";
+              } else {
+                this.permissionClass = 'none';
               }
             });
           }, 100)
@@ -96,7 +100,15 @@ export class AuthenticationService {
     getRequestPermissions() {
       let headers = new HttpHeaders();
       headers.append('Authorization', 'JWT ' + this.token);
-      return this.http.get('/api/permissions/', {headers: headers})
+      return this.http.get('/api/permissions/', {headers: headers}).pipe(map(data => {
+        // console.log(data);
+        if (data != null && data['admin']) {
+          this.permissionClass = "admin";
+        } else {
+          this.permissionClass = 'none';
+        }
+        return data;
+      }));
     }
 }
 

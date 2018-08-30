@@ -10,7 +10,8 @@ from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from api.models import Module, Package, Process, Template, Variable
@@ -170,6 +171,7 @@ def package_finish(request, package_id):
 
 
 @api_view(['GET', 'DELETE', 'PUT', 'POST'])
+@permission_classes((AllowAny, ))
 def package_files(request, package_id):
     """
     All functions for handling the filebrowser in ui for package

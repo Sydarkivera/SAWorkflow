@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { APIService } from '../Services/api.service';
+import { PackageService } from '../Services/package.service';
 
 @Component({
   selector: 'package',
@@ -17,7 +18,7 @@ export class PackageHeaderComponent {
   active_template: any;
   status = -1
 
-  constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router) {
+  constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router, private packageService: PackageService) {
 
   }
   ngOnInit() {
@@ -32,6 +33,11 @@ export class PackageHeaderComponent {
     });
     this.apiService.getPackages().subscribe((data) => {
       this.packages = data as [any];
+    });
+    this.packageService.packageEmitter$.subscribe(item => {
+      if ('active_template' in item) {
+        this.active_template = item['active_template'];
+      }
     });
   }
 
