@@ -33,11 +33,15 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "adminRoutes", function() { return adminRoutes; });
-/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
-/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
-/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
-/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
-/* harmony import */ var _AdminImages_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AdminImages.component */ "./src/app/Admin/AdminImages.component.ts");
+/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
+/* harmony import */ var _guards_admin_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../guards/admin.guard */ "./src/app/guards/admin.guard.ts");
+/* harmony import */ var _AdminHeader_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AdminHeader.component */ "./src/app/Admin/AdminHeader.component.ts");
+/* harmony import */ var _AdminModules_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./AdminModules.component */ "./src/app/Admin/AdminModules.component.ts");
+/* harmony import */ var _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AdminGlobal.component */ "./src/app/Admin/AdminGlobal.component.ts");
+/* harmony import */ var _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AdminTemplates.component */ "./src/app/Admin/AdminTemplates.component.ts");
+/* harmony import */ var _AdminImages_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AdminImages.component */ "./src/app/Admin/AdminImages.component.ts");
+
+
 // Components
 
 
@@ -45,12 +49,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var adminRoutes = [
-    { path: 'admin', component: _AdminHeader_component__WEBPACK_IMPORTED_MODULE_0__["AdminHeaderComponent"], children: [
+    { path: 'admin', component: _AdminHeader_component__WEBPACK_IMPORTED_MODULE_2__["AdminHeaderComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_0__["AuthGuard"], _guards_admin_guard__WEBPACK_IMPORTED_MODULE_1__["AdminGuard"]], children: [
             { path: '', redirectTo: 'modules', pathMatch: 'full' },
-            { path: 'modules', component: _AdminModules_component__WEBPACK_IMPORTED_MODULE_1__["AdminModulesComponent"] },
-            { path: 'global', component: _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_2__["AdminGlobalComponent"] },
-            { path: 'templates', component: _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_3__["AdminTemplatesComponent"] },
-            { path: 'images', component: _AdminImages_component__WEBPACK_IMPORTED_MODULE_4__["AdminImagesComponent"] },
+            { path: 'modules', component: _AdminModules_component__WEBPACK_IMPORTED_MODULE_3__["AdminModulesComponent"] },
+            { path: 'global', component: _AdminGlobal_component__WEBPACK_IMPORTED_MODULE_4__["AdminGlobalComponent"] },
+            { path: 'templates', component: _AdminTemplates_component__WEBPACK_IMPORTED_MODULE_5__["AdminTemplatesComponent"] },
+            { path: 'images', component: _AdminImages_component__WEBPACK_IMPORTED_MODULE_6__["AdminImagesComponent"] },
         ] }
 ];
 
@@ -152,7 +156,7 @@ var AdminModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n\n<div class=\"card\">\n  <div class=\"card-header\">\n    <h5 style=\"float:left\">Paths</h5>\n    <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n  </div>\n  <div class=\"card-body\">\n    <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Working directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path\" tooltip=\"A directory for temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/workdir\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Packages directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"packages_path\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"bottom\" placeholder=\"/ESSArch/data/epp/workarea\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">APP log file (premis)</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_file_name\" tooltip=\"The name of the premis log file generated by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"app_log.xml\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Directory for all tool files</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"tools_path\" tooltip=\"The absolute path of the directory where the tools are saved in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/tools\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">The absolute path of the workdir on docker host</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path_host\" tooltip=\"This is necessary since it is this folder that will be mounted into containers created by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/Docker/APP/Django/workdir\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for app log file</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_template_path\" tooltip=\"The json document used as a template for app log.\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premis.json\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for log additions</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_event_template_path\" tooltip=\"This should be a template for the part of the logfile that is repeated for every event\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premisEvent.json\">\n    </div>\n\n    <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button>\n  </div>\n</div>\n"
+module.exports = "\n\n<div class=\"card\">\n  <div class=\"card-header\">\n    <h5 style=\"float:left\">Paths</h5>\n    <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n      Save changes\n      <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n    </button>\n  </div>\n  <div class=\"card-body\">\n    <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Working directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path\" tooltip=\"A directory for temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/workdir\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Packages directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"packages_path\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"bottom\" placeholder=\"/ESSArch/data/epp/workarea\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">APP log file (premis)</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_file_name\" tooltip=\"The name of the premis log file generated by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"app_log.xml\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Directory for all tool files</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"tools_path\" tooltip=\"The absolute path of the directory where the tools are saved in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/tools\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">The absolute path of the workdir on docker host</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path_host\" tooltip=\"This is necessary since it is this folder that will be mounted into containers created by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/Docker/APP/Django/workdir\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for app log file</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_template_path\" tooltip=\"The json document used as a template for app log.\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premis.json\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for log additions</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_event_template_path\" tooltip=\"This should be a template for the part of the logfile that is repeated for every event\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premisEvent.json\">\n    </div>\n\n    <button class=\"btn btn-success\" (click)=\"save()\">\n      Save changes\n      <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n    </button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -316,7 +320,7 @@ var AdminHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selected_image.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selected_image.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selected_image.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selected_image.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selected_image.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selected_image.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of forkdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selected_image.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n"
+module.exports = "<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selected_image.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selected_image.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selected_image.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selected_image.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selected_image.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selected_image.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of workdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selected_image.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n"
 
 /***/ }),
 
@@ -327,7 +331,7 @@ module.exports = "<message duration=\"10000\" [(active)]=\"errorVisible\" type=\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n"
 
 /***/ }),
 
@@ -476,7 +480,7 @@ var AdminImagesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- Error message displayed if the module could not be removed -->\n<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\" [class.active]=\"module.module_id == selected_module.module_id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">Add new tool</button>\n    <button class=\"btn\" (click)=\"importModule()\">Import tool</button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" />\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputDescription\">Description - for log file</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputDescription\" [(ngModel)]=\"selected_module.description\" placeholder=\"Sentence describing what the tool does\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">Form json<i class=\"material-icons icon-button my-auto\" (click)=\"openFormJsonDocs()\">help</i></label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <div class=\"form-group my-auto\">\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <div class=\"form-group my-auto\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n            <option value=\"Docker Container\">Docker Container</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <!-- If command type is docker -->\n        <ng-template [ngIf]=\"selected_module.type == 'Docker Container'\">\n          <label class=\"input-label\">\n            Docker image:\n            <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.dockerImage\">\n              <option *ngFor=\"let image of images\" value=\"{{image.id}}\">{{image.label}}</option>\n            </select>\n          </label>\n          <div class=\"form-group\">\n            <label for=\"inputForm\">Command</label>\n            <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n          </div>\n          <!-- <button class=\"btn btn-success\" (click)=\"uploadDockerImage\">Upload Docker Image</button> -->\n          <!-- <div class=\"form-group\">\n            <label for=\"inputName\">Mount point for files/folder</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\">\n          </div> -->\n        </ng-template>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <button class=\"btn btn-success\" (click)=\"openFileBrowser()\">Browse files</button>\n        <!-- <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button> -->\n        <!-- <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p> -->\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">Delete</button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n          {{fileName}}\n        </label>\n      </div>\n      <button class=\"btn btn-success\" type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\"></filebrowser>\n\n<modal [(active)]=\"docsActive\" title=\"Form documentation\">\n  <div modal-body>\n    <p>\n      The form is specified as a json document. The structure must be an array of dictionaries. i.e. [ {{ '{' }}...{{ '}' }}, {{ '{' }}...{{ '}' }}, ...]\n    </p>\n    <p>\n      Each dictionay specifies one field in the form.\n    </p>\n\n    <ul>\n      <li>\n        <h5>type: [string] (required)</h5>\n        <p>\n          The type specifies which kind of form element is supposed to render. Options are: 'text' or 'checkbox'\n        </p>\n      </li>\n      <li>\n        <h5>identifier: [string] (required)</h5>\n        <p>\n          Identifer is the id that will be used in a command to select the value of this field. regex for possibilities: [a-Z0-9-_]\n        </p>\n      </li>\n      <li>\n        <h5>label: [string] (required)</h5>\n        <p>\n          A label which will be displayed in the final form. This can be any string.\n        </p>\n      </li>\n      <li>\n        <h5>default: [string] (optional)</h5>\n        <p>\n          An optional default state for the form. For a checkbox it must be true or false and for a textfield it must be a string.\n        </p>\n      </li>\n    </ul>\n  </div>\n</modal>\n"
+module.exports = "<!-- Error message displayed if the module could not be removed -->\n<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\" [class.active]=\"module.module_id == selected_module.module_id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">\n      Add new tool\n      <i class=\"material-icons my-auto align-middle\">add</i>\n    </button>\n    <button class=\"btn\" (click)=\"importModule()\">\n      Import tool\n    </button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" />\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputDescription\">Description - for log file</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputDescription\" [(ngModel)]=\"selected_module.description\" placeholder=\"Sentence describing what the tool does\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">\n            Form json\n            <i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openFormJsonDocs()\">help</i>\n          </label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <div class=\"form-group my-auto\">\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <div class=\"form-group my-auto\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n            <option value=\"Docker Container\">Docker Container</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"inputForm\">Command</label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <!-- If command type is docker -->\n        <ng-template [ngIf]=\"selected_module.type == 'Docker Container'\">\n          <label class=\"input-label\">\n            Docker image:\n            <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.dockerImage\">\n              <option *ngFor=\"let image of images\" value=\"{{image.id}}\">{{image.label}}</option>\n            </select>\n          </label>\n          <div class=\"form-group\">\n            <label for=\"inputForm\">Command</label>\n            <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n          </div>\n          <!-- <button class=\"btn btn-success\" (click)=\"uploadDockerImage\">Upload Docker Image</button> -->\n          <!-- <div class=\"form-group\">\n            <label for=\"inputName\">Mount point for files/folder</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\">\n          </div> -->\n        </ng-template>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <button class=\"btn btn-success\" (click)=\"openFileBrowser()\">\n          Browse files\n          <i class=\"material-icons my-auto align-middle icon-small\">folder_open</i>\n        </button>\n        <!-- <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button> -->\n        <!-- <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p> -->\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">\n      Delete\n      <i class=\"material-icons my-auto align-middle icon-small\">delete</i>\n    </button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n          {{fileName}}\n        </label>\n      </div>\n      <button class=\"btn btn-success\" type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\"></filebrowser>\n\n<modal [(active)]=\"docsActive\" title=\"Form documentation\">\n  <div modal-body>\n    <p>\n      The form is specified as a json document. The structure must be an array of dictionaries. i.e. [ {{ '{' }}...{{ '}' }}, {{ '{' }}...{{ '}' }}, ...]\n    </p>\n    <p>\n      Each dictionay specifies one field in the form.\n    </p>\n\n    <ul>\n      <li>\n        <h5>type: [string] (required)</h5>\n        <p>\n          The type specifies which kind of form element is supposed to render. Options are: 'text' or 'checkbox'\n        </p>\n      </li>\n      <li>\n        <h5>identifier: [string] (required)</h5>\n        <p>\n          Identifer is the id that will be used in a command to select the value of this field. regex for possibilities: [a-Z0-9-_]\n        </p>\n      </li>\n      <li>\n        <h5>label: [string] (required)</h5>\n        <p>\n          A label which will be displayed in the final form. This can be any string.\n        </p>\n      </li>\n      <li>\n        <h5>default: [string] (optional)</h5>\n        <p>\n          An optional default state for the form. For a checkbox it must be true or false and for a textfield it must be a string.\n        </p>\n      </li>\n    </ul>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -487,7 +491,7 @@ module.exports = "<!-- Error message displayed if the module could not be remove
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.input-label {\n  width: 100%; }\n\n.Error-text {\n  color: red; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n\ntextarea {\n  width: 100%; }\n\n.allow-scroll-beneath-page-end {\n  height: 300px; }\n\n.form-row div, .form-row select {\n  margin-right: 5px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.input-label {\n  width: 100%; }\n\n.Error-text {\n  color: red; }\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.active label, .active p, .active i, .active small {\n    color: #333; }\n\ntextarea {\n  width: 100%; }\n\n.allow-scroll-beneath-page-end {\n  height: 300px; }\n\n.form-row div, .form-row select {\n  margin-right: 5px; }\n"
 
 /***/ }),
 
@@ -777,7 +781,7 @@ var AdminModulesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">Save changes</button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">Save</button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
+module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -788,7 +792,7 @@ module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templ
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n\n.placeholder {\n  opacity: 0.4; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n\n.placeholder {\n  opacity: 0.4; }\n"
 
 /***/ }),
 
@@ -1280,7 +1284,7 @@ module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.modal.active {\n  display: block !important; }\n\n.main-modal.modal-dialog, .main-modal .modal-content {\n  height: 95%; }\n\n.modal-body {\n  overflow-x: scroll;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  padding: 0; }\n\n.modal-body .level {\n    float: left;\n    width: 200px;\n    min-width: 200px;\n    height: 100%;\n    overflow-y: scroll;\n    overflow-x: hidden;\n    border-right: 1px solid #e9ecef;\n    padding-left: 0; }\n\n.modal-body .level .file {\n      clear: both;\n      flex-wrap: nowrap;\n      display: flex;\n      padding-left: 10px;\n      align-items: center; }\n\n.modal-body .level .file p {\n        white-space: nowrap;\n        float: left;\n        vertical-align: middle;\n        margin: 5px; }\n\n.modal-body .level .file i {\n        float: left;\n        color: rgba(188, 4, 78, 0.5); }\n\n.modal-body .level .file.selected {\n        background-color: #bc044e; }\n\n.modal-body .level .file.selected p, .modal-body .level .file.selected i {\n          color: white; }\n\n.modal-background {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n\n.contextMenu {\n  position: fixed;\n  z-index: 10000; }\n\n.contextMenu .dropdown-menu {\n    display: block; }\n\n.contextMenu .dropdown-menu .dropdown-header {\n      padding: 0;\n      padding-left: 10px;\n      padding-top: 5px; }\n\n.contextMenu .dropdown-menu .dropdown-header p {\n        margin-left: 5px; }\n\n.contextMenu .dropdown-menu .dropdown-divider {\n      clear: both; }\n\n.popUpQuestion {\n  display: block; }\n\n.popUpQuestion .modal-body {\n    padding: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.modal.active {\n  display: block !important; }\n\n.main-modal.modal-dialog, .main-modal .modal-content {\n  height: 95%; }\n\n.modal-body {\n  overflow-x: auto;\n  display: flex;\n  flex-direction: row;\n  flex-wrap: nowrap;\n  padding: 0; }\n\n.modal-body .level {\n    float: left;\n    width: 200px;\n    min-width: 200px;\n    height: 100%;\n    overflow-y: auto;\n    overflow-x: hidden;\n    border-right: 1px solid #e9ecef;\n    padding-left: 0; }\n\n.modal-body .level .file {\n      clear: both;\n      flex-wrap: nowrap;\n      display: flex;\n      padding-left: 10px;\n      align-items: center; }\n\n.modal-body .level .file p {\n        white-space: nowrap;\n        float: left;\n        vertical-align: middle;\n        margin: 5px; }\n\n.modal-body .level .file i {\n        float: left;\n        color: rgba(188, 4, 78, 0.5); }\n\n.modal-body .level .file.selected {\n        background-color: #bc044e; }\n\n.modal-body .level .file.selected p, .modal-body .level .file.selected i {\n          color: white; }\n\n.modal-background {\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1; }\n\n.contextMenu {\n  position: fixed;\n  z-index: 10000; }\n\n.contextMenu .dropdown-menu {\n    display: block; }\n\n.contextMenu .dropdown-menu .dropdown-header {\n      padding: 0;\n      padding-left: 10px;\n      padding-top: 5px; }\n\n.contextMenu .dropdown-menu .dropdown-header p {\n        margin-left: 5px; }\n\n.contextMenu .dropdown-menu .dropdown-divider {\n      clear: both; }\n\n.popUpQuestion {\n  display: block; }\n\n.popUpQuestion .modal-body {\n    padding: 10px; }\n"
 
 /***/ }),
 
@@ -1968,7 +1972,7 @@ var ModalModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Login</a>\n    </li>\n    <li class=\"nav-item\">\n      <a class=\"nav-link\" href=\"#\">Register</a>\n    </li>\n  </ul>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\" *ngIf=\"!IsAuthenticated\">\n      <a class=\"nav-link\" [routerLink]=\"['/login']\">Sign in</a>\n    </li>\n    <li class=\"nav-item\" *ngIf=\"IsAuthenticated\">\n      <a class=\"nav-link\" >Welcome, {{username}}</a>\n    </li>\n    <li class=\"nav-item\" *ngIf=\"IsAuthenticated\">\n      <a class=\"nav-link\" (click)=\"signout()\">Sign out</a>\n    </li>\n  </ul>\n</nav>\n"
 
 /***/ }),
 
@@ -1994,22 +1998,39 @@ module.exports = ".navbar-brand {\n  background-color: #5c5c5c;\n  width: 220px;
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NavbarComponent", function() { return NavbarComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Services_authentication_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Services/authentication.service */ "./src/app/Services/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
 
 var NavbarComponent = /** @class */ (function () {
-    function NavbarComponent() {
+    function NavbarComponent(authService) {
+        this.authService = authService;
+        this.username = "";
+        this.IsAuthenticated = false;
+        //get username
+        if (authService.isAuthenticated()) {
+            this.IsAuthenticated = true;
+            this.username = authService.getUsername();
+        }
     }
+    NavbarComponent.prototype.signout = function () {
+        this.authService.logout();
+    };
     NavbarComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'navbar',
             template: __webpack_require__(/*! ./Navbar.component.html */ "./src/app/Components/Navbar/Navbar.component.html"),
             styles: [__webpack_require__(/*! ./Navbar.component.sass */ "./src/app/Components/Navbar/Navbar.component.sass")]
-        })
+        }),
+        __metadata("design:paramtypes", [_Services_authentication_service__WEBPACK_IMPORTED_MODULE_1__["AuthenticationService"]])
     ], NavbarComponent);
     return NavbarComponent;
 }());
@@ -3089,7 +3110,7 @@ module.exports = "<navbar></navbar>\n\n<!-- To row of important numbers -->\n<di
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -3135,7 +3156,7 @@ var NotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">Start</button>\n  </div>\n</div>\n"
+module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">\n      Start\n      <i class=\"material-icons my-auto align-middle icon-small\">play_arrow</i>\n    </button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -3146,7 +3167,7 @@ module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.input-label {\n  width: 100%; }\n\n.template {\n  opacity: 0.4; }\n\n.emptyList {\n  height: 400px;\n  width: 100%;\n  background-color: #eee;\n  display: table;\n  padding: 0px 40px; }\n\n.emptyList p {\n    display: table-cell;\n    vertical-align: middle;\n    color: #444; }\n\n.emptyList i {\n    vertical-align: middle;\n    color: #444; }\n\n.list-group-item.active {\n  background-color: #ddd;\n  border-color: #bc044e; }\n\n.list-group-item.active label, .list-group-item.active p, .list-group-item.active i, .list-group-item.active small {\n    color: #333; }\n"
 
 /***/ }),
 
@@ -3538,6 +3559,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../Components/FileBrowser/FileBrowser.module */ "./src/app/Components/FileBrowser/FileBrowser.module.ts");
 /* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ../Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
 /* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _Services_package_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../Services/package.service */ "./src/app/Services/package.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3563,6 +3585,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 //services
 
+
 var PackageModule = /** @class */ (function () {
     function PackageModule() {
     }
@@ -3586,7 +3609,7 @@ var PackageModule = /** @class */ (function () {
                 _PackageStatus_component__WEBPACK_IMPORTED_MODULE_7__["PackageStatusComponent"],
                 _PackageTemplate_component__WEBPACK_IMPORTED_MODULE_8__["PackageTemplateComponent"]
             ],
-            providers: [_Services_api_service__WEBPACK_IMPORTED_MODULE_15__["APIService"]]
+            providers: [_Services_api_service__WEBPACK_IMPORTED_MODULE_15__["APIService"], _Services_package_service__WEBPACK_IMPORTED_MODULE_16__["PackageService"]]
         })
     ], PackageModule);
     return PackageModule;
@@ -3603,7 +3626,7 @@ var PackageModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <button class=\"btn btn-success browse\" (click)=\"openFileBrowser()\">Browse package</button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div\n    *ngFor=\"let process of package.processes\"\n    class=\"progress-bar text-dark text-center\"\n    [style.width]=\"process.progress/package.processes.length + '%'\"\n    [class.bg-success]=\"process.status == 'Done'\"\n    [class.bg-danger]=\"process.status == 'Error'\"\n    [class.progress-bar-animated]=\"process.status == 'Running'\"\n    [class.progress-bar-striped]=\"process.status == 'Running'\"\n    >\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    label=\"Files\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\"></filebrowser>\n"
+module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <button class=\"btn btn-success browse\" (click)=\"openFileBrowser()\">\n      Browse package\n      <i class=\"material-icons my-auto align-middle\">folder_open</i>\n    </button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div\n    *ngFor=\"let process of package.processes\"\n    class=\"progress-bar text-dark text-center\"\n    [style.width]=\"process.progress/package.processes.length + '%'\"\n    [class.bg-success]=\"process.status == 'Done'\"\n    [class.bg-danger]=\"process.status == 'Error'\"\n    [class.progress-bar-animated]=\"process.status == 'Running'\"\n    [class.progress-bar-striped]=\"process.status == 'Running'\"\n    >\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    label=\"Files\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\"></filebrowser>\n"
 
 /***/ }),
 
@@ -3614,7 +3637,7 @@ module.exports = "\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-s
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n\n.btn.browse {\n  margin-top: 15px; }\n\n.progress {\n  margin-bottom: 10px; }\n"
 
 /***/ }),
 
@@ -3793,7 +3816,7 @@ module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.sh
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.package_title {\n  font-weight: bold;\n  color: white;\n  margin: 0;\n  padding: 0;\n  cursor: pointer; }\n\n.nav-item.disabled {\n  cursor: not-allowed; }\n\n.nav-item.active {\n  background-color: #bc044e; }\n\n.nav-item .nav-link {\n  color: white; }\n\n.nav-item .nav-link.disabled {\n    color: gray;\n    pointer-events: none;\n    cursor: not-allowed; }\n\n.dropdown-item:active {\n  background-color: #bc044e;\n  color: white !important; }\n"
 
 /***/ }),
 
@@ -3810,6 +3833,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _Services_package_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Services/package.service */ "./src/app/Services/package.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3822,11 +3846,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var PackageHeaderComponent = /** @class */ (function () {
-    function PackageHeaderComponent(apiService, route, router) {
+    function PackageHeaderComponent(apiService, route, router, packageService) {
         this.apiService = apiService;
         this.route = route;
         this.router = router;
+        this.packageService = packageService;
         this.name = "";
         this.showDropDown = false;
         this.status = -1;
@@ -3844,6 +3870,11 @@ var PackageHeaderComponent = /** @class */ (function () {
         this.apiService.getPackages().subscribe(function (data) {
             _this.packages = data;
         });
+        this.packageService.packageEmitter$.subscribe(function (item) {
+            if ('active_template' in item) {
+                _this.active_template = item['active_template'];
+            }
+        });
     };
     PackageHeaderComponent.prototype.navigateTo = function (package_id) {
         var topPath = this.router.url.split("/").pop();
@@ -3856,7 +3887,7 @@ var PackageHeaderComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageHeader.component.html */ "./src/app/PackageDetail/PackageHeader.component.html"),
             styles: [__webpack_require__(/*! ./PackageHeader.component.sass */ "./src/app/PackageDetail/PackageHeader.component.sass")]
         }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _Services_package_service__WEBPACK_IMPORTED_MODULE_3__["PackageService"]])
     ], PackageHeaderComponent);
     return PackageHeaderComponent;
 }());
@@ -3872,7 +3903,7 @@ var PackageHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<message [(active)]=\"messageActive\" duration=\"4000\">{{messageText}}</message>\n\n<h4>Package status: {{package.status}}</h4>\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.status != 'Error' && process.errors.length <= 0\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\" *ngIf=\"package.status != 'Finished'\">Start</button>\n<button class=\"btn btn-warning float-right\" (click)=\"finishPackage()\" *ngIf=\"package.status != 'Finished'\">Done</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">Delete</button>\n\n\n<!-- Modal for logfile display -->\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <!-- <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div> -->\n    <div class=\"list-group\">\n      <div *ngFor=\"let error of modalData\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.log)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
+module.exports = "<message [(active)]=\"messageActive\" duration=\"4000\">{{messageText}}</message>\n\n<h4>Package status: {{package.status}}</h4>\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Statusbar</th>\n      <th>Status</th>\n      <th>Log</th>\n      <th>\n        Error\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let process of package.processes\">\n      <td class=\"align-middle\">\n        {{process.name}} {{process.hidden ? '(Hidden)' : ''}}\n      </td>\n      <td class=\"align-middle\">\n        <div class=\"progress border border-primary\">\n          <div class=\"progress-bar text-dark text-center\"\n          [class.bg-success]=\"process.status == 'Done'\"\n          [class.bg-danger]=\"process.status == 'Error'\"\n          [class.progress-bar-animated]=\"process.status == 'Running'\"\n          [class.progress-bar-striped]=\"process.status == 'Running'\"\n          [style.width]=\"process.progress + '%'\">{{process.progress}}%</div>\n        </div>\n      </td>\n      <td class=\"align-middle\">{{process.status}}</td>\n      <td class=\"align-middle\"><button class=\"btn btn-outline-primary\" (click)=\"showModal(process, 'info_log')\" [disabled]=\"process.log_path == ''\">Open log</button></td>\n      <td class=\"align-middle\">\n        <button class=\"btn btn-danger\"\n                (click)=\"showModal(process, 'error_log')\"\n                [disabled]=\"process.status != 'Error' && process.errors.length <= 0\"\n                [class.btn-outline-danger]=\"process.errors.length <= 0\">\n                Errors: {{process.errors.length}}\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n<button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\" *ngIf=\"package.status != 'Finished'\">\n  Start\n  <i class=\"material-icons my-auto align-middle icon-small\">play_arrow</i>\n</button>\n<button class=\"btn btn-warning float-right\" (click)=\"finishPackage()\" *ngIf=\"package.status != 'Finished'\">\n  Done\n  <!-- <i class=\"material-icons my-auto align-middle icon-small\">done</i> -->\n</button>\n<button class=\"btn btn-danger float-right\" (click)=\"removePackage()\">\n  Delete\n  <i class=\"material-icons my-auto align-middle icon-small\">delete</i>\n</button>\n\n\n<!-- Modal for logfile display -->\n<modal [(active)]=\"modalactive\" title=\"Complete log\">\n  <div modal-body style=\"margin-bottom: 10px\">\n    <div class=\"loading mx-auto\" *ngIf=\"modalLoading\"></div>\n    <!-- <div *ngIf=\"modalType == 'info'\" [innerHTML]=\"modalData\" style=\"white-space: pre-wrap;\"></div> -->\n    <div class=\"list-group\">\n      <div *ngFor=\"let error of modalData\" class=\"list-group-item list-group-item-action\" (click)=\"error.expanded = !error.expanded\">\n        <div class=\" d-flex justify-content-between\">\n          <p class=\"\">{{error.file}}</p>\n          <i *ngIf=\"!error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_right</i>\n          <i *ngIf=\"error.expanded\" class=\"material-icons my-auto\">keyboard_arrow_down</i>\n        </div>\n        <div *ngIf=\"error.expanded\">\n          <p [innerHTML]=\"sanitizeLog(error.log)\" style=\"white-space: pre-wrap;\">\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -3950,11 +3981,11 @@ var PackageStatusComponent = /** @class */ (function () {
         this.modalactive = true;
         this.modalLoading = true;
         this.modalData = "";
-        console.log(process);
         if (type == 'info_log') {
             this.modalLoading = false;
             this.modalData = process.logs;
             // this.modalType = 'info';
+            console.log(process.logs);
             // this.apiService.getLogFile(type, process.process_id).subscribe((data) => {
             //   this.modalLoading = false;
             //   this.modalData = this.sanitizeLog(data);
@@ -3962,6 +3993,7 @@ var PackageStatusComponent = /** @class */ (function () {
         }
         else {
             this.modalLoading = false;
+            console.log(process.errors);
             // this.modalType = 'error';
             // this.modalProcess = process;
             this.modalData = process.errors;
@@ -3983,7 +4015,7 @@ var PackageStatusComponent = /** @class */ (function () {
         var _this = this;
         this.apiService.getPackage(this.id).subscribe(function (data) {
             _this.package = data;
-            console.log(data);
+            // console.log(data);
         });
     };
     PackageStatusComponent.prototype.removePackage = function () {
@@ -4000,7 +4032,10 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.sanitizeLog = function (data) {
         // convert the file to html friendly text
-        return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
+        if (data) {
+            return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
+        }
+        return "Log is empty";
     };
     PackageStatusComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -4024,7 +4059,7 @@ var PackageStatusComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\" (click)=\"selectAndStart(template)\">Start</button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<h4>Select a template to set as a startingpoint for this package</h4>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Actions</th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let template of templates\" [class.selected]=\"active_template==template.template_id\">\n      <td [class.selected]=\"active_template==template.template_id\">\n        {{template.name}}\n      </td>\n      <td class=\"small-column\" [class.selected]=\"active_template==template.template_id\">\n        <button class=\"btn btn-success\" *ngIf=\"active_template != template.template_id\" [class.btn-warning]=\"active_template != undefined\" (click)=\"selectTemplate(template)\">Select</button>\n        <button class=\"btn btn-success\" (click)=\"selectAndStart(template)\">\n          Start\n          <i class=\"material-icons my-auto align-middle icon-small\">play_arrow</i>\n        </button>\n      </td>\n    </tr>\n  </tbody>\n</table>\n"
 
 /***/ }),
 
@@ -4035,7 +4070,7 @@ module.exports = "<h4>Select a template to set as a startingpoint for this packa
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n\n.selected {\n  background-color: #aaa;\n  color: white; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.small-column {\n  width: 200px; }\n\nbutton {\n  margin-left: 10px; }\n\n.selected {\n  background-color: #aaa;\n  color: white; }\n"
 
 /***/ }),
 
@@ -4052,6 +4087,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _Services_package_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../Services/package.service */ "./src/app/Services/package.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4065,11 +4101,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var PackageTemplateComponent = /** @class */ (function () {
-    function PackageTemplateComponent(apiService, route, router) {
+    function PackageTemplateComponent(apiService, route, router, packageService) {
         this.apiService = apiService;
         this.route = route;
         this.router = router;
+        this.packageService = packageService;
         this.active_template = -1;
     }
     PackageTemplateComponent.prototype.ngOnInit = function () {
@@ -4097,7 +4135,10 @@ var PackageTemplateComponent = /** @class */ (function () {
         // api call to set the template for package.
         var data = { "active_template": template.template_id };
         this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe(function (res) {
-            window.location.href = '/packages/' + _this.package_id + '/edit';
+            // window.location.href = '/packages/' + this.package_id + '/edit';
+            _this.packageService.updatePackageData(data);
+            //navigate
+            _this.router.navigate(['../', 'edit'], { relativeTo: _this.route });
         });
     };
     PackageTemplateComponent.prototype.selectAndStart = function (template) {
@@ -4113,7 +4154,7 @@ var PackageTemplateComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./PackageTemplate.component.html */ "./src/app/PackageDetail/PackageTemplate.component.html"),
             styles: [__webpack_require__(/*! ./PackageTemplate.component.sass */ "./src/app/PackageDetail/PackageTemplate.component.sass")]
         }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _Services_package_service__WEBPACK_IMPORTED_MODULE_3__["PackageService"]])
     ], PackageTemplateComponent);
     return PackageTemplateComponent;
 }());
@@ -4211,6 +4252,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Packages_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Packages.component */ "./src/app/Packages/Packages.component.ts");
 /* harmony import */ var _PackageList_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PackageList.component */ "./src/app/Packages/PackageList.component.ts");
 /* harmony import */ var _PackageDetail_PackageDetail_routing_routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../PackageDetail/PackageDetail-routing.routes */ "./src/app/PackageDetail/PackageDetail-routing.routes.ts");
+/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4222,9 +4264,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var packagesRoutes = [
-    { path: 'packages', component: _Packages_component__WEBPACK_IMPORTED_MODULE_2__["PackagesComponent"], children: [
-            { path: '', component: _PackageList_component__WEBPACK_IMPORTED_MODULE_3__["PackageListComponent"] }
+    { path: 'packages', component: _Packages_component__WEBPACK_IMPORTED_MODULE_2__["PackagesComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]], children: [
+            { path: '', component: _PackageList_component__WEBPACK_IMPORTED_MODULE_3__["PackageListComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]] }
         ].concat(_PackageDetail_PackageDetail_routing_routes__WEBPACK_IMPORTED_MODULE_4__["packageRoutes"]) },
 ];
 var PackagesRoutingModule = /** @class */ (function () {
@@ -4515,6 +4558,200 @@ var APIService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Services/authentication.service.ts":
+/*!****************************************************!*\
+  !*** ./src/app/Services/authentication.service.ts ***!
+  \****************************************************/
+/*! exports provided: AuthenticationService, ErrorInterceptor */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthenticationService", function() { return AuthenticationService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ErrorInterceptor", function() { return ErrorInterceptor; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+// import 'rxjs/add/operator/map';
+// import { map } from 'rxjs/operators';
+
+// import { AuthenticationService } from '../_services';
+var AuthenticationService = /** @class */ (function () {
+    function AuthenticationService(http, router) {
+        this.http = http;
+        this.router = router;
+        this.username = "";
+        this.token = "";
+        this.permissions = [];
+        this.permissionsLoaded = false;
+        this.permissionClass = "";
+        this.token = localStorage.getItem('access_token');
+        this.username = localStorage.getItem('username');
+        this.loadPermissions();
+    }
+    AuthenticationService.prototype.login = function (username, password) {
+        var _this = this;
+        return this.http.post('/auth/api-token-auth/', { username: username, password: password })
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) {
+            // login successful if there's a jwt token in the response
+            if (res && res.token) {
+                _this.token = res.token;
+                // store username and jwt token in local storage to keep user logged in between page refreshes
+                localStorage.setItem('access_token', res.token);
+                localStorage.setItem('username', username);
+                _this.username = username;
+                _this.loadToken();
+                //get permission information.
+                _this.loadPermissions();
+            }
+        }));
+    };
+    AuthenticationService.prototype.loadToken = function () {
+        var base64Url = this.token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        this.payload = JSON.parse(window.atob(base64));
+    };
+    AuthenticationService.prototype.logout = function (navigate) {
+        if (navigate === void 0) { navigate = true; }
+        // console.log('sign out');
+        // remove user from local storage to log user out
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('username');
+        //navigate to dashboard
+        if (navigate) {
+            this.router.navigate(['/login'], { queryParams: { message: "Sign out successful", type: "alert-success" } });
+        }
+    };
+    AuthenticationService.prototype.getUsername = function () {
+        return this.username;
+    };
+    AuthenticationService.prototype.isAuthenticated = function () {
+        if (localStorage.getItem('access_token')) {
+            return true;
+        }
+        return false;
+    };
+    AuthenticationService.prototype.loadPermissions = function () {
+        var _this = this;
+        // console.log('get Permission')
+        if (!this.permissionsLoaded) {
+            // console.log('get request')
+            // console.log(this.permissionsLoaded);
+            this.permissionsLoaded = true;
+            if (this.token != "") {
+                // console.log(this.token)
+                setTimeout(function () {
+                    var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
+                    headers.append('Authorization', 'JWT ' + _this.token);
+                    _this.http.get('/api/permissions/', { headers: headers }).subscribe(function (data) {
+                        // console.log(data);
+                        if (data != null && data['admin']) {
+                            _this.permissionClass = "admin";
+                        }
+                        else {
+                            _this.permissionClass = 'none';
+                        }
+                    });
+                }, 100);
+            }
+        }
+    };
+    AuthenticationService.prototype.getRequestPermissions = function () {
+        var _this = this;
+        var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
+        headers.append('Authorization', 'JWT ' + this.token);
+        return this.http.get('/api/permissions/', { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            // console.log(data);
+            if (data != null && data['admin']) {
+                _this.permissionClass = "admin";
+            }
+            else {
+                _this.permissionClass = 'none';
+            }
+            return data;
+        }));
+    };
+    AuthenticationService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
+    ], AuthenticationService);
+    return AuthenticationService;
+}());
+
+var ErrorInterceptor = /** @class */ (function () {
+    function ErrorInterceptor(authenticationService, router, route) {
+        this.authenticationService = authenticationService;
+        this.router = router;
+        this.route = route;
+    }
+    ErrorInterceptor.prototype.intercept = function (request, next) {
+        var _this = this;
+        return next.handle(request).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["catchError"])(function (err) {
+            if (err.status === 401) {
+                // console.log('intercept 401')
+                // auto logout if 401 response returned from api
+                _this.authenticationService.logout(false);
+                _this.router.navigate(['/login'], { queryParams: { message: "Session has expired, please sign in again", type: "alert-danger", returnUrl: _this.router.url } });
+            }
+            var error = err.error.message || err.statusText;
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
+        }));
+    };
+    ErrorInterceptor = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [AuthenticationService, _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
+    ], ErrorInterceptor);
+    return ErrorInterceptor;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/Services/package.service.ts":
+/*!*********************************************!*\
+  !*** ./src/app/Services/package.service.ts ***!
+  \*********************************************/
+/*! exports provided: PackageService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PackageService", function() { return PackageService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+//music.service.ts
+
+var PackageService = /** @class */ (function () {
+    function PackageService() {
+        this.packageEmitter$ = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    PackageService.prototype.updatePackageData = function (packageData) {
+        this.packageEmitter$.emit(packageData);
+    };
+    return PackageService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Utilities.ts":
 /*!******************************!*\
   !*** ./src/app/Utilities.ts ***!
@@ -4565,7 +4802,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
 /* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
-/* harmony import */ var _Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Admin/Admin-routing.routes */ "./src/app/Admin/Admin-routing.routes.ts");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
+/* harmony import */ var _Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Admin/Admin-routing.routes */ "./src/app/Admin/Admin-routing.routes.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4577,10 +4815,12 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+
 var appRoutes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    { path: 'dashboard', component: _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"] }
-].concat(_Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_4__["adminRoutes"], [
+    { path: 'dashboard', component: _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"] },
+    { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] }
+].concat(_Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_5__["adminRoutes"], [
     { path: '**', component: _NotFound_component__WEBPACK_IMPORTED_MODULE_3__["NotFoundComponent"] },
 ]);
 var AppRoutingModule = /** @class */ (function () {
@@ -4610,7 +4850,7 @@ var AppRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <!-- A sidebar with global navigation -->\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/images\">\n                  <i class=\"material-icons\">view_list</i>\n                  Docker images\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n\n    <!-- Main window, all content will be located inside <router-outlet> -->\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
+module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    <!-- A sidebar with global navigation -->\n    <nav class=\"col-md-2 d-md-block bg-light sidebar\">\n      <div class=\"sidebar-sticky\">\n        <ul class=\"nav flex-column\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"dashboard\">\n                  <i class=\"material-icons\">dashboard</i>\n                  Dashboard\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"packages\">\n                  <i class=\"material-icons\">pages</i>\n                  Packages\n                </a>\n          </li>\n        </ul>\n\n        <h6 *ngIf=\"authClass == 'admin'\" class=\"sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted\">\n              <span>Admin</span>\n              <a class=\"d-flex align-items-center text-muted\" href=\"#\">\n                <span data-feather=\"plus-circle\"></span>\n              </a>\n            </h6>\n        <ul class=\"nav flex-column mb-2\" *ngIf=\"authClass == 'admin'\">\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/modules\">\n                  <i class=\"material-icons\">category</i>\n                  Tools\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/global\">\n                  <i class=\"material-icons\">tune</i>\n                  Global Settings\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/templates\">\n                  <i class=\"material-icons\">format_list_numbered</i>\n                  Templates\n                </a>\n          </li>\n          <li class=\"nav-item\">\n            <a class=\"nav-link company\" routerLinkActive=\"active\" routerLink=\"admin/images\">\n                  <i class=\"material-icons\">view_list</i>\n                  Docker images\n                </a>\n          </li>\n        </ul>\n      </div>\n    </nav>\n\n    <!-- Main window, all content will be located inside <router-outlet> -->\n    <main role=\"main\" class=\"col-md-9 ml-sm-auto col-lg-10 px-4 main-view\">\n      <router-outlet></router-outlet>\n    </main>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -4621,7 +4861,7 @@ module.exports = "<div class=\"container-fluid\">\n  <div class=\"row\">\n\n    
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\nbody {\n  font-size: 0.875rem; }\n\n/* Sidebar */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: 0.5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: 0.75rem;\n  text-transform: uppercase; }\n\n/* Content */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/* Navbar */\n\n/* .navbar-brand\n * padding-top: .75rem\n * padding-bottom: .75rem\n * font-size: 1rem\n * margin: 0\n * margin-top: -10px\n * background-color: rgba(0, 0, 0, .75)\n * box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: 0.75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/* Utilities */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\nbody {\n  font-size: 0.875rem; }\n\n/* Sidebar */\n\n.sidebar {\n  position: fixed;\n  top: 0;\n  bottom: 0;\n  left: 0;\n  z-index: 100;\n  padding: 48px 0 0;\n  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);\n  width: 220px;\n  max-width: 220px; }\n\n.sidebar-sticky {\n  position: relative;\n  top: 0;\n  height: calc(100vh - 48px);\n  padding-top: 0.5rem;\n  overflow-x: hidden;\n  overflow-y: auto; }\n\n@supports ((position: -webkit-sticky) or (position: sticky)) {\n  .sidebar-sticky {\n    position: -webkit-sticky;\n    position: sticky; } }\n\n.sidebar .nav-link {\n  font-weight: 500;\n  color: #333; }\n\n.sidebar .nav-link.active {\n    color: #bc044e;\n    background-color: #cbcbcb; }\n\n.sidebar .nav-link:hover {\n    background-color: #dddddd; }\n\n.sidebar .nav-link:hover .active,\n.sidebar .nav-link.active .active {\n  color: inherit; }\n\n.sidebar-heading {\n  font-size: 0.75rem;\n  text-transform: uppercase; }\n\n/* Content */\n\n[role=\"main\"] {\n  padding-top: 48px; }\n\n/* Navbar */\n\n/* .navbar-brand\n * padding-top: .75rem\n * padding-bottom: .75rem\n * font-size: 1rem\n * margin: 0\n * margin-top: -10px\n * background-color: rgba(0, 0, 0, .75)\n * box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25) */\n\n.navbar-brand a {\n  color: white; }\n\n.navbar .form-control {\n  padding: 0.75rem 1rem;\n  border-width: 0;\n  border-radius: 0; }\n\n.form-control-dark {\n  color: #fff;\n  background-color: rgba(255, 255, 255, 0.1);\n  border-color: rgba(255, 255, 255, 0.1); }\n\n.form-control-dark:focus {\n  border-color: transparent;\n  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25); }\n\n/* Utilities */\n\n.material-icons {\n  float: left;\n  margin-right: 20px; }\n\n.main-view {\n  /* margin-left: 220px */\n  width: calc(100% - 220px);\n  min-width: calc(100% - 220px);\n  max-width: calc(100% - 220px);\n  float: left; }\n"
 
 /***/ }),
 
@@ -4636,22 +4876,43 @@ module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-se
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Services/authentication.service */ "./src/app/Services/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
 
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(authService, router) {
+        this.authService = authService;
+        this.router = router;
+        this.authClass = 'none';
+        this.authClass = 'none';
     }
+    AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.router.events
+            .subscribe(function (event) {
+            _this.authService.getRequestPermissions().subscribe(function (res) {
+                _this.authClass = _this.authService.permissionClass;
+            });
+        });
+    };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.sass */ "./src/app/app.component.sass")]
-        })
+        }),
+        __metadata("design:paramtypes", [_Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -4664,28 +4925,33 @@ var AppComponent = /** @class */ (function () {
 /*!*******************************!*\
   !*** ./src/app/app.module.ts ***!
   \*******************************/
-/*! exports provided: AppModule */
+/*! exports provided: tokenGetter, AppModule */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tokenGetter", function() { return tokenGetter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
-/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Dashboard/combo-chart.component */ "./src/app/Dashboard/combo-chart.component.ts");
-/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
-/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
-/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
-/* harmony import */ var _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Admin/Admin.module */ "./src/app/Admin/Admin.module.ts");
-/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+/* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
+/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
+/* harmony import */ var _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Dashboard/combo-chart.component */ "./src/app/Dashboard/combo-chart.component.ts");
+/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/index.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(_swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_11__);
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
+/* harmony import */ var _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Admin/Admin.module */ "./src/app/Admin/Admin.module.ts");
+/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
+/* harmony import */ var _Services_authentication_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Services/authentication.service */ "./src/app/Services/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4694,6 +4960,15 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 };
 
 
+
+
+
+// JWT authentication
+
+function tokenGetter() {
+    // console.log('getting access token')
+    return localStorage.getItem('access_token');
+}
 
 
 
@@ -4713,28 +4988,293 @@ var AppModule = /** @class */ (function () {
     AppModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
-                _app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"],
-                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_6__["DashboardComponent"],
-                _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_7__["ComboChartComponent"],
-                _NotFound_component__WEBPACK_IMPORTED_MODULE_8__["NotFoundComponent"],
+                _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
+                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_7__["DashboardComponent"],
+                _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_9__["ComboChartComponent"],
+                _NotFound_component__WEBPACK_IMPORTED_MODULE_10__["NotFoundComponent"],
+                _login_login_component__WEBPACK_IMPORTED_MODULE_8__["LoginComponent"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
                 _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
+                _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__["JwtModule"].forRoot({
+                    config: {
+                        tokenGetter: tokenGetter,
+                        whitelistedDomains: ['localhost'],
+                        blacklistedRoutes: ['localhost/auth/'],
+                        authScheme: 'JWT '
+                    }
+                }),
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
-                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_9__["NgxChartsModule"],
-                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_13__["TooltipModule"],
-                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_14__["NavbarModule"],
-                _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_11__["PackagesModule"],
-                _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_12__["AdminModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_10__["AppRoutingModule"]
+                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_11__["NgxChartsModule"],
+                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_15__["TooltipModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__["NavbarModule"],
+                _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_13__["PackagesModule"],
+                _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_14__["AdminModule"],
+                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_17__["MessageModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_12__["AppRoutingModule"]
             ],
-            providers: [],
-            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_5__["AppComponent"]]
+            providers: [
+                {
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
+                    useClass: _Services_authentication_service__WEBPACK_IMPORTED_MODULE_18__["ErrorInterceptor"],
+                    multi: true
+                },
+                _Services_authentication_service__WEBPACK_IMPORTED_MODULE_18__["AuthenticationService"]
+            ],
+            bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/guards/admin.guard.ts":
+/*!***************************************!*\
+  !*** ./src/app/guards/admin.guard.ts ***!
+  \***************************************/
+/*! exports provided: AdminGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminGuard", function() { return AdminGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/authentication.service */ "./src/app/Services/authentication.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+// import { map } from 'rxjs/operators';
+
+// import { of } from 'rxjs/operators';
+// import { of } from 'rxjs/observable/of';
+// import { of } from 'rxjs/observable/of'
+var AdminGuard = /** @class */ (function () {
+    function AdminGuard(router, authService) {
+        this.router = router;
+        this.authService = authService;
+    }
+    AdminGuard.prototype.canActivate = function (route, state) {
+        var _this = this;
+        return this.authService.getRequestPermissions().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (data) {
+            console.log(data);
+            if (data['admin']) {
+                return true;
+            }
+            _this.router.navigate(['/login'], { queryParams: { returnUrl: state.url, message: "You need to have admin permissions to access this" } });
+            return false;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            _this.router.navigate(['/login'], { queryParams: { returnUrl: state.url, message: "You need to have admin permissions to access this" } });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(false);
+        }));
+        // .subscribe(e => {
+        //   if (e) {
+        //     return of(true);
+        //   }
+        // }, () => {
+        //   this.router.navigate(['/login'], { queryParams: { returnUrl: state.url, message: "You need to have admin permissions to access this" }});
+        //   return of(false);
+        // })
+        // .subscribe(data => {
+        // if (this.authService.permissionClass == "admin") {
+        //   return true;
+        // }
+        // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url, message: "You need to have admin permissions to access this" }});
+        // return false;
+        // })
+    };
+    AdminGuard = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"], _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"]])
+    ], AdminGuard);
+    return AdminGuard;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/guards/auth.guard.ts":
+/*!**************************************!*\
+  !*** ./src/app/guards/auth.guard.ts ***!
+  \**************************************/
+/*! exports provided: AuthGuard */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var AuthGuard = /** @class */ (function () {
+    function AuthGuard(router) {
+        this.router = router;
+    }
+    AuthGuard.prototype.canActivate = function (route, state) {
+        console.log(localStorage.getItem('access_token'));
+        if (localStorage.getItem('access_token')) {
+            // logged in so return true
+            return true;
+        }
+        // not logged in so redirect to login page with the return url
+        this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+        return false;
+    };
+    AuthGuard = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+    ], AuthGuard);
+    return AuthGuard;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.html":
+/*!********************************************!*\
+  !*** ./src/app/login/login.component.html ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<navbar></navbar>\n\n<message [(active)]=\"modalActive\" [type]=\"modalType\">{{modalMessage}}</message>\n\n<h1>Sign in</h1>\n\n<div class=\"card\" style=\"width: 18rem;\">\n  <div class=\"card-body\">\n    <!-- <h5 class=\"card-title\">Login</h5> -->\n    <label for=\"username\">Username</label>\n    <input\n      type=\"text\"\n      class=\"form-control\"\n      id=\"username\"\n      placeholder=\"Username\"\n      [(ngModel)]=\"username\"\n      [class.is-invalid]=\"usernameError != ''\"\n      >\n      <div class=\"invalid-feedback\" *ngIf=\"usernameError != ''\">\n        {{usernameError}}\n      </div>\n    <label for=\"username\">Password</label>\n    <input\n      type=\"password\"\n      class=\"form-control\"\n      id=\"password\"\n      placeholder=\"Password\"\n      [(ngModel)]=\"password\"\n      [class.is-invalid]=\"passwordError != ''\"\n      >\n      <div class=\"invalid-feedback\" *ngIf=\"passwordError != ''\">\n        {{usernameError}}\n      </div>\n      <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\" (click)=\"login()\">Sign in</button>\n  </div>\n</div>\n<!--\n<form class=\"col-xs-3\">\n  <label for=\"username\">Username</label>\n  <input\n    type=\"text\"\n    class=\"form-control\"\n    id=\"username\"\n    placeholder=\"Username\"\n    [value]=\"username\"\n    >\n  <label for=\"username\">Password</label>\n  <input\n    type=\"password\"\n    class=\"form-control\"\n    id=\"password\"\n    placeholder=\"Password\"\n    [value]=\"password\"\n    >\n    <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n</form> -->\n\n<!-- <form class=\"form-signin\">\n        <h2 class=\"form-signin-heading\">Please sign in</h2>\n        <label for=\"inputEmail\" class=\"sr-only\">Email address</label>\n        <input type=\"email\" id=\"inputEmail\" class=\"form-control\" placeholder=\"Email address\" required autofocus>\n        <label for=\"inputPassword\" class=\"sr-only\">Password</label>\n        <input type=\"password\" id=\"inputPassword\" class=\"form-control\" placeholder=\"Password\" required>\n        <div class=\"checkbox\">\n          <label>\n            <input type=\"checkbox\" value=\"remember-me\"> Remember me\n          </label>\n        </div>\n        <button class=\"btn btn-lg btn-primary btn-block\" type=\"submit\">Sign in</button>\n      </form> -->\n\n<!-- <form [formGroup]=\"loginForm\" (ngSubmit)=\"onSubmit()\">\n    <div class=\"form-group\">\n        <label for=\"username\">Username</label>\n        <input type=\"text\" formControlName=\"username\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && f.username.errors }\" />\n        <div *ngIf=\"submitted && f.username.errors\" class=\"invalid-feedback\">\n            <div *ngIf=\"f.username.errors.required\">Username is required</div>\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <label for=\"password\">Password</label>\n        <input type=\"password\" formControlName=\"password\" class=\"form-control\" [ngClass]=\"{ 'is-invalid': submitted && f.password.errors }\" />\n        <div *ngIf=\"submitted && f.password.errors\" class=\"invalid-feedback\">\n            <div *ngIf=\"f.password.errors.required\">Password is required</div>\n        </div>\n    </div>\n    <div class=\"form-group\">\n        <button [disabled]=\"loading\" class=\"btn btn-primary\">Login</button>\n        <img *ngIf=\"loading\" src=\"data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==\" />\n    </div>\n    <div *ngIf=\"error\" class=\"alert alert-danger\">{{error}}</div>\n</form> -->\n"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.sass":
+/*!********************************************!*\
+  !*** ./src/app/login/login.component.sass ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none; }\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee; }\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2); }\n\nbutton.btn {\n  margin: 2px; }\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px; }\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white; }\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab; }\n\n.card {\n  margin-bottom: 10px; }\n\n.icon-small {\n  font-size: 1em; }\n\n.numberRow {\n  border: 1px solid rgba(0, 0, 0, 0.125);\n  border-radius: 0.25rem;\n  margin: 0;\n  margin-bottom: 10px;\n  padding: 10px; }\n\n.numberTitle {\n  margin: 0; }\n\n.divider::before {\n  content: \"\";\n  position: absolute;\n  left: 0;\n  height: 52px;\n  border-left: 2px solid rgba(188, 4, 78, 0.5);\n  margin-top: 10px; }\n\n.number {\n  font-size: 2em;\n  font-weight: bold;\n  margin: 0;\n  opacity: 0.5; }\n\n.number.errors {\n    color: red; }\n\n.half-graph {\n  margin: 0;\n  margin-bottom: 10px; }\n\n.half-graph .card {\n    padding-right: 40px; }\n\n.half-graph .card .card-body {\n      height: 200px;\n      padding: 0; }\n\n.filetypes {\n  height: 300px;\n  margin-bottom: 10px; }\n"
+
+/***/ }),
+
+/***/ "./src/app/login/login.component.ts":
+/*!******************************************!*\
+  !*** ./src/app/login/login.component.ts ***!
+  \******************************************/
+/*! exports provided: LoginComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../Services/authentication.service */ "./src/app/Services/authentication.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var LoginComponent = /** @class */ (function () {
+    function LoginComponent(apiService, route, authService, router) {
+        this.apiService = apiService;
+        this.route = route;
+        this.authService = authService;
+        this.router = router;
+        this.username = "";
+        this.password = "";
+        this.usernameError = "";
+        this.passwordError = "";
+        this.modalActive = false;
+        this.modalMessage = "";
+        this.modalType = "alert-success";
+    }
+    LoginComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.queryParams.subscribe(function (params) {
+            if ('message' in params) {
+                _this.modalMessage = params['message'];
+                _this.modalActive = true;
+                if ('type' in params) {
+                    _this.modalType = params['type'];
+                }
+            }
+        });
+    };
+    LoginComponent.prototype.login = function () {
+        var _this = this;
+        var validated = true;
+        //verify username and password
+        if (this.username == "") {
+            this.usernameError = "Username can't be empty";
+            validated = false;
+        }
+        if (this.password == "") {
+            this.passwordError = "Password can't be empty";
+            validated = false;
+        }
+        if (!validated) {
+            return;
+        }
+        this.authService.login(this.username, this.password).subscribe(function (data) {
+            //redirect to returnUrl
+            _this.route.queryParams.subscribe(function (params) {
+                if ('returnUrl' in params) {
+                    _this.router.navigate([params['returnUrl']]);
+                }
+                else {
+                    _this.router.navigate(['/']);
+                }
+            });
+        }, function (error) {
+            //display error
+            _this.modalMessage = "Wrong username or password";
+            _this.modalActive = true;
+            _this.modalType = "alert-danger";
+        });
+    };
+    LoginComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'login',
+            template: __webpack_require__(/*! ./login.component.html */ "./src/app/login/login.component.html"),
+            styles: [__webpack_require__(/*! ./login.component.sass */ "./src/app/login/login.component.sass")]
+        }),
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], LoginComponent);
+    return LoginComponent;
 }());
 
 
@@ -4801,7 +5341,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/Axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
 
 
 /***/ })

@@ -10,14 +10,23 @@ from api.tasks import pythonModuleBase
 import os
 import json
 import subprocess
+from logging import getLogger
+
+
+logger = getLogger('background_task')
 
 class task(pythonModuleBase):
     def execute(self, process, package, values):
         retval = (1, "")
         # options: verbose, remove archive, ...
         args = ['tar' ,'-x']
+            # self.logger("process has verbose true and sould log it all!!!!!")
+        # logger.info("process has verbose true and sould log it all!!!!!")
+        # logger.info(process.value)
         if 'verbose' in process.value:
             if process.value['verbose'] == True:
+                # self.logger("process has verbose true and sould log it all!!!!!")
+                # logger.info("process has verbose true and sould log it all!!!!!")
                 args.append('-v')
         args = args + ['-f', os.path.join(package.workdir, package.file_name)]
         args = args + ['-C', package.workdir]
@@ -27,6 +36,8 @@ class task(pythonModuleBase):
         stdout, stderr = p.communicate()
         if stdout:
             self.logger.info(stdout.decode('utf-8'))
+            # logger.info(stdout.decode('utf-8'))
+            retval = (1, stdout.decode('utf-8'))
         if stderr:
             self.logger.error(stderr.decode('utf-8'))
             retval = (-1, stderr.decode('utf-8'))

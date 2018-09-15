@@ -126,7 +126,9 @@ template1.save()
 # process1.save()
 process2 = Process(order=1,
                    template=template1,
-                   module=module2)
+                   module=module2,
+                   value={"verbose": True}
+                   )
 process2.save()
 # process3 = Process(order=2,
 #                    template=template1,

@@ -108,7 +108,6 @@ def package_detail(request, id):
     """
     package = get_object_or_404(Package, pk=id)
     if request.method == 'GET':
-        logger.error(pwd.getpwuid(os.getuid()))
         serializer = PackageDetailSerializer(package)
         return Response(serializer.data)
     elif request.method == 'DELETE':

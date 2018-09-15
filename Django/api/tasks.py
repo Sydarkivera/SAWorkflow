@@ -101,8 +101,12 @@ class pythonModuleBase:
                 if val == True:
                     # get value from form instead
                     for item in process.module.form:
+                        # logger.error(item)
                         if item['identifier'] == key:
-                            values[key] = item['value']
+                            if 'value' in item:
+                                values[key] = item['value']
+                            else:
+                                values[key] = key
             else:
                 values[key] = val
         logger.info('run values updated')

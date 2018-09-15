@@ -5139,6 +5139,7 @@ var AuthGuard = /** @class */ (function () {
         this.router = router;
     }
     AuthGuard.prototype.canActivate = function (route, state) {
+        console.log(localStorage.getItem('access_token'));
         if (localStorage.getItem('access_token')) {
             // logged in so return true
             return true;
