@@ -1,0 +1,59 @@
+# Start with a Python image.
+FROM python:3.5-alpine
+
+# Some stuff that everyone has been copy-pasting
+# since the dawn of time.
+# ENV PYTHONUNBUFFERED 1
+
+# Install some necessary things.
+# RUN apt-get update
+# RUN apt-get install -y swig libssl-dev dpkg-dev netcat
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre
+RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
+RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
+RUN apk update
+RUN apk add docker
+
+ADD ./requirements.txt /requirements.txt
+# ADD ./viewtar.c /viewtar.c
+
+# RUN gcc /viewtar.c
+# Install our requirements.
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Copy all our files into the image.
+RUN mkdir /code
+WORKDIR /code
+COPY ./Django /code/
+COPY ./wrapper.sh /code/wrapper.sh
+RUN chmod 770 /code/wrapper.sh
+# RUN mkdir /code/log && mv /a.out /code/tools/
+
+# Collect our static media.
+# RUN python /code/manage.py collectstatic --noinput
+
+# ADD ./prod_run.sh /prod_run.sh
+# RUN chmod 770 /prod_run.sh
+# ADD ./uwsgi.ini /uwsgi.ini
+
+EXPOSE 8000
+# Specify the command to run when the image is run.
+# CMD ["/usr/bin/gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
+# CMD ["gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
+CMD ["./wrapper.sh"]
+
+# FROM saworkflow_django
+#
+# # install tool for clamav
+# RUN apk --update add openjdk8-jre
+# RUN apk add curl
+#
+# RUN curl -o droid.zip http://www.nationalarchives.gov.uk/documents/information-management/droid-binary-6.4-bin.zip &&\
+# unzip droid.zip &&\
+# rm -f droid.zip
+#
+# RUN chmod 777 droid.sh
+#
+# ADD ./run.sh /run.sh
+# RUN chmod 777 /run.sh
