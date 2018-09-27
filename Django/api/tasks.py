@@ -32,6 +32,9 @@ from celery.decorators import task
 from datetime import timedelta
 from celery.task import periodic_task
 
+# making http request to another server for smart docker module
+import requests
+
 logger = getLogger('background_task')
 
 def errorHappend(fileName=""):
@@ -88,27 +91,10 @@ class pythonModuleBase:
         # do all preparations that is the same for all modules:
 
         #set default values
-        values = {}
-        values['tar_path'] = os.path.join(package.workdir, package.file_name)
-        values['workdir'] = package.workdir
-        values['file_name'] = package.file_name
+        values = get_values(process, package)
 
         retval = 1
 
-        #update values with data from form:
-        for key, val in process.value.items():
-            if isinstance(val, bool):
-                if val == True:
-                    # get value from form instead
-                    for item in process.module.form:
-                        # logger.error(item)
-                        if item['identifier'] == key:
-                            if 'value' in item:
-                                values[key] = item['value']
-                            else:
-                                values[key] = key
-            else:
-                values[key] = val
         logger.info('run values updated')
 
         #setup extra
@@ -235,6 +221,28 @@ class pythonModuleBase:
         self.logger.removeHandler(self.err_hdlr)
         del self.logger, self.log_hdlr, self.err_hdlr
 
+    def get_values(process, package):
+        values = {}
+        values['tar_path'] = os.path.join(package.workdir, package.file_name)
+        values['workdir'] = package.workdir
+        values['file_name'] = package.file_name
+
+        #update values with data from form:
+        for key, val in process.value.items():
+            if isinstance(val, bool):
+                if val == True:
+                    # get value from form instead
+                    for item in process.module.form:
+                        # logger.error(item)
+                        if item['identifier'] == key:
+                            if 'value' in item:
+                                values[key] = item['value']
+                            else:
+                                values[key] = key
+            else:
+                values[key] = val
+        return values
+
 class bashModule(pythonModuleBase):
 
     def execute(self, process, package, values):
@@ -305,6 +313,45 @@ class dockerModule(pythonModuleBase):
         container.remove()
         return (retval, retText)
 
+class dockerSmartModue(pythonModuleBase):
+    def run(self, process, package):
+        # start docker container and save a WIP object...
+        host_work_dir = Variable.objects.get(name="work_dir_path_host").data
+        local_work_dir = Variable.objects.get(name="work_dir_path").data
+        unique_workdir = os.path.relpath(package.workdir, local_work_dir)
+        host_path = os.path.join(host_work_dir, unique_workdir)
+
+        volumes = {host_path: {'bind': process.module.docker_mount_point, 'mode': 'rw'}}
+
+        # start container
+        container = client.containers.run(process.module.dockerImage.name, detach=True, volumes=volumes)
+
+        # calculate first command, and save values in database.
+
+        values = get_values(process, package)
+        if 'file' in values:
+            p = values['file']
+            relative = os.path.relpath(p, package.workdir)
+            values['file'] = os.path.join(process.module.docker_mount_point, relative)
+
+        command = self.fixCommand(process, values)
+
+        # list docker networks to select the network for app
+
+        # an object is needed for running "smart docker job". it needs:
+        # Job_id, container_name, container_id, values, pointer to process
+
+        # when a job is started the object is created and stored and the first command is dispatched.
+        # data = {}
+        # data['command'] = command
+        # data['job_id'] = job_id#...
+        # r = requests.post('', data=data) # figure out name of new container in network
+        # if r.status_code != requests.codes.ok:
+        #     #delay then try again
+        #     logger.info("failed to send start message to server. TODO try again")
+
+        pass
+
 # @background(schedule=1)
 @task(name="executeProcessFlow")
 def executeProcessFlow(package_id):
@@ -334,6 +381,9 @@ def executeProcessFlow(package_id):
                 elif process.module.type == Module.MODULE_TYPE_DOCKER:
                     # run the specified image.
                     obj = dockerModule()
+                elif process.module.type == Module.MODULE_TYPE_SMART_DOCKER:
+                    # run the specified image.
+                    obj = dockerSmartModue()
                 # execute
                 obj.setupLogging(process, package)
                 res = obj.run(process, package)

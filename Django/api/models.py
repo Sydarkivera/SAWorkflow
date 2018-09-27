@@ -13,7 +13,7 @@ from jsonfield import JSONField
 #cusom field for bigint
 # from django.db.models.fields import IntegerField
 # from django.conf import settings
-# 
+#
 # class Role(models.Model):
 #     '''
 #     The Role entries are managed by the system,
@@ -95,10 +95,12 @@ class Module(models.Model):
     MODULE_TYPE_COMMAND = 0
     MODULE_TYPE_PYTHON = 1
     MODULE_TYPE_DOCKER = 2
+    MODULE_TYPE_SMART_DOCKER = 3
     MODULE_TYPES = (
         (MODULE_TYPE_COMMAND, 'Command'),
         (MODULE_TYPE_PYTHON, 'Python module'),
         (MODULE_TYPE_DOCKER, 'Docker Container'),
+        (MODULE_TYPE_SMART_DOCKER, 'Smart docker module')
     )
     module_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=True, default='')

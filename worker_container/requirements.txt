@@ -13,3 +13,4 @@ django-tarview
 docker
 gunicorn
 djangorestframework-jwt
+requests
