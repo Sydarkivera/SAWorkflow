@@ -42,6 +42,50 @@ def add(a, b):
     # user = User.objects.get(pk=user_id)
     # user.email_user('Here is a notification', 'You have been notified')
 
+@background()
+def execute_command(command):
+    logger.info("execute command")
+    logger.info(command)
+    logger.info(pwd.getpwuid( os.getuid() )[ 0 ])
+
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    # p = subprocess.check_output(command, shell=True)
+    # logger.info(p)
+
+    stdout, stderr = p.communicate()
+    if stdout and stdout != None:
+        logger.info(stdout.decode('utf-8'))
+        # logger.info(stdout.decode('utf-8'))
+        retval = (1, stdout.decode('utf-8'))
+    if stderr and stderr != None:
+        logger.error(stderr.decode('utf-8'))
+        retval = (-1, stderr.decode('utf-8'))
+
+    # communicate result back to server...(Environment variable or settings varaible for APP server name)
+    container_name = "saworkflow_web_1"
+    data = {}
+    data['stdout'] = stdout.decode('utf-8')
+    data['stderr'] = stderr.decode('utf-8')
+    # data['file'] = first_file
+    data['process_id'] = process.process_id
+    # data['job_id'] = job_id#...
+    # figure out name of new container in network
+    url = "http://" + container_name + "/api/docker/result/"
+    logger.info(url)
+    try:
+        r = requests.put(url, data=data)
+        logger.info("status code: " + str(r.status_code))
+        if r.status_code != requests.codes.ok:
+            logger.info("Got non 200 status code when returning process result to APP")
+            r.raise_for_status()
+            # self.try_again(url, data)
+    except requests.exceptions.RequestException:
+        # self.try_again(url, data)
+        logger.info("failed to return result")
+        pass
+
+
+    pass
 
 #
 # def errorHappend(fileName=""):

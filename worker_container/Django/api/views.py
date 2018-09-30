@@ -25,7 +25,7 @@ from django.utils.six import b, BytesIO
 import json
 from config.settings import BASE_DIR
 
-from api.tasks import add
+from api.tasks import add, execute_command
 
 # import os
 # import pwd
@@ -39,26 +39,47 @@ from api.tasks import add
 # import time
 # import tarfile
 
+# api call order:
+# wait for a request of first job. respond with OK.
+# while have job:
+#    when job is done, send POST to APP with status and request next job.
+#if no further job is recieved prepare to close??
+
 from logging import getLogger
 logger = getLogger('django')
+
+@api_view(['GET'])
+def default(request):
+    if request.method == 'GET':
+        add.now(3, 7)
+        return HttpResponse("A simple get request. started add task", status=200)
 
 @api_view(['PUT', 'GET'])
 def start(request):
     if request.method == 'PUT':
         # start the job.
+        logger.info("Put request to start work. edit")
+        logger.info(request.data)
         if 'process_id' not in request.data:
+            logger.error("missing process_id in request")
             return HttpResponse(status=400)
+        # create job.
         job = Job(process_id=request.data['process_id'])
         job.save()
 
-        # if Jobs.objects.all().count() <= 1:
-            # no other jobs running, run this.
+        #start task...
+        if 'command' not in request.data:
+            logger.error("missing command in request")
+            return HttpResponse("Command not present in data", status=400)
+
+        # execute command
+        execute_command(request.data['command'])
 
         return HttpResponse(status=200)
 
-    elif request.method == 'GET':
-        add.now(3, 7)
-        return HttpResponse("A simple get request. started add task", status=200)
+    # elif request.method == 'GET':
+    #     add.now(3, 7)
+    #     return HttpResponse("A simple get request. started add task", status=200)
 
 # @api_view(['GET', 'PUT', 'DELETE'])
 # def process_detail(request, process_id):

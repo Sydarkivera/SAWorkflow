@@ -144,7 +144,7 @@
             <option value="Command">Command</option>
             <option value="Python module">Python module</option>
             <option value="Docker Container">Docker Container</option>
-            <option value="Smart docker module'">Smart docker module</option>
+            <option value="Smart docker module">Smart docker module</option>
           </select>
         </label>
         <div class="form-group" *ngIf="selected_module.type == 'Command'">
@@ -157,6 +157,23 @@
         </div>
         <!-- If command type is docker -->
         <ng-template [ngIf]="selected_module.type == 'Docker Container'">
+          <label class="input-label">
+            Docker image:
+            <select class="custom-select my-1 my-auto" [(ngModel)]="selected_module.dockerImage">
+              <option *ngFor="let image of images" value="{{image.id}}">{{image.label}}</option>
+            </select>
+          </label>
+          <div class="form-group">
+            <label for="inputForm">Command</label>
+            <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
+          </div>
+          <!-- <button class="btn btn-success" (click)="uploadDockerImage">Upload Docker Image</button> -->
+          <!-- <div class="form-group">
+            <label for="inputName">Mount point for files/folder</label>
+            <input type="text" class="form-control" id="inputName">
+          </div> -->
+        </ng-template>
+        <ng-template [ngIf]="selected_module.type == 'Smart docker module'">
           <label class="input-label">
             Docker image:
             <select class="custom-select my-1 my-auto" [(ngModel)]="selected_module.dockerImage">

@@ -3,7 +3,9 @@
 echo "started wrapper"
 
 # Start the first process
-gunicorn config.wsgi:application -w 2 -b :8000
+# gunicorn config.wsgi:application -w 2 -b :80
+echo "port 80"
+/code/run_django.sh
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start my_first_process: $status"

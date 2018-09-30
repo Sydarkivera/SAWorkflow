@@ -100,44 +100,44 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-        # 'default': {
-        #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        #     'NAME': os.environ.get('DB_ENV_DB', 'postgres'),
-        #     'USER': os.environ.get('DB_ENV_POSTGRES_USER', 'postgres'),
-        #     'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD', 'postgres'),
-        #     'HOST': os.environ.get('DB_PORT_5432_TCP_ADDR', 'db'),
-        #     'PORT': os.environ.get('DB_PORT_5432_TCP_PORT', ''),
-        # },
-        # 'default':{
-        #    'ENGINE':'django.db.backends.postgresql_psycopg2',
-        #    'USER':'saw',
-        #    'PASSWORD':'pass',
-        #    'HOST':'db',
-        #    'NAME':'saw_db',
-        #    'PORT':5432,
-        # }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
-        # 'default':{
-        #    'ENGINE':'django.db.backends.postgresql_psycopg2',
-        #    'USER':'saw',
-        #    'PASSWORD':'pass',
-        #    'HOST':'db',
-        #    'NAME':'saw_db',
-        #    'PORT':5432,
-        # }
-    }
+# if DEBUG:
+DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': os.environ.get('DB_ENV_DB', 'postgres'),
+        'USER': os.environ.get('DB_ENV_POSTGRES_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD', 'postgres'),
+        'HOST': os.environ.get('DB_PORT_5432_TCP_ADDR', 'db-workers'),
+        'PORT': os.environ.get('DB_PORT_5432_TCP_PORT', ''),
+    },
+    # 'default':{
+    #    'ENGINE':'django.db.backends.postgresql_psycopg2',
+    #    'USER':'saw',
+    #    'PASSWORD':'pass',
+    #    'HOST':'db',
+    #    'NAME':'saw_db',
+    #    'PORT':5432,
+    # }
+}
+# else:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#         }
+#         # 'default':{
+#         #    'ENGINE':'django.db.backends.postgresql_psycopg2',
+#         #    'USER':'saw',
+#         #    'PASSWORD':'pass',
+#         #    'HOST':'db',
+#         #    'NAME':'saw_db',
+#         #    'PORT':5432,
+#         # }
+#     }
 
 
 # Password validation
@@ -158,67 +158,67 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if DEBUG:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-            },
-            # 'file': {
-            #     'level': 'DEBUG',
-            #     'class': 'logging.FileHandler',
-            #     'filename': os.path.join(BASE_DIR, "log/all.log"),
-            # },
-            # 'background': {
-            #     'level': 'DEBUG',
-            #     'class': 'logging.FileHandler',
-            #     'filename': os.path.join(BASE_DIR, "log/background.log"),
-            # },
+# if DEBUG:
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
         },
-        'loggers': {
-            'django': {
-                'handlers': ['console'],
-                'level': 'INFO',
-                'propagate': True,
-            },
-            'background_task': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
+        # 'file': {
+        #     'level': 'DEBUG',
+        #     'class': 'logging.FileHandler',
+        #     'filename': os.path.join(BASE_DIR, "log/all.log"),
+        # },
+        # 'background': {
+        #     'level': 'DEBUG',
+        #     'class': 'logging.FileHandler',
+        #     'filename': os.path.join(BASE_DIR, "log/background.log"),
+        # },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
         },
-    }
-else:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, "log/all.log"),
-            },
-            'background': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, "log/background.log"),
-            },
+        'background_task': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
         },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'INFO',
-                'propagate': True,
-            },
-            'background_task': {
-                'handlers': ['background'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
-        },
-    }
+    },
+}
+# else:
+#     LOGGING = {
+#         'version': 1,
+#         'disable_existing_loggers': False,
+#         'handlers': {
+#             'file': {
+#                 'level': 'DEBUG',
+#                 'class': 'logging.FileHandler',
+#                 'filename': os.path.join(BASE_DIR, "log/all.log"),
+#             },
+#             'background': {
+#                 'level': 'DEBUG',
+#                 'class': 'logging.FileHandler',
+#                 'filename': os.path.join(BASE_DIR, "log/background.log"),
+#             },
+#         },
+#         'loggers': {
+#             'django': {
+#                 'handlers': ['file'],
+#                 'level': 'INFO',
+#                 'propagate': True,
+#             },
+#             'background_task': {
+#                 'handlers': ['background'],
+#                 'level': 'DEBUG',
+#                 'propagate': True,
+#             },
+#         },
+#     }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

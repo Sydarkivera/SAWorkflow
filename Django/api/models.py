@@ -194,3 +194,8 @@ class GraphData(models.Model):
     date = models.DateField()
     size = models.BigIntegerField(default=0) # in bytes
     count = models.BigIntegerField(default=0) # number of files
+
+class Job(models.Model):
+    id = models.AutoField(primary_key=True)
+    process = models.ForeignKey(Process, related_name='jobs', on_delete=models.PROTECT)
+    container_id = models.CharField(max_length=100, blank=True, default='')

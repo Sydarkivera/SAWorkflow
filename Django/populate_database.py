@@ -19,6 +19,7 @@ import datetime
 print('populate_databse starting')
 
 # delete all old objects, if there are any.
+Job.objects.all().delete()
 Package.objects.all().delete()
 Process.objects.all().delete()
 Module.objects.all().delete()
@@ -105,14 +106,18 @@ module7 = Module(name="ls",
                  tool_folder_name="ls",
                  )
 module7.save()
-# module4 = Module(name="Untar cmd",
-#                  type='0',
-#                  form='[{"type":"checkbox", "label":"Visa bara infekterade filer", "identifier":"only_found"}]',
-#                  python_module='a',
-#                  command='[{"type":"text","value":"tar"},{"type":"text","value":"-x"},{"name":"verbose","type":"var","value":"-v"},{"type":"text","value":"-f"},{"name":"tar_path","type":"var"},{"type":"text","value":"-C"},{"name":"workdir","type":"var"}]',
-#                  module_id=4,
-#                  )
-# module4.save()
+module8 = Module(name="Smart DROID",
+                 type='3',
+                 form='[]',
+                command="/run.sh #file",
+                module_id=7,
+                filter='.*',
+                tool_folder_name="SMART_DROID",
+                docker_mount_point="/workdir",
+                resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
+                 )
+module8.save()
+
 
 # setup default templates
 
@@ -240,6 +245,11 @@ image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="verapdf")
 image.save()
 module4.dockerImage = image
 module4.save()
+
+image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid worker")
+image.save()
+module8.dockerImage = image
+module8.save()
 
 
 # create default admin users

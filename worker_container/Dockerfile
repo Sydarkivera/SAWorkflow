@@ -27,7 +27,8 @@ RUN mkdir /code
 WORKDIR /code
 COPY ./Django /code/
 COPY ./wrapper.sh /code/wrapper.sh
-RUN chmod 770 /code/wrapper.sh
+COPY ./run_django.sh /code/run_django.sh
+RUN chmod 770 /code/wrapper.sh /code/run_django.sh
 # RUN mkdir /code/log && mv /a.out /code/tools/
 
 # Collect our static media.
@@ -37,11 +38,11 @@ RUN chmod 770 /code/wrapper.sh
 # RUN chmod 770 /prod_run.sh
 # ADD ./uwsgi.ini /uwsgi.ini
 
-EXPOSE 8000
+EXPOSE 80
 # Specify the command to run when the image is run.
 # CMD ["/usr/bin/gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
 # CMD ["gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
-CMD ["./wrapper.sh"]
+CMD ["/code/wrapper.sh"]
 
 # FROM saworkflow_django
 #
