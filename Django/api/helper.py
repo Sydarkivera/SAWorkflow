@@ -9,7 +9,7 @@ __status__ = "Development"
 # imports regex
 import re
 # process django model
-from api.models import Process, Package
+from api.models import Process, Package, Variable, FileType
 # os for file apth modifications
 import os
 
@@ -57,3 +57,33 @@ def get_values(process, package):
         else:
             values[key] = val
     return values
+
+def AnalyseLog(resultFilter, log):
+    for resFilter in resultFilter:
+        pattern = resFilter['value']
+        match = re.match(pattern, log)
+
+        if match and resFilter['type'] != "Containing":
+            # logger.error(log)
+            return (-1, log)
+        elif not match and resFilter['type'] == "Containing":
+            # logger.error(log)
+            return (-1, log)
+    return (1, "")
+
+
+def errorHappend(fileName=""):
+    var = Variable.objects.get(name='total_number_of_errors')
+    value = int(var.data)
+    var.data = value + 1
+    var.save()
+    # var.save()
+    if fileName != "":
+        fileType = fileName.split('.')[-1].upper()
+        try:
+            ft = FileType.objects.get(name=fileType)
+            ft.errors += 1
+            ft.save()
+        except FileType.DoesNotExist:
+            ft = FileType(name=fileType, errors=1)
+            ft.save()

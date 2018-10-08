@@ -33,30 +33,13 @@ from datetime import timedelta
 from celery.task import periodic_task
 from time import sleep
 # include helper functions for building a command
-from api.helper import fixCommand, get_values
+from api.helper import fixCommand, get_values, errorHappend
 from api.worker.helper import send_request
 
 # making http request to another server for smart docker module
 import requests
 
 logger = getLogger('background_task')
-
-
-def errorHappend(fileName=""):
-    var = Variable.objects.get(name='total_number_of_errors')
-    value = int(var.data)
-    var.data = value + 1
-    var.save()
-    # var.save()
-    if fileName != "":
-        fileType = fileName.split('.')[-1].upper()
-        try:
-            ft = FileType.objects.get(name=fileType)
-            ft.errors += 1
-            ft.save()
-        except FileType.DoesNotExist:
-            ft = FileType(name=fileType, errors=1)
-            ft.save()
 
 
 class pythonModuleBase:
@@ -217,7 +200,6 @@ class pythonModuleBase:
             allFiles = process.allFiles
         return allFiles
 
-
 class bashModule(pythonModuleBase):
 
     def execute(self, process, package, values):
@@ -314,7 +296,7 @@ class dockerSmartModue(pythonModuleBase):
             index += 1
         if first_file == "":
             logger.error("no files to process, quitting")
-            return
+            return 1
 
         logger.info("first file: " + first_file)
         # calculate first command, and save values in database.
@@ -336,8 +318,24 @@ class dockerSmartModue(pythonModuleBase):
         command = fixCommand(process, values)
 
         # create Job object
-        job = Job(process=process, file_name=first_file, file_index=index)
+        container_name = process.module.dockerImage.name
+        container_name = container_name.replace('_', '-')
+
+
+        # check if there are any containers already open with this name
+        container_iteration = 2
+        jobs_of_this_type = Job.objects.filter(container_name=container_name)
+        logger.info(jobs_of_this_type)
+        if jobs_of_this_type:
+            for temp_job in jobs_of_this_type:
+                logger.info("job in list")
+                logger.info(temp_job)
+                logger.info(temp_job.container_iteration)
+                if temp_job.container_iteration >= container_iteration:
+                    container_iteration = temp_job.container_iteration + 1
+        job = Job(process=process, file_name=first_file, file_index=index, container_name=container_name, container_iteration=container_iteration)
         job.save()
+        container_name += "-" + str(container_iteration)
 
         # start docker container and save a WIP object...
         host_work_dir = Variable.objects.get(name="work_dir_path_host").data
@@ -347,11 +345,10 @@ class dockerSmartModue(pythonModuleBase):
 
         volumes = {host_path: {
             'bind': process.module.docker_mount_point, 'mode': 'rw'}}
-        container_name = process.module.dockerImage.name + "-2"
-        container_name = container_name.replace('_', '-')
         logger.info(container_name)
 
         # start container
+        # TODO change to trying to create a new container and fail if it doesn't work.
         need_network = False
         client = docker.from_env()
         try:
@@ -359,6 +356,7 @@ class dockerSmartModue(pythonModuleBase):
             if container.status != "running":
                 container.start()
                 need_network = True
+                logger.error("container with this name already exists, causing an error!!!")
         except docker.errors.NotFound:
             # container does not exist, run it
             container = client.containers.run(
@@ -526,7 +524,7 @@ def moduleFailed(name, process, package):
 # @app.on_after_configure.connect
 
 
-@periodic_task(run_every=timedelta(seconds=20))
+@periodic_task(run_every=timedelta(seconds=5))
 def periodic_scan_for_new_packages(**kwargs):
     # logger.info('my_periodic_task running')
     # path = settings.PAKAGE_SEARCH_PATH

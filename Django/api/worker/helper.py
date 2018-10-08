@@ -14,7 +14,6 @@ from logging import getLogger
 logger = getLogger('django')
 
 def send_request(url, data, delay_time=4):
-    logger.info("could not start service, trying again")
     if delay_time > 1000:
         logger.error(
             "fail to start command on smart docker host. Will stop retrying")
@@ -27,6 +26,8 @@ def send_request(url, data, delay_time=4):
         logger.info("status code: " + str(r.status_code))
         if r.status_code != requests.codes.ok:
             r.raise_for_status()
-            send_request(url, data)
+            logger.info("could not start service, trying again")
+            send_request(url, data, delay_time=delay_time*2)
     except requests.exceptions.RequestException:
+        logger.info("could not start service, trying again")
         send_request(url, data, delay_time=delay_time*2)

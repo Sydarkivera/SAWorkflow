@@ -144,9 +144,9 @@ module11 = Module(name="Smart unoconv",
                  type='3',
                  form='[]',
                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
-                module_id=8,
+                module_id=10,
                 filter='.*(\.doc)',
-                tool_folder_name="SMART_LS",
+                tool_folder_name="SMART_UNOCONV",
                 docker_mount_point="/workdir"
                  )
 module11.save()
@@ -284,7 +284,7 @@ image.save()
 module8.dockerImage = image
 module8.save()
 
-image = DockerImage(name="smart_ls", mountpoint="/workdir", label="Smart ls")
+image = DockerImage(name="ls_worker", mountpoint="/workdir", label="Smart ls")
 image.save()
 module9.dockerImage = image
 module9.save()

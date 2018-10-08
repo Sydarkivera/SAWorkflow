@@ -5,6 +5,7 @@
 
 # cd myproject
 # prepare init migration
+python /code/manage.py makemigrations
 python /code/manage.py makemigrations api
 # migrate db, so we have the latest db schema
 python /code/manage.py migrate
