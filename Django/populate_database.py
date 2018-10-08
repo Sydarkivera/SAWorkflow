@@ -99,7 +99,7 @@ module7 = Module(name="ls",
                  type='0',
                  form='[]',
                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 command="ls -al #workdir/docx/content",
+                 command="ls -al #workdir",
                  # command="ls -al /workdir",
                  module_id=6,
                  filter='',
@@ -117,6 +117,39 @@ module8 = Module(name="Smart DROID",
                 resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
                  )
 module8.save()
+
+module9 = Module(name="Smart ls",
+                 type='3',
+                 form='[]',
+                command="ls -al #workdir",
+                module_id=8,
+                filter='.*',
+                tool_folder_name="SMART_LS",
+                docker_mount_point="/workdir"
+                 )
+module9.save()
+
+module10 = Module(name="docker ls",
+                 type='2',
+                 form='[]',
+                command="ls -al #workdir",
+                module_id=9,
+                filter='.*',
+                tool_folder_name="DOCKER_LS",
+                docker_mount_point="/workdir"
+                 )
+module10.save()
+
+module11 = Module(name="Smart unoconv",
+                 type='3',
+                 form='[]',
+                command="unoconv -f pdf -e SelectPdfVersion=1 #file",
+                module_id=8,
+                filter='.*(\.doc)',
+                tool_folder_name="SMART_LS",
+                docker_mount_point="/workdir"
+                 )
+module11.save()
 
 
 # setup default templates
@@ -251,6 +284,20 @@ image.save()
 module8.dockerImage = image
 module8.save()
 
+image = DockerImage(name="smart_ls", mountpoint="/workdir", label="Smart ls")
+image.save()
+module9.dockerImage = image
+module9.save()
+
+image = DockerImage(name="ls", mountpoint="/workdir", label="docker ls")
+image.save()
+module10.dockerImage = image
+module10.save()
+
+image = DockerImage(name="unoconv_worker", mountpoint="/workdir", label="smart unoconv")
+image.save()
+module11.dockerImage = image
+module11.save()
 
 # create default admin users
 User.objects.all().delete()

@@ -199,3 +199,5 @@ class Job(models.Model):
     id = models.AutoField(primary_key=True)
     process = models.ForeignKey(Process, related_name='jobs', on_delete=models.PROTECT)
     container_id = models.CharField(max_length=100, blank=True, default='')
+    file_name = models.CharField(max_length=1000, blank=True, default='')
+    file_index = models.IntegerField(default=0)

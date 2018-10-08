@@ -63,7 +63,7 @@ RUN mkdir /code/log
 # RUN mkdir /code/log/
 
 # uWSGI will listen on this port
-EXPOSE 8000
+EXPOSE 80
 
 # Add any custom, static environment variables needed by Django or your settings file here:
 # ENV DJANGO_SETTINGS_MODULE=config.settings
@@ -76,6 +76,6 @@ EXPOSE 8000
 # RUN python manage.py migrate
 # RUN python populate_databse.py
 
-# CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+# CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]
 # Start uWSGI
 # CMD ["/venv/bin/uwsgi", "--http-auto-chunked", "--http-keepalive", "--static-map", "/static=/code/static_root"]

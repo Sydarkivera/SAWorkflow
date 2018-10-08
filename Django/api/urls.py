@@ -31,5 +31,7 @@ urlpatterns = [
     #containers (docker)
     url(r'^image/', include('api.images.urls')),
 
+    url(r'^worker/', include('api.worker.urls')),
+
     url(r'^permissions/', views.permissions),
 ]

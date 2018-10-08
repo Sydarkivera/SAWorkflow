@@ -10,3 +10,14 @@ RUN chmod 777 droid.sh
 
 ADD ./run.sh /run.sh
 RUN chmod 777 run.sh
+
+
+
+
+#docker build . -t droid
+
+#docker save droid -d images.tar
+
+#images.tar
+
+#docker load images.tar

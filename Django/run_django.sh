@@ -12,4 +12,4 @@ python manage.py migrate
 python populate_database.py
 
 
-gunicorn config.wsgi:application -w 2 -b :8000
+gunicorn config.wsgi:application -w 2 -b :80

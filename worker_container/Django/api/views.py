@@ -64,7 +64,7 @@ def start(request):
             logger.error("missing process_id in request")
             return HttpResponse(status=400)
         # create job.
-        job = Job(process_id=request.data['process_id'])
+        job = Job(job_id=request.data['job_id'], process_id=request.data['process_id'])
         job.save()
 
         #start task...
@@ -73,7 +73,7 @@ def start(request):
             return HttpResponse("Command not present in data", status=400)
 
         # execute command
-        execute_command(request.data['command'])
+        execute_command(request.data['command'], job.job_id)
 
         return HttpResponse(status=200)
 

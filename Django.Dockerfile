@@ -35,6 +35,6 @@ RUN python /code/manage.py collectstatic --noinput
 # RUN chmod 770 /prod_run.sh
 # ADD ./uwsgi.ini /uwsgi.ini
 
-EXPOSE 8000
+EXPOSE 80
 # Specify the command to run when the image is run.
-CMD ["/usr/bin/gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
+CMD ["/usr/bin/gunicorn", "config.wsgi:application", "-w", "2", "-b", ":80"]

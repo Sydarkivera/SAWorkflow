@@ -1,5 +1,5 @@
 # Start with a Python image.
-FROM python:3.5-alpine
+FROM python:3.5-alpine3.8
 
 # Some stuff that everyone has been copy-pasting
 # since the dawn of time.
@@ -8,7 +8,7 @@ FROM python:3.5-alpine
 # Install some necessary things.
 # RUN apt-get update
 # RUN apt-get install -y swig libssl-dev dpkg-dev netcat
-RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre supervisor
 RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
 RUN apk update
@@ -29,6 +29,8 @@ COPY ./Django /code/
 COPY ./wrapper.sh /code/wrapper.sh
 COPY ./run_django.sh /code/run_django.sh
 RUN chmod 770 /code/wrapper.sh /code/run_django.sh
+
+COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 # RUN mkdir /code/log && mv /a.out /code/tools/
 
 # Collect our static media.
@@ -42,7 +44,8 @@ EXPOSE 80
 # Specify the command to run when the image is run.
 # CMD ["/usr/bin/gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
 # CMD ["gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
-CMD ["/code/wrapper.sh"]
+# CMD ["/code/wrapper.sh"]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
 
 # FROM saworkflow_django
 #

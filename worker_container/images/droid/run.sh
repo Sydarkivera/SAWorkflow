@@ -12,5 +12,5 @@ done < /result.csv
 
 
 #cat /result.csv
-rm result.csv >/dev/null
-rm profile.droid >/dev/null
+rm /result.csv >/dev/null
+rm /profile.droid >/dev/null

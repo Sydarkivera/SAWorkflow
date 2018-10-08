@@ -23,6 +23,8 @@ import docker
 from docker.types import Mount
 import uuid
 import shutil
+import requests
+from django.http import HttpResponse
 # from xmlGenerator.xmlGenerator import *
 # from xmlGenerator.xmlExtensions import inlineUUIDModule, inlineDatetimeModule
 
@@ -43,7 +45,7 @@ def add(a, b):
     # user.email_user('Here is a notification', 'You have been notified')
 
 @background()
-def execute_command(command):
+def execute_command(command, job_id):
     logger.info("execute command")
     logger.info(command)
     logger.info(pwd.getpwuid( os.getuid() )[ 0 ])
@@ -53,24 +55,30 @@ def execute_command(command):
     # logger.info(p)
 
     stdout, stderr = p.communicate()
+    log = ""
+    error = ""
     if stdout and stdout != None:
-        logger.info(stdout.decode('utf-8'))
+        log = stdout.decode('utf-8')
+        logger.info(log)
         # logger.info(stdout.decode('utf-8'))
-        retval = (1, stdout.decode('utf-8'))
+        # retval = (1, log)
     if stderr and stderr != None:
-        logger.error(stderr.decode('utf-8'))
-        retval = (-1, stderr.decode('utf-8'))
+        error = stdout.decode('utf-8')
+        logger.error(error)
+        # retval = (-1, stderr.decode('utf-8'))
 
-    # communicate result back to server...(Environment variable or settings varaible for APP server name)
-    container_name = "saworkflow_web_1"
+    # communicate result back to server...(Environment variable or settings varaible for APP server name) TODO: container_name
+    container_name = "django"
     data = {}
-    data['stdout'] = stdout.decode('utf-8')
-    data['stderr'] = stderr.decode('utf-8')
+    data['stdout'] = log
+    data['stderr'] = error
     # data['file'] = first_file
-    data['process_id'] = process.process_id
+    job = Job.objects.get(pk=job_id)
+    data['process_id'] = job.process_id
+    data['job_id'] = job_id
     # data['job_id'] = job_id#...
     # figure out name of new container in network
-    url = "http://" + container_name + "/api/docker/result/"
+    url = "http://" + container_name + "/api/worker/result/"
     logger.info(url)
     try:
         r = requests.put(url, data=data)
@@ -79,8 +87,32 @@ def execute_command(command):
             logger.info("Got non 200 status code when returning process result to APP")
             r.raise_for_status()
             # self.try_again(url, data)
-    except requests.exceptions.RequestException:
+        else:
+            #status is ok and a new package should have been recieved.
+            logger.info("Got 200 from APP")
+            # logger.info("Put request to start work. edit")
+            response_data = r.json()
+            logger.info(response_data)
+
+            if 'done' in response_data:
+                logger.info("job completed")
+                return HttpResponse("Job done", status=200)
+
+            if 'process_id' not in response_data:
+                logger.error("missing process_id in response")
+                return HttpResponse(status=400)
+
+            #start task...
+            if 'command' not in response_data:
+                logger.error("missing command in response")
+                return HttpResponse("Command not present in data", status=400)
+
+            # execute command
+            execute_command(response_data['command'], response_data['job_id'])
+            pass
+    except requests.exceptions.RequestException as e:
         # self.try_again(url, data)
+        logger.info(e)
         logger.info("failed to return result")
         pass
 

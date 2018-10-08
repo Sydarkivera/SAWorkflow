@@ -42,7 +42,7 @@ services:
       - "15672:15672"  # here, we can access rabbitmq management plugin
 
   # Django web server
-  web:
+  django:
     build:
       context:    .
       dockerfile: DevDockerfile
@@ -62,7 +62,7 @@ services:
 #      - "./django/populate_database.py:/populate_database.py"
 #       - "./Django:/code"
     ports:
-      - "80:8000"
+      - "80:80"
     # set up links so that web knows about db, rabbit and redis
     links:
       - db

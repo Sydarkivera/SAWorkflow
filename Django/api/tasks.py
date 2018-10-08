@@ -32,6 +32,9 @@ from celery.decorators import task
 from datetime import timedelta
 from celery.task import periodic_task
 from time import sleep
+# include helper functions for building a command
+from api.helper import fixCommand, get_values
+from api.worker.helper import send_request
 
 # making http request to another server for smart docker module
 import requests
@@ -94,7 +97,7 @@ class pythonModuleBase:
         # do all preparations that is the same for all modules:
 
         # set default values
-        values = self.get_values(process, package)
+        values = get_values(process, package)
 
         retval = 1
 
@@ -102,6 +105,9 @@ class pythonModuleBase:
 
         # setup extra
         self.setup(process, package, values)
+
+        errorFiles = []
+        logs = []
 
         # check filter.
         filter = process.module.filter
@@ -165,26 +171,6 @@ class pythonModuleBase:
     def teardown(self, process, package, values):
         pass
 
-    def fixCommand(self, process, values):
-
-        # search with regex.
-        prog = re.compile("#[A-z0-9_-]+")  # match all variables.
-        command = process.module.command
-        result = prog.search(command)
-        while result:
-            # handle match
-            var = result.group(0)
-            var = var[1:]  # skip the first hashtag when searching for a match
-            if var in values:
-                command = command[:result.start(
-                    0)] + values[var] + command[result.end(0):]
-            else:
-                command = command[:result.start(0)] + command[result.end(0):]
-                # args[i] = ""
-            result = prog.search(command)
-        logger.info(command)
-        return command.split(' ')
-
     def AnalyseLog(self, process, log):
         for resFilter in process.module.resultFilter:
             pattern = resFilter['value']
@@ -204,28 +190,6 @@ class pythonModuleBase:
         self.logger.removeHandler(self.log_hdlr)
         self.logger.removeHandler(self.err_hdlr)
         del self.logger, self.log_hdlr, self.err_hdlr
-
-    def get_values(self, process, package):
-        values = {}
-        values['tar_path'] = os.path.join(package.workdir, package.file_name)
-        values['workdir'] = package.workdir
-        values['file_name'] = package.file_name
-
-        # update values with data from form:
-        for key, val in process.value.items():
-            if isinstance(val, bool):
-                if val == True:
-                    # get value from form instead
-                    for item in process.module.form:
-                        # logger.error(item)
-                        if item['identifier'] == key:
-                            if 'value' in item:
-                                values[key] = item['value']
-                            else:
-                                values[key] = key
-            else:
-                values[key] = val
-        return values
 
     def get_all_files(self, package, process):
         filter = process.module.filter
@@ -257,7 +221,7 @@ class pythonModuleBase:
 class bashModule(pythonModuleBase):
 
     def execute(self, process, package, values):
-        args = self.fixCommand(process, values)
+        args = fixCommand(process, values)
         logger.info(args)
 
         p = subprocess.Popen(args, stdout=subprocess.PIPE,
@@ -295,6 +259,12 @@ class dockerModule(pythonModuleBase):
             values['file'] = os.path.join(
                 process.module.docker_mount_point, relative)
 
+        if 'workdir' in values:
+            p = values['workdir']
+            relative = os.path.relpath(p, package.workdir)
+            values['workdir'] = os.path.join(
+                process.module.docker_mount_point, relative)
+
         client = docker.from_env()
 
         host_work_dir = Variable.objects.get(name="work_dir_path_host").data
@@ -304,7 +274,7 @@ class dockerModule(pythonModuleBase):
 
         volumes = {host_path: {
             'bind': process.module.docker_mount_point, 'mode': 'rw'}}
-        command = self.fixCommand(process, values)
+        command = fixCommand(process, values)
 
         logger.info(host_path)
         logger.info(volumes)
@@ -336,17 +306,19 @@ class dockerSmartModue(pythonModuleBase):
         # get file list
         allFiles = self.get_all_files(package, process)
         first_file = ""
+        index = 0
         for file_obj in allFiles:
             if not file_obj['status']:
                 first_file = file_obj['file']
                 break
+            index += 1
         if first_file == "":
             logger.error("no files to process, quitting")
             return
 
         logger.info("first file: " + first_file)
         # calculate first command, and save values in database.
-        values = self.get_values(process, package)
+        values = get_values(process, package)
         # values['file'] =
         # if 'file' in values:
         p = first_file
@@ -354,10 +326,17 @@ class dockerSmartModue(pythonModuleBase):
         values['file'] = os.path.join(
             process.module.docker_mount_point, relative)
 
-        command = self.fixCommand(process, values)
+        if 'workdir' in values:
+            p = values['workdir']
+            relative = os.path.relpath(p, package.workdir)
+            values['workdir'] = os.path.join(
+                process.module.docker_mount_point, relative)
+
+
+        command = fixCommand(process, values)
 
         # create Job object
-        job = Job(process=process)
+        job = Job(process=process, file_name=first_file, file_index=index)
         job.save()
 
         # start docker container and save a WIP object...
@@ -424,41 +403,25 @@ class dockerSmartModue(pythonModuleBase):
         data['command'] = command_string
         # data['file'] = first_file
         data['process_id'] = process.process_id
+        data['file'] = first_file
+        data['job_id'] = job.id
         # data['job_id'] = job_id#...
         # figure out name of new container in network
         url = "http://" + container_name + "/start/"
         logger.info(url)
-        try:
-            r = requests.put(url, data=data)
-            logger.info("status code: " + str(r.status_code))
-            if r.status_code != requests.codes.ok:
-                r.raise_for_status()
-                self.try_again(url, data)
-        except requests.exceptions.RequestException:
-            self.try_again(url, data)
-
-        #     #delay then try again
-        #     logger.info("failed to send start message to server. TODO try again")
+        send_request(url, data)
+        # try:
+        #     r = requests.put(url, data=data)
+        #     logger.info("status code: " + str(r.status_code))
+        #     if r.status_code != requests.codes.ok:
+        #         r.raise_for_status()
+        #         send_request(url, data)
+        # except requests.exceptions.RequestException:
+        #     send_request(url, data)
+        #
+        # #     #delay then try again
+        # #     logger.info("failed to send start message to server. TODO try again")
         return 2
-        pass
-
-    def try_again(self, url, data, delay_time=4):
-        logger.info("could not start service, trying again")
-        if delay_time > 1000:
-            logger.error(
-                "fail to start command on smart docker host. Will stop retrying")
-            return
-        sleep(delay_time)
-        # figure out name of new container in network
-        try:
-            r = requests.put(url, data=data)
-            logger.info("status code: " + str(r.status_code))
-            if r.status_code != requests.codes.ok:
-                r.raise_for_status()
-                self.try_again(url, data)
-        except requests.exceptions.RequestException:
-            self.try_again(url, data, delay_time=delay_time*2)
-            return
 
 # @background(schedule=1)
 

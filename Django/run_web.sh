@@ -11,4 +11,4 @@ python manage.py migrate
 
 python populate_database.py
 # start development server on public ip interface, on port 8000
-python manage.py runserver 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:80
