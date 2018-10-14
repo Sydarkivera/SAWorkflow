@@ -4154,6 +4154,7 @@ var PackageTemplateComponent = /** @class */ (function () {
         var data = { "active_template": template.template_id };
         this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe(function (res) {
             _this.apiService.startWorkflow(_this.package.package_id);
+            _this.router.navigate(['packages', _this.package.package_id, 'status']);
         });
     };
     PackageTemplateComponent = __decorate([
