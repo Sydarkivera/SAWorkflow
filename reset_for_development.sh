@@ -1,8 +1,7 @@
 #!/bin/sh
 
 docker kill $(docker ps -q)
-docker rm droid-worker-2
-docker rm unoconv-worker-2
+docker rm $(docker ps -aq)
 docker build -t worker_base ./worker_container
 cd ./worker_container/images
 ./build_containers.sh

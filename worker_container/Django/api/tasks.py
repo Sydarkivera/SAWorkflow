@@ -46,9 +46,11 @@ def add(a, b):
 
 @background()
 def execute_command(command, job_id):
-    logger.info("execute command")
-    logger.info(command)
-    logger.info(pwd.getpwuid( os.getuid() )[ 0 ])
+    # logger.info("execute command")
+    # logger.info(command)
+    # logger.info(pwd.getpwuid( os.getuid() )[ 0 ])
+
+    logger.info("%s executing command: %s with id: %s" % (os.environ['HOSTNAME'], command, job_id))
 
     p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     # p = subprocess.check_output(command, shell=True)
@@ -59,12 +61,12 @@ def execute_command(command, job_id):
     error = ""
     if stdout and stdout != None:
         log = stdout.decode('utf-8')
-        logger.info(log)
+        # logger.info(log)
         # logger.info(stdout.decode('utf-8'))
         # retval = (1, log)
     if stderr and stderr != None:
         error = stdout.decode('utf-8')
-        logger.error(error)
+        # logger.error(error)
         # retval = (-1, stderr.decode('utf-8'))
 
     # communicate result back to server...(Environment variable or settings varaible for APP server name) TODO: container_name
@@ -79,20 +81,21 @@ def execute_command(command, job_id):
     # data['job_id'] = job_id#...
     # figure out name of new container in network
     url = "http://" + container_name + "/api/worker/result/"
-    logger.info(url)
+    logger.info("%s returning result from job: %s to url: %s" % (os.environ['HOSTNAME'], job_id, url))
+    # logger.info(url)
     try:
         r = requests.put(url, data=data)
-        logger.info("status code: " + str(r.status_code))
+        # logger.info("status code: " + str(r.status_code))
         if r.status_code != requests.codes.ok:
             logger.info("Got non 200 status code when returning process result to APP")
             r.raise_for_status()
             # self.try_again(url, data)
         else:
             #status is ok and a new package should have been recieved.
-            logger.info("Got 200 from APP")
+            # logger.info("Got 200 from APP")
             # logger.info("Put request to start work. edit")
             response_data = r.json()
-            logger.info(response_data)
+            # logger.info(response_data)
 
             if 'done' in response_data:
                 logger.info("job completed")

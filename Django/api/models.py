@@ -203,3 +203,6 @@ class Job(models.Model):
     container_iteration = models.IntegerField(default=2)
     file_name = models.CharField(max_length=1000, blank=True, default='')
     file_index = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "id: %d\nprocess_id: %d\ncontainer_name: %s\n container_iteration: %d" % (self.id, self.process.process_id, self.container_name, self.container_iteration)

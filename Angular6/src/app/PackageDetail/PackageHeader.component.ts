@@ -17,6 +17,7 @@ export class PackageHeaderComponent {
   packages: [any];
   active_template: any;
   status = -1
+  messageActive = false;
 
   constructor(private apiService: APIService, private route: ActivatedRoute, private router: Router, private packageService: PackageService) {
 
@@ -29,6 +30,13 @@ export class PackageHeaderComponent {
          this.active_template = data['active_template'];
          this.name = data['name'];
          this.status = data['status']
+       }, (error) => {
+         //package was not found, display message and return to package list.
+         this.messageActive = true;
+         // console.log("package not found, redirecting")
+          setTimeout(()=>{    //<<<---    using ()=> syntax
+            this.router.navigate(['/packages']);
+          }, 4000);
        });
     });
     this.apiService.getPackages().subscribe((data) => {

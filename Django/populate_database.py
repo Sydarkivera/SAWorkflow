@@ -109,7 +109,7 @@ module7.save()
 module8 = Module(name="Smart DROID",
                  type='3',
                  form='[]',
-                command="/run.sh #file",
+                command="/run.sh \"#file\"",
                 module_id=7,
                 filter='.*',
                 tool_folder_name="SMART_DROID",
@@ -208,6 +208,17 @@ process = Process(order=4,
                    template=template4,
                    module=module4)
 process.save()
+
+# smart droid template
+template5 = Template(name="Smart droid",
+                     template_id=4)
+template5.save()
+process = Process(order=1,
+                   template=template5,
+                   module=module8)
+process.save()
+
+
 # create default variables # TODO set data to 0 for all variables
 var = Variable(name="total_number_of_files", data="134")
 var.save()

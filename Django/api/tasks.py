@@ -298,7 +298,7 @@ class dockerSmartModue(pythonModuleBase):
             logger.error("no files to process, quitting")
             return 1
 
-        logger.info("first file: " + first_file)
+        # logger.info("first file: " + first_file)
         # calculate first command, and save values in database.
         values = get_values(process, package)
         # values['file'] =
@@ -343,6 +343,9 @@ class dockerSmartModue(pythonModuleBase):
         unique_workdir = os.path.relpath(package.workdir, local_work_dir)
         host_path = os.path.join(host_work_dir, unique_workdir)
 
+        logger.info(host_path)
+        logger.info(process.module.docker_mount_point)
+
         volumes = {host_path: {
             'bind': process.module.docker_mount_point, 'mode': 'rw'}}
         logger.info(container_name)
@@ -353,44 +356,43 @@ class dockerSmartModue(pythonModuleBase):
         client = docker.from_env()
         try:
             container = client.containers.get(container_name)
-            if container.status != "running":
-                container.start()
-                need_network = True
-                logger.error("container with this name already exists, causing an error!!!")
+            logger.error("A container already exists")
+            if container.status == "running":
+                container.kill()
+            container.remove()
         except docker.errors.NotFound:
             # container does not exist, run it
-            container = client.containers.run(
-                process.module.dockerImage.name, detach=True, volumes=volumes, hostname=container_name, name=container_name)
-            need_network = True
-
-        job.container_id = container.id
-        job.save()
+            pass
+        container = client.containers.run(
+            process.module.dockerImage.name, detach=True, volumes=volumes, hostname=container_name, name=container_name)
 
         # list docker networks to select the network for app
         # network name: "APP_Default"
-        if need_network:
-            network_list = client.networks.list(names=["APP_Default"])
-            if len(network_list) < 1:
-                logger.error(
-                    "docker network_list does not contain any instance of 'APP_Default'.")
-                # logger.info(client.networks.list())
-                # for network in
-            APP_network = network_list[0]
-            already_in_network = False
-            logger.info(APP_network)
-            logger.info(APP_network.containers)
-            logger.info("test if container already in network")
-            for con in APP_network.containers:
-                logger.log(con.name)
-                if con.name == container_name:
-                    already_in_network = True
+        network_list = client.networks.list(names=["APP_Default"])
+        if len(network_list) < 1:
+            logger.error(
+                "docker network_list does not contain any instance of 'APP_Default'.")
+            # logger.info(client.networks.list())
+            # for network in
+        APP_network = network_list[0]
+        already_in_network = False
+        # logger.info(APP_network)
+        # logger.info(APP_network.containers)
+        # logger.info("test if container already in network")
+        for con in APP_network.containers:
+            logger.log(con.name)
+            if con.name == container_name:
+                already_in_network = True
 
-            if not already_in_network:
-                try:
-                    APP_network.connect(container, aliases=[container_name])
-                except docker.errors.APIError as e:
-                    logger.error("Error adding container to network")
+        if not already_in_network:
+            try:
+                APP_network.connect(container, aliases=[container_name])
+            except docker.errors.APIError as e:
+                logger.error("Error adding container to network")
 
+
+        job.container_id = container.id
+        job.save()
         # an object is needed for running "smart docker job". it needs:
         # Job_id, container_name, container_id, values, pointer to process
 
@@ -406,7 +408,9 @@ class dockerSmartModue(pythonModuleBase):
         # data['job_id'] = job_id#...
         # figure out name of new container in network
         url = "http://" + container_name + "/start/"
+        logger.info(data)
         logger.info(url)
+        logger.info(job)
         send_request(url, data)
         # try:
         #     r = requests.put(url, data=data)
@@ -425,7 +429,7 @@ class dockerSmartModue(pythonModuleBase):
 
 
 @task(name="executeProcessFlow")
-def executeProcessFlow(package_id):
+def executeProcessFlow(package_id, skip_failed_tasks=False):
     # get list of all processes in package.
     # execute the processes one by one.
 
@@ -437,70 +441,71 @@ def executeProcessFlow(package_id):
     # os.setuid(pwd.getpwnam('apache').pw_uid) # production
     for process in package.processes.all():
         if process.status != Process.PROCESS_STATUS_DONE:
-            process.status = Process.PROCESS_STATUS_RUNNING
-            process.save()
-
-            obj = None
-            res = -1
-
-            try:
-                if process.module.type == Module.MODULE_TYPE_PYTHON:
-                    module = importlib.import_module(
-                        process.module.python_module)
-                    obj = module.task()
-                elif process.module.type == Module.MODULE_TYPE_COMMAND:
-                    obj = bashModule()
-                elif process.module.type == Module.MODULE_TYPE_DOCKER:
-                    # run the specified image.
-                    obj = dockerModule()
-                elif process.module.type == Module.MODULE_TYPE_SMART_DOCKER:
-                    # run the specified image.
-                    obj = dockerSmartModue()
-                # execute
-                obj.setupLogging(process, package)
-                res = obj.run(process, package)
-                obj.teardownLogging()
-            except Exception as e:
-                moduleFailed(process.module.name, process, package)
-                break
-
-            if res == 1:
-                process.status = Process.PROCESS_STATUS_DONE
-                process.progress = 100
+            if not (process.status == Process.PROCESS_STATUS_ERROR and skip_failed_tasks):
+                process.status = Process.PROCESS_STATUS_RUNNING
                 process.save()
-                # save to premis log
 
-                data = {
-                    "package_uuid": package.file_name.split('.')[0],
-                    "package_file": package.file_name,
-                    "outcome": "0",
-                    "label": process.module.name,
-                    "detail": process.module.description,
-                    "user": "Admin"
-                }
+                obj = None
+                res = -1
 
-                relLogPath = Variable.objects.get(name="premis_file_name").data
-                templatePath = Variable.objects.get(
-                    name="premis_event_template_path").data
+                try:
+                    if process.module.type == Module.MODULE_TYPE_PYTHON:
+                        module = importlib.import_module(
+                            process.module.python_module)
+                        obj = module.task()
+                    elif process.module.type == Module.MODULE_TYPE_COMMAND:
+                        obj = bashModule()
+                    elif process.module.type == Module.MODULE_TYPE_DOCKER:
+                        # run the specified image.
+                        obj = dockerModule()
+                    elif process.module.type == Module.MODULE_TYPE_SMART_DOCKER:
+                        # run the specified image.
+                        obj = dockerSmartModue()
+                    # execute
+                    obj.setupLogging(process, package)
+                    res = obj.run(process, package)
+                    obj.teardownLogging()
+                except Exception as e:
+                    moduleFailed(process.module.name, process, package)
+                    break
 
-                files = [
-                    {
-                        "xmlFileName": os.path.join(package.workdir, relLogPath),
-                        "templateFileName": templatePath
+                if res == 1:
+                    process.status = Process.PROCESS_STATUS_DONE
+                    process.progress = 100
+                    process.save()
+                    # save to premis log
+
+                    data = {
+                        "package_uuid": package.file_name.split('.')[0],
+                        "package_file": package.file_name,
+                        "outcome": "0",
+                        "label": process.module.name,
+                        "detail": process.module.description,
+                        "user": "Admin"
                     }
-                ]
-                c = xmlGenerator(data, files)
-                c.addExtension(inlineUUIDModule())
-                c.addExtension(inlineDatetimeModule())
-                c.appendToXML('/premis:premis/premis:event')
-            elif res == 2:
-                #status ongoing, used for smart docker container
-                pass
-            else:
-                process.status = Process.PROCESS_STATUS_ERROR
-                package.status = Package.PACKAGE_STATUS_ERROR
-                process.save()
-                break
+
+                    relLogPath = Variable.objects.get(name="premis_file_name").data
+                    templatePath = Variable.objects.get(
+                        name="premis_event_template_path").data
+
+                    files = [
+                        {
+                            "xmlFileName": os.path.join(package.workdir, relLogPath),
+                            "templateFileName": templatePath
+                        }
+                    ]
+                    c = xmlGenerator(data, files)
+                    c.addExtension(inlineUUIDModule())
+                    c.addExtension(inlineDatetimeModule())
+                    c.appendToXML('/premis:premis/premis:event')
+                elif res == 2:
+                    #status ongoing, used for smart docker container
+                    return
+                else:
+                    process.status = Process.PROCESS_STATUS_ERROR
+                    package.status = Package.PACKAGE_STATUS_ERROR
+                    process.save()
+                    break
 
     if package.status != Package.PACKAGE_STATUS_ERROR:
         package.status = Package.PACKAGE_STATUS_DONE

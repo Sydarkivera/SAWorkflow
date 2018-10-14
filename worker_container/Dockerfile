@@ -29,6 +29,9 @@ COPY ./Django /code/
 COPY ./wrapper.sh /code/wrapper.sh
 COPY ./run_django.sh /code/run_django.sh
 RUN chmod 770 /code/wrapper.sh /code/run_django.sh
+COPY ./run_background_tasks.sh /code/run_background_tasks.sh
+RUN chmod 770 /code/run_background_tasks.sh
+
 
 COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 # RUN mkdir /code/log && mv /a.out /code/tools/

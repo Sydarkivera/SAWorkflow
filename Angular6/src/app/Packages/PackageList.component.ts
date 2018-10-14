@@ -21,6 +21,15 @@ export class PackageListComponent {
   updateData() {
     this.apiService.getPackages().subscribe((data) => {
       this.packages = data as [any];
+    }, (error) => {
+      this.packages = [];
     });
+  }
+
+  isListEmpty() {
+    if (this.packages.length <= 0) {
+      return true;
+    }
+    return false;
   }
 }

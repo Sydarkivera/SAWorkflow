@@ -14,13 +14,13 @@ services:
       - "5432:5432"
 
     # PostgreSQL database
-  db-workers:
-    image:        postgres:9.4
-    hostname:     db-workers
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
+  # db-workers:
+  #   image:        postgres:9.4
+  #   hostname:     db-workers
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=postgres
+  #     - POSTGRES_DB=postgres
     # ports:
       # - "5432:5432"
 

@@ -17,6 +17,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from api.models import Module, Package, Process, Template, Variable, Job
 from api.serializers import *
+from api.tasks import executeProcessFlow
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import get_object_or_404
 from api.tasks import executeProcessFlow, finishPackage
@@ -54,6 +55,7 @@ def result(request):
             return HttpResponse("Missing job_id in request body", status=400)
 
         job = get_object_or_404(Job, pk=request.data['job_id'])
+        # logger.info(job)
         process = job.process
         allFiles = process.allFiles
 
@@ -93,8 +95,8 @@ def result(request):
         job.file_index = job.file_index + 1
         if job.file_index >= len(allFiles):
             # the job is done.... TODO: Handle done
-            logger.info(process.errors)
-            logger.info(len(process.errors))
+            # logger.info(process.errors)
+            # logger.info(len(process.errors))
             process.status = Process.PROCESS_STATUS_DONE
             if len(process.errors) > 0:
                 process.status = Process.PROCESS_STATUS_ERROR
@@ -102,6 +104,8 @@ def result(request):
             process.save()
             close_container(process, job)
             logger.info("job is done")
+            # continue workflow if there are multiple tasks:
+            executeProcessFlow(process.package.package_id, True)
             return JsonResponse({"done": True}, status=200)
 
         job.file_name = allFiles[job.file_index]['file']
@@ -126,12 +130,15 @@ def result(request):
         data['process_id'] = process.process_id
         data['file'] = job.file_name
         data['job_id'] = job.id
+        # logger.info(data)
         # container_name = process.module.dockerImage.name + "-2"
         # container_name = container_name.replace('_', '-')
         # figure out name of new container in network
-        url = "http://" + job.container_name + "-" + str(job.container_iteration) + "/start/"
-        logger.info(url)
+        # url = "http://" + job.container_name + "-" + str(job.container_iteration) + "/start/"
+        # logger.info(url)
         # send_request(url, data)
+
+        logger.info("Recieved data.\nThe response: %s was returned" % (data))
 
 
         # add.now(3, 7)

@@ -56,6 +56,8 @@ export class PackageTemplateComponent {
     let data = {"active_template": template.template_id};
     this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe((res) => {
         this.apiService.startWorkflow(this.package.package_id);
+        this.router.navigate(['packages', this.package.package_id, 'status']);
     });
   }
+
 }

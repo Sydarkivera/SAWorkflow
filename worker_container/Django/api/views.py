@@ -26,6 +26,8 @@ import json
 from config.settings import BASE_DIR
 
 from api.tasks import add, execute_command
+import os
+# from django.contrib.sites.models import Site
 
 # import os
 # import pwd
@@ -57,9 +59,14 @@ def default(request):
 @api_view(['PUT', 'GET'])
 def start(request):
     if request.method == 'PUT':
+        logger.info("%s recieved start request with id: %s" % (os.environ['HOSTNAME'], request.data['job_id']))
         # start the job.
-        logger.info("Put request to start work. edit")
-        logger.info(request.data)
+        # logger.info("Put request to start work. edit")
+        # logger.info(request.data)
+        # logger.info(request.build_absolute_uri())
+        # current_site = Site.objects.get_current()
+        # logger.info(current_site)
+        # logger.info(current_site.domain)
         if 'process_id' not in request.data:
             logger.error("missing process_id in request")
             return HttpResponse(status=400)

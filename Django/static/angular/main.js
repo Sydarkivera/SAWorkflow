@@ -3805,7 +3805,7 @@ var packageRoutes = [
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.show]=\"showDropDown\">\n    <p class=\"navbar-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </p>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-item\"  routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['template']\" [class.disabled]=\"status==6\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-item disabled\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"bottom\" tooltipOpacity=\"0.8\">\n    <a class=\"nav-link disabled noselect\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['edit']\" [class.disabled]=\"status==6\">Workflow</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n<router-outlet></router-outlet>\n"
+module.exports = "<navbar>\n  <li class=\"nav-item nav-link dropdown\" [class.show]=\"showDropDown\">\n    <p class=\"navbar-link dropdown-toggle package_title\" (click)=\"showDropDown = !showDropDown\">\n      {{name}}\n    </p>\n    <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\" [class.show]=\"showDropDown\">\n      <a *ngFor=\"let package of packages\" class=\"dropdown-item\" (click)=\"navigateTo(package.package_id)\">{{package.name}}</a>\n    </div>\n  </li>\n  <li class=\"nav-item\"  routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['dashboard']\">Dashboard</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['template']\" [class.disabled]=\"status==6\">Templates</a>\n  </li>\n  <li *ngIf=\"!active_template\" class=\"nav-item disabled\" tooltip=\"Select any template before you can modify it\" tooltipPlacement=\"bottom\" tooltipOpacity=\"0.8\">\n    <a class=\"nav-link disabled noselect\">Workflow</a>\n  </li>\n  <li *ngIf=\"active_template\" class=\"nav-item\" routerLinkActive=\"active\" [class.disabled]=\"status==6\">\n    <a class=\"nav-link\" [routerLink]=\"['edit']\" [class.disabled]=\"status==6\">Workflow</a>\n  </li>\n  <li class=\"nav-item\" routerLinkActive=\"active\">\n    <a class=\"nav-link\" [routerLink]=\"['status']\">Status</a>\n  </li>\n</navbar>\n\n<message [(active)]=\"messageActive\" type=\"alert-danger\" duration=\"4000\">Package not found, returning to package list</message>\n\n<router-outlet></router-outlet>\n"
 
 /***/ }),
 
@@ -3856,6 +3856,7 @@ var PackageHeaderComponent = /** @class */ (function () {
         this.name = "";
         this.showDropDown = false;
         this.status = -1;
+        this.messageActive = false;
     }
     PackageHeaderComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -3865,6 +3866,13 @@ var PackageHeaderComponent = /** @class */ (function () {
                 _this.active_template = data['active_template'];
                 _this.name = data['name'];
                 _this.status = data['status'];
+            }, function (error) {
+                //package was not found, display message and return to package list.
+                _this.messageActive = true;
+                // console.log("package not found, redirecting")
+                setTimeout(function () {
+                    _this.router.navigate(['/packages']);
+                }, 4000);
             });
         });
         this.apiService.getPackages().subscribe(function (data) {
@@ -4146,6 +4154,7 @@ var PackageTemplateComponent = /** @class */ (function () {
         var data = { "active_template": template.template_id };
         this.apiService.setActiveTemplate(template.template_id, this.package_id, data).subscribe(function (res) {
             _this.apiService.startWorkflow(_this.package.package_id);
+            _this.router.navigate(['packages', _this.package.package_id, 'status']);
         });
     };
     PackageTemplateComponent = __decorate([
@@ -4170,7 +4179,7 @@ var PackageTemplateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n</table>\n"
+module.exports = "<navbar></navbar>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n  <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n    <p>\n      There are no packages\n      <br> Add pacakges to the packages folder an they will appear here\n    </p>\n  </div>\n</table>\n"
 
 /***/ }),
 
@@ -4220,7 +4229,15 @@ var PackageListComponent = /** @class */ (function () {
         var _this = this;
         this.apiService.getPackages().subscribe(function (data) {
             _this.packages = data;
+        }, function (error) {
+            _this.packages = [];
         });
+    };
+    PackageListComponent.prototype.isListEmpty = function () {
+        if (this.packages.length <= 0) {
+            return true;
+        }
+        return false;
     };
     PackageListComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -5341,7 +5358,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/Axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
 
 
 /***/ })
