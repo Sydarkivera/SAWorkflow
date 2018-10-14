@@ -1,33 +1,33 @@
+# always base every smart docker container on worker_base.
+#It contains all the logic for communicating the results
 FROM worker_base
 
-RUN cat /etc/alpine-release
-
+# the url where unoconv can be found
 ENV UNO_URL https://raw.githubusercontent.com/dagwieers/unoconv/master/unoconv
 
+# install some packages from apk
 RUN apk update
-
-RUN apk --no-cache add icu-libs icu-dev bash mc \
+RUN apk --no-cache add icu-libs \
+            icu-dev \
+            bash \
+            mc \
             curl \
-            util-linux
-
-RUN apk --no-cache add libreoffice
-RUN apk --no-cache add libreoffice-common \
-            libreoffice-writer
-
-RUN apk --no-chache add ttf-droid-nonlatin \
+            util-linux libreoffice \
+            libreoffice-common \
+            libreoffice-writer \
+            ttf-droid-nonlatin \
             ttf-droid \
             ttf-dejavu \
             ttf-freefont \
             ttf-liberation
+
+#download unoconv from the url previously defined
 RUN curl -Ls $UNO_URL -o /usr/local/bin/unoconv \
         && chmod +x /usr/local/bin/unoconv \
         && apk del curl \
         && rm -rf /var/cache/apk/*
 
-# RUN mkdir /workdir
-
-RUN ls /usr/share/fonts
-
+# update the font list
 WORKDIR /usr/share/fonts
 COPY ./fonts_from_win10_180824.tar .
 RUN tar xvf fonts_from_win10_180824.tar
