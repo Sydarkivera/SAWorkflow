@@ -62,13 +62,13 @@
     <div class="loading mx-auto" *ngIf="modalLoading"></div>
     <!-- <div *ngIf="modalType == 'info'" [innerHTML]="modalData" style="white-space: pre-wrap;"></div> -->
     <div class="list-group">
-      <div *ngFor="let error of modalData" class="list-group-item list-group-item-action" (click)="error.expanded = !error.expanded">
-        <div class=" d-flex justify-content-between">
+      <div *ngFor="let error of modalData" class="list-group-item list-group-item-action selection-header">
+        <div class=" d-flex justify-content-between" (click)="error.expanded = !error.expanded">
           <p class="">{{error.file}}</p>
           <i *ngIf="!error.expanded" class="material-icons my-auto">keyboard_arrow_right</i>
           <i *ngIf="error.expanded" class="material-icons my-auto">keyboard_arrow_down</i>
         </div>
-        <div *ngIf="error.expanded">
+        <div *ngIf="error.expanded" class="selection-header">
           <p [innerHTML]="sanitizeLog(error.log)" style="white-space: pre-wrap;">
           </p>
         </div>
