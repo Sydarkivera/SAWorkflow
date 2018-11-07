@@ -33,10 +33,11 @@
       <td><a [routerLink]="[package.package_id, 'status']">{{package.status}}</a></td>
     </tr>
   </tbody>
-  <div class="emptyList" *ngIf="isListEmpty()">
-    <p>
-      There are no packages
-      <br> Add pacakges to the packages folder an they will appear here
-    </p>
-  </div>
+
 </table>
+<div class="emptyList" *ngIf="isListEmpty()"  colspan="5">
+  <p>
+    There are no packages
+    <br> Add pacakges to the packages folder an they will appear here
+  </p>
+</div>

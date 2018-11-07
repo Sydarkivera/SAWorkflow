@@ -1,13 +1,11 @@
-# Start with a Python image.
+# Start with a Python alpine base image.
 FROM python:3.5-alpine3.8
 
 # Some stuff that everyone has been copy-pasting
 # since the dawn of time.
-# ENV PYTHONUNBUFFERED 1
+ENV PYTHONUNBUFFERED 1
 
 # Install some necessary things.
-# RUN apt-get update
-# RUN apt-get install -y swig libssl-dev dpkg-dev netcat
 RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre supervisor
 RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
@@ -15,9 +13,7 @@ RUN apk update
 RUN apk add docker
 
 ADD ./requirements.txt /requirements.txt
-# ADD ./viewtar.c /viewtar.c
 
-# RUN gcc /viewtar.c
 # Install our requirements.
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
@@ -32,35 +28,11 @@ RUN chmod 770 /code/wrapper.sh /code/run_django.sh
 COPY ./run_background_tasks.sh /code/run_background_tasks.sh
 RUN chmod 770 /code/run_background_tasks.sh
 
-
+# suporvisor is used to let the container both run django in gunicorn and backgroun tasks
 COPY supervisor.conf /etc/supervisor/conf.d/supervisor.conf
-# RUN mkdir /code/log && mv /a.out /code/tools/
 
-# Collect our static media.
-# RUN python /code/manage.py collectstatic --noinput
-
-# ADD ./prod_run.sh /prod_run.sh
-# RUN chmod 770 /prod_run.sh
-# ADD ./uwsgi.ini /uwsgi.ini
-
+# the port to expose
 EXPOSE 80
-# Specify the command to run when the image is run.
-# CMD ["/usr/bin/gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
-# CMD ["gunicorn", "config.wsgi:application", "-w", "2", "-b", ":8000"]
-# CMD ["/code/wrapper.sh"]
-CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
 
-# FROM saworkflow_django
-#
-# # install tool for clamav
-# RUN apk --update add openjdk8-jre
-# RUN apk add curl
-#
-# RUN curl -o droid.zip http://www.nationalarchives.gov.uk/documents/information-management/droid-binary-6.4-bin.zip &&\
-# unzip droid.zip &&\
-# rm -f droid.zip
-#
-# RUN chmod 777 droid.sh
-#
-# ADD ./run.sh /run.sh
-# RUN chmod 777 /run.sh
+# the comman to be executed by this container and all of it's chilren. Carefull to never overwrite this as it won't work.
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisor.conf"]
