@@ -2,10 +2,8 @@
 #It contains all the logic for communicating the results
 FROM worker_base
 
-# install java
-RUN apk --update add openjdk8-jre
-# install curl
-RUN apk add curl
+# install java and curl
+RUN apk --update --no-cache add openjdk8-jre curl
 
 
 

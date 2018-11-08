@@ -20,6 +20,7 @@ RUN apk --no-cache add icu-libs \
             ttf-dejavu \
             ttf-freefont \
             ttf-liberation
+RUN pip install unotools
 
 #download unoconv from the url previously defined
 RUN curl -Ls $UNO_URL -o /usr/local/bin/unoconv \
