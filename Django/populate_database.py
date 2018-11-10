@@ -101,17 +101,6 @@ module6 = Module(name="Unoconv",
                  docker_mount_point="/workdir/"
                  )
 module6.save()
-module7 = Module(name="ls",
-                 type='0',
-                 form='[]',
-                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 command="ls -al #workdir",
-                 # command="ls -al /workdir",
-                 module_id=6,
-                 filter='',
-                 tool_folder_name="ls",
-                 )
-module7.save()
 module8 = Module(name="Smart DROID",
                  type='3',
                  form='[]',
@@ -123,28 +112,6 @@ module8 = Module(name="Smart DROID",
                 resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
                  )
 module8.save()
-
-module9 = Module(name="Smart ls",
-                 type='3',
-                 form='[]',
-                command="ls -al #workdir",
-                module_id=8,
-                filter='.*',
-                tool_folder_name="SMART_LS",
-                docker_mount_point="/workdir"
-                 )
-module9.save()
-
-module10 = Module(name="docker ls",
-                 type='2',
-                 form='[]',
-                command="ls -al #workdir",
-                module_id=9,
-                filter='.*',
-                tool_folder_name="DOCKER_LS",
-                docker_mount_point="/workdir"
-                 )
-module10.save()
 
 module11 = Module(name="Smart unoconv",
                  type='3',
@@ -164,28 +131,12 @@ template1 = Template(name="Default Start",
                      template_id=0)
 template1.save()
 
-# process1 = Process(order=0,
-#                    template=template1,
-#                    module=module1)
-# process1.save()
 process2 = Process(order=1,
                    template=template1,
                    module=module2,
                    value={"verbose": True}
                    )
 process2.save()
-# process3 = Process(order=2,
-#                    template=template1,
-#                    module=module3)
-# process3.save()
-# process4 = Process(order=3,
-#                    template=template1,
-#                    module=module4)
-# process4.save()
-# process5 = Process(order=4,
-#                    template=template1,
-#                    module=module5)
-# process5.save()
 
 template2 = Template(name="Default Done",
                      template_id=1)
@@ -200,17 +151,9 @@ template4 = Template(name="Convert pdf",
 template4.save()
 process = Process(order=1,
                    template=template4,
-                   module=module7)
-process.save()
-process = Process(order=2,
-                   template=template4,
                    module=module6)
 process.save()
-process = Process(order=3,
-                   template=template4,
-                   module=module7)
-process.save()
-process = Process(order=4,
+process = Process(order=2,
                    template=template4,
                    module=module4)
 process.save()
@@ -225,14 +168,14 @@ process = Process(order=1,
 process.save()
 
 
-# create default variables # TODO set data to 0 for all variables
-var = Variable(name="total_number_of_files", data="134")
+# create default variables
+var = Variable(name="total_number_of_files", data="0")
 var.save()
-var = Variable(name="total_size", data="12345578")
+var = Variable(name="total_size", data="0")
 var.save()
-var = Variable(name="total_number_of_packages", data="2")
+var = Variable(name="total_number_of_packages", data="0")
 var.save()
-var = Variable(name="total_number_of_errors", data="34")
+var = Variable(name="total_number_of_errors", data="0")
 var.save()
 # system variables
 var = Variable(name="work_dir_path", data="/code/workdir")
@@ -254,31 +197,31 @@ var.save()
 
 
 # default test data, TODO remove in production
-ftype = FileType(name="PDF", errors=3, total=100, size=1203000)
-ftype.save()
-ftype = FileType(name="JPG", errors=33, total=10, size=12033400)
-ftype.save()
-ftype = FileType(name="XML", errors=0, total=43, size=120340)
-ftype.save()
-ftype = FileType(name="XSD", errors=0, total=12, size=120300123)
-ftype.save()
-ftype = FileType(name="sdf", errors=0, total=12, size=120300123)
-ftype.save()
-ftype = FileType(name="Xdh4eSD", errors=0, total=12, size=120300123)
-ftype.save()
-ftype = FileType(name="fgdh", errors=0, total=12, size=120300123)
-ftype.save()
-ftype = FileType(name="wert", errors=0, total=12, size=120300123)
-ftype.save()
+# ftype = FileType(name="PDF", errors=3, total=100, size=1203000)
+# ftype.save()
+# ftype = FileType(name="JPG", errors=33, total=10, size=12033400)
+# ftype.save()
+# ftype = FileType(name="XML", errors=0, total=43, size=120340)
+# ftype.save()
+# ftype = FileType(name="XSD", errors=0, total=12, size=120300123)
+# ftype.save()
+# ftype = FileType(name="sdf", errors=0, total=12, size=120300123)
+# ftype.save()
+# ftype = FileType(name="Xdh4eSD", errors=0, total=12, size=120300123)
+# ftype.save()
+# ftype = FileType(name="fgdh", errors=0, total=12, size=120300123)
+# ftype.save()
+# ftype = FileType(name="wert", errors=0, total=12, size=120300123)
+# ftype.save()
 
-graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=21)), size=1110000000, count=37954)
-graph.save()
-graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=14)), size=5834400000, count=9754)
-graph.save()
-graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=7)), size=2340000000, count=751)
-graph.save()
-graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
-graph.save()
+# graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=21)), size=1110000000, count=37954)
+# graph.save()
+# graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=14)), size=5834400000, count=9754)
+# graph.save()
+# graph = GraphData(date=(datetime.date.today() - datetime.timedelta(days=7)), size=2340000000, count=751)
+# graph.save()
+# graph = GraphData(date=datetime.date.today(), size=300000000, count=3452)
+# graph.save()
 
 #create default docker images
 image = DockerImage(name="droid", mountpoint="/workdir", label="Droid check")
@@ -300,16 +243,6 @@ image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid wor
 image.save()
 module8.dockerImage = image
 module8.save()
-
-image = DockerImage(name="ls_worker", mountpoint="/workdir", label="Smart ls")
-image.save()
-module9.dockerImage = image
-module9.save()
-
-image = DockerImage(name="ls", mountpoint="/workdir", label="docker ls")
-image.save()
-module10.dockerImage = image
-module10.save()
 
 image = DockerImage(name="unoconv_worker", mountpoint="/workdir", label="smart unoconv")
 image.save()
