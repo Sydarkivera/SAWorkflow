@@ -63,31 +63,31 @@ module3 = Module(name="ClamAV",
                  tool_folder_name="ClamAV"
                  )
 module3.save()
-module4 = Module(name="VeraPDF validate pdf1/a",
-                 type='2',
-                 form='[]',
-                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 command="verapdf #file",
-                 module_id=3,
-                 filter='.*(\.pdf)',
-                 resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]',
-                 tool_folder_name="VeraPDF",
-                 docker_mount_point="/workdir"
-                 )
-module4.save()
-module5 = Module(name="DROID",
-                 type='2',
-                 form='[]',
-                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 command="/run.sh #file",
-                 # command="ls -al /workdir",
-                 module_id=4,
-                 filter='.*',
-                 tool_folder_name="DROID",
-                 docker_mount_point="/workdir",
-                 resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
-                 )
-module5.save()
+# module4 = Module(name="VeraPDF validate pdf1/a",
+#                  type='2',
+#                  form='[]',
+#                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+#                  command="verapdf #file",
+#                  module_id=3,
+#                  filter='.*(\.pdf)',
+#                  resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]',
+#                  tool_folder_name="VeraPDF",
+#                  docker_mount_point="/workdir"
+#                  )
+# module4.save()
+# module5 = Module(name="DROID",
+#                  type='2',
+#                  form='[]',
+#                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
+#                  command="/run.sh #file",
+#                  # command="ls -al /workdir",
+#                  module_id=4,
+#                  filter='.*',
+#                  tool_folder_name="DROID",
+#                  docker_mount_point="/workdir",
+#                  resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
+#                  )
+# module5.save()
 
 module6 = Module(name="Unoconv",
                  type='2',
@@ -123,6 +123,16 @@ module11 = Module(name="Smart unoconv",
                 docker_mount_point="/workdir"
                  )
 module11.save()
+module12 = Module(name="Smart verapdf",
+                 type='3',
+                 form='[]',
+                command="verapdf -f 1a #file",
+                module_id=11,
+                filter='.*(\.pdf)',
+                tool_folder_name="SMART_VERAPDF",
+                docker_mount_point="/workdir"
+                 )
+module12.save()
 
 
 # setup default templates
@@ -155,16 +165,7 @@ process = Process(order=1,
 process.save()
 process = Process(order=2,
                    template=template4,
-                   module=module4)
-process.save()
-
-# smart droid template
-template5 = Template(name="Smart droid",
-                     template_id=4)
-template5.save()
-process = Process(order=1,
-                   template=template5,
-                   module=module8)
+                   module=module12)
 process.save()
 
 
@@ -224,15 +225,6 @@ var.save()
 # graph.save()
 
 #create default docker images
-image = DockerImage(name="droid", mountpoint="/workdir", label="Droid check")
-image.save()
-module5.dockerImage = image
-module5.save()
-
-image = DockerImage(name="unoconv", mountpoint="/workdir", label="unoconv - libreoffice")
-image.save()
-module6.dockerImage = image
-module6.save()
 
 image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="verapdf")
 image.save()

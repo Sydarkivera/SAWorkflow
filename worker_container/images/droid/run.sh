@@ -1,7 +1,5 @@
 #!/bin/sh
 
-find /workdir
-
 /droid.sh -a "$1" -p /profile.droid >/dev/null
 
 
