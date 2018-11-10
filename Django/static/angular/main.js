@@ -320,7 +320,7 @@ var AdminHeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selected_image.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selected_image.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selected_image.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selected_image.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selected_image.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selected_image.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of workdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selected_image.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n"
+module.exports = "<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selected_image.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selected_image.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selected_image.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selected_image.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selected_image.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selected_image.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of workdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selected_image.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"alert alert-warning\" *ngIf=\"modalOther.length > 0\">\n      {{modalOther}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Path to workdir inside image</label>\n      <input type=\"text\" class=\"form-control\" id=\"pathLabel\" placeholder=\"i.e. /code/workdir\" [(ngModel)]=\"newPath\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n"
 
 /***/ }),
 
@@ -371,22 +371,25 @@ var AdminImagesComponent = /** @class */ (function () {
         this.fileStatus = 0;
         this.modalactive = false;
         this.newLabel = "";
+        this.newPath = "";
         this.modalMessage = false;
         this.uploadDone = 0;
         this.uploadTotal = 0;
+        this.modalOther = "";
         this.errorVisible = false;
         this.apiService.getDockerImages().subscribe(function (data) {
             _this.images = data;
         });
     }
-    AdminImagesComponent.prototype.ngOnInit = function () {
-    };
+    AdminImagesComponent.prototype.ngOnInit = function () { };
     AdminImagesComponent.prototype.selectImage = function (image) {
         this.selected_image = image;
     };
     AdminImagesComponent.prototype.save = function () {
         var _this = this;
-        this.apiService.saveDockerImage(this.selected_image.id, this.selected_image).subscribe(function (data) {
+        this.apiService
+            .saveDockerImage(this.selected_image.id, this.selected_image)
+            .subscribe(function (data) {
             _this.saveSuccess = true;
         });
     };
@@ -397,8 +400,8 @@ var AdminImagesComponent = /** @class */ (function () {
     AdminImagesComponent.prototype.fileSelected = function (e) {
         if (e.target.files.length > 0) {
             //check fileFormat
-            if (!e.target.files[0].name.endsWith('.tar')) {
-                console.error('error, wrong fileType');
+            if (!e.target.files[0].name.endsWith(".tar")) {
+                console.error("error, wrong fileType");
                 this.fileName = "Select file...";
                 this.fileStatus = 1;
             }
@@ -412,37 +415,52 @@ var AdminImagesComponent = /** @class */ (function () {
     AdminImagesComponent.prototype.importImage = function () {
         var _this = this;
         // a file is selectd, and the user has pressed upload. Submit the data to the backend.
-        if (!this.file.name.endsWith('.tar')) {
-            console.error('error, wrong fileType');
+        if (!this.file.name.endsWith(".tar")) {
+            console.error("error, wrong fileType");
             return;
         }
         if (this.newLabel == "") {
-            console.error('error, no name specified');
+            console.error("error, no name specified");
             return;
         }
         this.modalMessage = true;
         var formData = new FormData();
-        formData.append('file', this.file, 'import.tar');
-        formData.append('label', this.newLabel);
+        formData.append("file", this.file, "import.tar");
+        formData.append("label", this.newLabel);
+        formData.append("workdir", this.newPath);
         this.apiService.importDockerImage(formData).subscribe(function (data) {
             // if (data.type == 4) {
             //   this.modules = data['body'] as [any];
             // }
             // console.log(data);
             if (data.type == 4) {
-                _this.images.push(data['body']);
+                _this.images.push(data["body"]);
                 _this.modalactive = false;
                 _this.fileName = "Select file...";
+                _this.label = "";
+                _this.modalMessage = false;
             }
             else if (data.type == 1) {
-                _this.uploadDone = data['loaded'];
-                _this.uploadTotal = data['total'];
+                _this.uploadDone = data["loaded"];
+                _this.uploadTotal = data["total"];
+            }
+            else {
+                // this.modalOther = data["body"];
+                // console.log(data);
+                if ("status" in data) {
+                    if (data["status"] != 200) {
+                        _this.modalOther =
+                            "unknown error occured, status: " + data["status"];
+                    }
+                }
             }
         });
     };
     AdminImagesComponent.prototype.deleteImage = function (image) {
         var _this = this;
-        if (confirm("Are you sure to delete " + image.label + "\n This action is irreversible")) {
+        if (confirm("Are you sure to delete " +
+            image.label +
+            "\n This action is irreversible")) {
             this.apiService.deleteDockerImage(image.id).subscribe(function (data) {
                 console.log(data);
                 _this.images = _this.images.filter(function (item) {
@@ -460,7 +478,7 @@ var AdminImagesComponent = /** @class */ (function () {
     };
     AdminImagesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'admin-images',
+            selector: "admin-images",
             template: __webpack_require__(/*! ./AdminImages.component.html */ "./src/app/Admin/AdminImages.component.html"),
             styles: [__webpack_require__(/*! ./AdminImages.component.sass */ "./src/app/Admin/AdminImages.component.sass")]
         }),
@@ -5358,7 +5376,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/Axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/axenu/Sydarkivera/SAWorkflow/Angular6/src/main.ts */"./src/main.ts");
 
 
 /***/ })

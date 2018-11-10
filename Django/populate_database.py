@@ -9,6 +9,7 @@ __status__ = "Development"
 import os
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 import django
+import shutil, os # for deleting and recreating workdir
 
 django.setup()
 
@@ -28,6 +29,11 @@ FileType.objects.all().delete()
 Variable.objects.all().delete()
 GraphData.objects.all().delete()
 DockerImage.objects.all().delete()
+
+# delete files in workdir
+folders = os.listdir('/code/workdir/')
+for folder in folders:
+    shutil.rmtree('/code/workdir/' + folder)
 
 # create new module
 module1 = Module(name="Setup workdir",

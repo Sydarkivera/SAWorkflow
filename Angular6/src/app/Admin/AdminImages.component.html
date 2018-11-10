@@ -64,9 +64,17 @@
     <div class="alert alert-info" *ngIf="modalMessage">
       Uploading image, {{uploadDone}}/{{uploadTotal}}
     </div>
+    <div class="alert alert-warning" *ngIf="modalOther.length > 0">
+      {{modalOther}}
+    </div>
     <div class="form-group">
       <label for="inputLabel">Name of the image (display name)</label>
       <input type="text" class="form-control" id="inputLabel" placeholder="i.e. DROID" [(ngModel)]="newLabel">
+    </div>
+
+    <div class="form-group">
+      <label for="inputLabel">Path to workdir inside image</label>
+      <input type="text" class="form-control" id="pathLabel" placeholder="i.e. /code/workdir" [(ngModel)]="newPath">
     </div>
 
     <label for="inputLabel">Docker image. (generated with docker save)</label>
