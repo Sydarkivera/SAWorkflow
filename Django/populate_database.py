@@ -95,7 +95,7 @@ module6 = Module(name="Unoconv",
                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
                  command="unoconv -f pdf -e SelectPdfVersion=1 #file",
                  # command="ls -al /workdir",
-                 module_id=5,
+                 module_id=3,
                  filter='.*(\.doc)',
                  tool_folder_name="unoconv",
                  docker_mount_point="/workdir/"
@@ -105,7 +105,7 @@ module8 = Module(name="Smart DROID",
                  type='3',
                  form='[]',
                 command="/run.sh \"#file\"",
-                module_id=7,
+                module_id=4,
                 filter='.*',
                 tool_folder_name="SMART_DROID",
                 docker_mount_point="/workdir",
@@ -117,7 +117,7 @@ module11 = Module(name="Smart unoconv",
                  type='3',
                  form='[]',
                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
-                module_id=10,
+                module_id=5,
                 filter='.*(\.doc)',
                 tool_folder_name="SMART_UNOCONV",
                 docker_mount_point="/workdir"
@@ -127,7 +127,7 @@ module12 = Module(name="Smart verapdf",
                  type='3',
                  form='[]',
                 command="verapdf -f 1a #file",
-                module_id=11,
+                module_id=6,
                 filter='.*(\.pdf)',
                 tool_folder_name="SMART_VERAPDF",
                 docker_mount_point="/workdir"
@@ -228,8 +228,8 @@ var.save()
 
 image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="verapdf")
 image.save()
-module4.dockerImage = image
-module4.save()
+module12.dockerImage = image
+module12.save()
 
 image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid worker")
 image.save()

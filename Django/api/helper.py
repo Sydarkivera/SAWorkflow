@@ -48,7 +48,9 @@ def get_values(process, package):
             if val == True:
                 # get value from form instead
                 for item in process.module.form:
-                    # logger.error(item)
+                    # logger.error(process.module.form)
+                    # print(item)
+                    # logger.info('item: ' + item)
                     if item['identifier'] == key:
                         if 'value' in item:
                             values[key] = item['value']
