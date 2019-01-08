@@ -149,8 +149,11 @@
           </select>
         </label>
         <div class="form-group" *ngIf="selected_module.type == 'Command'">
-          <label for="inputForm">Command</label>
-          <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
+          <label for="commandForm">
+            Command
+            <i class="material-icons icon-button my-auto icon-small" (click)="openModalCommandDocs()">help</i>
+          </label>
+          <textarea class="form-control" id="commandForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
         </div>
         <div class="form-group" *ngIf="selected_module.type == 'Python module'">
           <label for="inputName">Python Module</label>
@@ -165,8 +168,8 @@
             </select>
           </label>
           <div class="form-group">
-            <label for="inputForm">Command</label>
-            <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
+            <label for="commandForm">Command<i class="material-icons icon-button my-auto icon-small" (click)="openModalCommandDocs()">help</i></label>
+            <textarea class="form-control" id="commandForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
           </div>
           <!-- <button class="btn btn-success" (click)="uploadDockerImage">Upload Docker Image</button> -->
           <!-- <div class="form-group">
@@ -182,8 +185,8 @@
             </select>
           </label>
           <div class="form-group">
-            <label for="inputForm">Command</label>
-            <textarea class="form-control" id="inputForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
+            <label for="commandForm">Command<i class="material-icons icon-button my-auto icon-small" (click)="openModalCommandDocs()">help</i></label>
+            <textarea class="form-control" id="commandForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
           </div>
           <!-- <button class="btn btn-success" (click)="uploadDockerImage">Upload Docker Image</button> -->
           <!-- <div class="form-group">
@@ -257,6 +260,52 @@
         <h5>default: [string] (optional)</h5>
         <p>
           An optional default state for the form. For a checkbox it must be true or false and for a textfield it must be a string.
+        </p>
+      </li>
+    </ul>
+  </div>
+</modal>
+
+<modal [(active)]="commandDocsActive" title="Command documentation">
+  <div modal-body>
+    <p>
+      The command field lets you specify the unix command that will be executed.<br/>
+      It is executed once for every file in the package.
+    </p>
+    <p>
+      Variables can be added to allow for more dynamic commands.
+      For example can the name of the file be used in the command. A variable is prefixed with hashtag (#). In the example below the variable "file" is used.
+    </p>
+    <p>
+      The variables can be defined in the form json field above.
+      There are also som predefined variables built-in listed below.
+    </p>
+    <p>
+      Example: <span class="code_example">unoconv -f pdf -e SelectPdfVersion=1 #file</span>
+    </p>
+    <ul>
+      <li>
+        <h5>tar_path</h5>
+        <p>
+          The absolute location of the tar file containing the package.
+        </p>
+      </li>
+      <li>
+        <h5>workdir</h5>
+        <p>
+          The absolute path for the package's workdir.
+        </p>
+      </li>
+      <li>
+        <h5>tar_name</h5>
+        <p>
+          The name of the tar archive file containing the package.
+        </p>
+      </li>
+      <li>
+        <h5>file</h5>
+        <p>
+          The absolute path of the current file beeing executed.
         </p>
       </li>
     </ul>

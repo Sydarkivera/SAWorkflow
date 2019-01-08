@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 
-import { APIService } from '../Services/api.service';
-
+import { APIService } from "../Services/api.service";
 
 @Component({
-  selector: 'admin',
-  templateUrl: './AdminModules.component.html',
-  styleUrls: ['./AdminModules.component.sass']
+  selector: "admin",
+  templateUrl: "./AdminModules.component.html",
+  styleUrls: ["./AdminModules.component.sass"]
 })
 export class AdminModulesComponent {
   modules: any[];
@@ -19,32 +18,32 @@ export class AdminModulesComponent {
   formJsonError = "";
   commandJsonError = "";
   resultFilters = [];
-  newResultFilter = { type: 'Containing', value: '' }
+  newResultFilter = { type: "Containing", value: "" };
   modalactive = false;
   file: any;
-  fileName = "Select file..."
+  fileName = "Select file...";
   fileStatus = 0;
-  messageVisible = false
-  errorVisible = false
+  messageVisible = false;
+  errorVisible = false;
 
   browserActive = false;
   browserPath = "";
 
   docsActive = false;
+  commandDocsActive = false;
 
-  constructor(private apiService: APIService) {
-  }
+  constructor(private apiService: APIService) {}
 
   ngOnInit() {
     //load initial data from server, module list
-    this.apiService.getModules().subscribe((data) => {
+    this.apiService.getModules().subscribe(data => {
       this.modules = data as [any];
-      console.log(this.modules)
+      console.log(this.modules);
     });
 
-    this.apiService.getDockerImages().subscribe((data) => {
-      this.images = data as [any]
-    })
+    this.apiService.getDockerImages().subscribe(data => {
+      this.images = data as [any];
+    });
   }
 
   setModule(mod) {
@@ -64,26 +63,38 @@ export class AdminModulesComponent {
 
   deleteModule(dmodule) {
     // Before a module can be deleted a confirmation is displayed, warning the user of the risks.
-    if(confirm("Are you sure to delete " + dmodule.name + "\n This action is irreversible")) {
-      this.apiService.deleteModule(dmodule.module_id).subscribe((data) => {
-        this.modules = this.modules.filter((item) => {
-          if (item.module_id == dmodule.module_id) {
-            return false;
+    if (
+      confirm(
+        "Are you sure to delete " +
+          dmodule.name +
+          "\n This action is irreversible"
+      )
+    ) {
+      this.apiService.deleteModule(dmodule.module_id).subscribe(
+        data => {
+          this.modules = this.modules.filter(item => {
+            if (item.module_id == dmodule.module_id) {
+              return false;
+            }
+            return true;
+          });
+          this.selected_module = { module_id: -1 };
+        },
+        error => {
+          if (error.status == 409) {
+            this.errorVisible = true;
           }
-          return true;
-        });
-        this.selected_module = { module_id: -1 };
-      }, (error) => {
-        if (error.status == 409) {
-          this.errorVisible = true;
         }
-      })
+      );
     }
   }
 
   selectModule(mod) {
     // if this module isn't selected already, select it. Else deselect.
-    if (!this.selected_module || this.selected_module.module_id != mod.module_id) {
+    if (
+      !this.selected_module ||
+      this.selected_module.module_id != mod.module_id
+    ) {
       this.setModule(mod);
     } else {
       this.selected_module = { module_id: -1 };
@@ -156,14 +167,22 @@ export class AdminModulesComponent {
     }
 
     //verfiy that the tools action is implemented
-    if (this.selected_module.type == 'Command') {
-      if (!this.selected_module.command || this.selected_module.command.length <= 0) {
-        this.commandJsonError = "to save a new tool, the command needs to be configured";
+    if (this.selected_module.type == "Command") {
+      if (
+        !this.selected_module.command ||
+        this.selected_module.command.length <= 0
+      ) {
+        this.commandJsonError =
+          "to save a new tool, the command needs to be configured";
         return false;
       }
-    } else if (this.selected_module.type == 'Python module') {
-      if (!this.selected_module.python_module || this.selected_module.python_module == "") {
-        this.commandJsonError = "to save a new tool, the python file needs to be specified";
+    } else if (this.selected_module.type == "Python module") {
+      if (
+        !this.selected_module.python_module ||
+        this.selected_module.python_module == ""
+      ) {
+        this.commandJsonError =
+          "to save a new tool, the python file needs to be specified";
         return false;
       }
     }
@@ -171,30 +190,35 @@ export class AdminModulesComponent {
     console.log(data);
 
     // if the id isn't -2, this is an existing module which should be updated
-    if (this.selected_module.module_id != -2 && this.selected_module.module_id ) {
-      this.apiService.saveData(this.selected_module.module_id, data).subscribe((data) => {
-        this.messageVisible = true
-        for (let i in this.modules) {
-          let m = this.modules[i];
-          if (m.module_id == data["module_id"]) {
-            this.modules[i] = data;
-            this.setModule(data);
+    if (
+      this.selected_module.module_id != -2 &&
+      this.selected_module.module_id
+    ) {
+      this.apiService
+        .saveData(this.selected_module.module_id, data)
+        .subscribe(data => {
+          this.messageVisible = true;
+          for (let i in this.modules) {
+            let m = this.modules[i];
+            if (m.module_id == data["module_id"]) {
+              this.modules[i] = data;
+              this.setModule(data);
+            }
           }
-        }
-      });
+        });
     } else {
       // else this is a new module which has not been saved before.
-      delete this.selected_module.module_id
-      this.apiService.createModule(data).subscribe((data) => {
-        this.messageVisible = true
+      delete this.selected_module.module_id;
+      this.apiService.createModule(data).subscribe(data => {
+        this.messageVisible = true;
         this.setModule(data);
         this.modules.push(data);
         this.modules = this.modules.sort((a, b) => {
           if (a.name.toUpperCase() > b.name.toUpperCase()) {
-            return 1
+            return 1;
           }
-          return -1
-        })
+          return -1;
+        });
       });
     }
   }
@@ -208,12 +232,12 @@ export class AdminModulesComponent {
   fileSelected(e) {
     if (e.target.files.length > 0) {
       //check fileFormat
-      if (!e.target.files[0].name.endsWith('.tar')) {
-        console.error('error, wrong fileType');
+      if (!e.target.files[0].name.endsWith(".tar")) {
+        console.error("error, wrong fileType");
         this.fileName = "Select file...";
         this.fileStatus = 1;
       } else {
-        this.file = e.target.files[0]
+        this.file = e.target.files[0];
         this.fileName = this.file.name;
         this.fileStatus = 2;
       }
@@ -222,28 +246,27 @@ export class AdminModulesComponent {
 
   uploadFile() {
     // a file is selectd, and the user has pressed upload. Submit the data to the backend.
-    if (!this.file.name.endsWith('.tar')) {
-      console.error('error, wrong fileType');
+    if (!this.file.name.endsWith(".tar")) {
+      console.error("error, wrong fileType");
       return;
     }
     this.modalactive = false;
     this.fileName = "Select file...";
 
     const formData: FormData = new FormData();
-    formData.append('file', this.file, 'import.tar');
+    formData.append("file", this.file, "import.tar");
 
-    this.apiService.importModule(formData).subscribe((data) => {
+    this.apiService.importModule(formData).subscribe(data => {
       if (data.type == 4) {
-        this.modules = data['body'] as [any];
+        this.modules = data["body"] as [any];
       }
-
-    })
+    });
   }
 
   addResultFilter() {
     // add another filter for scanning the log files
     this.selected_module.resultFilter.push({ ...this.newResultFilter });
-    this.newResultFilter = { type: 'Containing', value: '' }
+    this.newResultFilter = { type: "Containing", value: "" };
   }
 
   removeResultFilter(filter) {
@@ -255,7 +278,8 @@ export class AdminModulesComponent {
   }
 
   openFileBrowser() {
-    this.browserPath = "/api/module/"+this.selected_module.module_id+"/files/"
+    this.browserPath =
+      "/api/module/" + this.selected_module.module_id + "/files/";
     this.browserActive = true;
   }
 
@@ -263,4 +287,7 @@ export class AdminModulesComponent {
     this.docsActive = true;
   }
 
+  openModalCommandDocs() {
+    this.commandDocsActive = true;
+  }
 }
