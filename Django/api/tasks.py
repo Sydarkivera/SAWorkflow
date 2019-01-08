@@ -560,7 +560,7 @@ def periodic_scan_for_new_packages(**kwargs):
                     label = label[0:end_index]
                     package.name = label
                     package.save()
-                    template = Template.objects.get(pk=0)
+                    template = Template.objects.get(name="Default Start")
                     if template:
                         for process in template.processes.all():
                             process.pk = None
@@ -683,7 +683,7 @@ def finishPackage(package_id):
         return
 
     # add template tasks
-    template = Template.objects.get(pk=1)
+    template = Template.objects.get(name="Default Done")
     if template:
         for process in template.processes.all():
             process.pk = None

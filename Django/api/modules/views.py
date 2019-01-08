@@ -86,9 +86,18 @@ def module_import(request):
         jsonFO = tar.extractfile('data.json')
         data = jsonFO.read()
         jsonData = json.loads(data.decode("utf-8"))
+        hasDockerImage = False
+        dockerData = {}
+        if 'dockerImage' in jsonData:
+            dockerData = jsonData['dockerImage']
+            dockerData['label'] = jsonData['dockerImage']['label']
+            del jsonData['dockerImage']
+            hasDockerImage = True
+        if 'module_id' in jsonData:
+            del jsonData['module_id']
         serializer = ModuleSerializer(data=jsonData, partial=True)
         if serializer.is_valid():
-            serializer.save()
+            module = serializer.save()
             # logger.info('python_file_path: ', serializer.data['python_module'])
             if 'python_module' in serializer.data and serializer.data['type'] == 'Python module':
                 # import python file
@@ -98,6 +107,35 @@ def module_import(request):
                 # verify that the python file exists in the package:
                 if py_file_name in tar_list:
                     tar.extract(py_file_name, path=py_path)
+            elif hasDockerImage:
+                # check if there are an image of this name
+                image_name = dockerData['name']
+                if DockerImage.objects.filter(name = image_name).exists():
+                    # point to the existing
+                    module.dockerImage = DockerImage.objects.get(name = image_name)
+                    module.save()
+                    logger.info('exists')
+                    pass
+                else:
+                    logger.info('does not exist')
+                    # add the docker image and point to the new image.
+                    if (image_name + ".tar") in tar_list:
+                        client = docker.from_env()
+                        imageFO = tar.extractfile((image_name + ".tar"))
+                        images = client.images.load(imageFO)
+
+                        if len(images) > 0:
+                            logger.info(images[0])
+                            logger.info(images[0].tags)
+                            logger.info(dockerData)
+                            label = ""
+                            if 'label' in jsonData:
+                                label = dockerData['label']
+                            dImage = DockerImage(name=images[0].tags[0], label=label)
+                            dImage.save()
+                            module.dockerImage = dImage
+                            module.save()
+                    pass
         else:
             logger.error('Failed to serialize imported module: ', serializer.errors)
     tar.close()
@@ -201,16 +239,6 @@ def module_export(request, module_id):
                 info.size = s
                 info.name = image_name + ".tar"
                 tar_file.addfile(tarinfo=info, fileobj=f)
-            # info.size = len(data)
-            # lol = BytesIO(data)
-            # logger.info(info.size)
-            # try:
-            #     info = tar_file.gettarinfo(fileobj=image)
-            # except UnsupportedOperation:
-            #     info = tarfile.TarInfo(name=(image_name + ".tar"))
-
-            # tar_file.addfile(tarinfo=info, fileobj=lol)
-            # tar_file.add((image_name + ".tar"), )
 
 
     file_size = temp_file.tell()
@@ -219,6 +247,7 @@ def module_export(request, module_id):
     response = HttpResponse(temp_file, content_type='application/x-tar')
     response['Content-Disposition'] = 'attachment; filename=\"' + module.name + '.tar\"'
     response['Content-Length'] = file_size
+    temp_file.close()
     return response
     # def get_files(self):
     #     # for i in range(0,10):
