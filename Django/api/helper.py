@@ -40,7 +40,7 @@ def get_values(process, package):
     values = {}
     values['tar_path'] = os.path.join(package.workdir, package.file_name)
     values['workdir'] = package.workdir
-    values['file_name'] = package.file_name
+    values['tar_name'] = package.file_name
 
     # update values with data from form:
     for key, val in process.value.items():

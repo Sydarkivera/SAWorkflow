@@ -34,7 +34,9 @@ import shutil
 import tarfile
 from io import UnsupportedOperation
 import time
-import tarfile
+import docker # for docker
+from docker import APIClient
+import tempfile
 
 from logging import getLogger
 logger = getLogger('django')
@@ -147,7 +149,7 @@ def module_export(request, module_id):
         logger.info(module.python_module.split('.')[-1:])
         files.append(File(open(os.path.join(BASE_DIR, 'tools/') + '.'.join(module.python_module.split('.')[-1:]) + '.py'), name=module.python_module.split('.')[-1] + '.py'))
 
-    temp_file = ContentFile(b(""), name=module.name + '.tar')
+    temp_file = tempfile.TemporaryFile()
     with tarfile.TarFile(fileobj=temp_file, mode='w', debug=3) as tar_file:
         for file_ in files:
             file_name = file_.name
@@ -170,6 +172,47 @@ def module_export(request, module_id):
                 info = tarfile.TarInfo(name=file_name)
             info.size = size
             tar_file.addfile(tarinfo=info, fileobj=lol)
+
+        # a docker tarball if present:
+        if module.type == Module.MODULE_TYPE_SMART_DOCKER:
+            image_name = module.dockerImage.name
+            logger.info(image_name)
+            client = docker.from_env()
+            logger.info(client)
+            cli = APIClient(base_url='unix://var/run/docker.sock')
+            image = cli.get_image(image_name)
+
+            # info = tarfile.TarInfo((image_name + ".tar"))
+            # data = b""
+            with tempfile.NamedTemporaryFile() as f:
+                logger.info('begining reading')
+                s = 0
+                for chunk in image:
+                    # logger.info(chunk)
+                    # data += chunk
+                    s += len(chunk)
+                    f.write(chunk)
+                logger.info('done with docker')
+                info = tar_file.gettarinfo(fileobj=f)
+                # data = f.read()
+                # logger.info(len(data))
+                # logger.info(s)
+                f.seek(0)
+                info.size = s
+                info.name = image_name + ".tar"
+                tar_file.addfile(tarinfo=info, fileobj=f)
+            # info.size = len(data)
+            # lol = BytesIO(data)
+            # logger.info(info.size)
+            # try:
+            #     info = tar_file.gettarinfo(fileobj=image)
+            # except UnsupportedOperation:
+            #     info = tarfile.TarInfo(name=(image_name + ".tar"))
+
+            # tar_file.addfile(tarinfo=info, fileobj=lol)
+            # tar_file.add((image_name + ".tar"), )
+
+
     file_size = temp_file.tell()
     temp_file.seek(0)
 
