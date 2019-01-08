@@ -13,13 +13,13 @@ from time import sleep
 from logging import getLogger
 logger = getLogger('django')
 
-def send_request(url, data, delay_time=4):
+def send_request(url, data, delay_time=1):
     if delay_time > 1000:
         logger.error(
             "fail to start command on smart docker host. Will stop retrying")
         return
-    if delay_time > 4:
-        sleep(delay_time)
+    # if delay_time > 1:
+    sleep(delay_time)
     # figure out name of new container in network
     try:
         r = requests.put(url, data=data)

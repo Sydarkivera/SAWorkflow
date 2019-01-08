@@ -31,9 +31,9 @@ GraphData.objects.all().delete()
 DockerImage.objects.all().delete()
 
 # delete files in workdir
-folders = os.listdir('/code/workdir/')
-for folder in folders:
-    shutil.rmtree('/code/workdir/' + folder)
+# folders = os.listdir('/code/workdir/')
+# for folder in folders:
+#     shutil.rmtree('/code/workdir/' + folder)
 
 # create new module
 module1 = Module(name="Setup workdir",
@@ -118,7 +118,7 @@ module11 = Module(name="Smart unoconv",
                  form='[]',
                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
                 module_id=5,
-                filter='.*(\.doc)',
+                filter='.*(\.doc)$',
                 tool_folder_name="SMART_UNOCONV",
                 docker_mount_point="/workdir"
                  )
@@ -130,7 +130,8 @@ module12 = Module(name="Smart verapdf",
                 module_id=6,
                 filter='.*(\.pdf)',
                 tool_folder_name="SMART_VERAPDF",
-                docker_mount_point="/workdir"
+                docker_mount_point="/workdir",
+                resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]'
                  )
 module12.save()
 

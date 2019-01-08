@@ -69,8 +69,8 @@
                 {{process.name}}
               </p>
               <!-- <i class="material-icons">arrow_back</i> -->
-              <i *ngIf="process.order != 0" class="material-icons icon-button" (click)="moveUp(process)">keyboard_arrow_up</i>
-              <i *ngIf="process.order < selected_template.processes.length-1" class="material-icons icon-button" (click)="moveDown(process)">keyboard_arrow_down</i>
+              <i *ngIf="process.order > 1" class="material-icons icon-button" (click)="moveUp(process)">keyboard_arrow_up</i>
+              <i *ngIf="process.order < selected_template.processes.length" class="material-icons icon-button" (click)="moveDown(process)">keyboard_arrow_down</i>
               <i class="material-icons icon-button" (click)="deleteProcess(process)">delete</i>
               <i class="material-icons drag-handle">drag_handle</i>
             </div>
