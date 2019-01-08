@@ -799,7 +799,7 @@ var AdminModulesComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"process.order > 1\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < selected_template.processes.length\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
+module.exports = "<div class=\"row\">\n  <!-- Error message for removal of templates in use -->\n  <message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n    <i class=\"material-icons align-middle\">warning</i> The template could not be removed since it is in use by one or more packages.\n  </message>\n  <!-- list of all templates -->\n  <h4 style=\"clear: both; width: 100%\">Templates</h4>\n  <div class=\"col-lg-6\">\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-template [ngForOf]=\"templates\">\n          <div class=\"list-group-item list-group-item-action\" [class.active]=\"template.template_id==selected_template_id\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectTemplate(template)\">\n                {{template.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i class=\"material-icons icon-button\" (click)=\"deleteTemplate(template)\" *ngIf=\"template.template_id > 1\">delete</i>\n            </div>\n          </div>\n        </ng-template>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"createTemplateModal()\">Create new template</button>\n  </div>\n\n  <!-- Basic settings in a template (Only name at this time) -->\n  <div class=\"col-lg-6\">\n    <div class=\"card\" *ngIf=\"selected_template_id != -1\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" [(ngModel)]=\"selected_template.name\" placeholder=\"Virus scanning - ClamAV\">\n        </div>\n        <button class=\"btn btn-success float-right\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n<!-- Processes and tools inside the template. Much like the Package.component.ts view -->\n<div class=\"row\" *ngIf=\"selected_template_id != -1\">\n  <div class=\"col-lg-6\" *ngIf=\"selected_template_id != -1\">\n    <h4>Tools in {{selected_template.name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (dragover)=\"allowDropTop($event)\" (drop)=\"onDrop($event)\">\n        Name\n      </div>\n      <ng-template ngFor let-process [ngForOf]=\"selected_template.processes\" let-i=\"index\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'template', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.placeholder]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <!-- <i class=\"material-icons\">arrow_back</i> -->\n              <i *ngIf=\"i > 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"i < selected_template.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n\n  <!-- Tool/Modules list -->\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n  </div>\n</div>\n\n<!-- Modal for creation of new templates -->\n<modal [(active)]=\"createModalActive\" title=\"Create a new template\">\n  <div modal-body>\n    <h5>Enter the name of the new template</h5>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Name</label>\n      <input type=\"text\" class=\"form-control\" [(ngModel)]=\"newTemplateName\" placeholder=\"Virus scanning - ClamAV\">\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"createNewTemplate()\">Create</button>\n  </div>\n</modal>\n"
 
 /***/ }),
 
@@ -3235,7 +3235,7 @@ var NotFoundComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"process.order != 0\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"process.order < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">\n      Start\n      <i class=\"material-icons my-auto align-middle icon-small\">play_arrow</i>\n    </button>\n  </div>\n</div>\n"
+module.exports = "\n<!-- PackageWorkflow -->\n<div class=\"row\">\n  <div class=\"col-lg-6\">\n    <h4>Current workflow: {{package.template_name}}</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\" (drop)=\"onDrop($event)\" (dragover)=\"allowDropTop($event)\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <ng-template ngFor let-process [ngForOf]=\"package.processes\" let-i=\"index\">\n          <div *ngIf=\"!process.hidden\" draggable=\"true\" (dragstart)=\"dragStart($event, process.process_id, 'process', process.name)\" (drop)=\"onDrop($event)\" (dragover)=\"allowDrop($event, process.order)\" class=\"list-group-item list-group-item-action\" [class.active]=\"process.process_id==selected_process_id\"\n              [class.template]=\"process.type=='placeholder'\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\" (click)=\"selectProcess(process)\">\n                {{process.name}}\n              </p>\n              <i *ngIf=\"i > 1\" class=\"material-icons icon-button\" (click)=\"moveUp(process)\">keyboard_arrow_up</i>\n              <i *ngIf=\"i < package.processes.length-1\" class=\"material-icons icon-button\" (click)=\"moveDown(process)\">keyboard_arrow_down</i>\n              <i class=\"material-icons icon-button\" (click)=\"deleteProcess(process)\">delete</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n            <ng-template [ngIf]=\"process.process_id==selected_process_id\">\n              <form *ngIf=\"process.form.length>0\">\n                <div class=\"form-group\" *ngFor=\"let input of process.form\">\n                  <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n                    <input\n                      class=\"form-check-input\"\n                      type=\"checkbox\"\n                      *ngIf=\"input.type=='checkbox'\"\n                      [id]=\"input.identifier\"\n                      [checked]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.checked)\"\n                      />\n                    <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n                      {{input.label}}\n                    </label>\n                  </div>\n                  <ng-template [ngIf]=\"input.type=='text'\">\n                    <label for=\"{{input.identifier}}\">{{input.label}}</label>\n                    <input\n                      type=\"text\"\n                      class=\"form-control\"\n                      [id]=\"input.identifier\"\n                      placeholder=\"{{input.identifier}}\"\n                      [value]=\"getProcessValue(input.identifier)\"\n                      (change)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      (keyup)=\"setProcessValue(input.identifier, $event.target.value)\"\n                      >\n                  </ng-template>\n                </div>\n                <!-- <label *ngFor=\"let input of process.form\" for=\"{{input.identifier}}\" class=\"input-label\">\n                  {{input.label}}\n                  <input type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"process.value[input.identifier]\" (change)=\"setProcessValue(input.identifier, $event.target.checked)\"/>\n                </label> -->\n              </form>\n            </ng-template>\n          </div>\n        </ng-template>\n        <div class=\"emptyList\" *ngIf=\"isListEmpty()\">\n          <p>\n            You have not selected any tools.\n            <br> Select on by either dragging it from the right or pressing the plus (\n            <i class=\"material-icons\">add</i> ) sign\n          </p>\n        </div>\n      </div>\n    </div>\n  </div>\n\n  <div class=\"col-lg-6\">\n    <h4>Avaliable Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <ng-template ngFor let-module [ngForOf]=\"modules\">\n        <div *ngIf=\"!module.hidden\" class=\"list-group list-group-flush\">\n          <div draggable=\"true\" (dragstart)=\"dragStart($event, module.module_id, 'module', module.name)\" (dragend)=\"onRelease($event)\" class=\"list-group-item list-group-item-action\">\n            <div class=\"d-flex w-100 justify-content-between\">\n              <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n              <i class=\"material-icons icon-button\" (click)=\"addProcessLast(module.module_id)\">add</i>\n              <i class=\"material-icons drag-handle\">drag_handle</i>\n            </div>\n          </div>\n        </div>\n      </ng-template>\n    </div>\n    <button class=\"btn btn-success float-right\" (click)=\"startWorkflow()\">\n      Start\n      <i class=\"material-icons my-auto align-middle icon-small\">play_arrow</i>\n    </button>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -3283,6 +3283,7 @@ var PackageComponent = /** @class */ (function () {
         this.route = route;
         this.router = router;
         this.placeholderLocation = -1;
+        this.placeholderName = "";
         this.selected_process_id = -1;
         this.selected_process = undefined;
         this.FileBrowserOpen = false;
@@ -3296,10 +3297,10 @@ var PackageComponent = /** @class */ (function () {
         var _this = this;
         // when id exists, load the package
         this.route.parent.params.subscribe(function (params) {
-            _this.id = params['id'];
+            _this.id = params["id"];
             _this.apiService.getPackage(_this.id).subscribe(function (data) {
                 _this.package = data;
-                console.log(data['processes']);
+                console.log(data["processes"]);
             });
         });
         // load modules right away
@@ -3310,7 +3311,7 @@ var PackageComponent = /** @class */ (function () {
     //exectute the workflow
     PackageComponent.prototype.startWorkflow = function () {
         this.apiService.startWorkflow(this.package.package_id);
-        this.router.navigate(['packages', this.package.package_id, 'status']);
+        this.router.navigate(["packages", this.package.package_id, "status"]);
     };
     //select a process. If it is alreade selected, deselect it.
     PackageComponent.prototype.selectProcess = function (process) {
@@ -3325,8 +3326,7 @@ var PackageComponent = /** @class */ (function () {
     };
     // delete process
     PackageComponent.prototype.deleteProcess = function (process) {
-        this.apiService.deleteProcess(process.process_id).subscribe(function (data) {
-        });
+        this.apiService.deleteProcess(process.process_id).subscribe(function (data) { });
         this.package.processes = this.package.processes.filter(function (item) {
             return item.process_id != process.process_id;
         });
@@ -3334,13 +3334,14 @@ var PackageComponent = /** @class */ (function () {
         var data = [];
         for (var index in this.package.processes) {
             var item = this.package.processes[index];
-            if (item.type != 'placeholder' && item.order > process.order) {
+            if (item.type != "placeholder" && item.order > process.order) {
                 item.order -= 1;
-                data.push({ "order": item.order, "process_id": item.process_id });
+                data.push({ order: item.order, process_id: item.process_id });
             }
         }
-        this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
-        });
+        this.apiService
+            .reorderPackageProcesses(data, this.package.package_id)
+            .subscribe(function (data) { });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
                 return 1;
@@ -3353,9 +3354,16 @@ var PackageComponent = /** @class */ (function () {
         var _this = this;
         var order = 0;
         if (this.package.processes.length > 0) {
-            order = this.package.processes[this.package.processes.length - 1].order + 1;
+            order =
+                this.package.processes[this.package.processes.length - 1].order + 1;
         }
-        this.apiService.addProcess({ "order": order, "module": module_id, "package": this.package.package_id }).subscribe(function (data) {
+        this.apiService
+            .addProcess({
+            order: order,
+            module: module_id,
+            package: this.package.package_id
+        })
+            .subscribe(function (data) {
             _this.package.processes = data;
         });
     };
@@ -3363,9 +3371,10 @@ var PackageComponent = /** @class */ (function () {
     PackageComponent.prototype.setProcessValue = function (id, value) {
         var values = this.selected_process.value;
         values[id] = value;
-        var data = { "value": values };
-        this.apiService.saveProcess(data, this.selected_process_id).subscribe(function (data) {
-        });
+        var data = { value: values };
+        this.apiService
+            .saveProcess(data, this.selected_process_id)
+            .subscribe(function (data) { });
     };
     // get a process value. use default if none are set
     PackageComponent.prototype.getProcessValue = function (id) {
@@ -3399,20 +3408,21 @@ var PackageComponent = /** @class */ (function () {
     // move up a process on step
     PackageComponent.prototype.moveUp = function (process) {
         var data = [];
-        data.push({ "order": (process.order - 1), "process_id": process.process_id });
+        data.push({ order: process.order - 1, process_id: process.process_id });
         //find the one below
         var below;
         for (var i = 0; i < this.package.processes.length; i++) {
             var p = this.package.processes[i];
             if (p.order == process.order - 1) {
-                data.push({ "order": (p.order + 1), "process_id": p.process_id });
+                data.push({ order: p.order + 1, process_id: p.process_id });
                 this.package.processes[i].order += 1;
                 this.package.processes[i + 1].order -= 1;
                 break;
             }
         }
-        this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
-        });
+        this.apiService
+            .reorderPackageProcesses(data, this.package.package_id)
+            .subscribe(function (data) { });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
                 return 1;
@@ -3423,21 +3433,22 @@ var PackageComponent = /** @class */ (function () {
     // move down a process on step
     PackageComponent.prototype.moveDown = function (process) {
         var data = [];
-        data.push({ "order": (process.order + 1), "process_id": process.process_id });
+        data.push({ order: process.order + 1, process_id: process.process_id });
         //find the one below
         var below;
         for (var i = 0; i < this.package.processes.length; i++) {
             var p = this.package.processes[i];
             if (p.order == process.order + 1) {
-                data.push({ "order": (p.order - 1), "process_id": p.process_id });
+                data.push({ order: p.order - 1, process_id: p.process_id });
                 // console.log(i);/
                 this.package.processes[i].order -= 1;
                 this.package.processes[i - 1].order += 1;
                 break;
             }
         }
-        this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
-        });
+        this.apiService
+            .reorderPackageProcesses(data, this.package.package_id)
+            .subscribe(function (data) { });
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
                 return 1;
@@ -3447,9 +3458,10 @@ var PackageComponent = /** @class */ (function () {
     };
     // store info about the moving object in the event
     PackageComponent.prototype.dragStart = function (e, id, type, name) {
-        e.dataTransfer.setData('id', id);
-        e.dataTransfer.setData('type', type);
-        e.dataTransfer.setData('name', name);
+        e.dataTransfer.setData("id", id);
+        e.dataTransfer.setData("type", type);
+        e.dataTransfer.setData("name", name);
+        this.placeholderName = name;
     };
     // drop the element
     PackageComponent.prototype.onDrop = function (e) {
@@ -3460,28 +3472,35 @@ var PackageComponent = /** @class */ (function () {
             dropOrder = 0;
         }
         // if the element is a module, create a new process
-        if (e.dataTransfer.getData('type') == 'module') {
+        if (e.dataTransfer.getData("type") == "module") {
             var data = [];
             // move down all items under existingIndex
             for (var index in this.package.processes) {
                 var item = this.package.processes[index];
-                if (item.type != 'placeholder' && item.order >= dropOrder) {
+                if (item.type != "placeholder" && item.order >= dropOrder) {
                     item.order += 1;
-                    data.push({ "order": item.order, "process_id": item.process_id }); // updates to push to backend
+                    data.push({ order: item.order, process_id: item.process_id }); // updates to push to backend
                 }
             }
             //submit reorder:
-            this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
-            });
+            this.apiService
+                .reorderPackageProcesses(data, this.package.package_id)
+                .subscribe(function (data) { });
             //add temporary process
             var newProcess = {
-                "order": dropOrder,
-                "process_id": 100,
-                "module": e.dataTransfer.getData('id'),
-                "name": e.dataTransfer.getData('name')
+                order: dropOrder,
+                process_id: 100,
+                module: e.dataTransfer.getData("id"),
+                name: this.placeholderName
             };
             this.package.processes.splice(dropOrder, 0, newProcess);
-            this.apiService.addProcess({ "order": dropOrder, "module": e.dataTransfer.getData('id'), "package": this.package.package_id }).subscribe(function (data) {
+            this.apiService
+                .addProcess({
+                order: dropOrder,
+                module: e.dataTransfer.getData("id"),
+                package: this.package.package_id
+            })
+                .subscribe(function (data) {
                 _this.package.processes = data;
             });
         }
@@ -3492,39 +3511,54 @@ var PackageComponent = /** @class */ (function () {
             var data = [];
             for (var index in this.package.processes) {
                 var item = this.package.processes[index];
-                if (item.process_id == e.dataTransfer.getData('id')) {
+                if (item.process_id == e.dataTransfer.getData("id")) {
                     startOrder = item.order;
                     movedProcessIndex = index;
                 }
             }
             if (startOrder > dropOrder) {
+                // the item was dragged up. items from dropOrder to startOrder should be moved down.
                 for (var index in this.package.processes) {
                     var item = this.package.processes[index];
-                    if (item.type != 'placeholder' && item.order < startOrder && item.order >= dropOrder) {
+                    if (item.type != "placeholder" &&
+                        item.order < startOrder &&
+                        item.order >= dropOrder) {
                         item.order += 1;
-                        data.push({ "order": item.order, "process_id": item.process_id });
+                        data.push({ order: item.order, process_id: item.process_id });
                     }
                 }
                 this.package.processes[movedProcessIndex].order = dropOrder;
-                data.push({ "order": this.package.processes[movedProcessIndex].order, "process_id": this.package.processes[movedProcessIndex].process_id });
+                data.push({
+                    order: this.package.processes[movedProcessIndex].order,
+                    process_id: this.package.processes[movedProcessIndex].process_id
+                });
             }
             else {
+                // the item was dragged down. items smaller than startOrder and larger than dropOrder shall be moved up.
                 for (var index in this.package.processes) {
                     var item = this.package.processes[index];
-                    if (item.type != 'placeholder' && item.order > startOrder && item.order < dropOrder) {
+                    if (item.type != "placeholder" &&
+                        item.order > startOrder &&
+                        item.order < dropOrder) {
                         item.order -= 1;
-                        data.push({ "order": item.order, "process_id": item.process_id });
+                        data.push({ order: item.order, process_id: item.process_id });
                     }
                 }
                 this.package.processes[movedProcessIndex].order = dropOrder - 1;
-                data.push({ "order": this.package.processes[movedProcessIndex].order, "process_id": this.package.processes[movedProcessIndex].process_id });
+                data.push({
+                    order: this.package.processes[movedProcessIndex].order,
+                    process_id: this.package.processes[movedProcessIndex].process_id
+                });
             }
             // push changes to api
-            this.apiService.reorderPackageProcesses(data, this.package.package_id).subscribe(function (data) {
-            });
-            this.package.processes = this.package.processes.filter(function (item) {
-                return item['type'] != 'placeholder';
-            }).sort(function (a, b) {
+            this.apiService
+                .reorderPackageProcesses(data, this.package.package_id)
+                .subscribe(function (data) { });
+            this.package.processes = this.package.processes
+                .filter(function (item) {
+                return item["type"] != "placeholder";
+            })
+                .sort(function (a, b) {
                 if (a.order > b.order) {
                     return 1;
                 }
@@ -3535,7 +3569,7 @@ var PackageComponent = /** @class */ (function () {
     PackageComponent.prototype.onRelease = function (e) {
         //remove placeholder
         this.package.processes = this.package.processes.filter(function (item) {
-            return item['type'] != 'placeholder';
+            return item["type"] != "placeholder";
         });
     };
     //set ghost image to show where you will drop.
@@ -3545,15 +3579,20 @@ var PackageComponent = /** @class */ (function () {
         if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
             return;
         }
-        if (e.pageY - element.getBoundingClientRect().top > element.offsetHeight * 0.5) {
+        if (e.pageY - element.getBoundingClientRect().top >
+            element.offsetHeight * 0.5) {
             // drop below elements
             var ind = index + 0.5;
             if (ind != this.placeholderLocation) {
                 this.placeholderLocation = ind;
                 this.package.processes = this.package.processes.filter(function (item) {
-                    return item.type != 'placeholder';
+                    return item.type != "placeholder";
                 });
-                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+                var temp = {
+                    type: "placeholder",
+                    order: ind,
+                    name: this.placeholderName
+                };
                 this.package.processes.splice(index + 1, 0, temp);
             }
         }
@@ -3563,9 +3602,13 @@ var PackageComponent = /** @class */ (function () {
             if (ind != this.placeholderLocation) {
                 this.placeholderLocation = ind;
                 this.package.processes = this.package.processes.filter(function (item) {
-                    return item.type != 'placeholder';
+                    return item.type != "placeholder";
                 });
-                var temp = { type: "placeholder", order: ind, name: e.dataTransfer.getData('name') };
+                var temp = {
+                    type: "placeholder",
+                    order: ind,
+                    name: this.placeholderName
+                };
                 this.package.processes.splice(index, 0, temp);
             }
         }
@@ -3585,9 +3628,13 @@ var PackageComponent = /** @class */ (function () {
         }
         this.placeholderLocation = order;
         this.package.processes = this.package.processes.filter(function (item) {
-            return item.type != 'placeholder';
+            return item.type != "placeholder";
         });
-        var temp = { type: "placeholder", order: order, name: e.dataTransfer.getData('name') };
+        var temp = {
+            type: "placeholder",
+            order: order,
+            name: this.placeholderName
+        };
         this.package.processes.push(temp);
         this.package.processes = this.package.processes.sort(function (a, b) {
             if (a.order > b.order) {
@@ -3598,11 +3645,13 @@ var PackageComponent = /** @class */ (function () {
     };
     PackageComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'package',
+            selector: "package",
             template: __webpack_require__(/*! ./Package.component.html */ "./src/app/PackageDetail/Package.component.html"),
             styles: [__webpack_require__(/*! ./Package.component.sass */ "./src/app/PackageDetail/Package.component.sass")]
         }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"], _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
     ], PackageComponent);
     return PackageComponent;
 }());
