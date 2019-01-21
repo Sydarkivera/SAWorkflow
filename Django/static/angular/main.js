@@ -5421,11 +5421,11 @@ var LoginComponent = /** @class */ (function () {
     LoginComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.queryParams.subscribe(function (params) {
-            if ('message' in params) {
-                _this.modalMessage = params['message'];
+            if ("message" in params) {
+                _this.modalMessage = params["message"];
                 _this.modalActive = true;
-                if ('type' in params) {
-                    _this.modalType = params['type'];
+                if ("type" in params) {
+                    _this.modalType = params["type"];
                 }
             }
         });
@@ -5448,12 +5448,13 @@ var LoginComponent = /** @class */ (function () {
         this.authService.login(this.username, this.password).subscribe(function (data) {
             //redirect to returnUrl
             _this.route.queryParams.subscribe(function (params) {
-                if ('returnUrl' in params) {
-                    _this.router.navigate([params['returnUrl']]);
+                if (!("returnUrl" in params)) {
+                    _this.router.navigate(["/"]);
                 }
-                else {
-                    _this.router.navigate(['/']);
+                if (params["returnUrl"].length > 100) {
+                    _this.router.navigate(["/"]);
                 }
+                _this.router.navigate([params["returnUrl"]]);
             });
         }, function (error) {
             //display error
@@ -5464,11 +5465,14 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'login',
+            selector: "login",
             template: __webpack_require__(/*! ./login.component.html */ "./src/app/login/login.component.html"),
             styles: [__webpack_require__(/*! ./login.component.sass */ "./src/app/login/login.component.sass")]
         }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"], _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"], _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
+            _Services_authentication_service__WEBPACK_IMPORTED_MODULE_2__["AuthenticationService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], LoginComponent);
     return LoginComponent;
 }());
