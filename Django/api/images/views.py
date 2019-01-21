@@ -75,6 +75,10 @@ def image_detail(request, image_id):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     elif request.method == 'DELETE':
         if not image.modules.all().exists():
+            # delete docker image??
+            client = docker.from_env()
+            client.images.remove(image.name)
+            logger.info("deleting image: " + image.name)
             image.delete()
             return HttpResponse(status=200)
         else:

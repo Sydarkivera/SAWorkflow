@@ -383,7 +383,12 @@ var AdminImagesComponent = /** @class */ (function () {
     }
     AdminImagesComponent.prototype.ngOnInit = function () { };
     AdminImagesComponent.prototype.selectImage = function (image) {
-        this.selected_image = image;
+        if (image == this.selected_image) {
+            this.selected_image = { id: -1 };
+        }
+        else {
+            this.selected_image = image;
+        }
     };
     AdminImagesComponent.prototype.save = function () {
         var _this = this;
@@ -395,6 +400,9 @@ var AdminImagesComponent = /** @class */ (function () {
     };
     AdminImagesComponent.prototype.openNewImageModal = function () {
         this.modalactive = true;
+        this.fileName = "Select file...";
+        this.newLabel = "";
+        this.newPath = "";
     };
     //validate the selected file, if it's a tar accept it, else return error.
     AdminImagesComponent.prototype.fileSelected = function (e) {
@@ -439,6 +447,7 @@ var AdminImagesComponent = /** @class */ (function () {
                 _this.fileName = "Select file...";
                 _this.label = "";
                 _this.modalMessage = false;
+                _this.selected_image = _this.images[_this.images.length - 1];
             }
             else if (data.type == 1) {
                 _this.uploadDone = data["loaded"];
@@ -469,6 +478,7 @@ var AdminImagesComponent = /** @class */ (function () {
                     }
                     return true;
                 });
+                _this.selected_image = { id: -1 };
             }, function (error) {
                 if (error.status == 409) {
                     _this.errorVisible = true;
@@ -4762,20 +4772,24 @@ var AuthenticationService = /** @class */ (function () {
         this.permissions = [];
         this.permissionsLoaded = false;
         this.permissionClass = "";
-        this.token = localStorage.getItem('access_token');
-        this.username = localStorage.getItem('username');
+        this.token = localStorage.getItem("access_token");
+        this.username = localStorage.getItem("username");
         this.loadPermissions();
     }
     AuthenticationService.prototype.login = function (username, password) {
         var _this = this;
-        return this.http.post('/auth/api-token-auth/', { username: username, password: password })
+        return this.http
+            .post("/auth/api-token-auth/", {
+            username: username,
+            password: password
+        })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) {
             // login successful if there's a jwt token in the response
             if (res && res.token) {
                 _this.token = res.token;
                 // store username and jwt token in local storage to keep user logged in between page refreshes
-                localStorage.setItem('access_token', res.token);
-                localStorage.setItem('username', username);
+                localStorage.setItem("access_token", res.token);
+                localStorage.setItem("username", username);
                 _this.username = username;
                 _this.loadToken();
                 //get permission information.
@@ -4784,26 +4798,28 @@ var AuthenticationService = /** @class */ (function () {
         }));
     };
     AuthenticationService.prototype.loadToken = function () {
-        var base64Url = this.token.split('.')[1];
-        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        var base64Url = this.token.split(".")[1];
+        var base64 = base64Url.replace("-", "+").replace("_", "/");
         this.payload = JSON.parse(window.atob(base64));
     };
     AuthenticationService.prototype.logout = function (navigate) {
         if (navigate === void 0) { navigate = true; }
         // console.log('sign out');
         // remove user from local storage to log user out
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('username');
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("username");
         //navigate to dashboard
         if (navigate) {
-            this.router.navigate(['/login'], { queryParams: { message: "Sign out successful", type: "alert-success" } });
+            this.router.navigate(["/login"], {
+                queryParams: { message: "Sign out successful", type: "alert-success" }
+            });
         }
     };
     AuthenticationService.prototype.getUsername = function () {
         return this.username;
     };
     AuthenticationService.prototype.isAuthenticated = function () {
-        if (localStorage.getItem('access_token')) {
+        if (localStorage.getItem("access_token")) {
             return true;
         }
         return false;
@@ -4819,14 +4835,16 @@ var AuthenticationService = /** @class */ (function () {
                 // console.log(this.token)
                 setTimeout(function () {
                     var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
-                    headers.append('Authorization', 'JWT ' + _this.token);
-                    _this.http.get('/api/permissions/', { headers: headers }).subscribe(function (data) {
+                    headers.append("Authorization", "JWT " + _this.token);
+                    _this.http
+                        .get("/api/permissions/", { headers: headers })
+                        .subscribe(function (data) {
                         // console.log(data);
-                        if (data != null && data['admin']) {
+                        if (data != null && data["admin"]) {
                             _this.permissionClass = "admin";
                         }
                         else {
-                            _this.permissionClass = 'none';
+                            _this.permissionClass = "none";
                         }
                     });
                 }, 100);
@@ -4836,20 +4854,20 @@ var AuthenticationService = /** @class */ (function () {
     AuthenticationService.prototype.getRequestPermissions = function () {
         var _this = this;
         var headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]();
-        headers.append('Authorization', 'JWT ' + this.token);
-        return this.http.get('/api/permissions/', { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+        headers.append("Authorization", "JWT " + this.token);
+        return this.http.get("/api/permissions/", { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
             // console.log(data);
-            if (data != null && data['admin']) {
+            if (data != null && data["admin"]) {
                 _this.permissionClass = "admin";
             }
             else {
-                _this.permissionClass = 'none';
+                _this.permissionClass = "none";
             }
             return data;
         }));
     };
     AuthenticationService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: "root" }),
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], AuthenticationService);
     return AuthenticationService;
@@ -4868,15 +4886,23 @@ var ErrorInterceptor = /** @class */ (function () {
                 // console.log('intercept 401')
                 // auto logout if 401 response returned from api
                 _this.authenticationService.logout(false);
-                _this.router.navigate(['/login'], { queryParams: { message: "Session has expired, please sign in again", type: "alert-danger", returnUrl: _this.router.url } });
+                _this.router.navigate(["/login"], {
+                    queryParams: {
+                        message: "Session has expired, please sign in again",
+                        type: "alert-danger",
+                        returnUrl: _this.router.url
+                    }
+                });
             }
-            var error = err.error.message || err.statusText;
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(error);
+            // const error = err.error.message || err.statusText;
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["throwError"])(err);
         }));
     };
     ErrorInterceptor = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: 'root' }),
-        __metadata("design:paramtypes", [AuthenticationService, _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"], _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({ providedIn: "root" }),
+        __metadata("design:paramtypes", [AuthenticationService,
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"]])
     ], ErrorInterceptor);
     return ErrorInterceptor;
 }());

@@ -107,35 +107,35 @@ def module_import(request):
                 # verify that the python file exists in the package:
                 if py_file_name in tar_list:
                     tar.extract(py_file_name, path=py_path)
-            elif hasDockerImage:
-                # check if there are an image of this name
-                image_name = dockerData['name']
-                if DockerImage.objects.filter(name = image_name).exists():
-                    # point to the existing
-                    module.dockerImage = DockerImage.objects.get(name = image_name)
-                    module.save()
-                    logger.info('exists')
-                    pass
-                else:
-                    logger.info('does not exist')
-                    # add the docker image and point to the new image.
-                    if (image_name + ".tar") in tar_list:
-                        client = docker.from_env()
-                        imageFO = tar.extractfile((image_name + ".tar"))
-                        images = client.images.load(imageFO)
-
-                        if len(images) > 0:
-                            logger.info(images[0])
-                            logger.info(images[0].tags)
-                            logger.info(dockerData)
-                            label = ""
-                            if 'label' in jsonData:
-                                label = dockerData['label']
-                            dImage = DockerImage(name=images[0].tags[0], label=label)
-                            dImage.save()
-                            module.dockerImage = dImage
-                            module.save()
-                    pass
+            # elif hasDockerImage:
+            #     # check if there are an image of this name
+            #     image_name = dockerData['name']
+            #     if DockerImage.objects.filter(name = image_name).exists():
+            #         # point to the existing
+            #         module.dockerImage = DockerImage.objects.get(name = image_name)
+            #         module.save()
+            #         logger.info('exists')
+            #         pass
+            #     else:
+            #         logger.info('does not exist')
+            #         # add the docker image and point to the new image.
+            #         if (image_name + ".tar") in tar_list:
+            #             client = docker.from_env()
+            #             imageFO = tar.extractfile((image_name + ".tar"))
+            #             images = client.images.load(imageFO)
+            #
+            #             if len(images) > 0:
+            #                 logger.info(images[0])
+            #                 logger.info(images[0].tags)
+            #                 logger.info(dockerData)
+            #                 label = ""
+            #                 if 'label' in jsonData:
+            #                     label = dockerData['label']
+            #                 dImage = DockerImage(name=images[0].tags[0], label=label)
+            #                 dImage.save()
+            #                 module.dockerImage = dImage
+            #                 module.save()
+            #         pass
         else:
             logger.error('Failed to serialize imported module: ', serializer.errors)
     tar.close()
@@ -212,33 +212,33 @@ def module_export(request, module_id):
             tar_file.addfile(tarinfo=info, fileobj=lol)
 
         # a docker tarball if present:
-        if module.type == Module.MODULE_TYPE_SMART_DOCKER:
-            image_name = module.dockerImage.name
-            logger.info(image_name)
-            client = docker.from_env()
-            logger.info(client)
-            cli = APIClient(base_url='unix://var/run/docker.sock')
-            image = cli.get_image(image_name)
-
-            # info = tarfile.TarInfo((image_name + ".tar"))
-            # data = b""
-            with tempfile.NamedTemporaryFile() as f:
-                logger.info('begining reading')
-                s = 0
-                for chunk in image:
-                    # logger.info(chunk)
-                    # data += chunk
-                    s += len(chunk)
-                    f.write(chunk)
-                logger.info('done with docker')
-                info = tar_file.gettarinfo(fileobj=f)
-                # data = f.read()
-                # logger.info(len(data))
-                # logger.info(s)
-                f.seek(0)
-                info.size = s
-                info.name = image_name + ".tar"
-                tar_file.addfile(tarinfo=info, fileobj=f)
+        # if module.type == Module.MODULE_TYPE_SMART_DOCKER:
+        #     image_name = module.dockerImage.name
+        #     logger.info(image_name)
+        #     client = docker.from_env()
+        #     logger.info(client)
+        #     cli = APIClient(base_url='unix://var/run/docker.sock')
+        #     image = cli.get_image(image_name)
+        #
+        #     # info = tarfile.TarInfo((image_name + ".tar"))
+        #     # data = b""
+        #     with tempfile.NamedTemporaryFile() as f:
+        #         logger.info('begining reading')
+        #         s = 0
+        #         for chunk in image:
+        #             # logger.info(chunk)
+        #             # data += chunk
+        #             s += len(chunk)
+        #             f.write(chunk)
+        #         logger.info('done with docker')
+        #         info = tar_file.gettarinfo(fileobj=f)
+        #         # data = f.read()
+        #         # logger.info(len(data))
+        #         # logger.info(s)
+        #         f.seek(0)
+        #         info.size = s
+        #         info.name = image_name + ".tar"
+        #         tar_file.addfile(tarinfo=info, fileobj=f)
 
 
     file_size = temp_file.tell()
