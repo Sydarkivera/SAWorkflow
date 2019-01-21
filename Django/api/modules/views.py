@@ -167,7 +167,38 @@ def module(request, module_id):
             module.delete()
             return HttpResponse(status=200)
         else:
-            return HttpResponse(status=409)
+            processes = module.processes.all()
+            res = ""
+            t = []
+            p = []
+            for process in processes:
+                # logger.info(process.template)
+                # logger.info(process.package)
+                if process.template != None:
+                    t.append(process.template)
+                elif process.package != None:
+                    p.append(process.package)
+
+            res = "The tool could not be removed since it is in use by "
+
+            if len(t) > 0:
+                res += "templates: "
+                for template in t:
+                    res += '"' + template.name + '", '
+                res = res[:-2]
+                res += " and"
+
+            if len(p) > 0:
+                res += " packages: "
+                for package in p:
+                    res += '"' + package.name + '", '
+                res = res[:-2]
+            else:
+                res = res[:-4]
+
+            res += "."
+
+            return HttpResponse(res, status=409)
 
 @api_view(['GET'])
 @permission_classes((AllowAny, ))
