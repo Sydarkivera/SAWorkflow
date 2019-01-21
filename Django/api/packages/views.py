@@ -35,6 +35,7 @@ import tarfile
 from io import UnsupportedOperation
 import time
 import tarfile
+import mimetypes
 
 from logging import getLogger
 logger = getLogger('django')
@@ -185,7 +186,9 @@ def package_files(request, package_id):
             if os.path.exists(folderName):
                 if os.path.isfile(folderName):
                     with open(folderName, 'rb') as fh:
-                        response = HttpResponse(fh.read(), content_type='application/force-download')
+                        logger.info(mimetypes.guess_type(os.path.basename(specific_path)))
+                        mimetype, _ = mimetypes.guess_type(os.path.basename(specific_path))
+                        response = HttpResponse(fh.read(), content_type=mimetype)
                         response['Content-Disposition'] = 'inline; filename=' + os.path.basename(folderName).replace(' ', '_')
                         return response
                 else:
