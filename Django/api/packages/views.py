@@ -210,10 +210,12 @@ def package_files(request, package_id):
     elif request.method == 'POST':
         # file upload. save the file/files at POST['path']
         file = request.FILES['file']
-        folderName = os.path.join(package.workdir, request.data['path'])
+        newPath = os.path.join(package.workdir, request.data['path'])
         # newPath = os.path.join(tools_path, module.tool_folder_name, request.data['path'])
         logger.info(request.data['path'])
         logger.info(newPath)
+        # logger.info(newPath)
+        # return Response("the file does not exist", status=status.HTTP_400_BAD_REQUEST)
         #verify that newPath doesn't exist
         if not os.path.exists(newPath):
             with open(newPath, 'wb+') as destination:

@@ -1381,7 +1381,7 @@ var FileComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n  <div class=\"main-modal modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div *ngFor=\"let level of levels; let i = index\" class=\"level\">\n          <div\n            *ngFor=\"let file of level\"\n            class=\"file\"\n            [class.selected]=\"i == selectedLevel && file.name == selectedFile.name\"\n            (contextmenu)=\"openContextMenu($event, i, file)\"\n            (click)=\"openNewLevel(i, file)\"\n            >\n            <!-- <file [file]=\"file\" [path]=\"path\" [specific_path]=\"file.name + '/'\"></file> -->\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'folder'\">folder</i>\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'file'\">insert_drive_file</i>\n            <p class=\"align-middle\">\n              {{file.name}}\n            </p>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"openUploadModal()\">Upload file</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-warning\" (click)=\"openRenameModal()\">Rename</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-danger\" (click)=\"openDeleteModal()\">Delete</button>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\n      </div>\n    </div>\n\n    <!-- Popup window inside modal -->\n    <div class=\"popUpQuestion modal\" *ngIf=\"innerModalVisible\">\n      <div class=\"modal-dialog modal-dialog-centered\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h5 *ngIf=\"innerModalType == 'delete'\" class=\"modal-title\">Delete</h5>\n            <h5 *ngIf=\"innerModalType == 'rename'\" class=\"modal-title\">Rename</h5>\n            <h5 *ngIf=\"innerModalType == 'create'\" class=\"modal-title\">Create new folder</h5>\n            <h5 *ngIf=\"innerModalType == 'upload'\" class=\"modal-title\">Upload a file</h5>\n            <button type=\"button\" class=\"close\" (click)=\"closeInnerModal()\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            <p *ngIf=\"innerModalType == 'delete'\">\n              Are you sure you want to delete \"{{selectedFile.name}}\"? All it's content will permanently be deleted.\n            </p>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'rename'\">\n              <label for=\"inputName\">New name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"New file name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'create'\">\n              <label for=\"inputName\">Folder name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Folder name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div *ngIf=\"innerModalType == 'upload'\" class=\"custom-file\" id=\"customFile\" lang=\"en\">\n              <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"onFileSelected($event)\" name=\"import\">\n              <label class=\"custom-file-label\" for=\"exampleInputFile\" >\n                {{innerModalValue}}\n              </label>\n            </div>\n          </div>\n          <div class=\"modal-footer justify-content-between\">\n            <button *ngIf=\"innerModalType == 'delete'\" type=\"button\" class=\"btn btn-danger\" (click)=\"delete()\">Delete</button>\n            <button *ngIf=\"innerModalType == 'rename'\" type=\"button\" class=\"btn btn-success\" (click)=\"rename()\">Rename</button>\n            <button *ngIf=\"innerModalType == 'create'\" type=\"button\" class=\"btn btn-success\" (click)=\"create()\">Create</button>\n            <button *ngIf=\"innerModalType == 'upload'\" type=\"button\" class=\"btn btn-success\" (click)=\"uploadFile()\">Upload</button>\n            <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeInnerModal()\">Cancel</button>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-background\" (click)=\"closeInnerModal()\"></div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"closeModal()\"></div>\n</div>\n\n<div class=\"contextMenu\" *ngIf=\"contextMenuPos.x != -1\" [ngStyle]=\"{'left.px': contextMenuPos.x, 'top.px': contextMenuPos.y}\">\n  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n    <div class=\"dropdown-header\">\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'folder'\">folder</i>\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'file'\">insert_drive_file</i>\n      <p class=\"float-left\">{{selectedFile.name}}</p>\n    </div>\n    <div class=\"dropdown-divider\"></div>\n    <a class=\"dropdown-item\" (click)=\"openRenameModal()\">Rename</a>\n    <a class=\"dropdown-item\" [href]=\"getDownloadPath()\">Download</a>\n    <a class=\"dropdown-item\" (click)=\"openDeleteModal()\">Delete</a>\n    <a class=\"dropdown-item\" (click)=\"openUploadModal()\">upload file</a>\n    <a class=\"dropdown-item\" (click)=\"openCreateFolderModal()\">Create folder</a>\n  </div>\n</div>\n"
+module.exports = "<div class=\"modal\" [class.active]=\"active\" id=\"modal\">\n  <div class=\"main-modal modal-dialog modal-lg\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\">\n        <div *ngFor=\"let level of levels; let i = index\" class=\"level\">\n          <div\n            *ngFor=\"let file of level\"\n            class=\"file\"\n            [class.selected]=\"file.name == selected[i]\"\n            (contextmenu)=\"openContextMenu($event, i, file)\"\n            (click)=\"openNewLevel(i, file)\"\n            >\n            <!-- <file [file]=\"file\" [path]=\"path\" [specific_path]=\"file.name + '/'\"></file> -->\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'folder'\">folder</i>\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'file'\">insert_drive_file</i>\n            <p class=\"align-middle\">\n              {{file.name}}\n            </p>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"openUploadModal()\">Upload file</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-warning\" (click)=\"openRenameModal()\">Rename</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-danger\" (click)=\"openDeleteModal()\">Delete</button>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\">Close</button>\n      </div>\n    </div>\n\n    <!-- Popup window inside modal -->\n    <div class=\"popUpQuestion modal\" *ngIf=\"innerModalVisible\">\n      <div class=\"modal-dialog modal-dialog-centered\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h5 *ngIf=\"innerModalType == 'delete'\" class=\"modal-title\">Delete</h5>\n            <h5 *ngIf=\"innerModalType == 'rename'\" class=\"modal-title\">Rename</h5>\n            <h5 *ngIf=\"innerModalType == 'create'\" class=\"modal-title\">Create new folder</h5>\n            <h5 *ngIf=\"innerModalType == 'upload'\" class=\"modal-title\">Upload a file</h5>\n            <button type=\"button\" class=\"close\" (click)=\"closeInnerModal()\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            <p *ngIf=\"innerModalType == 'delete'\">\n              Are you sure you want to delete \"{{selectedFile.name}}\"? All it's content will permanently be deleted.\n            </p>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'rename'\">\n              <label for=\"inputName\">New name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"New file name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'create'\">\n              <label for=\"inputName\">Folder name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Folder name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div *ngIf=\"innerModalType == 'upload'\" class=\"custom-file\" id=\"customFile\" lang=\"en\">\n              <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"onFileSelected($event)\" name=\"import\">\n              <label class=\"custom-file-label\" for=\"exampleInputFile\" >\n                {{innerModalValue}}\n              </label>\n            </div>\n          </div>\n          <div class=\"modal-footer justify-content-between\">\n            <button *ngIf=\"innerModalType == 'delete'\" type=\"button\" class=\"btn btn-danger\" (click)=\"delete()\">Delete</button>\n            <button *ngIf=\"innerModalType == 'rename'\" type=\"button\" class=\"btn btn-success\" (click)=\"rename()\">Rename</button>\n            <button *ngIf=\"innerModalType == 'create'\" type=\"button\" class=\"btn btn-success\" (click)=\"create()\">Create</button>\n            <button *ngIf=\"innerModalType == 'upload'\" type=\"button\" class=\"btn btn-success\" (click)=\"uploadFile()\">Upload</button>\n            <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeInnerModal()\">Cancel</button>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-background\" (click)=\"closeInnerModal()\"></div>\n    </div>\n  </div>\n  <div class=\"modal-background\" (click)=\"closeModal()\"></div>\n</div>\n\n<div class=\"contextMenu\" *ngIf=\"contextMenuPos.x != -1\" [ngStyle]=\"{'left.px': contextMenuPos.x, 'top.px': contextMenuPos.y}\">\n  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n    <div class=\"dropdown-header\">\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'folder'\">folder</i>\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'file'\">insert_drive_file</i>\n      <p class=\"float-left\">{{selectedFile.name}}</p>\n    </div>\n    <div class=\"dropdown-divider\"></div>\n    <a class=\"dropdown-item\" (click)=\"openRenameModal()\">Rename</a>\n    <a class=\"dropdown-item\" [href]=\"getDownloadPath()\">Download</a>\n    <a class=\"dropdown-item\" (click)=\"openDeleteModal()\">Delete</a>\n    <a class=\"dropdown-item\" (click)=\"openUploadModal()\">upload file</a>\n    <a class=\"dropdown-item\" (click)=\"openCreateFolderModal()\">Create folder</a>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1429,6 +1429,7 @@ var FileBrowserComponent = /** @class */ (function () {
         this.fullPath = [];
         this.selectedLevel = -1;
         this.selectedFile = undefined;
+        this.selected = [];
         this.contextMenuPos = { x: -1, y: -1 };
         this.innerModalVisible = false;
         this.innerModalValue = "";
@@ -1450,8 +1451,8 @@ var FileBrowserComponent = /** @class */ (function () {
     FileBrowserComponent.prototype.clickedOutside = function ($event) {
         // here you can hide your menu
         if ($event.button == 0) {
-            this.contextMenuPos['x'] = -1;
-            this.contextMenuPos['y'] = -1;
+            this.contextMenuPos["x"] = -1;
+            this.contextMenuPos["y"] = -1;
         }
     };
     FileBrowserComponent.prototype.closeModal = function () {
@@ -1470,6 +1471,7 @@ var FileBrowserComponent = /** @class */ (function () {
         this.fullPath = [];
         this.selectedLevel = -1;
         this.selectedFile = undefined;
+        this.selected = [];
         this.apiService.getFiles(this.path).subscribe(function (data) {
             _this.levels[0] = data;
         });
@@ -1478,7 +1480,7 @@ var FileBrowserComponent = /** @class */ (function () {
         var path = "";
         if (file) {
             for (var i = 0; i < index; i++) {
-                path += this.fullPath[i] + '/';
+                path += this.fullPath[i] + "/";
             }
             path += file.name;
         }
@@ -1494,6 +1496,9 @@ var FileBrowserComponent = /** @class */ (function () {
             this.levels.pop();
             this.fullPath.pop();
         }
+        while (this.selected.length > index) {
+            this.selected.pop();
+        }
         if (file.type == "folder") {
             var path = this.calculatePath(index, file);
             this.apiService.getFiles(this.path, path).subscribe(function (data) {
@@ -1501,29 +1506,30 @@ var FileBrowserComponent = /** @class */ (function () {
                 _this.fullPath.push(file.name);
             });
         }
+        this.selected.push(file.name);
     };
     FileBrowserComponent.prototype.openContextMenu = function (event, index, file) {
         event.preventDefault();
         event.stopPropagation();
-        this.contextMenuPos['x'] = event.clientX;
-        this.contextMenuPos['y'] = event.clientY;
+        this.contextMenuPos["x"] = event.clientX;
+        this.contextMenuPos["y"] = event.clientY;
         //select the rightclicked item:
         this.openNewLevel(index, file);
     };
     FileBrowserComponent.prototype.openRenameModal = function () {
         this.innerModalValue = this.selectedFile.name;
-        this.innerModalType = 'rename';
+        this.innerModalType = "rename";
         this.innerModalVisible = true;
     };
     FileBrowserComponent.prototype.rename = function () {
         var _this = this;
         var body = {};
-        body['path'] = this.calculatePath(this.selectedLevel, this.selectedFile);
-        body['name'] = this.innerModalValue;
+        body["path"] = this.calculatePath(this.selectedLevel, this.selectedFile);
+        body["name"] = this.innerModalValue;
         this.apiService.renameFile(this.path, body).subscribe(function (data) {
             _this.selectedFile.name = _this.innerModalValue;
             _this.levels.pop();
-            if (_this.selectedFile.type == 'folder') {
+            if (_this.selectedFile.type == "folder") {
                 _this.levels.pop();
                 _this.fullPath[_this.fullPath.length - 1] = _this.innerModalValue;
                 _this.selectedFile = undefined;
@@ -1539,7 +1545,7 @@ var FileBrowserComponent = /** @class */ (function () {
     };
     FileBrowserComponent.prototype.openDeleteModal = function () {
         this.innerModalVisible = true;
-        this.innerModalType = 'delete';
+        this.innerModalType = "delete";
     };
     FileBrowserComponent.prototype.delete = function () {
         var _this = this;
@@ -1548,26 +1554,26 @@ var FileBrowserComponent = /** @class */ (function () {
         }
         var path = this.calculatePath(this.selectedLevel, this.selectedFile);
         this.apiService.deleteFile(this.path, path).subscribe(function (data) {
-            if (_this.selectedFile.type == 'folder') {
+            if (_this.selectedFile.type == "folder") {
                 _this.fullPath.pop();
                 _this.levels.pop();
             }
             _this.levels.pop();
             _this.levels.push(data);
             _this.selectedFile.name = _this.fullPath[_this.fullPath.length - 1];
-            _this.selectedFile.type = 'folder';
+            _this.selectedFile.type = "folder";
             _this.selectedLevel -= 1;
             _this.closeInnerModal();
         });
     };
     FileBrowserComponent.prototype.openUploadModal = function () {
         this.innerModalVisible = true;
-        this.innerModalType = 'upload';
+        this.innerModalType = "upload";
         this.innerModalValue = "";
     };
     FileBrowserComponent.prototype.openCreateFolderModal = function () {
         this.innerModalVisible = true;
-        this.innerModalType = 'create';
+        this.innerModalType = "create";
         this.innerModalValue = "";
     };
     FileBrowserComponent.prototype.onFileSelected = function (e) {
@@ -1586,15 +1592,15 @@ var FileBrowserComponent = /** @class */ (function () {
     };
     FileBrowserComponent.prototype.uploadFile = function () {
         var _this = this;
-        console.log('upload');
+        console.log("upload");
         if (!this.innerModalFile) {
-            console.error('no file selected');
+            console.error("no file selected");
             return;
         }
         // this.modalactive = false;
         // this.fileName = "Select file...";
         var formData = new FormData();
-        formData.append('file', this.innerModalFile, this.innerModalValue);
+        formData.append("file", this.innerModalFile, this.innerModalValue);
         //calculate the final path:
         var newPath = "";
         if (this.selectedFile) {
@@ -1605,7 +1611,7 @@ var FileBrowserComponent = /** @class */ (function () {
             }
             else {
                 // create the new folder in this folder.
-                var prev = path.substr(0, path.lastIndexOf('/'));
+                var prev = path.substr(0, path.lastIndexOf("/"));
                 if (prev != "") {
                     prev += "/";
                 }
@@ -1615,12 +1621,12 @@ var FileBrowserComponent = /** @class */ (function () {
         else {
             newPath = this.innerModalValue;
         }
-        formData.append('path', newPath);
+        formData.append("path", newPath);
         // console.log(this.innerModalValue)
         this.apiService.uploadFile(this.path, formData).subscribe(function (data) {
             if (data.type == 4) {
                 _this.levels.pop();
-                _this.levels.push(data['body']);
+                _this.levels.push(data["body"]);
                 _this.closeInnerModal();
             }
         });
@@ -1638,7 +1644,7 @@ var FileBrowserComponent = /** @class */ (function () {
         }
         else {
             // create the new folder in this folder.
-            var prev = path.substr(0, path.lastIndexOf('/'));
+            var prev = path.substr(0, path.lastIndexOf("/"));
             if (prev != "") {
                 prev += "/";
             }
@@ -1651,7 +1657,7 @@ var FileBrowserComponent = /** @class */ (function () {
         });
     };
     FileBrowserComponent.prototype.closeInnerModal = function () {
-        console.log('close inner modeal');
+        console.log("close inner modeal");
         this.innerModalVisible = false;
     };
     __decorate([
@@ -1676,14 +1682,14 @@ var FileBrowserComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], FileBrowserComponent.prototype, "selectedFiles", void 0);
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('document:click', ['$event']),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("document:click", ["$event"]),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], FileBrowserComponent.prototype, "clickedOutside", null);
     FileBrowserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'filebrowser',
+            selector: "filebrowser",
             template: __webpack_require__(/*! ./FileBrowser.component.html */ "./src/app/Components/FileBrowser/FileBrowser.component.html"),
             styles: [__webpack_require__(/*! ./FileBrowser.component.sass */ "./src/app/Components/FileBrowser/FileBrowser.component.sass")]
         }),

@@ -12,7 +12,7 @@
           <div
             *ngFor="let file of level"
             class="file"
-            [class.selected]="i == selectedLevel && file.name == selectedFile.name"
+            [class.selected]="file.name == selected[i]"
             (contextmenu)="openContextMenu($event, i, file)"
             (click)="openNewLevel(i, file)"
             >
