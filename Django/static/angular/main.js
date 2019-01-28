@@ -584,6 +584,7 @@ var AdminModulesComponent = /** @class */ (function () {
         });
         this.apiService.getDockerImages().subscribe(function (data) {
             _this.images = data;
+            console.log(_this.images);
         });
     };
     AdminModulesComponent.prototype.setModule = function (mod) {
@@ -688,7 +689,7 @@ var AdminModulesComponent = /** @class */ (function () {
             data["resultFilter"] = this.selected_module.resultFilter;
         }
         else {
-            data["resultFilter"] = [];
+            data["resultFilter"] = "[]";
         }
         if (this.selected_module.dockerImage != undefined) {
             data["dockerImage"] = this.selected_module.dockerImage;
@@ -2643,31 +2644,38 @@ var DashboardComponent = /** @class */ (function () {
         this.gradient = false;
         // showLegend = true;
         this.showXAxisLabel = true;
-        this.xAxisLabel = 'Country';
+        this.xAxisLabel = "Country";
         this.showYAxisLabel = true;
-        this.yAxisLabel = 'Population';
+        this.yAxisLabel = "Population";
         this.autoScale = true;
         this.dataLoaded = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
         var _this = this;
         // load the data from the server and reorder it for the various graphs.
+        console.log("init");
         this.apiService.getStatsDashboard().subscribe(function (data) {
-            // console.log(data)
+            console.log(data);
             _this.stats = data;
-            _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_2__["formatBytes"])(data['total_size']);
-            _this.total_number_of_files = data['total_number_of_files'];
-            _this.total_number_of_errors = data['total_number_of_errors'];
-            _this.total_number_of_packages = data['total_number_of_packages'];
+            _this.total_size = Object(_Utilities__WEBPACK_IMPORTED_MODULE_2__["formatBytes"])(data["total_size"]);
+            _this.total_number_of_files = data["total_number_of_files"];
+            _this.total_number_of_errors = data["total_number_of_errors"];
+            _this.total_number_of_packages = data["total_number_of_packages"];
             _this.fileTypes = [];
             _this.fileTypesErrors = [];
             for (var key in _this.stats.fileTypes) {
                 var value = _this.stats.fileTypes[key];
-                _this.fileTypes.push({ "name": value['name'].toUpperCase(), "value": value['total'] });
-                _this.fileTypesErrors.push({ "name": value['name'].toUpperCase(), "value": value['errors'] });
+                _this.fileTypes.push({
+                    name: value["name"].toUpperCase(),
+                    value: value["total"]
+                });
+                _this.fileTypesErrors.push({
+                    name: value["name"].toUpperCase(),
+                    value: value["errors"]
+                });
             }
             _this.fileTypesErrors = _this.fileTypesErrors.sort(function (a, b) {
-                if (a['value'] > b['value']) {
+                if (a["value"] > b["value"]) {
                     return -1;
                 }
                 return 1;
@@ -2676,19 +2684,19 @@ var DashboardComponent = /** @class */ (function () {
             var sizes = [];
             for (var key in _this.stats.graphData) {
                 var value = _this.stats.graphData[key];
-                counts.push({ "name": value['date'], "value": value['count'] });
-                sizes.push({ "name": value['date'], "value": value['size'] });
+                counts.push({ name: value["date"], value: value["count"] });
+                sizes.push({ name: value["date"], value: value["size"] });
             }
             _this.graphDataSize = [
                 {
-                    "name": "size",
-                    "series": sizes
+                    name: "size",
+                    series: sizes
                 }
             ];
             _this.graphDataCount = [
                 {
-                    "name": "count",
-                    "series": counts
+                    name: "count",
+                    series: counts
                 }
             ];
             _this.dataLoaded = true;
@@ -2696,7 +2704,7 @@ var DashboardComponent = /** @class */ (function () {
     };
     DashboardComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'dashboard',
+            selector: "dashboard",
             template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/Dashboard/dashboard.component.html"),
             styles: [__webpack_require__(/*! ./dashboard.component.sass */ "./src/app/Dashboard/dashboard.component.sass")]
         }),
@@ -5448,11 +5456,14 @@ var LoginComponent = /** @class */ (function () {
         this.authService.login(this.username, this.password).subscribe(function (data) {
             //redirect to returnUrl
             _this.route.queryParams.subscribe(function (params) {
-                if (!("returnUrl" in params)) {
+                // console.log(params["returnUrl"]);
+                if (!("returnUrl" in params) || !params["returnUrl"]) {
                     _this.router.navigate(["/"]);
+                    return;
                 }
                 if (params["returnUrl"].length > 100) {
                     _this.router.navigate(["/"]);
+                    return;
                 }
                 _this.router.navigate([params["returnUrl"]]);
             });

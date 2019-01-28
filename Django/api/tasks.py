@@ -8,7 +8,7 @@ __status__ = "Development"
 
 from background_task import background
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import Module, Package, Process, Template, Variable, FileType, Job
+from api.models import Module, Package, Process, Template, Variable, FileType, Job, GraphData
 from logging import getLogger
 import importlib
 import time
@@ -24,6 +24,7 @@ import uuid
 import shutil
 from xmlGenerator.xmlGenerator import *
 from xmlGenerator.xmlExtensions import inlineUUIDModule, inlineDatetimeModule
+import datetime
 
 from celery import Celery
 from celery.schedules import crontab
@@ -158,10 +159,10 @@ class pythonModuleBase:
         for resFilter in process.module.resultFilter:
             pattern = resFilter['value']
             match = re.match(pattern, log)
+            logger.info(resFilter)
 
             if match and resFilter['type'] != "Containing":
                 # logger.info(match)
-                # logger.info()
                 self.logger.error(log)
                 return (-1, log)
             elif not match and resFilter['type'] == "Containing":
@@ -743,3 +744,15 @@ def calculateFileType(path):
             else:
                 filetypes[type] = 1
     return (filetypes, total_number_of_files, total_size)
+
+
+@periodic_task(run_every=crontab(minute="50", hour="23"))
+def update_daily_data():
+    logger.info("saveing daily data")
+    var = Variable.objects.get(name="total_number_of_files")
+    num_files = int(var.data)
+    var = Variable.objects.get(name="total_size")
+    total_size = int(var.data)
+
+    graph = GraphData(date=datetime.date.today(), size=total_size, count=num_files)
+    graph.save()

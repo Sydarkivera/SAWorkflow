@@ -44,6 +44,7 @@ export class AdminModulesComponent {
 
     this.apiService.getDockerImages().subscribe(data => {
       this.images = data as [any];
+      console.log(this.images);
     });
   }
 
@@ -161,7 +162,7 @@ export class AdminModulesComponent {
     if (this.selected_module.resultFilter != undefined) {
       data["resultFilter"] = this.selected_module.resultFilter;
     } else {
-      data["resultFilter"] = [];
+      data["resultFilter"] = "[]";
     }
     if (this.selected_module.dockerImage != undefined) {
       data["dockerImage"] = this.selected_module.dockerImage;

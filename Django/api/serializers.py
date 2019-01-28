@@ -99,7 +99,7 @@ class ModuleSerializer(serializers.ModelSerializer):
     command = JSONSerializerField()
     type = TypeSerializer()
     resultFilter = JSONSerializerField()
-    dockerImage = DockerImageSerializer()
+    # dockerImage = DockerImageSerializer()
 
     class Meta:
         model = Module

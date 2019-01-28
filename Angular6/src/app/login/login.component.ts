@@ -60,11 +60,14 @@ export class LoginComponent {
       data => {
         //redirect to returnUrl
         this.route.queryParams.subscribe(params => {
-          if (!("returnUrl" in params)) {
+          // console.log(params["returnUrl"]);
+          if (!("returnUrl" in params) || !params["returnUrl"]) {
             this.router.navigate(["/"]);
+            return;
           }
           if (params["returnUrl"].length > 100) {
             this.router.navigate(["/"]);
+            return;
           }
           this.router.navigate([params["returnUrl"]]);
         });

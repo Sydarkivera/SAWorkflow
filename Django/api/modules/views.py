@@ -152,6 +152,9 @@ def module(request, module_id):
     """
     module = get_object_or_404(Module, pk=module_id)
     if request.method == 'POST':
+        # logger.info(request.data)
+        # logger.info(request.data['resultFilter'])
+        # request.data['resultFilter'] = json.dumps(request.data['resultFilter'])
         serializer = ModuleSerializer(module, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()

@@ -65,6 +65,8 @@ def AnalyseLog(resultFilter, log):
         pattern = resFilter['value']
         match = re.match(pattern, log)
 
+        logger.info(resFilter)
+
         if match and resFilter['type'] != "Containing":
             # logger.error(log)
             return (-1, log)

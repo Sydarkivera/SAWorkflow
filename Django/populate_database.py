@@ -99,18 +99,18 @@ module6 = Module(name="Unoconv",
 module6.save()
 module8 = Module(name="Smart DROID",
                  type='3',
-                 form='[]',
+                 form=[],
                 command="/run.sh \"#file\"",
                 filter='.*',
                 tool_folder_name="SMART_DROID",
                 docker_mount_point="/workdir",
-                resultFilter=[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \"false\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \"true\"[\\\w\\\W]*"}]
+                resultFilter=[{"type": "Containing","value": "[\\w\\W]*Missmatch: \"false\"[\\w\\W]*"},{"type": "Not containing","value": "[\\w\\W]*Missmatch: \"true\"[\\w\\W]*"}]
                  )
 module8.save()
 
 module11 = Module(name="Smart unoconv",
                  type='3',
-                 form='[]',
+                 form=[],
                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
                 filter='.*(\.doc)$',
                 tool_folder_name="SMART_UNOCONV",
