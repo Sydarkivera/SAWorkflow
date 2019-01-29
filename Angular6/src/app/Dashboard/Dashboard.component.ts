@@ -6,8 +6,8 @@ import { GraphColors, formatBytes } from "../Utilities";
 
 @Component({
   selector: "dashboard",
-  templateUrl: "./dashboard.component.html",
-  styleUrls: ["./dashboard.component.sass"]
+  templateUrl: "./Dashboard.component.html",
+  styleUrls: ["./Dashboard.component.sass"]
 })
 export class DashboardComponent {
   stats = undefined;
