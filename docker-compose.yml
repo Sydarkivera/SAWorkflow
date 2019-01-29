@@ -69,7 +69,7 @@ services:
       - "./packages:/code/test_packages"
 #      - "./Django/populate_database.py:/code/populate_database.py"
       - "/var/run/docker.sock:/var/run/docker.sock"
-#      - "./static_files:/code/static_root"
+      #- "./static_files:/code/static_root"
     command: ./run_django.sh #gunicorn config.wsgi:application -w 2 -b :8000
     # ports:
     #   - "8000:8000"
@@ -81,8 +81,8 @@ services:
         dockerfile: ./nginx.Dockerfile
       ports:
         - "80:80"
-      volumes:
-        - "./static_files:/code/static_root"
+      #volumes:
+        # - "./static_files:/code/static_root"
         # - "./Django/config:/code/config"
         # - "./Django/api:/code/api"
         # - "./Django/core:/code/core"

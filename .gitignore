@@ -19,3 +19,4 @@ static/angular
 *.zip
 
 Angular6/build/
+static_files/
