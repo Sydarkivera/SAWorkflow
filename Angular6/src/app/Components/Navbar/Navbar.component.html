@@ -1,5 +1,9 @@
-<nav class="navbar navbar-dark navbar-expand fixed-top bg-dark flex-md-nowrap p-0 shadow">
+<nav class="navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow">
   <a class="navbar-brand col-sm-3 col-md-2 mr-0" [routerLink]="['/']">Sydarkivera</a>
+  <!-- <button class="navbar-toggler" type="button" [nav-expand-toggle()]>
+    <span class="navbar-toggler-icon"></span>
+  </button> -->
+  <div class="collapse navbar-collapse">
   <ul class="navbar-nav mr-auto">
     <ng-content></ng-content>
   </ul>
@@ -14,4 +18,5 @@
       <a class="nav-link" (click)="signout()">Sign out</a>
     </li>
   </ul>
+  </div>
 </nav>

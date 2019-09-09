@@ -21,6 +21,8 @@ export class PackageListComponent {
   updateData() {
     this.apiService.getPackages().subscribe((data) => {
       this.packages = data as [any];
+      console.log(this.packages);
+      
     }, (error) => {
       this.packages = [];
     });

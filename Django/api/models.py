@@ -79,6 +79,15 @@ class Package(models.Model):
         (PACKAGE_STATUS_EDITED, 'Edited'),
         (PACKAGE_STATUS_FINISHED, 'Finished'),
     )
+    PACKAGE_TYPE_SIP = 0
+    PACKAGE_TYPE_TAR = 1
+    PACKAGE_TYPE_FOLDER = 2
+
+    PACKAGE_TYPE = (
+        (PACKAGE_TYPE_SIP, 'Sip'),
+        (PACKAGE_TYPE_TAR, 'Tar'),
+        (PACKAGE_TYPE_FOLDER, 'Folder'),
+    )
     package_id = models.AutoField(primary_key=True) # Example: 1
     name = models.TextField() # Example: Ljungby uttag 1
     path = models.TextField() # Example: /code/test_packages/af268c33-5ba8-4af5-9a44-039b10126835.tar
@@ -87,6 +96,7 @@ class Package(models.Model):
     workdir = models.TextField()
     logdir = models.TextField()
     statistics = JSONField(default={})
+    type = models.IntegerField(choices=PACKAGE_TYPE, default=0)
     # active_template = models.ForeignKey()
     active_template = models.ForeignKey(Template, related_name='packages', on_delete=models.PROTECT, blank = True, null = True)
 

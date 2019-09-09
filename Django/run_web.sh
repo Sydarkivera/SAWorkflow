@@ -5,9 +5,9 @@ sleep 10
 
 # cd myproject
 # prepare init migration
-#python manage.py makemigrations api
+python manage.py makemigrations api
 # migrate db, so we have the latest db schema
-#python manage.py migrate
+python manage.py migrate
 
 #python populate_database.py
 # start development server on public ip interface, on port 8000

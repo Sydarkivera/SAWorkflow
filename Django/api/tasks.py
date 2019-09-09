@@ -529,70 +529,97 @@ def moduleFailed(name, process, package):
 
 # @app.on_after_configure.connect
 
+def execute_initial_tasks_on_package(package):
+    # add the default start template to the package
+    template = Template.objects.get(name="Default Start")
+    if template:
+        for process in template.processes.all():
+            process.pk = None
+            process.template = None
+            process.package = package
+            process.save()
+
+    # create a workdir for this package
+    workdir_path = Variable.objects.get(
+        name='work_dir_path').data
+    dest = os.path.join(workdir_path, str(uuid.uuid4()))
+    package.logdir = os.path.join(dest, 'log')
+    try:
+        # cant start logging before folder in place.
+        package.workdir = dest
+        if not package.path.endswith('.tar'):
+            shutil.copytree(package.path, package.workdir)
+        else:
+            if not os.path.exists(dest):
+                os.makedirs(dest)
+            shutil.copy(package.path, package.workdir)
+        if not os.path.exists(package.logdir):
+            os.makedirs(package.logdir)
+        package.save()
+    except IOError as e:
+        logger.error(
+            "I/O error({0}): {1}".format(e.errno, e.strerror))
+        return -1
+
+    # calculate metrics and execute initial tasks
+    calculateMetricsForNewPackage(package)
+    createLogFile(package)
+    executeProcessFlow.delay(package.package_id)
+
+def add_new_tar_package(file_path, file_name):
+    package = Package(path=file_path, file_name=file_name, type=Package.PACKAGE_TYPE_TAR)
+    package.save()
+    # logger.info('found new package: ' + file_path + '!')
+    # create database entry, queue jobs to create workdir and untar files.
+    archive_name = file_name.split('.')[-2]
+
+    # fetch mets.xml file inside the tar package.
+    output = subprocess.check_output(
+        ['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
+
+    # get the package name, either from the mets.xml file or just use the tar file name.
+    label = archive_name
+    if (len(output) > 0):
+        start_index = output.find(b'LABEL="')
+        if start_index > 0:
+            label = output[start_index +
+                            7:start_index + 200].decode('utf-8')
+            end_index = label.find('" ')
+            label = label[0:end_index]
+            package.type = Package.PACKAGE_TYPE_SIP
+
+    package.name = label
+    package.save()
+
+    execute_initial_tasks_on_package(package)
+
+    
+
+def add_new_folder_package(file_path, file_name):
+    package = Package(path=file_path, file_name=file_name, name=file_name, type=Package.PACKAGE_TYPE_FOLDER)
+    package.save()
+
+    execute_initial_tasks_on_package(package)
 
 @periodic_task(run_every=timedelta(seconds=5))
 def periodic_scan_for_new_packages(**kwargs):
-    # logger.info('my_periodic_task running')
-    # path = settings.PAKAGE_SEARCH_PATH
+
     path = Variable.objects.get(name="packages_path").data
-    packages = []
+
     for file_name in os.listdir(path):
         file_path = os.path.join(path, file_name)
         if os.path.isfile(file_path):
-            pass
+
             # check if .tar
             if file_name.split('.')[-1] == 'tar':
-                if Package.objects.filter(path=file_path).exists():
-                    # logger.info('package: ' + file_path + ' exists!')
-                    pass
-                else:
+                if not Package.objects.filter(path=file_path).exists():
+                    # new package found, add it
+                    add_new_tar_package(file_path, file_name)
 
-                    package = Package(path=file_path, file_name=file_name)
-                    package.save()
-                    # logger.info('found new package: ' + file_path + '!')
-                    # create database entry, queue jobs to create workdir and untar files.
-                    archive_name = file_name.split('.')[-2]
-                    output = subprocess.check_output(
-                        ['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
-                    start_index = output.find(b'LABEL="')
-                    label = output[start_index +
-                                   7:start_index + 200].decode('utf-8')
-                    end_index = label.find('" ')
-                    label = label[0:end_index]
-                    package.name = label
-                    package.save()
-                    template = Template.objects.get(name="Default Start")
-                    if template:
-                        for process in template.processes.all():
-                            process.pk = None
-                            process.template = None
-                            process.package = package
-                            process.save()
 
-                    # create a workdir for this package
-                    workdir_path = Variable.objects.get(
-                        name='work_dir_path').data
-                    dest = os.path.join(workdir_path, str(uuid.uuid4()))
-                    package.logdir = os.path.join(dest, 'log')
-                    try:
-                        # cant start logging before folder in place.
-                        if not os.path.exists(dest):
-                            os.makedirs(dest)
-                        if not os.path.exists(package.logdir):
-                            os.makedirs(package.logdir)
-                        package.workdir = dest
-                        package.save()
-                        shutil.copy(package.path, package.workdir)
-                    except IOError:
-                        logger.error(
-                            "I/O error({0}): {1}".format(e.errno, e.strerror))
-                        return -1
-
-                    # calculate
-                    calculateMetricsForNewPackage(package)
-                    createLogFile(package)
-
-                    executeProcessFlow.delay(package.package_id)
+        elif os.path.isdir(file_path):
+            if not Package.objects.filter(path=file_path).exists():
+                add_new_folder_package(file_path, file_name)
 
 
 def calculateMetricsForNewPackage(package):
@@ -604,9 +631,12 @@ def calculateMetricsForNewPackage(package):
     dest = os.path.join(workdir_path, str(uuid.uuid4()))
 
     # copy package
-    if not os.path.exists(dest):
-        os.makedirs(dest)
-    shutil.copy(package.path, dest)
+    if package.file_name.endswith('.tar'):
+        if not os.path.exists(dest):
+            os.makedirs(dest)
+        shutil.copy(package.path, dest)
+    else:
+        shutil.copytree(package.path, dest)
 
     # untar package
     args = ['tar', '-x']
@@ -618,11 +648,12 @@ def calculateMetricsForNewPackage(package):
 
     stdout, stderr = p.communicate()
     if stdout:
-        self.logger.info(stdout.decode('utf-8'))
+        logger.info(stdout.decode('utf-8'))
     if stderr:
-        self.logger.error(stderr.decode('utf-8'))
+        logger.error(stderr.decode('utf-8'))
 
-    os.remove(os.path.join(dest, package.file_name))
+    if package.file_name.endswith('.tar'):
+        os.remove(os.path.join(dest, package.file_name))
     logger.info('Temporary directory is created: ' + dest)
 
     stats = {}

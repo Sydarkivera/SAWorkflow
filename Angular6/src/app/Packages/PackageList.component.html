@@ -15,7 +15,7 @@
   <tbody>
     <tr *ngFor="let package of packages">
       <td><a [routerLink]="[package.package_id]">{{package.name}}</a></td>
-      <td>{{package.file_name}}</td>
+      <td>({{package.type}}) {{package.file_name}}</td>
       <td>
         <div class="progress border border-primary">
           <div

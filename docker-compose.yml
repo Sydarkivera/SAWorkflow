@@ -65,7 +65,7 @@ services:
 #      - "./Django/core:/code/core"
 #      - "./Django/static:/code/static"
       - "./workdir:/code/workdir"
-      # - "./Django/tools:/code/tools"
+      - "tools:/code/tools"
       - "./packages:/code/test_packages"
 #      - "./Django/populate_database.py:/code/populate_database.py"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -109,7 +109,7 @@ services:
       - "./workdir:/code/workdir"
       - "./packages:/code/test_packages"
       - "/var/run/docker.sock:/var/run/docker.sock"
-      # - "./Django/tools:/code/tools"
+      - "tools:/code/tools"
 #       - "./Django:/code"
     links:
       - db
@@ -117,6 +117,9 @@ services:
       - redis
     depends_on:
       - rabbit
+
+volumes:
+  tools:
 
 networks:
   default:

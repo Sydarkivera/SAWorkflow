@@ -58,7 +58,7 @@ export class AdminModulesComponent {
 
   addNewModule() {
     // Adding a new module only resets the data in all forms, saving the changes then creates a new module.
-    this.selected_module = { module_id: -2, form: [], type: "Command" };
+    this.selected_module = { module_id: -2, form: [], type: "Command", resultFilter: [] };
     this.title = "New module";
     this.formJson = "[]";
   }

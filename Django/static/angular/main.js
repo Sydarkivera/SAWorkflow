@@ -596,7 +596,7 @@ var AdminModulesComponent = /** @class */ (function () {
     };
     AdminModulesComponent.prototype.addNewModule = function () {
         // Adding a new module only resets the data in all forms, saving the changes then creates a new module.
-        this.selected_module = { module_id: -2, form: [], type: "Command" };
+        this.selected_module = { module_id: -2, form: [], type: "Command", resultFilter: [] };
         this.title = "New module";
         this.formJson = "[]";
     };
@@ -2087,7 +2087,7 @@ var ModalModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<nav class=\"navbar navbar-dark navbar-expand fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\" *ngIf=\"!IsAuthenticated\">\n      <a class=\"nav-link\" [routerLink]=\"['/login']\">Sign in</a>\n    </li>\n    <li class=\"nav-item\" *ngIf=\"IsAuthenticated\">\n      <a class=\"nav-link\" >Welcome, {{username}}</a>\n    </li>\n    <li class=\"nav-item\" *ngIf=\"IsAuthenticated\">\n      <a class=\"nav-link\" (click)=\"signout()\">Sign out</a>\n    </li>\n  </ul>\n</nav>\n"
+module.exports = "<nav class=\"navbar navbar-dark navbar-expand-lg fixed-top bg-dark flex-md-nowrap p-0 shadow\">\n  <a class=\"navbar-brand col-sm-3 col-md-2 mr-0\" [routerLink]=\"['/']\">Sydarkivera</a>\n  <!-- <button class=\"navbar-toggler\" type=\"button\" [nav-expand-toggle()]>\n    <span class=\"navbar-toggler-icon\"></span>\n  </button> -->\n  <div class=\"collapse navbar-collapse\">\n  <ul class=\"navbar-nav mr-auto\">\n    <ng-content></ng-content>\n  </ul>\n  <ul class=\"navbar-nav mr-2\">\n    <li class=\"nav-item\" *ngIf=\"!IsAuthenticated\">\n      <a class=\"nav-link\" [routerLink]=\"['/login']\">Sign in</a>\n    </li>\n    <li class=\"nav-item\" *ngIf=\"IsAuthenticated\">\n      <a class=\"nav-link\" >Welcome, {{username}}</a>\n    </li>\n    <li class=\"nav-item\" *ngIf=\"IsAuthenticated\">\n      <a class=\"nav-link\" (click)=\"signout()\">Sign out</a>\n    </li>\n  </ul>\n  </div>\n</nav>\n"
 
 /***/ }),
 
@@ -4350,7 +4350,7 @@ var PackageTemplateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<navbar></navbar>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>{{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n\n</table>\n<div class=\"emptyList\" *ngIf=\"isListEmpty()\"  colspan=\"5\">\n  <p>\n    There are no packages\n    <br> Add pacakges to the packages folder an they will appear here\n  </p>\n</div>\n"
+module.exports = "<navbar></navbar>\n\n<table class=\"table table-striped table-hover\" style=\"background-color: white;\">\n  <thead class=\"company-table-head\">\n    <tr>\n      <th>Name</th>\n      <th>Filename</th>\n      <th>Progress</th>\n      <th>\n        Status\n        <button class=\"refresh\" (click)=\"updateData()\"><i class=\"material-icons\">refresh</i></button>\n      </th>\n    </tr>\n  </thead>\n  <tbody>\n    <tr *ngFor=\"let package of packages\">\n      <td><a [routerLink]=\"[package.package_id]\">{{package.name}}</a></td>\n      <td>({{package.type}}) {{package.file_name}}</td>\n      <td>\n        <div class=\"progress border border-primary\">\n          <div\n            *ngFor=\"let process of package.processes\"\n            class=\"progress-bar text-dark text-center\"\n            [style.width]=\"process.progress/package.processes.length + '%'\"\n            [class.bg-success]=\"process.status == 'Done'\"\n            [class.bg-danger]=\"process.status == 'Error'\"\n            [class.progress-bar-animated]=\"process.status == 'Running'\"\n            [class.progress-bar-striped]=\"process.status == 'Running'\"\n            >\n          </div>\n        </div>\n      </td>\n      <td><a [routerLink]=\"[package.package_id, 'status']\">{{package.status}}</a></td>\n    </tr>\n  </tbody>\n\n</table>\n<div class=\"emptyList\" *ngIf=\"isListEmpty()\"  colspan=\"5\">\n  <p>\n    There are no packages\n    <br> Add pacakges to the packages folder an they will appear here\n  </p>\n</div>\n"
 
 /***/ }),
 
@@ -4400,6 +4400,7 @@ var PackageListComponent = /** @class */ (function () {
         var _this = this;
         this.apiService.getPackages().subscribe(function (data) {
             _this.packages = data;
+            console.log(_this.packages);
         }, function (error) {
             _this.packages = [];
         });
@@ -5343,7 +5344,7 @@ var AuthGuard = /** @class */ (function () {
         this.router = router;
     }
     AuthGuard.prototype.canActivate = function (route, state) {
-        console.log(localStorage.getItem('access_token'));
+        //   console.log(localStorage.getItem('access_token'));
         if (localStorage.getItem('access_token')) {
             // logged in so return true
             return true;

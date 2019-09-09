@@ -70,28 +70,36 @@ class ProcessSerializer(serializers.ModelSerializer):
 
 class PackageSerializer(serializers.ModelSerializer):
     status = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
     template_name = serializers.CharField(source='active_template.name', read_only=True)
 
     class Meta:
         model = Package
-        fields = ('package_id', 'name', 'path', 'file_name', 'status', 'active_template', 'template_name')
+        fields = ('package_id', 'name', 'path', 'file_name', 'status', 'active_template', 'template_name', 'type')
 
     def get_status(self,obj):
         return obj.get_status_display()
+
+    def get_type(self,obj):
+        return obj.get_type_display()
 
 class PackageDetailSerializer(serializers.ModelSerializer):
     processes = ProcessSerializer(many=True)
     statistics = JSONSerializerField(required=True)
     template_name = serializers.CharField(source='active_template.name', read_only=True)
     status = serializers.SerializerMethodField()
+    type = serializers.SerializerMethodField()
 
     class Meta:
         model = Package
-        fields = ('package_id', 'name', 'file_name', 'status', 'processes', 'statistics', 'active_template', 'template_name')
+        fields = ('package_id', 'name', 'file_name', 'status', 'processes', 'statistics', 'active_template', 'template_name', 'type')
 
 
     def get_status(self,obj):
         return obj.get_status_display()
+
+    def get_type(self,obj):
+        return obj.get_type_display()
 
 
 class ModuleSerializer(serializers.ModelSerializer):
