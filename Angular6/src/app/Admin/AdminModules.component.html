@@ -1,6 +1,6 @@
 <!-- Error message displayed if the module could not be removed -->
 <message duration="10000" [(active)]="errorVisible" type="alert-danger">
-  <i class="material-icons align-middle">warning</i> The tool could not be removed since it is in use by one or more packages or templates.
+  <i class="material-icons align-middle">warning</i> {{errorMessage}}
 </message>
 <div class="row">
 

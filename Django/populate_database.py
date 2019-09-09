@@ -40,26 +40,23 @@ module1 = Module(name="Setup workdir",
                  type='1',
                  python_module='tools.Setup_workdir.setupWorkDir',
                  hidden=True,
-                 module_id=0,
                  tool_folder_name="Setup_workdir"
                  )
 module1.save()
 module2 = Module(name="Untar archive",
                  type='1',
-                 form='[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}]',
+                 form=[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}],
                  python_module='tools.Untar_archive.untar',
                  description="Untar the package .tar into a folder with the same name",
                  hidden=True,
-                 module_id=1,
                  tool_folder_name="Untar_archive"
                  )
 module2.save()
 module3 = Module(name="ClamAV",
                  type='0',
-                 form='[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found", "value":"-i"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove", "value":"--remove"}]',
+                 form=[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found", "value":"-i"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove", "value":"--remove"}],
                  # command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
                  command="clamscan #only_found #remove #file",
-                 module_id=2,
                  tool_folder_name="ClamAV"
                  )
 module3.save()
@@ -91,11 +88,10 @@ module3.save()
 
 module6 = Module(name="Unoconv",
                  type='2',
-                 form='[]',
+                 form=[],
                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
                  command="unoconv -f pdf -e SelectPdfVersion=1 #file",
                  # command="ls -al /workdir",
-                 module_id=3,
                  filter='.*(\.doc)',
                  tool_folder_name="unoconv",
                  docker_mount_point="/workdir/"
@@ -103,43 +99,39 @@ module6 = Module(name="Unoconv",
 module6.save()
 module8 = Module(name="Smart DROID",
                  type='3',
-                 form='[]',
+                 form=[],
                 command="/run.sh \"#file\"",
-                module_id=4,
                 filter='.*',
                 tool_folder_name="SMART_DROID",
                 docker_mount_point="/workdir",
-                resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
+                resultFilter=[{"type": "Containing","value": "[\\w\\W]*Missmatch: \"false\"[\\w\\W]*"},{"type": "Not containing","value": "[\\w\\W]*Missmatch: \"true\"[\\w\\W]*"}]
                  )
 module8.save()
 
 module11 = Module(name="Smart unoconv",
                  type='3',
-                 form='[]',
+                 form=[],
                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
-                module_id=5,
                 filter='.*(\.doc)$',
                 tool_folder_name="SMART_UNOCONV",
                 docker_mount_point="/workdir"
                  )
 module11.save()
-module12 = Module(name="Smart verapdf",
-                 type='3',
-                 form='[]',
-                command="verapdf -f 1a #file",
-                module_id=6,
-                filter='.*(\.pdf)',
-                tool_folder_name="SMART_VERAPDF",
-                docker_mount_point="/workdir",
-                resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]'
-                 )
-module12.save()
+# module12 = Module(name="Smart verapdf",
+#                  type='3',
+#                  form=[],
+#                 command="verapdf -f 1a #file",
+#                 filter='.*(\.pdf)',
+#                 tool_folder_name="SMART_VERAPDF",
+#                 docker_mount_point="/workdir",
+#                 resultFilter=[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\"1\"[\\\w\\\W]*"}]
+#                  )
+# module12.save()
 
 
 # setup default templates
 
-template1 = Template(name="Default Start",
-                     template_id=0)
+template1 = Template(name="Default Start")
 template1.save()
 
 process2 = Process(order=1,
@@ -149,25 +141,22 @@ process2 = Process(order=1,
                    )
 process2.save()
 
-template2 = Template(name="Default Done",
-                     template_id=1)
+template2 = Template(name="Default Done")
 template2.save()
 
-template3 = Template(name="Empty template",
-                     template_id=2)
+template3 = Template(name="Empty template")
 template3.save()
 
-template4 = Template(name="Convert pdf",
-                     template_id=3)
-template4.save()
-process = Process(order=1,
-                   template=template4,
-                   module=module6)
-process.save()
-process = Process(order=2,
-                   template=template4,
-                   module=module12)
-process.save()
+# template4 = Template(name="Convert pdf")
+# template4.save()
+# process = Process(order=1,
+#                    template=template4,
+#                    module=module6)
+# process.save()
+# process = Process(order=2,
+#                    template=template4,
+#                    module=module12)
+# process.save()
 
 
 # create default variables
@@ -227,10 +216,10 @@ var.save()
 
 #create default docker images
 
-image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="verapdf")
-image.save()
-module12.dockerImage = image
-module12.save()
+# image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="verapdf")
+# image.save()
+# module12.dockerImage = image
+# module12.save()
 
 image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid worker")
 image.save()

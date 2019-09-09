@@ -25,6 +25,7 @@ export class AdminModulesComponent {
   fileStatus = 0;
   messageVisible = false;
   errorVisible = false;
+  errorMessage = "Error";
 
   browserActive = false;
   browserPath = "";
@@ -43,6 +44,7 @@ export class AdminModulesComponent {
 
     this.apiService.getDockerImages().subscribe(data => {
       this.images = data as [any];
+      console.log(this.images);
     });
   }
 
@@ -81,8 +83,11 @@ export class AdminModulesComponent {
           this.selected_module = { module_id: -1 };
         },
         error => {
+          console.log(error);
           if (error.status == 409) {
             this.errorVisible = true;
+            this.errorMessage = error.error;
+            console.log(error.error);
           }
         }
       );
@@ -157,7 +162,7 @@ export class AdminModulesComponent {
     if (this.selected_module.resultFilter != undefined) {
       data["resultFilter"] = this.selected_module.resultFilter;
     } else {
-      data["resultFilter"] = [];
+      data["resultFilter"] = "[]";
     }
     if (this.selected_module.dockerImage != undefined) {
       data["dockerImage"] = this.selected_module.dockerImage;

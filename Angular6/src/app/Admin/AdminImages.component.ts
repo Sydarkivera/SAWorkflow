@@ -39,7 +39,11 @@ export class AdminImagesComponent {
   ngOnInit() {}
 
   selectImage(image) {
-    this.selected_image = image;
+    if (image == this.selected_image) {
+      this.selected_image = { id: -1 };
+    } else {
+      this.selected_image = image;
+    }
   }
 
   save() {
@@ -52,6 +56,10 @@ export class AdminImagesComponent {
 
   openNewImageModal() {
     this.modalactive = true;
+
+    this.fileName = "Select file...";
+    this.newLabel = "";
+    this.newPath = "";
   }
 
   //validate the selected file, if it's a tar accept it, else return error.
@@ -98,6 +106,7 @@ export class AdminImagesComponent {
         this.fileName = "Select file...";
         this.label = "";
         this.modalMessage = false;
+        this.selected_image = this.images[this.images.length - 1];
       } else if (data.type == 1) {
         this.uploadDone = data["loaded"];
         this.uploadTotal = data["total"];
@@ -131,6 +140,7 @@ export class AdminImagesComponent {
             }
             return true;
           });
+          this.selected_image = { id: -1 };
         },
         error => {
           if (error.status == 409) {

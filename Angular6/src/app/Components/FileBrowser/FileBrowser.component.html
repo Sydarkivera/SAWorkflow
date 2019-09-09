@@ -12,7 +12,7 @@
           <div
             *ngFor="let file of level"
             class="file"
-            [class.selected]="i == selectedLevel && file.name == selectedFile.name"
+            [class.selected]="file.name == selected[i]"
             (contextmenu)="openContextMenu($event, i, file)"
             (click)="openNewLevel(i, file)"
             >
@@ -89,7 +89,7 @@
     </div>
     <div class="dropdown-divider"></div>
     <a class="dropdown-item" (click)="openRenameModal()">Rename</a>
-    <a class="dropdown-item" [href]="getDownloadPath()">Download</a>
+    <a class="dropdown-item" [href]="getDownloadPath()" target="_blank">Download</a>
     <a class="dropdown-item" (click)="openDeleteModal()">Delete</a>
     <a class="dropdown-item" (click)="openUploadModal()">upload file</a>
     <a class="dropdown-item" (click)="openCreateFolderModal()">Create folder</a>

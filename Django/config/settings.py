@@ -10,6 +10,7 @@ import os
 
 from kombu import Exchange, Queue
 import datetime
+from celery.schedules import crontab
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -311,6 +312,14 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERYD_HIJACK_ROOT_LOGGER = False
 CELERYD_PREFETCH_MULTIPLIER = 1
 CELERYD_MAX_TASKS_PER_CHILD = 1000
+
+CELERY_BEAT_SCHEDULE = {
+    'task-number-one': {
+        'task': 'api.tasks.update_daily_data',
+        'schedule': crontab(minute="*", hour="*"),
+        'args': ()
+    }
+}
 
 
 #JWT

@@ -34,6 +34,12 @@ class TypeSerializer(serializers.Field):
         return 0
         # return {k:v for v,k in Module.MODULE_TYPES.items()}[data]
 
+class DockerImageSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = DockerImage
+        fields = ('id', 'name', 'mountpoint', 'label')
+
 class JSONSerializerField(serializers.Field):
     """ Serializer for JSONField -- required to make field writable"""
     def to_internal_value(self, data):
@@ -93,6 +99,7 @@ class ModuleSerializer(serializers.ModelSerializer):
     command = JSONSerializerField()
     type = TypeSerializer()
     resultFilter = JSONSerializerField()
+    # dockerImage = DockerImageSerializer()
 
     class Meta:
         model = Module
@@ -136,12 +143,6 @@ class VariableSerializer(serializers.ModelSerializer):
     class Meta:
         model = Variable
         fields = ('id', 'name', 'data')
-
-class DockerImageSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = DockerImage
-        fields = ('id', 'name', 'mountpoint', 'label')
 
 class PermissionSerializer(serializers.ModelSerializer):
 

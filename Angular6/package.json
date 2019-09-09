@@ -27,7 +27,7 @@
     "@swimlane/ngx-dnd": "^4.0.2",
     "core-js": "^2.5.4",
     "ngx-tooltip": "^0.0.9",
-    "rxjs": "^6.0.0",
+    "rxjs": "6.0.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {

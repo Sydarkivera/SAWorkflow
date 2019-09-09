@@ -60,16 +60,16 @@ services:
       - redis
 
     volumes:
-      - "./Django/config:/code/config"
-      - "./Django/api:/code/api"
-      - "./Django/core:/code/core"
-      - "./Django/static:/code/static"
-      - "./Django/workdir:/code/workdir"
+#      - "./Django/config:/code/config"
+#      - "./Django/api:/code/api"
+#      - "./Django/core:/code/core"
+#      - "./Django/static:/code/static"
+      - "./workdir:/code/workdir"
       # - "./Django/tools:/code/tools"
-      - "./Django/test_packages:/code/test_packages"
-      - "./Django/populate_database.py:/code/populate_database.py"
+      - "./packages:/code/test_packages"
+#      - "./Django/populate_database.py:/code/populate_database.py"
       - "/var/run/docker.sock:/var/run/docker.sock"
-      - "./static_files:/code/static_root"
+      #- "./static_files:/code/static_root"
     command: ./run_django.sh #gunicorn config.wsgi:application -w 2 -b :8000
     # ports:
     #   - "8000:8000"
@@ -81,15 +81,15 @@ services:
         dockerfile: ./nginx.Dockerfile
       ports:
         - "80:80"
-      volumes:
-        - "./static_files:/code/static_root"
+      #volumes:
+        # - "./static_files:/code/static_root"
         # - "./Django/config:/code/config"
         # - "./Django/api:/code/api"
         # - "./Django/core:/code/core"
         # - "./Django/static:/code/static"
-        # - "./Django/workdir:/code/workdir"
+        # - "./workdir:/code/workdir"
         # - "./Django/tools:/code/tools"
-        # - "./Django/test_packages:/code/test_packages"
+        # - "./packages:/code/test_packages"
         # - "./Django/populate_database.py:/code/populate_database.py"
         # - "/var/run/docker.sock:/var/run/docker.sock"
       links:
@@ -102,12 +102,12 @@ services:
     command: ./run_celery.sh
     volumes:
       # - .:/app  # mount current directory inside container
-      - "./Django/config:/code/config"
-      - "./Django/api:/code/api"
-      - "./Django/core:/code/core"
-      - "./Django/static:/code/static"
-      - "./Django/workdir:/code/workdir"
-      - "./Django/test_packages:/code/test_packages"
+#      - "./Django/config:/code/config"
+#      - "./Django/api:/code/api"
+#      - "./Django/core:/code/core"
+#      - "./Django/static:/code/static"
+      - "./workdir:/code/workdir"
+      - "./packages:/code/test_packages"
       - "/var/run/docker.sock:/var/run/docker.sock"
       # - "./Django/tools:/code/tools"
 #       - "./Django:/code"

@@ -17,3 +17,6 @@ static/angular
 
 *.tar
 *.zip
+
+Angular6/build/
+static_files/
