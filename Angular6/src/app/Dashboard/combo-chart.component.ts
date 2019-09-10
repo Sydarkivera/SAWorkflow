@@ -172,8 +172,8 @@ export class ComboChartComponent extends BaseChartComponent  {
   @Output() activate: EventEmitter<any> = new EventEmitter();
   @Output() deactivate: EventEmitter<any> = new EventEmitter();
 
-  @ContentChild('tooltipTemplate') tooltipTemplate: TemplateRef<any>;
-  @ContentChild('seriesTooltipTemplate') seriesTooltipTemplate: TemplateRef<any>;
+  @ContentChild('tooltipTemplate', {static: true}) tooltipTemplate: TemplateRef<any>;
+  @ContentChild('seriesTooltipTemplate', {static: true}) seriesTooltipTemplate: TemplateRef<any>;
 
   dims: ViewDimensions;
   xSet: any;
@@ -266,7 +266,7 @@ export class ComboChartComponent extends BaseChartComponent  {
         valueSet.add(d.name);
       }
     }
-    let values = Array.from(valueSet);
+    let values: number[] = <number[]>Array.from(valueSet);
 
     this.scaleType = this.getScaleType(values);
     let domain = [];
@@ -290,8 +290,8 @@ export class ComboChartComponent extends BaseChartComponent  {
     if (this.scaleType === 'time') {
       domain = [new Date(min), new Date(max)];
       this.xSet = [...values].sort((a, b) => {
-        const aDate = a.getTime();
-        const bDate = b.getTime();
+        const aDate = a;
+        const bDate = b;
         if (aDate > bDate) return 1;
         if (bDate > aDate) return -1;
         return 0;

@@ -10,7 +10,7 @@ import { trigger, state, transition, style, animate } from '@angular/animations'
       state('shown', style({ opacity: 1 })),
       state('hidden', style({ opacity: 0, display: 'none' })),
       transition('shown => hidden', animate('600ms')),
-      transition('hidden => shown', animate('300ms')),
+      transition('hidden => shown', [style({ 'display': 'block' }), animate('300ms')]),
     ])
   ]
 })
@@ -25,6 +25,8 @@ export class MessageComponent {
     private _active: boolean = false;
     @Output() activeChange = new EventEmitter<boolean>();
     @Input() set active(active: boolean) {
+      console.log("message active", active);
+      
       this._active = active;
       if (active) {
         this.visiblityState = 'shown';
