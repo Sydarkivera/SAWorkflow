@@ -357,12 +357,13 @@ class dockerSmartModue(pythonModuleBase):
         unique_workdir = os.path.relpath(package.workdir, local_work_dir)
         host_path = os.path.join(host_work_dir, unique_workdir)
 
-        logger.info(host_path)
-        logger.info(process.module.docker_mount_point)
+        logger.info('host_path' + host_path)
+        logger.info('mountpoint: ' + process.module.dockerImage.mountpoint)
 
         volumes = {host_path: {
             'bind': process.module.dockerImage.mountpoint, 'mode': 'rw'}}
         logger.info(container_name)
+        logger.info(volumes)
 
         # start container
         # TODO change to trying to create a new container and fail if it doesn't work.
