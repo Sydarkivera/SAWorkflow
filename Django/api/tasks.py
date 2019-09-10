@@ -361,7 +361,7 @@ class dockerSmartModue(pythonModuleBase):
         logger.info(process.module.docker_mount_point)
 
         volumes = {host_path: {
-            'bind': process.module.docker_mount_point, 'mode': 'rw'}}
+            'bind': process.module.dockerImage.mountpoint, 'mode': 'rw'}}
         logger.info(container_name)
 
         # start container
