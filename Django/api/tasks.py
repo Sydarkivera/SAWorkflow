@@ -206,18 +206,31 @@ class bashModule(pythonModuleBase):
     def execute(self, process, package, values):
         args = fixCommand(process, values)
         logger.info(args)
+        # print(args)
+        # print('join', ' '.join(args))
+        # print('after join')
 
-        p = subprocess.Popen(args, stdout=subprocess.PIPE,
-                             stderr=subprocess.STDOUT)
+        # p = subprocess.Popen('/bin/sh', stdout=subprocess.PIPE,
+        #                      stderr=subprocess.STDOUT)
 
-        stdout, stderr = p.communicate()
+        # stdout, stderr = p.communicate(' '.join(args))
+
+        try:
+            stdout = subprocess.check_output(' '.join(args), shell=True)
+        except subprocess.CalledProcessError as e:
+            # print e.output
+            # error = stderr.decode('utf-8')
+            self.logger.error(e.output)
+            return (-1, e.output)
+
 
         # validate output, check if there are any error, or if there are errors in the info file.
-        if stderr:
-            error = stderr.decode('utf-8')
-            self.logger.error(error)
-            return (-1, error)
+        # if stderr:
+            # error = stderr.decode('utf-8')
+            # self.logger.error(error)
+            # return (-1, error)
 
+        log = ''
         if stdout:
             # self.logger.info('File: ' + )
             log = stdout.decode('utf-8')
@@ -575,7 +588,7 @@ def add_new_tar_package(file_path, file_name):
 
     # fetch mets.xml file inside the tar package.
     output = subprocess.check_output(
-        ['/code/tools/a.out', file_path, archive_name + '/mets.xml'])
+        ['/code/internal/a.out', file_path, archive_name + '/mets.xml'])
 
     # get the package name, either from the mets.xml file or just use the tar file name.
     label = archive_name

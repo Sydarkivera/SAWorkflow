@@ -64,7 +64,8 @@ RUN set -ex \
 RUN mkdir /code/
 WORKDIR /code/
 ADD ./ /code/
-RUN mv /a.out /code/tools
+RUN mkdir -p /code/internal/
+RUN mv /a.out /code/internal/
 # RUN mkdir /code/log/
 
 # uWSGI will listen on this port
