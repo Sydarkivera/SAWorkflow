@@ -26,7 +26,7 @@ RUN pip install -r requirements.txt
 RUN mkdir /code
 WORKDIR /code
 COPY ./Django /code/
-RUN mkdir /code/log && mv /a.out /code/internal/
+RUN mkdir /code/log && mkdir /code/internal && mv /a.out /code/internal/
 
 # Collect our static media.
 RUN python /code/manage.py collectstatic --noinput
