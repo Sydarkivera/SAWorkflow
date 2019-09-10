@@ -123,20 +123,19 @@ export class AdminModulesComponent {
       return false;
     }
 
-    //validate command json input
-    // try {
-    //   this.selected_module.command = JSON.parse(this.commandJson);
-    //   this.commandJsonError = "";
-    // } catch (e) {
-    //   console.log("Error", e.message);
-    //   this.commandJsonError = e.message;
-    //   return false;
-    // }
-
     //only pass the values that are defined to the server.
     let data = {};
     if (this.selected_module.name != undefined) {
       data["name"] = this.selected_module.name;
+      if (data["name"] === "") {
+        this.commandJsonError = "Name must be filled in";
+        return false;
+      } else {
+        this.commandJsonError = "";
+      }
+    } else {
+      this.commandJsonError = "Name must be filled in";
+      return false;
     }
     if (this.selected_module.hidden != undefined) {
       data["hidden"] = this.selected_module.hidden;
@@ -180,6 +179,8 @@ export class AdminModulesComponent {
         this.commandJsonError =
           "to save a new tool, the command needs to be configured";
         return false;
+      } else {
+        this.commandJsonError = "";
       }
     } else if (this.selected_module.type == "Python module") {
       if (
@@ -189,6 +190,8 @@ export class AdminModulesComponent {
         this.commandJsonError =
           "to save a new tool, the python file needs to be specified";
         return false;
+      } else {
+        this.commandJsonError = "";
       }
     }
 

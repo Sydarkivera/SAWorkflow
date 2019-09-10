@@ -16,6 +16,7 @@ import { APIService } from "../../Services/api.service";
 export class FileBrowserComponent {
   private _active: boolean = false;
 
+  @Input() canCreateFolder: boolean = true;
   @Input() package_id: number;
   @Input() path: string;
   @Input()

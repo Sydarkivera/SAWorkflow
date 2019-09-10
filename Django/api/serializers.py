@@ -116,6 +116,20 @@ class ModuleSerializer(serializers.ModelSerializer):
     def get_type(self,obj):
         return obj.get_type_display()
 
+class ModuleExportSerializer(serializers.ModelSerializer):
+    form = JSONSerializerField()
+    command = JSONSerializerField()
+    type = TypeSerializer()
+    resultFilter = JSONSerializerField()
+    # dockerImage = DockerImageSerializer()
+
+    class Meta:
+        model = Module
+        fields = ('module_id', 'name', 'type', 'form', 'hidden', 'python_module', 'command', 'tool_folder_name', 'docker_mount_point', 'description', 'filter', 'resultFilter', 'dockerImage')
+
+    def get_type(self,obj):
+        return obj.get_type_display()
+
 class TemplateListSerializer(serializers.ModelSerializer):
 
 

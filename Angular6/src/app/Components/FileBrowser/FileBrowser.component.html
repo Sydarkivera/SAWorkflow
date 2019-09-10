@@ -92,6 +92,6 @@
     <a class="dropdown-item" [href]="getDownloadPath()" target="_blank">Download</a>
     <a class="dropdown-item" (click)="openDeleteModal()">Delete</a>
     <a class="dropdown-item" (click)="openUploadModal()">upload file</a>
-    <a class="dropdown-item" (click)="openCreateFolderModal()">Create folder</a>
+    <a class="dropdown-item" (click)="openCreateFolderModal()" *ngIf="canCreateFolder">Create folder</a>
   </div>
 </div>

@@ -25,7 +25,6 @@ export class MessageComponent {
     private _active: boolean = false;
     @Output() activeChange = new EventEmitter<boolean>();
     @Input() set active(active: boolean) {
-      console.log("message active", active);
       
       this._active = active;
       if (active) {

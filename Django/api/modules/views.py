@@ -78,7 +78,6 @@ def module_import(request):
     unpack imported module and add it to the system
     """
     file = request.FILES['file']
-    fname = 'temp' + str(int(time.time()))
 
     tar = tarfile.open(fileobj=file)
     tar_list = tar.getnames()
@@ -86,58 +85,52 @@ def module_import(request):
         jsonFO = tar.extractfile('data.json')
         data = jsonFO.read()
         jsonData = json.loads(data.decode("utf-8"))
-        hasDockerImage = False
         dockerData = {}
-        if 'dockerImage' in jsonData:
+        if 'dockerImage' in jsonData and jsonData['dockerImage']:
             dockerData = jsonData['dockerImage']
             dockerData['label'] = jsonData['dockerImage']['label']
             del jsonData['dockerImage']
-            hasDockerImage = True
         if 'module_id' in jsonData:
             del jsonData['module_id']
-        serializer = ModuleSerializer(data=jsonData, partial=True)
+
+
+        # change the name if it already exists
+        if Module.objects.filter(name=jsonData['name']).exists():
+            i = 1
+            # jsonData['name'] += ' ' + 1
+            newName = jsonData['name'] + ' ' + str(i)
+            while Module.objects.filter(name=newName).exists():
+                i+= 1
+                newName = jsonData['name'] + ' ' + str(i)
+
+            jsonData['name'] = newName
+
+        serializer = ModuleExportSerializer(data=jsonData, partial=True)
+
         if serializer.is_valid():
             module = serializer.save()
-            # logger.info('python_file_path: ', serializer.data['python_module'])
-            if 'python_module' in serializer.data and serializer.data['type'] == 'Python module':
-                # import python file
-                py_file_name = serializer.data['python_module'].split('.')[-1]
-                py_file_name += '.py'
-                py_path = os.path.join(settings.BASE_DIR, 'tools')
-                # verify that the python file exists in the package:
-                if py_file_name in tar_list:
-                    tar.extract(py_file_name, path=py_path)
-            # elif hasDockerImage:
-            #     # check if there are an image of this name
-            #     image_name = dockerData['name']
-            #     if DockerImage.objects.filter(name = image_name).exists():
-            #         # point to the existing
-            #         module.dockerImage = DockerImage.objects.get(name = image_name)
-            #         module.save()
-            #         logger.info('exists')
-            #         pass
-            #     else:
-            #         logger.info('does not exist')
-            #         # add the docker image and point to the new image.
-            #         if (image_name + ".tar") in tar_list:
-            #             client = docker.from_env()
-            #             imageFO = tar.extractfile((image_name + ".tar"))
-            #             images = client.images.load(imageFO)
-            #
-            #             if len(images) > 0:
-            #                 logger.info(images[0])
-            #                 logger.info(images[0].tags)
-            #                 logger.info(dockerData)
-            #                 label = ""
-            #                 if 'label' in jsonData:
-            #                     label = dockerData['label']
-            #                 dImage = DockerImage(name=images[0].tags[0], label=label)
-            #                 dImage.save()
-            #                 module.dockerImage = dImage
-            #                 module.save()
-            #         pass
+            # create the folder if there are not already on present. 
+            if os.path.isdir(os.path.join(BASE_DIR, 'tools/', module.tool_folder_name)):
+                # find a different name and save it to the module
+                i = 1
+                newDir = os.path.join(BASE_DIR, 'tools/', module.tool_folder_name) + '_' + str(i)
+                while os.path.isdir(newDir):
+                    i+= 1
+                    newDir = os.path.join(BASE_DIR, 'tools/', module.tool_folder_name) + '_' + str(i)
+
+                module.tool_folder_name = newDir
+                module.save()
+
+            # create dir
+            os.mkdir(module.tool_folder_name)
+
+            # add all the other files TODO
+            for fileName in tar_list:
+                if fileName != 'data.json':
+                    # new file found, load it and store it in the folder
+                    tar.extract(fileName, path=os.path.join(module.tool_folder_name, fileName))
         else:
-            logger.error('Failed to serialize imported module: ', serializer.errors)
+            logger.error('Failed to serialize imported module: ' + serializer.errors)
     tar.close()
 
     #return list of all tools:
@@ -210,16 +203,17 @@ def module_export(request, module_id):
     Export all data in the module as a tar file.
     """
     module = get_object_or_404(Module, pk=module_id)
-    serializer = ModuleSerializer(module)
+    serializer = ModuleExportSerializer(module)
 
 
     files = []
     files.append(ContentFile(b(json.dumps(serializer.data)), name="data.json"))
 
-    if module.type == 1:
-        # export python file
-        logger.info(module.python_module.split('.')[-1:])
-        files.append(File(open(os.path.join(BASE_DIR, 'tools/') + '.'.join(module.python_module.split('.')[-1:]) + '.py'), name=module.python_module.split('.')[-1] + '.py'))
+    # independent of module type, the whole folder should be copied.
+    folder_path = os.path.join(BASE_DIR, 'tools/', module.tool_folder_name)
+    for file in os.listdir(folder_path):
+        files.append(File(open(os.path.join(folder_path, file)), name=file))
+
 
     temp_file = tempfile.TemporaryFile()
     with tarfile.TarFile(fileobj=temp_file, mode='w', debug=3) as tar_file:
@@ -228,6 +222,8 @@ def module_export(request, module_id):
             try:
                 data = file_.read()
             except UnicodeDecodeError:
+                # logger.error("unicode decode error")
+                data = open(file_.file.name, 'rb').read()
                 pass
             file_.seek(0, os.SEEK_SET)
             size = len(data)
@@ -237,6 +233,7 @@ def module_export(request, module_id):
                 else:
                     lol = BytesIO(data.encode())
             except UnicodeDecodeError:
+                # logger.error("unicode decode error 2")
                 pass
             try:
                 info = tar_file.gettarinfo(fileobj=file_)
@@ -293,7 +290,7 @@ def module_export(request, module_id):
 @api_view(['GET', 'DELETE', 'PUT', 'POST'])
 def module_files(request, module_id):
     """
-    All functions for handling the filebrowser in ui
+    All functions for handling the filebrowser ui when creating a new module/tool
     """
     logger.info('modules files')
     module = get_object_or_404(Module, pk=module_id)
