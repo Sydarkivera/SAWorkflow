@@ -269,10 +269,10 @@ class dockerModule(pythonModuleBase):
         host_path = os.path.join(host_work_dir, unique_workdir)
 
         volumes = {host_path: {
-            'bind': process.module.docker_mount_point, 'mode': 'rw'}}
+            'bind': process.module.dockerImage.mountpoint, 'mode': 'rw'}}
         command = fixCommand(process, values)
 
-        logger.info(host_path)
+        logger.info('host_path: ' + host_path)
         logger.info(volumes)
         logger.info(command)
 
