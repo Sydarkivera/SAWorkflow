@@ -6,7 +6,7 @@ __maintainer__ = "Simon Nilsson"
 __email__ = "simon@axenu.com"
 __status__ = "Development"
 
-from django.http import HttpResponse, JsonResponse, StreamingHttpResponse
+from django.http import HttpResponse, JsonResponse, StreamingHttpResponse, HttpResponseBadRequest
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser

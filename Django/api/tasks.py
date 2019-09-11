@@ -253,13 +253,13 @@ class dockerModule(pythonModuleBase):
             p = values['file']
             relative = os.path.relpath(p, package.workdir)
             values['file'] = os.path.join(
-                process.module.docker_mount_point, relative)
+                process.module.dockerImage.mountpoint, relative)
 
         if 'workdir' in values:
             p = values['workdir']
             relative = os.path.relpath(p, package.workdir)
             values['workdir'] = os.path.join(
-                process.module.docker_mount_point, relative)
+                process.module.dockerImage.mountpoint, relative)
 
         client = docker.from_env()
 
@@ -318,15 +318,16 @@ class dockerSmartModue(pythonModuleBase):
         # values['file'] =
         # if 'file' in values:
         p = first_file
+        logger.info("p: " + p + " workdir: " + package.workdir)
         relative = os.path.relpath(p, package.workdir)
         values['file'] = os.path.join(
-            process.module.docker_mount_point, relative)
+            process.module.dockerImage.mountpoint, relative)
 
         if 'workdir' in values:
             p = values['workdir']
             relative = os.path.relpath(p, package.workdir)
             values['workdir'] = os.path.join(
-                process.module.docker_mount_point, relative)
+                process.module.dockerImage.mountpoint, relative)
 
 
         command = fixCommand(process, values)

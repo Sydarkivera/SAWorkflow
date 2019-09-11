@@ -58,8 +58,7 @@ RUN pip install -r requirements.txt
 RUN mkdir /code/
 WORKDIR /code/
 ADD ./Django/ /code/
-RUN mv /a.out /code/tools
-RUN mkdir /code/log
+RUN mkdir /code/log && mkdir /code/internal && mv /a.out /code/internal/
 # RUN mkdir /code/log/
 
 # uWSGI will listen on this port

@@ -115,12 +115,12 @@ def result(request):
         values = get_values(process, process.package)
         relative = os.path.relpath(job.file_name, process.package.workdir)
         values['file'] = os.path.join(
-            process.module.docker_mount_point, relative)
+            process.module.dockerImage.mountpoint, relative)
         if 'workdir' in values:
             p = values['workdir']
             relative = os.path.relpath(p, process.package.workdir)
             values['workdir'] = os.path.join(
-                process.module.docker_mount_point, relative)
+                process.module.dockerImage.mountpoint, relative)
 
         command = fixCommand(process, values)
 

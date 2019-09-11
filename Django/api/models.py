@@ -207,7 +207,7 @@ class GraphData(models.Model):
 
 class Job(models.Model):
     id = models.AutoField(primary_key=True)
-    process = models.ForeignKey(Process, related_name='jobs', on_delete=models.PROTECT)
+    process = models.ForeignKey(Process, related_name='jobs', on_delete=models.CASCADE)
     container_id = models.CharField(max_length=100, blank=True, default='')
     container_name = models.CharField(max_length=100, blank=True, default='')
     container_iteration = models.IntegerField(default=2)
