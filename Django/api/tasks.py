@@ -220,8 +220,8 @@ class bashModule(pythonModuleBase):
         except subprocess.CalledProcessError as e:
             # print e.output
             # error = stderr.decode('utf-8')
-            self.logger.error(e.output)
-            return (-1, e.output)
+            self.logger.error(e.output.decode('utf-8'))
+            return (-1, e.output.decode('utf-8'))
 
 
         # validate output, check if there are any error, or if there are errors in the info file.
