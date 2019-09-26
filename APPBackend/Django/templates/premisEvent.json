@@ -1,0 +1,137 @@
+{
+  "name": "event",
+  "namespace": "premis",
+  "children": [{
+      "name": "eventIdentifier",
+      "children": [{
+          "name": "eventIdentifierType",
+          "children": [{
+              "content": [{
+                  "type": "text",
+                  "data": "UUID"
+                }]
+            }]
+        }, {
+          "name": "eventIdentifierValue",
+          "children": [{
+              "extension": "uuid",
+              "children": [{
+                  "content": [{
+                      "type": "var",
+                      "data": "uuid"
+                    }]
+                }]
+            }]
+        }]
+    }, {
+      "name": "eventType",
+      "children": [{
+          "content": [{
+              "type": "text",
+              "data": "A.P.P action"
+            }]
+        }]
+    }, {
+      "name": "eventDateTime",
+      "children": [{
+          "extension": "datetime",
+          "children": [{
+              "content": [{
+                  "type": "var",
+                  "data": "datetime"
+                }]
+            }]
+        }]
+    }, {
+      "name": "eventDetailInformation",
+      "min": 1,
+      "max": 1,
+      "children": [{
+          "name": "eventDetail",
+          "children": [{
+              "content": [{
+                  "type": "var",
+                  "data": "label"
+                }]
+            }]
+        }]
+    }, {
+      "name": "eventOutcomeInformation",
+      "min": 1,
+      "max": 1,
+      "children": [{
+          "name": "eventOutcome",
+          "min": 1,
+          "max": 1,
+          "children": [{
+              "content": [{
+                  "type": "var",
+                  "data": "outcome"
+                }]
+            }]
+        }, {
+          "name": "eventOutcomeDetail",
+          "min": 1,
+          "max": 1,
+          "children": [{
+              "name": "eventOutcomeDetailNote",
+              "min": 1,
+              "max": 1,
+              "children": [{
+                  "content": [{
+                      "type": "var",
+                      "data": "detail"
+                    }]
+                }]
+            }]
+        }]
+    }, {
+      "name": "linkingAgentIdentifier",
+      "children": [{
+          "name": "linkingAgentIdentifierType",
+          "min": 1,
+          "max": 1,
+          "children": [{
+              "content": [{
+                  "type": "text",
+                  "data": "APP signin"
+                }]
+            }]
+        }, {
+          "name": "linkingAgentIdentifierValue",
+          "min": 1,
+          "max": 1,
+          "children": [{
+              "content": [{
+                  "type": "var",
+                  "data": "user"
+                }]
+            }]
+        }]
+    }, {
+      "name": "linkingObjectIdentifier",
+      "min": 1,
+      "max": 1,
+      "children": [{
+          "name": "linkingObjectIdentifierType",
+          "min": 1,
+          "max": 1,
+          "children": [{
+              "content": [{
+                  "type": "text",
+                  "data": "UUID"
+                }]
+            }]
+        }, {
+          "name": "linkingObjectIdentifierValue",
+          "min": 1,
+          "max": 1,
+          "children": [{
+              "content": [{
+                  "type": "var",
+                  "data": "package_uuid"
+                }]
+            }]
+        }]
+    }]
+}

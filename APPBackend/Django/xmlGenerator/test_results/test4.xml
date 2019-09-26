@@ -1,0 +1,6 @@
+<namespace1:parent>
+   <namespace1:child1/>
+   <namespace1:child2>
+      <namespace1:childOfChild2/>
+   </namespace1:child2>
+</namespace1:parent>

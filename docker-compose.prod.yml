@@ -1,0 +1,126 @@
+version: '3.5'
+
+services:
+
+    # PostgreSQL database
+  db:
+    image: postgres:9.4
+    hostname: db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+
+
+  # Redis
+  redis:
+    image: redis:2.8.19
+    hostname: redis
+
+    # RabbitMQ
+  rabbit:
+    hostname: rabbit
+    image: rabbitmq:3.6.0
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=mypass
+    ports:
+      - "5672:5672"  # we forward this port because it's useful for debugging
+      - "15672:15672"  # here, we can access rabbitmq management plugin
+
+  # redis:
+  #   restart: always
+  #   image: redis:3.0
+  #   expose:
+  #     - "6379"
+  # app:
+  #   # environment:
+  #     # DATABASE_URL: postgres://app_user:changeme@db/app_db
+  #     # REDIS_URL: redis://redis
+  #     # DJANGO_MANAGEPY_MIGRATE: on
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   links:
+  #     - db:db
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - "./test_packages:/mnt/epp"
+
+  django:
+    build:
+      context: ./APPBackend
+      dockerfile: ./prod.Dockerfile
+    links:
+      - db
+      - rabbit
+      - redis
+
+    volumes:
+#      - "./Django/config:/code/config"
+#      - "./Django/api:/code/api"
+#      - "./Django/core:/code/core"
+#      - "./Django/static:/code/static"
+      - "./workdir:/code/workdir"
+      - "./tools:/code/tools"
+      - "./test_packages:/code/test_packages"
+#      - "./Django/populate_database.py:/code/populate_database.py"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./static_files:/code/static_root"
+    command: ./run_django.sh #gunicorn config.wsgi:application -w 2 -b :8000
+    # ports:
+    #   - "8000:8000"
+
+  nginx:
+      # restart: always
+      build:
+        context: ./Nginx
+        dockerfile: ./nginx.Dockerfile
+      ports:
+        - "80:80"
+      #volumes:
+        # - "./static_files:/code/static_root"
+        # - "./Django/config:/code/config"
+        # - "./Django/api:/code/api"
+        # - "./Django/core:/code/core"
+        # - "./Django/static:/code/static"
+        # - "./workdir:/code/workdir"
+        # - "./Django/tools:/code/tools"
+        # - "./packages:/code/test_packages"
+        # - "./Django/populate_database.py:/code/populate_database.py"
+        # - "/var/run/docker.sock:/var/run/docker.sock"
+      links:
+        - django:django
+
+  worker:
+    build:
+      context: ./APPBackend
+      dockerfile: ./prod.Dockerfile
+    command: ./run_celery.sh
+    volumes:
+      # - .:/app  # mount current directory inside container
+#      - "./Django/config:/code/config"
+#      - "./Django/api:/code/api"
+#      - "./Django/core:/code/core"
+#      - "./Django/static:/code/static"
+      - "./workdir:/code/workdir"
+      - "./test_packages:/code/test_packages"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./tools:/code/tools"
+#       - "./Django:/code"
+    links:
+      - db
+      - rabbit
+      - redis
+    depends_on:
+      - rabbit
+
+volumes:
+  tools:
+
+networks:
+  default:
+    name: "APP_Default"

@@ -1,6 +1,0 @@
-<namespace1:parent>
-   <childnamespace1:child1/>
-   <namespace1:child2>
-      <childOfChild2/>
-   </namespace1:child2>
-</namespace1:parent>

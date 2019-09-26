@@ -1,6 +1,0 @@
-<parent>
-   <child1/>
-   <child2>
-      <childOfChild2/>
-   </child2>
-</parent>

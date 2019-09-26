@@ -1,0 +1,17 @@
+
+<div class="file-header noselect d-flex" (click)="expand()">
+  <ng-template [ngIf]="file.type == 'folder'">
+    <i *ngIf="!expanded" class="material-icons file-float">arrow_right</i>
+    <i *ngIf="expanded" class="material-icons file-float">arrow_drop_down</i>
+  </ng-template>
+  <p class="file-float">{{file.name}}</p>
+  <!-- <i class="material-icons file-float">indeterminate_check_box</i> -->
+</div>
+<!-- <i *ngIf="file.selected == true && file.type == 'file'" class="material-icons file-float" (click)="select()" tooltip="Deselect this file" tooltipPlacement="right">check_box</i> -->
+<!-- <i *ngIf="file.selected != true && file.type == 'file'" class="material-icons file-float" (click)="select()" tooltip="Select this file" tooltipPlacement="right">check_box_outline_blank</i> -->
+<!-- <i *ngIf="file.type == 'folder'" class="material-icons file-float" tooltip="Set a filter for items in folder" tooltipPlacement="right">filter_list</i> -->
+<div *ngIf="expanded" class="file-children">
+  <!-- <div *ngFor="let file of file.children"> -->
+    <file *ngFor="let f of children" [file]="f" [specific_path]="specific_path + f.name + '/'" [path]="path"></file>
+  <!-- </div> -->
+</div>

@@ -1,0 +1,10 @@
+{
+    "name": "parent",
+    "allowempty": 1,
+    "children": [
+        {
+            "name": "child",
+            "allowempty": 1
+        }
+    ]
+}

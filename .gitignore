@@ -22,3 +22,5 @@ Angular6/build/
 static_files/
 packages/
 Angular8/
+test_packages/
+workdir/

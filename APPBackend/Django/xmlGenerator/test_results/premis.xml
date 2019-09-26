@@ -1,0 +1,125 @@
+<premis:premis xmlns:premis="http://www.loc.gov/premis/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.0" xsi:schemaLocation="http://www.loc.gov/premis/v3 http://www.loc.gov/standards/premis/premis.xsd">
+   <premis:object xsi:type="premis:file">
+      <premis:objectIdentifier>
+         <premis:objectIdentifierType>
+            UUID
+         </premis:objectIdentifierType>
+         <premis:objectIdentifierValue>
+            long-uuid-sdf-asdf
+         </premis:objectIdentifierValue>
+      </premis:objectIdentifier>
+      <premis:objectCharacteristics>
+         <premis:format>
+            <premis:formatDesignation>
+               <premis:formatName>
+                  TAR
+               </premis:formatName>
+            </premis:formatDesignation>
+         </premis:format>
+      </premis:objectCharacteristics>
+      <premis:storage>
+         <premis:contentLocation>
+            <premis:contentLocationType>
+               URI
+            </premis:contentLocationType>
+            <premis:contentLocationValue>
+               file:///uuid.tar
+            </premis:contentLocationValue>
+         </premis:contentLocation>
+      </premis:storage>
+   </premis:object>
+   <premis:event>
+      <premis:eventIdentifier>
+         <premis:eventIdentifierType>
+            UUID
+         </premis:eventIdentifierType>
+         <premis:eventIdentifierValue>
+            05ad1544-63d5-4f72-8377-ea508b8b088b
+         </premis:eventIdentifierValue>
+      </premis:eventIdentifier>
+      <premis:eventType>
+         A.P.P action
+      </premis:eventType>
+      <premis:eventDateTime>
+         2018-07-18 09:09:41.119656
+      </premis:eventDateTime>
+      <premis:eventDetailInformation>
+         <premis:eventDetail>
+            Vera pdf
+         </premis:eventDetail>
+      </premis:eventDetailInformation>
+      <premis:eventOutcomeInformation>
+         <premis:eventOutcome>
+            0
+         </premis:eventOutcome>
+         <premis:eventOutcomeDetail>
+            <premis:eventOutcomeDetailNote>
+               Vera pdf validation with arguments....
+            </premis:eventOutcomeDetailNote>
+         </premis:eventOutcomeDetail>
+      </premis:eventOutcomeInformation>
+      <premis:linkingAgentIdentifier>
+         <premis:linkingAgentIdentifierType>
+            APP signin
+         </premis:linkingAgentIdentifierType>
+         <premis:linkingAgentIdentifierValue>
+            Simon Nilsson
+         </premis:linkingAgentIdentifierValue>
+      </premis:linkingAgentIdentifier>
+      <premis:linkingObjectIdentifier>
+         <premis:linkingObjectIdentifierType>
+            UUID
+         </premis:linkingObjectIdentifierType>
+         <premis:linkingObjectIdentifierValue>
+            long-uuid-sdf-asdf
+         </premis:linkingObjectIdentifierValue>
+      </premis:linkingObjectIdentifier>
+   </premis:event>
+   <premis:event>
+      <premis:eventIdentifier>
+         <premis:eventIdentifierType>
+            UUID
+         </premis:eventIdentifierType>
+         <premis:eventIdentifierValue>
+            1d1b3c60-8db8-4b39-b805-dac250792394
+         </premis:eventIdentifierValue>
+      </premis:eventIdentifier>
+      <premis:eventType>
+         A.P.P action
+      </premis:eventType>
+      <premis:eventDateTime>
+         2018-07-18 09:09:41.120528
+      </premis:eventDateTime>
+      <premis:eventDetailInformation>
+         <premis:eventDetail>
+            clam pdf
+         </premis:eventDetail>
+      </premis:eventDetailInformation>
+      <premis:eventOutcomeInformation>
+         <premis:eventOutcome>
+            2
+         </premis:eventOutcome>
+         <premis:eventOutcomeDetail>
+            <premis:eventOutcomeDetailNote>
+               clam pdf validation with arguments....
+            </premis:eventOutcomeDetailNote>
+         </premis:eventOutcomeDetail>
+      </premis:eventOutcomeInformation>
+      <premis:linkingAgentIdentifier>
+         <premis:linkingAgentIdentifierType>
+            APP signin
+         </premis:linkingAgentIdentifierType>
+         <premis:linkingAgentIdentifierValue>
+            DA Nilsson
+         </premis:linkingAgentIdentifierValue>
+      </premis:linkingAgentIdentifier>
+      <premis:linkingObjectIdentifier>
+         <premis:linkingObjectIdentifierType>
+            UUID
+         </premis:linkingObjectIdentifierType>
+         <premis:linkingObjectIdentifierValue>
+            other uuid
+         </premis:linkingObjectIdentifierValue>
+      </premis:linkingObjectIdentifier>
+   </premis:event>
+</premis:premis>

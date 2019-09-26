@@ -1,0 +1,22 @@
+{
+    "name": "parent",
+    "namespace": "namespace1",
+    "allowempty": 1,
+    "children": [
+        {
+            "name": "child1",
+            "namespace": "childnamespace1",
+            "allowempty": 1
+        }, {
+            "name": "child2",
+            "allowempty": 1,
+            "children": [
+                {
+                    "name": "childOfChild2",
+                    "namespace": "",
+                    "allowempty": 1
+                }
+            ]
+        }
+    ]
+}
