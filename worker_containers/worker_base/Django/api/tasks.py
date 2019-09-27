@@ -53,7 +53,8 @@ def execute_command(command, job_id):
     log = ""
     error = ""
 
-    logger.info("%s executing command: %s with id: %s" % (os.environ['HOSTNAME'], command, job_id))
+    logger.info("%s executing command: %s with id: %s" % (os.environ['HOSTNAME']ls
+
 
     try:
         p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
@@ -88,7 +89,7 @@ def execute_command(command, job_id):
     # data['job_id'] = job_id#...
     # figure out name of new container in network
     url = "http://" + container_name + "/api/worker/result/"
-    logger.info("%s returning result from job: %s to url: %s" % (os.environ['HOSTNAME'], job_id, url))
+    logger.info("%s returning RESULT from job: %s to url: %s" % (os.environ['HOSTNAME'], job_id, url))
     # logger.info(url)
     try:
         r = requests.put(url, data=data)
