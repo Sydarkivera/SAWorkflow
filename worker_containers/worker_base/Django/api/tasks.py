@@ -50,24 +50,31 @@ def execute_command(command, job_id):
     # logger.info(command)
     # logger.info(pwd.getpwuid( os.getuid() )[ 0 ])
 
-    logger.info("%s executing command: %s with id: %s" % (os.environ['HOSTNAME'], command, job_id))
-
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
-    # p = subprocess.check_output(command, shell=True)
-
-    stdout, stderr = p.communicate()
-    logger.info("Command finished")
     log = ""
     error = ""
-    if stdout and stdout != None:
-        log = stdout.decode('utf-8')
-        # logger.info(log)
-        # logger.info(stdout.decode('utf-8'))
-        # retval = (1, log)
-    if stderr and stderr != None:
-        error = stdout.decode('utf-8')
-        # logger.error(error)
-        # retval = (-1, stderr.decode('utf-8'))
+
+    logger.info("%s executing command: %s with id: %s" % (os.environ['HOSTNAME'], command, job_id))
+
+    try:
+        p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+        # p = subprocess.check_output(command, shell=True)
+
+        stdout, stderr = p.communicate()
+        logger.info("Command finished")
+        logger.info(p.returncode)
+        p.kill()
+        if stdout and stdout != None:
+            log = stdout.decode('utf-8')
+            # logger.info(log)
+            # logger.info(stdout.decode('utf-8'))
+            # retval = (1, log)
+        if stderr and stderr != None:
+            error = stdout.decode('utf-8')
+            # logger.error(error)
+            # retval = (-1, stderr.decode('utf-8'))
+    except Exception as e:
+        logging.error(traceback.format_exc())
+        error = traceback.format_exc()
 
     # communicate result back to server...(Environment variable or settings varaible for APP server name) TODO: container_name
     container_name = "django"
