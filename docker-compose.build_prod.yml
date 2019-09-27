@@ -30,9 +30,30 @@ services:
       - "5672:5672"  # we forward this port because it's useful for debugging
       - "15672:15672"  # here, we can access rabbitmq management plugin
 
+  # redis:
+  #   restart: always
+  #   image: redis:3.0
+  #   expose:
+  #     - "6379"
+  # app:
+  #   # environment:
+  #     # DATABASE_URL: postgres://app_user:changeme@db/app_db
+  #     # REDIS_URL: redis://redis
+  #     # DJANGO_MANAGEPY_MIGRATE: on
+  #   build:
+  #     context: .
+  #     dockerfile: ./Dockerfile
+  #   links:
+  #     - db:db
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - "./test_packages:/mnt/epp"
 
   django:
-    image: app_django
+    build:
+      context: ./APPBackend
+      dockerfile: ./prod.Dockerfile
     links:
       - db
       - rabbit
@@ -55,7 +76,9 @@ services:
 
   nginx:
       # restart: always
-      image: app_nginx
+      build:
+        context: ./Nginx
+        dockerfile: ./nginx.Dockerfile
       ports:
         - "80:80"
       volumes:
@@ -74,7 +97,9 @@ services:
         - django:django
 
   worker:
-    image: app_worker
+    build:
+      context: ./APPBackend
+      dockerfile: ./prod.Dockerfile
     command: ./run_celery.sh
     volumes:
       # - .:/app  # mount current directory inside container
