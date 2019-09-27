@@ -52,11 +52,11 @@ def execute_command(command, job_id):
 
     logger.info("%s executing command: %s with id: %s" % (os.environ['HOSTNAME'], command, job_id))
 
-    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    p = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=False)
     # p = subprocess.check_output(command, shell=True)
-    # logger.info(p)
 
     stdout, stderr = p.communicate()
+    logger.info("Command finished")
     log = ""
     error = ""
     if stdout and stdout != None:

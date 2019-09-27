@@ -23,3 +23,4 @@ static_files/
 ./packages/
 test_packages/
 workdir/
+APPBackend/static/

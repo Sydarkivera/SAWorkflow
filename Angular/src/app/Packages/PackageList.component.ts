@@ -20,7 +20,11 @@ export class PackageListComponent {
 
   updateData() {
     this.apiService.getPackages().subscribe((data) => {
-      this.packages = data as [any];
+      this.packages = (data as [any]).sort((a, b) => {
+        if(a.name < b.name) { return -1; }
+        if(a.name > b.name) { return 1; }
+        return 0;
+      });
       console.log(this.packages);
       
     }, (error) => {
