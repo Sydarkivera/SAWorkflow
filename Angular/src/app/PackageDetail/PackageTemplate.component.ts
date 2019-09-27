@@ -31,12 +31,10 @@ export class PackageTemplateComponent {
        });
     });
     this.apiService.getTemplates().subscribe((data) => {
+      
       let res = data as [any]
       this.templates = res.filter((item) => {
-        if (item.template_id > 1) {
-          return true;
-        }
-        return false;
+        return !item.hidden
       });
     });
   }

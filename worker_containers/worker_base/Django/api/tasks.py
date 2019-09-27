@@ -90,6 +90,7 @@ def execute_command(command, job_id):
             logger.info("Got non 200 status code when returning process result to APP")
             r.raise_for_status()
             # self.try_again(url, data)
+            logger.info("Got non 200 from APP")
         else:
             #status is ok and a new package should have been recieved.
             # logger.info("Got 200 from APP")

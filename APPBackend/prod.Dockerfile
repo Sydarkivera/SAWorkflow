@@ -26,6 +26,7 @@ RUN pip install -r requirements.txt
 RUN mkdir /code
 WORKDIR /code
 COPY ./Django /code/
+# VOLUME [ "/code/static" ]
 COPY ./static /code/static
 RUN mkdir /code/log && mkdir /code/internal && mv /a.out /code/internal/
 

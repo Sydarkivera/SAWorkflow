@@ -12,7 +12,7 @@ RUN apk --no-cache add icu-libs \
             bash \
             mc \
             curl \
-            util-linux libreoffice \
+            util-linux \
             libreoffice-common \
             libreoffice-writer \
             ttf-droid-nonlatin \

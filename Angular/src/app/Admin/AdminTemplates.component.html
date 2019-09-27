@@ -18,7 +18,7 @@
                 {{template.name}}
               </p>
               <!-- <i class="material-icons">arrow_back</i> -->
-              <i class="material-icons icon-button" (click)="deleteTemplate(template)" *ngIf="template.template_id > 1">delete</i>
+              <i class="material-icons icon-button" (click)="deleteTemplate(template)" *ngIf="!template.hidden">delete</i>
             </div>
           </div>
         </ng-template>

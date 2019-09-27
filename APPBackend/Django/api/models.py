@@ -47,6 +47,7 @@ class BigIntegerField(models.IntegerField):
 class Template(models.Model):
     template_id = models.AutoField(primary_key=True)
     name = models.TextField()
+    hidden = models.BooleanField(default=False)
     # processes = models.ManyToManyField(Process, related_name='template')
 
     class Meta:

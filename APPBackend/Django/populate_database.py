@@ -13,7 +13,6 @@ import shutil, os # for deleting and recreating workdir
 
 django.setup()
 
-from api.models import User
 from api.models import *
 import datetime
 
@@ -43,13 +42,13 @@ module1 = Module(name="Setup workdir",
                  tool_folder_name="Setup_workdir"
                  )
 module1.save()
-module2 = Module(name="Untar archive",
-                 type='1',
-                 form=[{"type":"checkbox", "label":"Verbose", "identifier":"verbose"}, {"type":"checkbox", "label":"Deleta archive after", "identifier":"delete_archive"}],
-                 python_module='tools.Untar_archive.untar',
-                 description="Untar the package .tar into a folder with the same name",
-                 hidden=True,
-                 tool_folder_name="Untar_archive"
+module2 = Module(name="Untar",
+                 type='0',
+                 filter='.*(\.tar)',
+                 form=[{"type":"checkbox", "label":"Verbose", "identifier":"verbose", "value": "-v"}],
+                 description="Untar all .tar fieles into the current folder",
+                 tool_folder_name="Untar_archive",
+                 command="tar xf #file -C #workdir #verbose "
                  )
 module2.save()
 module3 = Module(name="ClamAV",
@@ -60,44 +59,8 @@ module3 = Module(name="ClamAV",
                  tool_folder_name="ClamAV"
                  )
 module3.save()
-# module4 = Module(name="VeraPDF validate pdf1/a",
-#                  type='2',
-#                  form='[]',
-#                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-#                  command="verapdf #file",
-#                  module_id=3,
-#                  filter='.*(\.pdf)',
-#                  resultFilter='[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\\"1\\"[\\\w\\\W]*"}]',
-#                  tool_folder_name="VeraPDF",
-#                  docker_mount_point="/workdir"
-#                  )
-# module4.save()
-# module5 = Module(name="DROID",
-#                  type='2',
-#                  form='[]',
-#                  # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-#                  command="/run.sh #file",
-#                  # command="ls -al /workdir",
-#                  module_id=4,
-#                  filter='.*',
-#                  tool_folder_name="DROID",
-#                  docker_mount_point="/workdir",
-#                  resultFilter='[{"type": "Containing","value": "[\\\w\\\W]*Missmatch: \\"false\\"[\\\w\\\W]*"},{"type": "Not containing","value": "[\\\w\\\W]*Missmatch: \\"true\\"[\\\w\\\W]*"}]'
-#                  )
-# module5.save()
 
-module6 = Module(name="Unoconv",
-                 type='2',
-                 form=[],
-                 # command='[{"value":"verapdf","type":"text"}, {"type":"var", "name":"file"}]',
-                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
-                 # command="ls -al /workdir",
-                 filter='.*(\.doc)',
-                 tool_folder_name="unoconv",
-                 docker_mount_point="/workdir/"
-                 )
-module6.save()
-module8 = Module(name="Smart DROID",
+module8 = Module(name="DROID",
                  type='3',
                  form=[],
                 command="/run.sh \"#file\"",
@@ -108,30 +71,30 @@ module8 = Module(name="Smart DROID",
                  )
 module8.save()
 
-module11 = Module(name="Smart unoconv",
+module11 = Module(name="Unoconv",
                  type='3',
                  form=[],
                 command="unoconv -f pdf -e SelectPdfVersion=1 #file",
-                filter='.*(\.doc)$',
+                filter='.*(\.(doc|docx))$',
                 tool_folder_name="SMART_UNOCONV",
                 docker_mount_point="/workdir"
                  )
 module11.save()
-# module12 = Module(name="Smart verapdf",
-#                  type='3',
-#                  form=[],
-#                 command="verapdf -f 1a #file",
-#                 filter='.*(\.pdf)',
-#                 tool_folder_name="SMART_VERAPDF",
-#                 docker_mount_point="/workdir",
-#                 resultFilter=[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\"1\"[\\\w\\\W]*"}]
-#                  )
-# module12.save()
+module12 = Module(name="Verapdf",
+                 type='3',
+                 form=[],
+                command="verapdf -f 1a #file",
+                filter='.*(\.pdf)',
+                tool_folder_name="SMART_VERAPDF",
+                docker_mount_point="/workdir",
+                resultFilter=[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\"1\"[\\\w\\\W]*"}]
+                 )
+module12.save()
 
 
 # setup default templates
 
-template1 = Template(name="Default Start")
+template1 = Template(name="Default Start", hidden=True)
 template1.save()
 
 process2 = Process(order=1,
@@ -141,7 +104,7 @@ process2 = Process(order=1,
                    )
 process2.save()
 
-template2 = Template(name="Default Done")
+template2 = Template(name="Default Done", hidden=True)
 template2.save()
 
 template3 = Template(name="Empty template")
@@ -177,7 +140,7 @@ var = Variable(name="tools_path", data="/code/tools")
 var.save()
 var = Variable(name="premis_file_name", data="log/app_log.xml")
 var.save()
-var = Variable(name="work_dir_path_host", data="/Users/axenu/Sydarkivera/SAWorkflow/Django/workdir/")
+var = Variable(name="work_dir_path_host", data="/Users/axenu/Projects/Sydarkivera/APP/workdir")
 var.save()
 var = Variable(name="premis_template_path", data="/code/templates/premis.json")
 var.save()
@@ -221,15 +184,20 @@ var.save()
 # module12.dockerImage = image
 # module12.save()
 
-image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid worker")
+image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid")
 image.save()
 module8.dockerImage = image
 module8.save()
 
-image = DockerImage(name="unoconv_worker", mountpoint="/workdir", label="smart unoconv")
+image = DockerImage(name="unoconv_worker", mountpoint="/workdir", label="Unoconv")
 image.save()
 module11.dockerImage = image
 module11.save()
+
+image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="VeraPDF")
+image.save()
+module12.dockerImage = image
+module12.save()
 
 # create default admin users
 User.objects.all().delete()

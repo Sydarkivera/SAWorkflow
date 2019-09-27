@@ -7,9 +7,8 @@ WORKDIR /
 # install tool for clamav
 RUN apk --update add openjdk8-jre
 RUN apk add curl
-
 # download droid
-RUN curl -o droid.zip http://www.nationalarchives.gov.uk/documents/information-management/droid-binary-6.4-bin.zip
+RUN curl -L -o droid.zip http://www.nationalarchives.gov.uk/documents/information-management/droid-binary-6.4-bin.zip
 
 # a local version can be used instead of downloading it. (Used mostyl in development)
 # COPY droid.zip droid.zip

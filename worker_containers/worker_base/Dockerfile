@@ -1,5 +1,5 @@
 # Start with a Python alpine base image.
-FROM python:3.6-alpine3.8
+FROM python:3.6-alpine3.10
 
 # Some stuff that everyone has been copy-pasting
 # since the dawn of time.
@@ -10,7 +10,7 @@ RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav p
 RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
 RUN apk update
-RUN apk add --no-chache docker
+RUN apk --no-cache add docker
 
 ADD ./requirements.txt /requirements.txt
 

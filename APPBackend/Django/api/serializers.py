@@ -135,14 +135,14 @@ class TemplateListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Template
-        fields = ('name', 'template_id')
+        fields = ('name', 'template_id', 'hidden')
 
 class TemplateDetailSerializer(serializers.ModelSerializer):
     processes = ProcessSerializer(many=True)
 
     class Meta:
         model = Template
-        fields = ('name', 'template_id', 'processes')
+        fields = ('name', 'template_id', 'processes', 'hidden')
 
 
 # statistis serialisers
