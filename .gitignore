@@ -18,9 +18,8 @@ static/angular
 *.tar
 *.zip
 
-Angular6/build/
+
 static_files/
-packages/
-Angular8/
+./packages/
 test_packages/
 workdir/
