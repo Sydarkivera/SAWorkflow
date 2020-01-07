@@ -4,7 +4,7 @@ docker-compose -f docker-compose.prod.yml stop
 
 ./worker_containers/build_all.sh
 
-docker-compose -f docker-compose.prod.yml build
+docker build -f APPBackend/prod.Dockerfile --label Axenu/APP
 
 docker-compose -f docker-compose.prod.yml up -d
 

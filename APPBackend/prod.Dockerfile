@@ -28,7 +28,7 @@ WORKDIR /code
 COPY ./Django /code/
 # VOLUME [ "/code/static" ]
 COPY ./static /code/static
-RUN mkdir /code/log && mkdir /code/internal && mv /a.out /code/internal/
+RUN mkdir /code/log && mkdir /code/internal
 
 # Collect our static media.
 RUN python /code/manage.py collectstatic --noinput
