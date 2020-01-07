@@ -13,7 +13,7 @@ log/
 static_root/
 node_modules/
 .vscode/
-static/angular
+# static/angular
 
 *.tar
 *.zip
@@ -23,4 +23,4 @@ static_files/
 ./packages/
 test_packages/
 workdir/
-APPBackend/static/
+# APPBackend/static/
