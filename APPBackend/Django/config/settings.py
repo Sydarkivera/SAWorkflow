@@ -159,67 +159,104 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-if DEBUG:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'console': {
-                'class': 'logging.StreamHandler',
-            },
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, "log/all.log"),
-            },
-            'background': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, "log/background.log"),
-            },
+# if DEBUG:
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {                                                                                       
+        'simple': {
+            'format': '%(asctime)s,%(msecs)d %(levelname)-8s [%(filename)s:%(lineno)d] %(message)s',
+            'datefmt': '%Y-%m-%d:%H:%M:%S',
         },
-        'loggers': {
-            'django': {
-                'handlers': ['console'],
-                'level': 'INFO',
-                'propagate': True,
-            },
-            'background_task': {
-                'handlers': ['console'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple',
+            'level': 'INFO'
         },
-    }
-else:
-    LOGGING = {
-        'version': 1,
-        'disable_existing_loggers': False,
-        'handlers': {
-            'file': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, "log/all.log"),
-            },
-            'background': {
-                'level': 'DEBUG',
-                'class': 'logging.FileHandler',
-                'filename': os.path.join(BASE_DIR, "log/background.log"),
-            },
+        'all': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "log/all.log"),
+            'formatter': 'simple',
         },
-        'loggers': {
-            'django': {
-                'handlers': ['file'],
-                'level': 'INFO',
-                'propagate': True,
-            },
-            'background_task': {
-                'handlers': ['background'],
-                'level': 'DEBUG',
-                'propagate': True,
-            },
+        'background': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "log/background.log"),
+            'formatter': 'simple',
         },
-    }
+        'backend': {
+            'level': 'INFO',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "log/backend.log"),
+            'formatter': 'simple',
+        },
+        'error': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, "log/error.log"),
+            'formatter': 'simple',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'all', 'error'],
+            'level': 'DEBUG',
+        },
+        'django': {
+            'handlers': ['console', 'backend', 'all', 'error'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'background_task': {
+            'handlers': ['console', 'background', 'all', 'error'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
+# else:
+#     LOGGING = {
+#         'version': 1,
+#         'disable_existing_loggers': False,
+#         'handlers': {
+#             'all': {
+#                 'level': 'DEBUG',
+#                 'class': 'logging.FileHandler',
+#                 'filename': os.path.join(BASE_DIR, "log/all.log"),
+#             },
+#             'django': {
+
+#                 'level': 'INFO',
+#                 'class': 'logging.FileHandler',
+#                 'filename': os.path.join(BASE_DIR, "log/django.log"),
+#             },
+#             'background': {
+#                 'level': 'INFO',
+#                 'class': 'logging.FileHandler',
+#                 'filename': os.path.join(BASE_DIR, "log/background.log"),
+#             },
+#             'error': {
+#                 'level': 'WARNING',
+#                 'class': 'logging.FileHandler',
+#                 'filename': os.path.join(BASE_DIR, "log/background.log"),
+#             },
+#         },
+#         'loggers': {
+#             'django': {
+#                 'handlers': ['all', 'django', 'error'],
+#                 'level': 'DEBUG',
+#                 'propagate': False,
+#             },
+#             'background_task': {
+#                 'handlers': ['background', 'all', 'error'],
+#                 'level': 'DEBUG',
+#                 'propagate': False,
+#             },
+#         },
+#     }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

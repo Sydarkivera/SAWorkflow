@@ -178,10 +178,10 @@ def package_files(request, package_id):
     """
     package = get_object_or_404(Package, pk=package_id)
     specific_path = request.GET.get('path', '')
-    logger.info(specific_path)
+    logger.debug(specific_path)
     if request.method == 'GET':
         folderName = os.path.join(package.workdir, specific_path)
-        logger.info(folderName)
+        logger.debug(folderName)
         if 'download' in request.GET:
             if os.path.exists(folderName):
                 if os.path.isfile(folderName):

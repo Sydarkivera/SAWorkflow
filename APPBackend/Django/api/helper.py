@@ -33,7 +33,7 @@ def fixCommand(process, values):
             command = command[:result.start(0)] + command[result.end(0):]
             # args[i] = ""
         result = prog.search(command)
-    logger.info(command)
+    logger.debug(command)
     return command.split(' ')
 
 def get_values(process, package):

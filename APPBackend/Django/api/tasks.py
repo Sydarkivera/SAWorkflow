@@ -53,7 +53,7 @@ class pythonModuleBase:
         # sanitiza log filename
         logName = "".join(x for x in process.module.name if x.isalnum())
 
-        self.logger = logging.getLogger(
+        self.logger = logging.getLogger('background_task.' + 
             process.module.name + str(package.package_id))
         formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
         self.logger.setLevel(logging.DEBUG)
@@ -78,6 +78,8 @@ class pythonModuleBase:
         pass
 
     def run(self, process, package):
+
+        logger.info('started running module of name: ' + process.module.name)
         # do all preparations that is the same for all modules:
 
         # set default values
@@ -85,7 +87,7 @@ class pythonModuleBase:
 
         retval = 1
 
-        logger.info('run values updated')
+        logger.debug('run values updated')
 
         # setup extra
         self.setup(process, package, values)
@@ -97,7 +99,7 @@ class pythonModuleBase:
         filter = process.module.filter
         if filter == '':
             # run once.
-            logger.info('run no filter start')
+            logger.debug('run no filter start')
             res, logText = self.execute(process, package, values)
             # if there is an error, store it and return -1
             if res == -1:
@@ -109,13 +111,13 @@ class pythonModuleBase:
                 process.logs = [{'file': 'All files', 'log': logText}]
                 process.save()
 
-            logger.info('run no filter done')
+            logger.debug('run no filter done')
         else:
-            logger.info('run filter start')
+            logger.debug('run filter start')
             # setup regex
             allFiles = self.get_all_files(package, process)
 
-            logger.info('run filter file list generated')
+            logger.debug('run filter file list generated')
             numberOfFiles = len(allFiles)
             i = 0
             retval = 1
@@ -124,9 +126,9 @@ class pythonModuleBase:
                 if not f['status']:
                     fileName = f['file']
                     values['file'] = fileName
-                    logger.info('run filter before execute')
+                    logger.debug('run filter before execute')
                     res, logText = self.execute(process, package, values)
-                    logger.info('run filter after execute')
+                    logger.debug('run filter after execute')
                     if res == -1:
                         allFiles[i]['status'] = False
                         errorDict = {}
@@ -149,8 +151,9 @@ class pythonModuleBase:
             package.workdir)
 
         package.save()
+
+        logger.info('finished running module of name: ' + process.module.name)
         return retval
-        pass
 
     def teardown(self, process, package, values):
         pass
@@ -205,7 +208,7 @@ class bashModule(pythonModuleBase):
 
     def execute(self, process, package, values):
         args = fixCommand(process, values)
-        logger.info(args)
+        logger.debug(args)
         # print(args)
         # print('join', ' '.join(args))
         # print('after join')
@@ -234,7 +237,7 @@ class bashModule(pythonModuleBase):
         if stdout:
             # self.logger.info('File: ' + )
             log = stdout.decode('utf-8')
-            self.logger.info(log)
+            self.logger.debug(log)
             res, t = self.AnalyseLog(process, log)
             # if (res == -1):
             # return (res, t)
@@ -587,23 +590,27 @@ def add_new_tar_package(file_path, file_name):
     # logger.info('found new package: ' + file_path + '!')
     # create database entry, queue jobs to create workdir and untar files.
     archive_name = file_name.split('.')[-2]
+    package.name = archive_name
 
     # fetch mets.xml file inside the tar package.
-    output = subprocess.check_output(
-        ['tar', 'xOf', file_path, archive_name + '/mets.xml'])
+    try:
+        output = subprocess.check_output(
+            ['tar', 'xOf', file_path, archive_name + '/mets.xml'])
 
-    # get the package name, either from the mets.xml file or just use the tar file name.
-    label = archive_name
-    if (len(output) > 0):
-        start_index = output.find(b'LABEL="')
-        if start_index > 0:
-            label = output[start_index +
-                            7:start_index + 200].decode('utf-8')
-            end_index = label.find('" ')
-            label = label[0:end_index]
-            package.type = Package.PACKAGE_TYPE_SIP
+        # get the package name, either from the mets.xml file or just use the tar file name.
+        if (len(output) > 0):
+            start_index = output.find(b'LABEL="')
+            if start_index > 0:
+                label = output[start_index +
+                                7:start_index + 200].decode('utf-8')
+                end_index = label.find('" ')
+                package.name = label[0:end_index]
+                package.type = Package.PACKAGE_TYPE_SIP
 
-    package.name = label
+    except subprocess.CalledProcessError as e:
+        logger.info('faild too open mets file in tar archive: ' + file_name + ' : ' + str(e.output))
+
+    
     package.save()
 
     execute_initial_tasks_on_package(package)
