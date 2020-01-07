@@ -15,9 +15,9 @@ RUN apk update
 RUN apk add docker
 
 ADD ./Django/requirements.txt /requirements.txt
-ADD ./Django/viewtar.c /viewtar.c
+# ADD ./Django/viewtar.c /viewtar.c
 
-RUN gcc /viewtar.c
+# RUN gcc /viewtar.c
 # Install our requirements.
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt

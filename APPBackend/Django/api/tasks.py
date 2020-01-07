@@ -590,7 +590,7 @@ def add_new_tar_package(file_path, file_name):
 
     # fetch mets.xml file inside the tar package.
     output = subprocess.check_output(
-        ['/code/internal/a.out', file_path, archive_name + '/mets.xml'])
+        ['tar', 'xOf', file_path, archive_name + '/mets.xml'])
 
     # get the package name, either from the mets.xml file or just use the tar file name.
     label = archive_name

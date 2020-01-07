@@ -9,7 +9,9 @@ sleep 10
 # migrate db, so we have the latest db schema
 #python manage.py migrate
 
-#python populate_database.py
+# python populate_database.py
+
+python /code/manage.py collectstatic --noinput
 
 
 gunicorn config.wsgi:application -w 2 -b :80
