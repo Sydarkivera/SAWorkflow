@@ -1,4 +1,4 @@
-Django==1.11.5
+Django==1.11.23
 django-background-tasks==1.1.10
 django-compat==1.0.14
 djangorestframework==3.9.1
