@@ -12,6 +12,7 @@ import { PackageDashboardComponent }    from './PackageDashboard.component';
 import { PackageStatusComponent }    from './PackageStatus.component';
 import { PackageTemplateComponent }    from './PackageTemplate.component';
 import { PackageHeaderComponent } from './PackageHeader.component';
+import { PackageFilesComponent } from './PackageFiles.component';
 
 //modules
 import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
@@ -41,7 +42,8 @@ import { PackageService } from '../Services/package.service';
     PackageDashboardComponent,
     PackageHeaderComponent,
     PackageStatusComponent,
-    PackageTemplateComponent
+    PackageTemplateComponent,
+    PackageFilesComponent
   ],
   providers: [APIService, PackageService]
 })

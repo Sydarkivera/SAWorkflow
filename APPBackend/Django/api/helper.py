@@ -91,3 +91,20 @@ def errorHappend(fileName=""):
         except FileType.DoesNotExist:
             ft = FileType(name=fileType, errors=1)
             ft.save()
+
+
+def calculateFileType(path):
+    filetypes = {}
+    total_number_of_files = 0
+    total_size = 0
+    for dirpath, dirs, files in os.walk(path):
+        for fileName in files:
+            type = fileName.split('.')[-1].upper()
+            # logger.info(fileName)
+            total_size += os.path.getsize(os.path.join(dirpath, fileName))
+            total_number_of_files += 1
+            if type in filetypes:
+                filetypes[type] += 1
+            else:
+                filetypes[type] = 1
+    return (filetypes, total_number_of_files, total_size)

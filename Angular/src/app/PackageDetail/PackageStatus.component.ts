@@ -40,9 +40,9 @@ export class PackageStatusComponent {
     });
 
     clearInterval(this.interval);
-    this.interval = setInterval(() => {
-      this.updateData();
-    }, 3000);
+    // this.interval = setInterval(() => {
+    //   this.updateData();
+    // }, 3000);
   }
 
   showModal(process, type) {
@@ -99,6 +99,28 @@ export class PackageStatusComponent {
       setTimeout(() => {
         this.router.navigate(['packages']);
       }, 2000)
+    }
+  }
+
+  abortProcess() {
+    if (confirm("Are you sure to abort the process? You can restart it later.")) {
+
+
+      // find running process
+      // let processId = null;
+      // for (let p of this.package.processes) {
+      //   if (processId.status === 'Aborted') {
+      //     processId = p.id;
+      //   }
+      // }
+
+      this.apiService.abortPackage(this.id).subscribe((data) => {
+        this.messageActive = true;
+        this.messageText = "Package was successfully aborted."
+      });
+      // setTimeout(() => {
+      //   this.router.navigate(['packages']);
+      // }, 2000)
     }
   }
 

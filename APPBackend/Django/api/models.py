@@ -71,6 +71,7 @@ class Package(models.Model):
     PACKAGE_STATUS_DONE = 4
     PACKAGE_STATUS_EDITED = 5
     PACKAGE_STATUS_FINISHED = 6
+    PACKAGE_STATUS_ABORTED = 7
     PACKAGE_STATUS = (
         (PACKAGE_STATUS_NEW, 'New'),
         (PACKAGE_STATUS_WAITING, 'Waiting'),
@@ -79,6 +80,7 @@ class Package(models.Model):
         (PACKAGE_STATUS_DONE, 'Done'),
         (PACKAGE_STATUS_EDITED, 'Edited'),
         (PACKAGE_STATUS_FINISHED, 'Finished'),
+        (PACKAGE_STATUS_ABORTED, 'Aborted'),
     )
     PACKAGE_TYPE_SIP = 0
     PACKAGE_TYPE_TAR = 1
@@ -148,6 +150,7 @@ class Process(models.Model):
     PROCESS_STATUS_DONE = 4
     PROCESS_STATUS_PAUSED = 5
     PROCESS_STATUS_EDITED = 6
+    PROCESS_STATUS_ABORTED = 7
     PROCESS_STATUS = (
         (PROCESS_STATUS_DEFAULT, 'New'),
         (PROCESS_STATUS_WAITING, 'Waiting'),
@@ -156,6 +159,7 @@ class Process(models.Model):
         (PROCESS_STATUS_DONE, 'Done'),
         (PROCESS_STATUS_PAUSED, 'Paused'), # is it possible?
         (PROCESS_STATUS_EDITED, 'Edited'),
+        (PROCESS_STATUS_ABORTED, 'Aborted'),
     )
     process_id = models.AutoField(primary_key=True)
     order = models.IntegerField(default=10000)

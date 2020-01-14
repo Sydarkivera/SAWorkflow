@@ -19,6 +19,7 @@ export class FileBrowserComponent {
   @Input() canCreateFolder: boolean = true;
   @Input() package_id: number;
   @Input() path: string;
+  @Input() isModal: boolean = true;
   @Input()
   set active(active: boolean) {
     this._active = active;

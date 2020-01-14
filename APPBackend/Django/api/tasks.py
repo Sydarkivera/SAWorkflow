@@ -34,417 +34,16 @@ from datetime import timedelta
 from celery.task import periodic_task
 from time import sleep
 # include helper functions for building a command
-from api.helper import fixCommand, get_values, errorHappend
+from api.helper import fixCommand, get_values, errorHappend, calculateFileType
 from api.worker.helper import send_request
+
+from api.taskModules.bash import BashModule
+from api.taskModules.docker import DockerModule
 
 # making http request to another server for smart docker module
 import requests
 
 logger = getLogger('background_task')
-
-
-class pythonModuleBase:
-
-    def __init__(self):
-        pass
-
-    def setupLogging(self, process, package):
-
-        # sanitiza log filename
-        logName = "".join(x for x in process.module.name if x.isalnum())
-
-        self.logger = logging.getLogger('background_task.' + 
-            process.module.name + str(package.package_id))
-        formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-        self.logger.setLevel(logging.DEBUG)
-
-        process.log_path = os.path.join(package.logdir, logName + '.log')
-        process.err_path = os.path.join(package.logdir, logName + '.err')
-        self.log_hdlr = logging.FileHandler(process.log_path)
-        self.log_hdlr.setFormatter(formatter)
-        self.log_hdlr.setLevel(logging.INFO)
-        self.logger.addHandler(self.log_hdlr)
-        self.err_hdlr = logging.FileHandler(process.err_path)
-        self.err_hdlr.setFormatter(formatter)
-        self.err_hdlr.setLevel(logging.ERROR)
-        self.logger.addHandler(self.err_hdlr)
-        process.save()
-
-    def execute(self, process, package, values):
-        # execute writes to log continiously and returns error if there are any.
-        pass
-
-    def setup(self, process, package, values):
-        pass
-
-    def run(self, process, package):
-
-        logger.info('started running module of name: ' + process.module.name)
-        # do all preparations that is the same for all modules:
-
-        # set default values
-        values = get_values(process, package)
-
-        retval = 1
-
-        logger.debug('run values updated')
-
-        # setup extra
-        self.setup(process, package, values)
-
-        errorFiles = []
-        logs = []
-
-        # check filter.
-        filter = process.module.filter
-        if filter == '':
-            # run once.
-            logger.debug('run no filter start')
-            res, logText = self.execute(process, package, values)
-            # if there is an error, store it and return -1
-            if res == -1:
-                logger.error(logText)
-                process.errors = [{'file': 'All files', 'log': logText}]
-                process.save()
-                return -1
-            else:
-                process.logs = [{'file': 'All files', 'log': logText}]
-                process.save()
-
-            logger.debug('run no filter done')
-        else:
-            logger.debug('run filter start')
-            # setup regex
-            allFiles = self.get_all_files(package, process)
-
-            logger.debug('run filter file list generated')
-            numberOfFiles = len(allFiles)
-            i = 0
-            retval = 1
-            for i in range(numberOfFiles):
-                f = allFiles[i]
-                if not f['status']:
-                    fileName = f['file']
-                    values['file'] = fileName
-                    logger.debug('run filter before execute')
-                    res, logText = self.execute(process, package, values)
-                    logger.debug('run filter after execute')
-                    if res == -1:
-                        allFiles[i]['status'] = False
-                        errorDict = {}
-                        errorDict['file'] = fileName
-                        errorDict['log'] = logText
-                        errorFiles.append(errorDict)
-                        errorHappend(fileName)
-                        retval = -1
-                    else:
-                        allFiles[i]['status'] = True
-                        logs.append({'file': fileName, 'log': logText})
-                    process.errors = errorFiles
-                    process.logs = logs
-                    process.progress = (i + 1) / numberOfFiles * 100
-                    process.allFiles = allFiles
-                    process.save()
-        self.teardown(process, package, values)
-        # calculate the new filetype split
-        package.statistics['fileTypes'], package.statistics['total_number_of_files'], package.statistics['total_size'] = calculateFileType(
-            package.workdir)
-
-        package.save()
-
-        logger.info('finished running module of name: ' + process.module.name)
-        return retval
-
-    def teardown(self, process, package, values):
-        pass
-
-    def AnalyseLog(self, process, log):
-        for resFilter in process.module.resultFilter:
-            pattern = resFilter['value']
-            match = re.match(pattern, log)
-            logger.info(resFilter)
-
-            if match and resFilter['type'] != "Containing":
-                # logger.info(match)
-                self.logger.error(log)
-                return (-1, log)
-            elif not match and resFilter['type'] == "Containing":
-                self.logger.error(log)
-                return (-1, log)
-        return (1, "")
-
-    def teardownLogging(self):
-        self.logger.removeHandler(self.log_hdlr)
-        self.logger.removeHandler(self.err_hdlr)
-        del self.logger, self.log_hdlr, self.err_hdlr
-
-    def get_all_files(self, package, process):
-        filter = process.module.filter
-        try:
-            pattern = re.compile(filter)
-        except:
-            # self.logger.error('Regex is invalid: ' + filter)
-            logger.error('Regex is invalid: ' + filter)
-            return -1
-
-        # logger.info('run filter regex generated')
-        # calculate which files that should be run:
-        allFiles = []
-        errorFiles = []
-        logs = []
-        if process.allFiles == []:
-            for root, dirs, files in os.walk(package.workdir):
-                for name in files:
-                    file = os.path.join(root, name)
-                    if pattern.match(file):
-                        allFiles.append({"file": file, "status": False})
-            process.allFiles = allFiles
-            process.save()
-        else:
-            allFiles = process.allFiles
-        return allFiles
-
-class bashModule(pythonModuleBase):
-
-    def execute(self, process, package, values):
-        args = fixCommand(process, values)
-        logger.debug(args)
-        # print(args)
-        # print('join', ' '.join(args))
-        # print('after join')
-
-        # p = subprocess.Popen('/bin/sh', stdout=subprocess.PIPE,
-        #                      stderr=subprocess.STDOUT)
-
-        # stdout, stderr = p.communicate(' '.join(args))
-
-        try:
-            stdout = subprocess.check_output(' '.join(args), shell=True)
-        except subprocess.CalledProcessError as e:
-            # print e.output
-            # error = stderr.decode('utf-8')
-            self.logger.error(e.output.decode('utf-8'))
-            return (-1, e.output.decode('utf-8'))
-
-
-        # validate output, check if there are any error, or if there are errors in the info file.
-        # if stderr:
-            # error = stderr.decode('utf-8')
-            # self.logger.error(error)
-            # return (-1, error)
-
-        log = ''
-        if stdout:
-            # self.logger.info('File: ' + )
-            log = stdout.decode('utf-8')
-            self.logger.debug(log)
-            res, t = self.AnalyseLog(process, log)
-            # if (res == -1):
-            # return (res, t)
-        return (1, log)
-
-
-class dockerModule(pythonModuleBase):
-
-    def setup(self, process, package, values):
-        pass
-
-    def execute(self, process, package, values):
-
-        # edit path to be relative in the container
-        if 'file' in values:
-            p = values['file']
-            relative = os.path.relpath(p, package.workdir)
-            values['file'] = os.path.join(
-                process.module.dockerImage.mountpoint, relative)
-
-        if 'workdir' in values:
-            p = values['workdir']
-            relative = os.path.relpath(p, package.workdir)
-            values['workdir'] = os.path.join(
-                process.module.dockerImage.mountpoint, relative)
-
-        client = docker.from_env()
-
-        host_work_dir = Variable.objects.get(name="work_dir_path_host").data
-        local_work_dir = Variable.objects.get(name="work_dir_path").data
-        unique_workdir = os.path.relpath(package.workdir, local_work_dir)
-        host_path = os.path.join(host_work_dir, unique_workdir)
-
-        volumes = {host_path: {
-            'bind': process.module.dockerImage.mountpoint, 'mode': 'rw'}}
-        command = fixCommand(process, values)
-
-        logger.info('host_path: ' + host_path)
-        logger.info(volumes)
-        logger.info(command)
-
-        container = client.containers.run(
-            process.module.dockerImage.name, command, detach=True, volumes=volumes)
-        retval = 1
-        logger.info('docker execute')
-        container.wait()
-        retText = container.logs().decode('utf-8')
-        # for log in container.logs(stream=True):
-        res, t = self.AnalyseLog(process, retText)
-        if res == -1:
-            retval = -1
-        else:
-            self.logger.info(retText)
-
-        logger.info('docker done')
-
-        logger.info('docker remove')
-        container.remove()
-        return (retval, retText)
-
-
-class dockerSmartModue(pythonModuleBase):
-    def run(self, process, package):
-
-        # get file list
-        allFiles = self.get_all_files(package, process)
-        first_file = ""
-        index = 0
-        for file_obj in allFiles:
-            if not file_obj['status']:
-                first_file = file_obj['file']
-                break
-            index += 1
-        if first_file == "":
-            logger.error("no files to process, quitting")
-            return 1
-
-        # logger.info("first file: " + first_file)
-        # calculate first command, and save values in database.
-        values = get_values(process, package)
-        # values['file'] =
-        # if 'file' in values:
-        p = first_file
-        logger.info("p: " + p + " workdir: " + package.workdir)
-        relative = os.path.relpath(p, package.workdir)
-        values['file'] = os.path.join(
-            process.module.dockerImage.mountpoint, relative)
-
-        if 'workdir' in values:
-            p = values['workdir']
-            relative = os.path.relpath(p, package.workdir)
-            values['workdir'] = os.path.join(
-                process.module.dockerImage.mountpoint, relative)
-
-
-        command = fixCommand(process, values)
-
-        # create Job object
-        container_name = process.module.dockerImage.name
-        container_name = container_name.replace('_', '-')
-
-
-        # check if there are any containers already open with this name
-        container_iteration = 2
-        jobs_of_this_type = Job.objects.filter(container_name=container_name)
-        logger.info(jobs_of_this_type)
-        if jobs_of_this_type:
-            for temp_job in jobs_of_this_type:
-                logger.info("job in list")
-                logger.info(temp_job)
-                logger.info(temp_job.container_iteration)
-                if temp_job.container_iteration >= container_iteration:
-                    container_iteration = temp_job.container_iteration + 1
-        job = Job(process=process, file_name=first_file, file_index=index, container_name=container_name, container_iteration=container_iteration)
-        job.save()
-        container_name += "-" + str(container_iteration)
-
-        # start docker container and save a WIP object...
-        host_work_dir = Variable.objects.get(name="work_dir_path_host").data
-        local_work_dir = Variable.objects.get(name="work_dir_path").data
-        unique_workdir = os.path.relpath(package.workdir, local_work_dir)
-        host_path = os.path.join(host_work_dir, unique_workdir)
-
-        logger.info('host_path' + host_path)
-        logger.info('mountpoint: ' + process.module.dockerImage.mountpoint)
-
-        volumes = {host_path: {
-            'bind': process.module.dockerImage.mountpoint, 'mode': 'rw'}}
-        logger.info(container_name)
-        logger.info(volumes)
-
-        # start container
-        # TODO change to trying to create a new container and fail if it doesn't work.
-        need_network = False
-        client = docker.from_env()
-        try:
-            container = client.containers.get(container_name)
-            logger.error("A container already exists")
-            if container.status == "running":
-                container.kill()
-            container.remove()
-        except docker.errors.NotFound:
-            # container does not exist, run it
-            pass
-        container = client.containers.run(
-            process.module.dockerImage.name, detach=True, volumes=volumes, hostname=container_name, name=container_name)
-
-        # list docker networks to select the network for app
-        # network name: "APP_Default"
-        network_list = client.networks.list(names=["APP_Default"])
-        if len(network_list) < 1:
-            logger.error(
-                "docker network_list does not contain any instance of 'APP_Default'.")
-            # logger.info(client.networks.list())
-            # for network in
-        APP_network = network_list[0]
-        already_in_network = False
-        # logger.info(APP_network)
-        # logger.info(APP_network.containers)
-        # logger.info("test if container already in network")
-        for con in APP_network.containers:
-            logger.log(con.name)
-            if con.name == container_name:
-                already_in_network = True
-
-        if not already_in_network:
-            try:
-                APP_network.connect(container, aliases=[container_name])
-            except docker.errors.APIError as e:
-                logger.error("Error adding container to network")
-
-
-        job.container_id = container.id
-        job.save()
-        # an object is needed for running "smart docker job". it needs:
-        # Job_id, container_name, container_id, values, pointer to process
-
-        # when a job is started the object is created and stored and the first command is dispatched.
-
-        command_string = ' '.join(command)
-        data = {}
-        data['command'] = command_string
-        # data['file'] = first_file
-        data['process_id'] = process.process_id
-        data['file'] = first_file
-        data['job_id'] = job.id
-        # data['job_id'] = job_id#...
-        # figure out name of new container in network
-        url = "http://" + container_name + "/start/"
-        logger.info(data)
-        logger.info(url)
-        logger.info(job)
-        send_request(url, data)
-        # try:
-        #     r = requests.put(url, data=data)
-        #     logger.info("status code: " + str(r.status_code))
-        #     if r.status_code != requests.codes.ok:
-        #         r.raise_for_status()
-        #         send_request(url, data)
-        # except requests.exceptions.RequestException:
-        #     send_request(url, data)
-        #
-        # #     #delay then try again
-        # #     logger.info("failed to send start message to server. TODO try again")
-        return 2
-
-# @background(schedule=1)
 
 
 @task(name="executeProcessFlow")
@@ -473,13 +72,13 @@ def executeProcessFlow(package_id, skip_failed_tasks=False):
                             process.module.python_module)
                         obj = module.task()
                     elif process.module.type == Module.MODULE_TYPE_COMMAND:
-                        obj = bashModule()
-                    elif process.module.type == Module.MODULE_TYPE_DOCKER:
-                        # run the specified image.
-                        obj = dockerModule()
+                        obj = BashModule()
+                    # elif process.module.type == Module.MODULE_TYPE_DOCKER:
+                    #     # run the specified image.
+                    #     obj = dockerModule()
                     elif process.module.type == Module.MODULE_TYPE_SMART_DOCKER:
                         # run the specified image.
-                        obj = dockerSmartModue()
+                        obj = DockerModule()
                     # execute
                     obj.setupLogging(process, package)
                     res = obj.run(process, package)
@@ -545,8 +144,6 @@ def moduleFailed(name, process, package):
     package.status = Package.PACKAGE_STATUS_ERROR
     process.save()
 
-# @app.on_after_configure.connect
-
 def execute_initial_tasks_on_package(package):
     # add the default start template to the package
     template = Template.objects.get(name="Default Start")
@@ -563,7 +160,7 @@ def execute_initial_tasks_on_package(package):
     dest = os.path.join(workdir_path, str(uuid.uuid4()))
     package.logdir = os.path.join(dest, 'log')
     try:
-        # cant start logging before folder in place.
+        # cant start logging before folder is in place.
         package.workdir = dest
         if not package.path.endswith('.tar'):
             shutil.copytree(package.path, package.workdir)
@@ -580,7 +177,11 @@ def execute_initial_tasks_on_package(package):
         return -1
 
     # calculate metrics and execute initial tasks
-    calculateMetricsForNewPackage(package)
+    # calculateMetricsForNewPackage(package)
+    package.statistics['fileTypes'], package.statistics['total_number_of_files'], package.statistics['total_size'] = calculateFileType(
+        package.workdir)
+    package.save()
+    
     createLogFile(package)
     executeProcessFlow.delay(package.package_id)
 
@@ -782,21 +383,6 @@ def finishPackage(package_id):
     package.save()
 
 
-def calculateFileType(path):
-    filetypes = {}
-    total_number_of_files = 0
-    total_size = 0
-    for dirpath, dirs, files in os.walk(path):
-        for fileName in files:
-            type = fileName.split('.')[-1].upper()
-            # logger.info(fileName)
-            total_size += os.path.getsize(os.path.join(dirpath, fileName))
-            total_number_of_files += 1
-            if type in filetypes:
-                filetypes[type] += 1
-            else:
-                filetypes[type] = 1
-    return (filetypes, total_number_of_files, total_size)
 
 
 @periodic_task(run_every=crontab(minute="50", hour="23"))

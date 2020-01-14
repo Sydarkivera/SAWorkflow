@@ -14,6 +14,7 @@ urlpatterns = [
         url(r'^(?P<package_id>[0-9]+)/files/$', views.package_files),
         url(r'^(?P<id>[0-9]+)/$', views.package_detail),
         url(r'^(?P<id>[0-9]+)/process/$', views.process_list),
+        url(r'^(?P<package_id>[0-9]+)/abort/$', views.package_abort),
         # run workflows
         url(r'^(?P<package_id>[0-9]+)/execute/$', views.package_execute),
         url(r'^(?P<package_id>[0-9]+)/finish/$', views.package_finish),

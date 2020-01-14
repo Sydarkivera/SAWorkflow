@@ -163,6 +163,28 @@ def package_execute(request, package_id):
 
 
 @api_view(['POST'])
+def package_abort(request, package_id):
+
+    if request.method == 'POST':
+        # pause running the current flow. It can be resumed later.
+        package = get_object_or_404(Package, pk=package_id)
+        # if package.status != package.PACKAGE_STATUS_DONE:
+        for process in package.processes.all():
+            if process.status == Process.PROCESS_STATUS_RUNNING:
+                process.status = process.PROCESS_STATUS_ABORTED
+                process.save()
+            elif process.status == Process.PROCESS_STATUS_WAITING:
+                process.status = process.PROCESS_STATUS_ABORTED
+                process.save()
+        package.status = package.PACKAGE_STATUS_ABORTED
+        package.save()
+        # executeProcessFlow.delay(package_id)
+        return HttpResponse(status=204)
+        # finishPackage.delay(package_id)
+        # return HttpResponse(status=204)
+
+
+@api_view(['POST'])
 def package_finish(request, package_id):
     if request.method == 'POST':
         #done buton pressed in ui.

@@ -120,6 +120,10 @@ export class APIService {
     });
   }
 
+  abortPackage(packageId) {
+    return this.http.post('/api/package/' + packageId + '/abort/', {});
+  }
+  
   //files
 
   getFiles(path, specific="") {

@@ -31,8 +31,8 @@
       </td>
       <td class="align-middle">{{process.status}}</td>
       <td class="align-middle"><button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Open log</button></td>
-      <td class="align-middle">
-        <button class="btn btn-danger"
+      <td class="align-middle" style="max-width: 100px">
+          <button class="btn btn-danger"
                 (click)="showModal(process, 'error_log')"
                 [disabled]="process.status != 'Error' && process.errors.length <= 0"
                 [class.btn-outline-danger]="process.errors.length <= 0">
@@ -50,6 +50,7 @@
   Done
   <!-- <i class="material-icons my-auto align-middle icon-small">done</i> -->
 </button>
+<button class="btn btn-warning float-right" (click)="abortProcess()">abort/pause</button>
 <button class="btn btn-danger float-right" (click)="removePackage()">
   Delete
   <i class="material-icons my-auto align-middle icon-small">delete</i>

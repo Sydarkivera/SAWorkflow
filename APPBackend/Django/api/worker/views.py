@@ -51,7 +51,7 @@ def result(request):
     if request.method == 'PUT':
         # check and validate result
         if 'job_id' not in request.data:
-            logger.info("job_id missing in request.data")
+            logger.warn("job_id missing in request.data")
             return HttpResponse("Missing job_id in request body", status=400)
 
         job = get_object_or_404(Job, pk=request.data['job_id'])
@@ -139,10 +139,13 @@ def result(request):
         # send_request(url, data)
 
         logger.info("Recieved data.\nThe response: %s was returned" % (data))
+        logger.info('Proccess.status = %s' % str(process.status))
+
+        if process.status == process.PROCESS_STATUS_ABORTED:
+            logger.info('Package is aborted')
+            return JsonResponse({"done": True, "aborted": True}, status=200)
 
 
-        # add.now(3, 7)
-        # return HttpResponse("A simple get request. started add task", status=200)
         return JsonResponse(data, status=200)
 
 def close_container(process, job):

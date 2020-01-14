@@ -5,7 +5,7 @@
 <h1>Sign in</h1>
 
 <div class="card" style="width: 18rem;">
-  <div class="card-body">
+  <form class="card-body" (submit)="login()">
     <!-- <h5 class="card-title">Login</h5> -->
     <label for="username">Username</label>
     <input
@@ -15,6 +15,7 @@
       placeholder="Username"
       [(ngModel)]="username"
       [class.is-invalid]="usernameError != ''"
+      name="username"
       >
       <div class="invalid-feedback" *ngIf="usernameError != ''">
         {{usernameError}}
@@ -27,12 +28,13 @@
       placeholder="Password"
       [(ngModel)]="password"
       [class.is-invalid]="passwordError != ''"
+      name="password"
       >
       <div class="invalid-feedback" *ngIf="passwordError != ''">
-        {{usernameError}}
+        {{passwordError}}
       </div>
       <button class="btn btn-lg btn-primary btn-block" type="submit" (click)="login()">Sign in</button>
-  </div>
+  </form>
 </div>
 <!--
 <form class="col-xs-3">
