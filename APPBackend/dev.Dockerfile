@@ -1,5 +1,5 @@
 
-FROM python:3.5-alpine
+FROM python:3.7-alpine
 
 # Copy in your requirements file
 ADD ./Django/requirements.txt /requirements.txt

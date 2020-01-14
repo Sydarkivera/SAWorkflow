@@ -1,5 +1,5 @@
 # Start with a Python image.
-FROM python:3.5-alpine
+FROM python:3.7-alpine
 
 # Some stuff that everyone has been copy-pasting
 # since the dawn of time.
