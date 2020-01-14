@@ -1,5 +1,8 @@
 # A.P.P - Sydarkivera
 
+[![Build automated](https://img.shields.io/docker/cloud/automated/axenu/app.svg)](https://hub.docker.com/repository/docker/axenu/app/general) 
+[![Build Status](https://img.shields.io/docker/cloud/build/axenu/app.svg)](https://hub.docker.com/repository/docker/axenu/app/general) 
+
 ## About
 
 A.P.P is a tool developed by Sydarkivera to create a user friendly and extensible interface for file processing workflows. The tools is developed with focus on handling every possible tool for verifying, validating and converting files in batches. To allow for great flexibility A.P.P has support for user defined tools which can easily be added to the system.
