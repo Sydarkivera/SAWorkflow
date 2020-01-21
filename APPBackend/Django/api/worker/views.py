@@ -108,7 +108,13 @@ def result(request):
             executeProcessFlow(process.package.package_id, True)
             return JsonResponse({"done": True}, status=200)
 
-        job.file_name = smart_str(allFiles[job.file_index]['file'])
+        # logger.info(allFiles[job.file_index]['file'])
+        # logger.info(smart_str(allFiles[job.file_index]['file']))
+        # # logger.debug(str(allFiles[job.file_index]['file'], 'utf-8'))
+        # logger.info(bytes(allFiles[job.file_index]['file'], 'utf-8'))
+        # logger.info(''.join([i if ord(i) < 128 else ' ' for i in allFiles[job.file_index]['file']]))
+
+        job.file_name = ''.join([i if ord(i) < 128 else ' ' for i in allFiles[job.file_index]['file']])
         job.save()
 
         # reply with next task, if there are any, else end it.
