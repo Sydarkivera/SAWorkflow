@@ -2,8 +2,6 @@
 FROM python:3.7-alpine
 
 # Copy in your requirements file
-ADD ./Django/requirements.txt /requirements.txt
-ADD ./Django/viewtar.c /viewtar.c
 
 # OR, if you’re using a directory for your requirements, copy everything (comment out the above and uncomment this if so):
 # ADD requirements /requirements
@@ -38,6 +36,10 @@ RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav p
 RUN apk update
 RUN apk add docker
 #RUN service docker enable
+
+
+ADD ./Django/requirements.txt /requirements.txt
+ADD ./Django/viewtar.c /viewtar.c
 
 
 #insatll verapdf

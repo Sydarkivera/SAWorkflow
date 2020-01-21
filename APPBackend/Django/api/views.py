@@ -293,7 +293,7 @@ def variables_global(request):
 @permission_classes((AllowAny, ))
 def permissions(request):
     # logger.info(request.user)
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         # username = request.user.username
         # permissions = Permission.objects.filter(user=request.user)
         #
