@@ -50,19 +50,22 @@ export class PackageStatusComponent {
     this.modalactive = true;
     this.modalLoading = true;
     this.modalData = "";
+    this.modalProcess = undefined;
 
     if (type == 'info_log') {
       this.modalLoading = false;
       this.modalData = process.logs
+      this.modalProcess = process;
       // this.modalType = 'info';
-      console.log(process.logs)
+      // console.log(process.logs)
       // this.apiService.getLogFile(type, process.process_id).subscribe((data) => {
       //   this.modalLoading = false;
       //   this.modalData = this.sanitizeLog(data);
       // });
     } else {
       this.modalLoading = false;
-      console.log(process.errors)
+      this.modalProcess = process;
+      // console.log(process.errors)
       // this.modalType = 'error';
       // this.modalProcess = process;
       this.modalData = process.errors
@@ -130,5 +133,20 @@ export class PackageStatusComponent {
       return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
     }
     return "Log is empty";
+  }
+
+  getFilePath(filePath) {
+    const pParts = this.modalProcess.log_path.split('/')
+    const fParts = filePath.split('/')
+    for (var i = 0; i < pParts.length; i++) {
+      if (pParts[i] !== fParts[i]) {
+        break;
+      }
+    }
+    let res = ""
+    for (var j = i; j < fParts.length; j++) {
+      res += '/' + fParts[j]
+    }
+    return res;
   }
 }

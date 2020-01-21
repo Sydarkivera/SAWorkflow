@@ -94,7 +94,6 @@ def result(request):
         # prepare next task.
         job.file_index = job.file_index + 1
         if job.file_index >= len(allFiles):
-            # the job is done.... TODO: Handle done
             # logger.info(process.errors)
             # logger.info(len(process.errors))
             process.status = Process.PROCESS_STATUS_DONE

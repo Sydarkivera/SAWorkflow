@@ -65,7 +65,7 @@
     <div class="list-group">
       <div *ngFor="let error of modalData" class="list-group-item list-group-item-action selection-header">
         <div class=" d-flex justify-content-between" (click)="error.expanded = !error.expanded">
-          <p class="">{{error.file}}</p>
+          <p class="">{{getFilePath(error.file)}}</p>
           <i *ngIf="!error.expanded" class="material-icons my-auto">keyboard_arrow_right</i>
           <i *ngIf="error.expanded" class="material-icons my-auto">keyboard_arrow_down</i>
         </div>

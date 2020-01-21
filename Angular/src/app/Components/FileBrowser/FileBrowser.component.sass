@@ -7,9 +7,6 @@
   &.modal-dialog, .modal-content
     height: 95%
 
-.content
-  height: 95%
-
 
 .modal-body
   // overflow-x: auto
@@ -18,7 +15,8 @@
   flex-wrap: nowrap
   padding: 0
   // overflow: auto
-  overflow-x: scroll
+  overflow: hidden
+  max-height: 10%
 
 
 
@@ -94,6 +92,5 @@
   .modal-body
     padding: 10px
 
-.modal-footer
-  position: absolute
-  bottom: 0px
+.modal-footer, .modal-header
+  flex: 0
