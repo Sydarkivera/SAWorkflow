@@ -25,6 +25,7 @@ from django.core.files.base import ContentFile, File
 from django.utils.six import b, BytesIO
 import json
 from config.settings import BASE_DIR
+from django.utils.encoding import smart_str
 
 import os
 import pwd
@@ -107,12 +108,12 @@ def result(request):
             executeProcessFlow(process.package.package_id, True)
             return JsonResponse({"done": True}, status=200)
 
-        job.file_name = allFiles[job.file_index]['file']
+        job.file_name = smart_str(allFiles[job.file_index]['file'])
         job.save()
 
         # reply with next task, if there are any, else end it.
         values = get_values(process, process.package)
-        relative = os.path.relpath(job.file_name, process.package.workdir)
+        relative = os.path.relpath(allFiles[job.file_index]['file'], process.package.workdir)
         values['file'] = os.path.join(
             process.module.dockerImage.mountpoint, relative)
         if 'workdir' in values:
