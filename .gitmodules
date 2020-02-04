@@ -1,0 +1,7 @@
+[submodule "app_worker_base"]
+	path = worker_containers/app-worker-base
+	url = https://github.com/Sydarkivera/APP-worker-base
+
+[submodule "app_unoconv_worker"]
+  path = worker_containers/app-unoconv-worker
+  url = https://github.com/Sydarkivera/app-worker-unoconv
