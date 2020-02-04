@@ -35,3 +35,5 @@ RUN tar xvf fonts_from_win10_180824.tar
 RUN rm fonts_from_win10_180824.tar
 RUN ls
 RUN fc-cache -f -v
+
+ADD ./19970527-3663.pdf /

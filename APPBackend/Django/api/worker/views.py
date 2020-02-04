@@ -114,6 +114,9 @@ def result(request):
         # logger.info(bytes(allFiles[job.file_index]['file'], 'utf-8'))
         # logger.info(''.join([i if ord(i) < 128 else ' ' for i in allFiles[job.file_index]['file']]))
 
+        # job.file_name = ''.join([i if ord(i) < 128 else ' ' for i in '字'])
+        # job.save()
+
         job.file_name = ''.join([i if ord(i) < 128 else ' ' for i in allFiles[job.file_index]['file']])
         job.save()
 

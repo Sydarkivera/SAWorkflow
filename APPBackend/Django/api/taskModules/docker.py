@@ -83,6 +83,9 @@ class DockerModule(BaseModule):
         container_name = process.module.dockerImage.name
         container_name = container_name.replace('_', '-')
 
+        if ':' in container_name:
+            container_name = container_name.split(':')[0]
+
 
         # check if there are any containers already open with this name
         container_iteration = 2

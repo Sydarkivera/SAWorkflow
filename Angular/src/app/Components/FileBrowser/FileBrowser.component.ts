@@ -125,6 +125,10 @@ export class FileBrowserComponent {
     this.contextMenuPos["x"] = event.clientX;
     this.contextMenuPos["y"] = event.clientY;
 
+    if (event.clientY > window.innerHeight - 200) {
+      this.contextMenuPos["y"] = event.clientY - 200;
+    }
+
     //select the rightclicked item:
     this.openNewLevel(index, file);
   }

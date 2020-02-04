@@ -17,6 +17,7 @@
   // overflow: auto
   overflow: hidden
   // max-height: 10%
+  height: calc(100vh - 150px)
 
 
 
@@ -29,6 +30,7 @@
     // overflow-x: hidden
     border-right: 1px solid #e9ecef
     padding-left: 10px
+    overflow: scroll
 
     .file
       clear: both
@@ -94,3 +96,12 @@
 
 .modal-footer, .modal-header
   flex: 0
+  flex-shrink: 0
+
+.modal-footer
+  position: fixed
+  bottom: 0
+  flex: 1
+  left: 0
+  width: 100%
+  background-color: white
