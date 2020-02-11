@@ -18,5 +18,5 @@ jobs:
         name: axenu/app
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        dockerfile: ./APPBackend/prod.Dockerfile
-        workdir: ./APPBackend
+        dockerfile: ./prod.Dockerfile
+        workdir: ./APP/APP/APPBackend
