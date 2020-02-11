@@ -143,7 +143,7 @@ class DockerModule(BaseModule):
         # find the container with the highest iteration.
         iteration = 0
         if Container.objects.filter(name=container_name).order_by('-iteration').exists():
-            (iteration, container) = Container.objects.filter(name=container_name).order_by('-iteration')[0].iteration + 1
+            iteration = Container.objects.filter(name=container_name).order_by('-iteration')[0].iteration + 1
 
         
 

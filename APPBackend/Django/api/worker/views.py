@@ -121,6 +121,8 @@ def result(request):
             process.status = Process.PROCESS_STATUS_DONE
             process.end_time = datetime.datetime.now()
             process.save()
+            process.package.status = Package.PACKAGE_STATUS_DONE
+            process.package.save()
             return JsonResponse({"done": True, "aborted": True}, status=200)
 
 

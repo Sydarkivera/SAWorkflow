@@ -10,8 +10,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    # - name: Build the Docker image
-    #   run: docker build ./APPBackend --file ./APPBackend/prod.Dockerfile --tag axenu/app
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
