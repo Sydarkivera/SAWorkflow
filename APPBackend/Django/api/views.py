@@ -74,6 +74,16 @@ def process_detail(request, process_id):
         return HttpResponse(status=204)
 
 
+@api_view(['GET'])
+def process_logs(request, process_id):
+    """
+    fetch the logs for the process
+    """
+    process = get_object_or_404(Process, pk=process_id)
+    if request.method == 'GET':
+        serializer = ProcessLogsSerializer(process)
+        return Response(serializer.data)
+
 
 @api_view(['GET', 'POST'])
 def process_add(request):

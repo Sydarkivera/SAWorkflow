@@ -30,7 +30,7 @@
           [style.width]="process.progress + '%'">{{process.progress}}%</div>
         </div>
       </td>
-      <td>{{getDuration(process)}}</td>
+      <td class="align-middle">{{getDuration(process)}}</td>
       <td class="align-middle">{{process.status}}</td>
       <td class="align-middle"><button class="btn btn-outline-primary" (click)="showModal(process, 'info_log')" [disabled]="process.log_path == ''">Open log</button></td>
       <td class="align-middle" style="max-width: 100px">

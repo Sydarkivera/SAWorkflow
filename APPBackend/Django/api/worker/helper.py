@@ -30,5 +30,5 @@ def send_request(url, data, delay_time=1):
             send_request(url, data, delay_time=delay_time*2)
     except requests.exceptions.RequestException as e:
         logger.info("could not start service"+url+", trying again")
-        logger.info(e)
+        # logger.info(e)
         send_request(url, data, delay_time=delay_time*2)
