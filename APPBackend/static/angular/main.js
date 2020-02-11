@@ -4530,15 +4530,19 @@ var PackageStatusComponent = /** @class */ (function () {
         // }, 3000);
     };
     PackageStatusComponent.prototype.showModal = function (process, type) {
+        var _this = this;
         //load data fromserver...
         this.modalactive = true;
         this.modalLoading = true;
         this.modalData = "";
         this.modalProcess = undefined;
         if (type == 'info_log') {
-            this.modalLoading = false;
-            this.modalData = process.logs;
-            this.modalProcess = process;
+            // fetch info log
+            this.apiService.getProcessLogs(process.process_id).subscribe(function (data) {
+                _this.modalLoading = false;
+                _this.modalData = data.logs;
+                _this.modalProcess = process;
+            });
             // this.modalType = 'info';
             // console.log(process.logs)
             // this.apiService.getLogFile(type, process.process_id).subscribe((data) => {
@@ -5118,6 +5122,9 @@ var APIService = /** @class */ (function () {
     };
     APIService.prototype.getLogFile = function (path, process_id) {
         return this.http.get('/process/' + process_id + '/' + path, { responseType: 'text' });
+    };
+    APIService.prototype.getProcessLogs = function (id) {
+        return this.http.get('/api/process/' + id + '/logs/');
     };
     //variables
     APIService.prototype.getVariables = function () {

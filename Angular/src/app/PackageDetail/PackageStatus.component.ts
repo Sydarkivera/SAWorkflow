@@ -53,9 +53,14 @@ export class PackageStatusComponent {
     this.modalProcess = undefined;
 
     if (type == 'info_log') {
-      this.modalLoading = false;
-      this.modalData = process.logs
-      this.modalProcess = process;
+      // fetch info log
+      this.apiService.getProcessLogs(process.process_id).subscribe((data:any) => {
+        
+
+        this.modalLoading = false;
+        this.modalData = data.logs;
+        this.modalProcess = process;
+      })
       // this.modalType = 'info';
       // console.log(process.logs)
       // this.apiService.getLogFile(type, process.process_id).subscribe((data) => {

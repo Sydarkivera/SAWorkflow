@@ -239,7 +239,7 @@ def close_container(container_id):
     logger.info("close_container" + containerObject.name + "-" + str(containerObject.iteration))
 
     try:
-        container = client.containers.get(containerObject.name + "-" + containerObject.iteration)
+        container = client.containers.get(containerObject.name + "-" + str(containerObject.iteration))
         try:
             container.stop()
             container.wait(timeout=60)

@@ -79,6 +79,10 @@ export class APIService {
     return this.http.get('/process/' + process_id + '/' + path, { responseType: 'text' });
   }
 
+  getProcessLogs(id) {
+    return this.http.get('/api/process/' + id + '/logs/');
+  }
+
   //variables
 
   getVariables() {
