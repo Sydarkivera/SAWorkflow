@@ -26,8 +26,9 @@ def send_request(url, data, delay_time=1):
         logger.info("status code: " + str(r.status_code))
         if r.status_code != requests.codes.ok:
             r.raise_for_status()
-            logger.info("could not start service, trying again")
+            logger.info("could not start service"+url+", trying again")
             send_request(url, data, delay_time=delay_time*2)
-    except requests.exceptions.RequestException:
-        logger.info("could not start service, trying again")
+    except requests.exceptions.RequestException as e:
+        logger.info("could not start service"+url+", trying again")
+        logger.info(e)
         send_request(url, data, delay_time=delay_time*2)

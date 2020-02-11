@@ -61,6 +61,7 @@ def executeProcessFlow(package_id, skip_failed_tasks=False):
         if process.status != Process.PROCESS_STATUS_DONE:
             if not (process.status == Process.PROCESS_STATUS_ERROR and skip_failed_tasks):
                 process.status = Process.PROCESS_STATUS_RUNNING
+                process.start_time = datetime.datetime.now()
                 process.save()
 
                 obj = None
@@ -90,6 +91,7 @@ def executeProcessFlow(package_id, skip_failed_tasks=False):
                 if res == 1:
                     process.status = Process.PROCESS_STATUS_DONE
                     process.progress = 100
+                    process.end_time = datetime.datetime.now()
                     process.save()
                     # save to premis log
 

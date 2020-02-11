@@ -8,7 +8,7 @@ __status__ = "Development"
 
 from background_task import background
 from django.core.exceptions import ObjectDoesNotExist
-from api.models import Module, Package, Process, Template, Variable, FileType, Job, GraphData
+from api.models import Module, Package, Process, Template, Variable, FileType, Job, GraphData, FileModel
 from logging import getLogger
 import importlib
 import time
@@ -126,7 +126,7 @@ class BaseModule:
     else:
       logger.debug('run filter start')
       # setup regex
-      allFiles = self.get_all_files(package, process)
+      allFiles = self.get_all_files(process)
 
       logger.debug('run filter file list generated')
       numberOfFiles = len(allFiles)
@@ -134,14 +134,18 @@ class BaseModule:
       retval = 1
       for i in range(numberOfFiles):
         f = allFiles[i]
-        if not f['status']:
-          fileName = f['file']
+        if f.status == FileModel.FILEMODEL_STATUS_NOT_STARTED:
+          f.status = FileModel.FILEMODEL_STATUS_STARTED
+          f.save()
+          fileName = f.name
           values['file'] = fileName
           logger.debug('run filter before execute')
           res, logText = self.execute(process, package, values)
           logger.debug('run filter after execute')
           if res == -1:
-            allFiles[i]['status'] = False
+            # allFiles[i]['status'] = False
+            f.status = FileModel.FILEMODEL_STATUS_ERROR
+            f.save()
             errorDict = {}
             errorDict['file'] = fileName
             errorDict['log'] = logText
@@ -149,12 +153,14 @@ class BaseModule:
             errorHappend(fileName)
             retval = -1
           else:
-            allFiles[i]['status'] = True
+            # allFiles[i]['status'] = True
+            f.status = FileModel.FILEMODEL_STATUS_COMPLETE
+            f.save()
             logs.append({'file': fileName, 'log': logText})
           process.errors = errorFiles
           process.logs = logs
           process.progress = (i + 1) / numberOfFiles * 100
-          process.allFiles = allFiles
+          # process.allFiles = allFiles
           process.save()
     self.teardown(process, package, values)
     # calculate the new filetype split
@@ -198,7 +204,7 @@ class BaseModule:
     self.logger.removeHandler(self.err_hdlr)
     del self.logger, self.log_hdlr, self.err_hdlr
 
-  def get_all_files(self, package, process):
+  def get_all_files(self, process):
     """
     Get a list of all the files in the package that matches the pattern.
     """
@@ -210,17 +216,31 @@ class BaseModule:
       logger.error('Regex is invalid: ' + filter)
       return -1
 
+    # if process.files.count() == 0:
+    #   allFiles = self.get_all_files(package, process)
+    #   for fileName in allFiles:
+        # fileModel = FileModel(
+        #   process = process
+        #   file_name = fileName
+        #   )
+
     # logger.info('run filter regex generated')
     # calculate which files that should be run:
-    allFiles = []
-    if process.allFiles == []:
-      for root, _, files in os.walk(package.workdir):
+    # allFiles = []
+    if process.files.count() == 0:
+      for root, _, files in os.walk(process.package.workdir):
         for name in files:
-          file = os.path.join(root, name)
-          if pattern.match(file):
-            allFiles.append({"file": file, "status": False})
-      process.allFiles = allFiles
-      process.save()
-    else:
-      allFiles = process.allFiles
-    return allFiles
+          filePath = os.path.join(root, name)
+          if pattern.match(filePath):
+            fileModel = FileModel(
+              process = process,
+              name = filePath
+              )
+            fileModel.save()
+            # allFiles.append(filePath)
+      # process.allFiles = allFiles
+      # process.save()
+    # else:
+      # allFiles = process.allFiles
+    logger.info(process.module.parallell_jobs)
+    return process.files.filter(status=FileModel.FILEMODEL_STATUS_NOT_STARTED)[:process.module.parallell_jobs]

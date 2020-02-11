@@ -149,4 +149,35 @@ export class PackageStatusComponent {
     }
     return res;
   }
+
+  getDuration(process: any) {
+    
+    if (!process || !process.start_time) {
+      return ''
+    }
+    const start = new Date(process.start_time);
+    let end = new Date();
+    if (process.end_time) {
+      end = new Date(process.end_time);
+    }
+
+    return this.formatDuration(end.getTime() - start.getTime());
+  }
+
+  zeroPad(n, width, z='0') {
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  }
+
+  formatDuration(dt) {
+    const milli = Math.floor((dt/100) % 10);
+    const seconds = Math.floor((dt/1000) % 60);
+    const minutes = Math.floor((dt/60000) % 60);
+    const hours = Math.floor(dt/3600000);
+    if (dt < 60 * 1000) { // less than 60 seconds
+      return `${seconds}.${this.zeroPad(milli, 1)}s`
+    } else { // less than 1 day
+      return `${this.zeroPad(hours, 2)}:${this.zeroPad(minutes, 2)}:${this.zeroPad(seconds, 2)}`
+    }
+  }
 }

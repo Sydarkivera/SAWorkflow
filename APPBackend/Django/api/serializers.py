@@ -59,11 +59,13 @@ class ProcessSerializer(serializers.ModelSerializer):
     module = serializers.PrimaryKeyRelatedField(queryset=Module.objects.all())
     package = serializers.PrimaryKeyRelatedField(queryset=Package.objects.all(), required=False)
     template = serializers.PrimaryKeyRelatedField(queryset=Template.objects.all(), required=False)
+    start_time = serializers.DateTimeField(required=False)
+    end_time = serializers.DateTimeField(required=False)
     filter = serializers.CharField(source='module.filter', read_only=True)
 
     class Meta:
         model = Process
-        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template', 'errors', 'logs')
+        fields = ('process_id', 'order', 'name', 'type', 'form', 'value', 'status', 'log_path', 'err_path', 'module', 'package', 'hidden', 'filter', 'progress', 'template', 'errors', 'logs', 'start_time', 'end_time')
 
     def get_status(self,obj):
         return obj.get_status_display()

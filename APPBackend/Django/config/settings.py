@@ -176,7 +176,7 @@ LOGGING = {
             'level': 'INFO'
         },
         'all': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, "log/all.log"),
             'formatter': 'simple',

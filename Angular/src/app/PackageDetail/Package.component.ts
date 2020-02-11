@@ -28,6 +28,8 @@ export class PackageComponent {
   modalActive = false;
   templateName = "";
 
+  currentProcesses = []
+
   constructor(
     private apiService: APIService,
     private route: ActivatedRoute,
@@ -50,6 +52,15 @@ export class PackageComponent {
     // load modules right away
     this.apiService.getModules().subscribe(data => {
       this.modules = data as [any];
+    });
+  }
+
+  getVisibleProcesses() {
+    if (!this.package || !this.package.processes) {
+      return [];
+    }
+    return this.package.processes.filter((item) => {
+      return !item.hidden;
     });
   }
 

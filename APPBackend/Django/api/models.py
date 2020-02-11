@@ -125,6 +125,7 @@ class Module(models.Model):
     tool_folder_name = models.CharField(max_length=100, default='', blank=True)
     docker_mount_point = models.CharField(max_length=100, default='', blank=True)
     description = models.CharField(max_length=400, blank=True, default='')
+    parallell_jobs = models.IntegerField(default=1)
 
     #For docker, save some settings, like if it is a dockerfile or an image, where to mount workdir/files
     # docker = JSONField(default='{"dockerfile":"1", "image": "", "workdir_mount_point": "", "file_mount_point": "/file.pdf"}', blank=True)
@@ -170,14 +171,18 @@ class Process(models.Model):
     status = models.IntegerField(choices=PROCESS_STATUS, default=0)
     log_path = models.CharField(max_length=100, blank=True, default='')
     err_path = models.CharField(max_length=100, blank=True, default='')
+    start_time = models.DateTimeField(blank=True, null=True)
+    end_time = models.DateTimeField(blank=True, null=True)
 
     # progress/result
     # % complete
     progress = models.DecimalField(default=0, max_digits=10, decimal_places=5)
-    allFiles = JSONField(default=[])
     logs = JSONField(default=[])
     errors = JSONField(default=[])
+    # allFiles = JSONField(default=[])
 
+    # instead of storing all files in json there are a foreign key relation from FileModel. Each process can contain thousands of file objects.
+    # files = Foreign
 
     class Meta:
         ordering = ('order',)
@@ -213,11 +218,52 @@ class GraphData(models.Model):
 class Job(models.Model):
     id = models.AutoField(primary_key=True)
     process = models.ForeignKey(Process, related_name='jobs', on_delete=models.CASCADE)
-    container_id = models.CharField(max_length=100, blank=True, default='')
-    container_name = models.CharField(max_length=100, blank=True, default='')
-    container_iteration = models.IntegerField(default=2)
-    file_name = models.CharField(max_length=1000, blank=True, default='')
-    file_index = models.IntegerField(default=0)
+    # container_id = models.CharField(max_length=100, blank=True, default='')
+    # container_name = models.CharField(max_length=100, blank=True, default='')
+    # container_iteration = models.IntegerField(default=1)
+    # file_name = models.CharField(max_length=1000, blank=True, default='')
+    # file_index = models.IntegerField(default=0)
+
+    # have an foreign key to all the conteiners it uses
+    # containers = Foreign key this to many
 
     def __str__(self):
         return "id: %d\nprocess_id: %d\ncontainer_name: %s\n container_iteration: %d" % (self.id, self.process.process_id, self.container_name, self.container_iteration)
+
+class Container(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100, blank=True, default='')
+    iteration = models.IntegerField(default=1)
+
+
+    process = models.ForeignKey(Process, related_name='containers', on_delete=models.CASCADE)
+
+    # every container is used in one specific job and only one.
+    # job = models.ForeignKey(Job, related_name='containers', on_delete=models.PROTECT)
+
+
+    def __str__(self):
+        return 'Container: %d-%d' % (self.name, self.iteration)
+
+class FileModel(models.Model):
+    '''
+    A model for storing progress of a single file inside a process. 
+    A process can execute a task on thousands of files and this object is 
+    ment to keep track of each file that is processed.
+    '''
+
+    FILEMODEL_STATUS_NOT_STARTED = 0
+    FILEMODEL_STATUS_STARTED = 1
+    FILEMODEL_STATUS_COMPLETE = 2
+    FILEMODEL_STATUS_ERROR = 3
+    FILEMODEL_STATUS = (
+        (FILEMODEL_STATUS_NOT_STARTED, 'Not started'),
+        (FILEMODEL_STATUS_STARTED, 'Started'),
+        (FILEMODEL_STATUS_COMPLETE, 'Complete'),
+        (FILEMODEL_STATUS_ERROR, 'Error'),
+    )
+
+    id = models.AutoField(primary_key=True)
+    process = models.ForeignKey(Process, related_name='files', on_delete=models.CASCADE)
+    name = models.CharField(max_length=1000, blank=True, default='')
+    status = models.IntegerField(choices=FILEMODEL_STATUS, default=0)

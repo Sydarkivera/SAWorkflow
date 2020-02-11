@@ -48,7 +48,8 @@ module2 = Module(name="Untar",
                  form=[{"type":"checkbox", "label":"Verbose", "identifier":"verbose", "value": "-v"}],
                  description="Untar all .tar fieles into the current folder",
                  tool_folder_name="Untar_archive",
-                 command="tar xf #file -C #workdir #verbose "
+                 command="tar xf #file -C #workdir #verbose ",
+                 hidden=True
                  )
 module2.save()
 module3 = Module(name="ClamAV",
@@ -74,10 +75,11 @@ module8.save()
 module11 = Module(name="Unoconv",
                  type='3',
                  form=[],
-                command="unoconv -f pdf -e SelectPdfVersion=1 #file",
+                command="UNOPATH=/usr/lib/Libreoffice /usr/bin/python3 /usr/bin/unoconv -f pdf -e SelectPdfVersion=1 \"#file\"",
                 filter='.*(\.(doc|docx))$',
                 tool_folder_name="SMART_UNOCONV",
-                docker_mount_point="/workdir"
+                docker_mount_point="/workdir",
+                parallell_jobs=6
                  )
 module11.save()
 module12 = Module(name="Verapdf",

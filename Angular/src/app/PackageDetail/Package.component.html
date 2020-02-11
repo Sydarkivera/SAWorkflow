@@ -8,15 +8,15 @@
         Name
       </div>
       <div class="list-group list-group-flush">
-        <ng-template ngFor let-process [ngForOf]="package.processes" let-i="index">
+        <ng-template ngFor let-process [ngForOf]="getVisibleProcesses()" let-i="index">
           <div *ngIf="!process.hidden" draggable="true" (dragstart)="dragStart($event, process.process_id, 'process', process.name)" (drop)="onDrop($event)" (dragover)="allowDrop($event, process.order)" class="list-group-item list-group-item-action" [class.active]="process.process_id==selected_process_id"
               [class.template]="process.type=='placeholder'">
             <div class="d-flex w-100 justify-content-between">
               <p style="margin-bottom:0;" class="d-flex w-100 noselect" (click)="selectProcess(process)">
                 {{process.name}}
               </p>
-              <i *ngIf="i > 1" class="material-icons icon-button" (click)="moveUp(process)">keyboard_arrow_up</i>
-              <i *ngIf="i < package.processes.length-1" class="material-icons icon-button" (click)="moveDown(process)">keyboard_arrow_down</i>
+              <i *ngIf="i > 0" class="material-icons icon-button" (click)="moveUp(process)">keyboard_arrow_up</i>
+              <i *ngIf="i < getVisibleProcesses().length-1" class="material-icons icon-button" (click)="moveDown(process)">keyboard_arrow_down</i>
               <i class="material-icons icon-button" (click)="deleteProcess(process)">delete</i>
               <i class="material-icons drag-handle">drag_handle</i>
             </div>
