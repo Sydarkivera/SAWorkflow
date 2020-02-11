@@ -26,6 +26,7 @@ from django.utils.six import b, BytesIO
 import json
 from config.settings import BASE_DIR
 from django.utils.encoding import smart_str
+import datetime
 
 import os
 import pwd
@@ -118,6 +119,7 @@ def result(request):
             logger.info('Package is completed')
             close_container(container_id)
             process.status = Process.PROCESS_STATUS_DONE
+            process.end_time = datetime.datetime.now()
             process.save()
             return JsonResponse({"done": True, "aborted": True}, status=200)
 
