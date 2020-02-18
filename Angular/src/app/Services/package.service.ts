@@ -1,19 +1,19 @@
-//music.service.ts
-import { EventEmitter } from "@angular/core";
+// music.service.ts
+import { EventEmitter } from '@angular/core';
 
 export class PackageService {
 
-public packageEmitter$: EventEmitter<object>;
+packageEmitter$: EventEmitter<object>;
 
-  constructor() {
+constructor() {
 
       this.packageEmitter$ = new EventEmitter();
 
    }
 
-   updatePackageData(packageData):void {
+updatePackageData(packageData): void {
 
-      this.packageEmitter$.emit(packageData)
+      this.packageEmitter$.emit(packageData);
 
    }
 

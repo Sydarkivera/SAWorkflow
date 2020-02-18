@@ -12,6 +12,6 @@
 <!-- <i *ngIf="file.type == 'folder'" class="material-icons file-float" tooltip="Set a filter for items in folder" tooltipPlacement="right">filter_list</i> -->
 <div *ngIf="expanded" class="file-children">
   <!-- <div *ngFor="let file of file.children"> -->
-    <file *ngFor="let f of children" [file]="f" [specific_path]="specific_path + f.name + '/'" [path]="path"></file>
+    <file *ngFor="let f of children" [file]="f" [specificPath]="specificPath + f.name + '/'" [path]="path"></file>
   <!-- </div> -->
 </div>

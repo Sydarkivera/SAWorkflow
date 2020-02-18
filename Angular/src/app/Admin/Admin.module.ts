@@ -1,25 +1,25 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule }   from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule }    from '@angular/forms';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 
-//imports
-import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
-import { NavbarModule } from '../Components/Navbar/Navbar.module';
-import { ModalModule } from '../Components/Modal/Modal.module';
-import { MessageModule } from '../Components/Message/Message.module';
+// imports
 import { FileBrowserModule } from '../Components/FileBrowser/FileBrowser.module';
+import { MessageModule } from '../Components/Message/Message.module';
+import { ModalModule } from '../Components/Modal/Modal.module';
+import { NavbarModule } from '../Components/Navbar/Navbar.module';
+import { TooltipModule } from '../Components/Tooltip/Tooltip.module';
 
-//declarations
-import { AdminHeaderComponent }    from './Header/Header.component';
-import { AdminModulesComponent }    from './Modules/Modules.component';
-import { AdminGlobalComponent }    from './GlobalVariables/GlobalVariables.component';
-import { AdminTemplatesComponent } from './Templates/Templates.component';
-import { AdminImagesComponent } from './DockerImages/DockerImages.component';
+// declarations
+import { AdminImagesComponent } from './DockerImages/docker-images.component';
+import { AdminGlobalComponent } from './GlobalVariables/global-variables.component';
+import { AdminHeaderComponent } from './Header/header.component';
+import { AdminModulesComponent } from './Modules/modules.component';
+import { AdminTemplatesComponent } from './Templates/templates.component';
 
-//providers
+// providers
 // import { ModuleService } from './Module.service';
 import { APIService } from '@services/api.service';
 
@@ -44,6 +44,6 @@ import { APIService } from '@services/api.service';
   ],
   providers: [
     APIService
-  ],
+  ]
 })
 export class AdminModule {}

@@ -1,11 +1,11 @@
-//angular modules
+// angular modules
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
-//declarations
+// declarations
+import { FileComponent } from './file.component';
 import { FileBrowserComponent } from './FileBrowser.component';
-import { FileComponent } from './File.component';
 
 @NgModule({
   imports: [

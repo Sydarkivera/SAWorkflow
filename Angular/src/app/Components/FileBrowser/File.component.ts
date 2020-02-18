@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { APIService } from '../../Services/api.service';
 
 @Component({
-  selector: 'file',
+  selector: 'app-filebrowser-file',
   templateUrl: './file.component.html',
   styleUrls: ['./file.component.sass']
 })
@@ -11,32 +11,30 @@ export class FileComponent {
 
   @Input() file: any;
   @Input() path: string;
-  @Input() specific_path: string;
+  @Input() specificPath: string;
   expanded = false;
-  children: any[]
+  children: Array<any>;
 
-  constructor(private apiService: APIService) {
+  constructor(private readonly apiService: APIService) {
 
   }
 
-  ngOnInit() {
-  }
-
-  expand() {
+  expand(): void {
     if (this.expanded) {
       this.expanded = false;
     } else {
       this.expanded = true;
-      if (this.file.type == "folder") {
+      if (this.file.type === 'folder') {
         this.fetchFiles();
       }
     }
   }
 
-  fetchFiles() {
-    console.log(this.specific_path)
-    this.apiService.getFiles(this.path, this.specific_path).subscribe((data) => {
-      console.log(data)
+  fetchFiles(): void {
+    // console.log(this.specific_path);
+    this.apiService.getFiles(this.path, this.specificPath)
+    .subscribe(data => {
+      // console.log(data);
       this.children = data as [any];
     });
   }

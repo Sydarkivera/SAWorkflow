@@ -171,10 +171,10 @@ def package_abort(request, package_id):
         # if package.status != package.PACKAGE_STATUS_DONE:
         for process in package.processes.all():
             if process.status == Process.PROCESS_STATUS_RUNNING:
-                process.status = process.PROCESS_STATUS_ABORTED
+                process.status = Process.PROCESS_STATUS_ABORTED
                 process.save()
             elif process.status == Process.PROCESS_STATUS_WAITING:
-                process.status = process.PROCESS_STATUS_ABORTED
+                process.status = Process.PROCESS_STATUS_ABORTED
                 process.save()
         package.status = package.PACKAGE_STATUS_ABORTED
         package.save()

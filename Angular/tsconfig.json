@@ -12,6 +12,8 @@
     "typeRoots": [
       "node_modules/@types"
     ],
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@app/*":["src/app/*"],
       "@services/*":["src/app/Services/*"],

@@ -12,7 +12,7 @@
         Name
       </div>
       <div class="list-group list-group-flush">
-        <div *ngFor="let image of images" class="list-group-item list-group-item-action" (click)="selectImage(image)" [class.active]="image.id == selected_image.id">
+        <div *ngFor="let image of images" class="list-group-item list-group-item-action" (click)="selectImage(image)" [class.active]="image.id == selectedImage.id">
           <div class="d-flex w-100 justify-content-between">
             <p style="margin-bottom:0;" class="d-flex w-100 noselect">{{image.label}}</p>
             <i class="material-icons icon-button" (click)="deleteImage(image)">delete</i>
@@ -21,12 +21,12 @@
       </div>
     </div>
     <button class="btn btn-success" (click)="openNewImageModal()">Add new docker image</button>
-    <a *ngIf="selected_image.id != -1" class="btn btn-secondary" href="/api/image/{{selected_image.id}}/export/">Export image</a>
+    <a *ngIf="selectedImage.id != -1" class="btn btn-secondary" href="/api/image/{{selectedImage.id}}/export/">Export image</a>
   </div>
 
   <!-- Detail view of tool -->
 
-  <div class="col-lg-6" *ngIf="selected_image.id != -1">
+  <div class="col-lg-6" *ngIf="selectedImage.id != -1">
     <div class="card">
       <div class="card-header">
         <h5 style="float:left">Settings</h5>
@@ -39,15 +39,15 @@
         <message duration="3000" [(active)]="saveSuccess">All changes have been saved!</message>
         <div class="form-group">
           <label for="inputLabel">Name of the image (display name)</label>
-          <input type="text" class="form-control" id="inputLabel" placeholder="DROID" [(ngModel)]="selected_image.label">
+          <input type="text" class="form-control" id="inputLabel" placeholder="DROID" [(ngModel)]="selectedImage.label">
         </div>
         <div class="form-group">
           <label for="inputname">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>
-          <input type="text" class="form-control" id="inputname" placeholder="droid" [(ngModel)]="selected_image.name">
+          <input type="text" class="form-control" id="inputname" placeholder="droid" [(ngModel)]="selectedImage.name">
         </div>
         <div class="form-group">
           <label for="inputMount">Mount point of workdir inside image.</label>
-          <input type="text" class="form-control" id="inputMount" placeholder="/workdir/" [(ngModel)]="selected_image.mountpoint">
+          <input type="text" class="form-control" id="inputMount" placeholder="/workdir/" [(ngModel)]="selectedImage.mountpoint">
         </div>
         <button class="btn btn-success" (click)="save()">
           Save

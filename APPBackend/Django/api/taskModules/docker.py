@@ -127,6 +127,9 @@ class DockerModule(BaseModule):
         # get file list
         files = self.get_all_files(process)
 
+        if len(files) == 0:
+            return 1
+
         # get values
         values = get_values(process, package)
         if 'workdir' in values:
@@ -148,7 +151,7 @@ class DockerModule(BaseModule):
             iteration = Container.objects.filter(name=container_name).order_by('-iteration')[0].iteration + 1
 
         
-
+        
 
         # check if there are any containers already open with this name
         # container_iteration = 1
@@ -192,7 +195,8 @@ class DockerModule(BaseModule):
 
         # create the containers
         numberStarted = 0
-        for fileModel in files:
+        for fileModel in files: # TODO: Fix the cornercase where the files in the array "files" has already been completed before the container is started.
+            # the solution is to only start another container if x files is left NOT_STARTED in the database
             logger.info(fileModel.name)
 
             fileModel.status = FileModel.FILEMODEL_STATUS_STARTED

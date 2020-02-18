@@ -1,9 +1,8 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AdminHeaderComponent } from './Header.component';
+import { async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AdminHeaderComponent } from './header.component';
 
 import { NavbarModule } from '@app/Components/Navbar/Navbar.module';
-
 
 describe('AdminHeader', () => {
   beforeEach(async(() => {
@@ -14,14 +13,18 @@ describe('AdminHeader', () => {
       imports: [
         RouterTestingModule,
         NavbarModule
-      ],
-    }).compileComponents();
+      ]
+    })
+    .compileComponents()
+    .catch();
   }));
 
   it('should create the admin header', async(() => {
     const fixture = TestBed.createComponent(AdminHeaderComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(app)
+    .toBeTruthy()
+    .catch();
   }));
 
   // it(`should have a link to dashboard`, async(() => {
@@ -34,13 +37,17 @@ describe('AdminHeader', () => {
     const fixture = TestBed.createComponent(AdminHeaderComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('navbar')).toBeTruthy();
+    expect(compiled.querySelector('navbar'))
+    .toBeTruthy()
+    .catch();
   }));
 
   it('should contain a router outlet', async(() => {
     const fixture = TestBed.createComponent(AdminHeaderComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('router-outlet')).toBeTruthy();
+    expect(compiled.querySelector('router-outlet'))
+    .toBeTruthy()
+    .catch();
   }));
 });

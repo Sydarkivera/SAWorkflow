@@ -1,37 +1,40 @@
+import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { DockerImportImage, Module, Variables, DockerImage } from '@app/Services/models';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class APIService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private readonly http: HttpClient) { }
 
-  //Modules
+  // Modules
 
   getModules() {
     return this.http.get('/api/module/');
   }
 
-  createModule(data) {
-    return this.http.put('/api/module/', data);
+  createModule(data: Module): Observable<Module> {
+    return this.http.put<Module>('/api/module/', data);
   }
 
   deleteModule(module_id) {
     return this.http.delete('/api/module/' + module_id + '/');
   }
 
-  saveData(id, data) {
-    return this.http.post('/api/module/' + id + '/', data);
+  saveData(id: string, data: Module): Observable<Module> {
+    return this.http.post<Module>(`/api/module/${id}/`, data);
   }
 
   importModule(formData) {
     const req = new HttpRequest('POST', '/api/module/import/', formData, {
       reportProgress: true
     });
+
     return this.http.request(req);
   }
 
-  //templates
+  // templates
 
   getTemplates() {
     return this.http.get('/api/template/');
@@ -53,7 +56,7 @@ export class APIService {
     return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
   }
 
-  //processes
+  // processes
 
   addProcess(process) {
     return this.http.post('/api/process/', process);
@@ -64,7 +67,7 @@ export class APIService {
   }
 
   reorderPackageProcesses(data, package_id) {
-    return this.http.put('/api/package/'+package_id+'/process/', data);
+    return this.http.put('/api/package/' + package_id + '/process/', data);
   }
 
   deleteProcess(id) {
@@ -83,23 +86,23 @@ export class APIService {
     return this.http.get('/api/process/' + id + '/logs/');
   }
 
-  //variables
+  // variables
 
-  getVariables() {
-    return this.http.get('/api/variables/global/');
+  getVariables(): Observable<Variables> {
+    return this.http.get<Variables>('/api/variables/global/');
   }
 
-  setVariables(data) {
+  setVariables(data: Variables): Observable<Object> {
     return this.http.post('/api/variables/global/', data);
   }
 
-  //stats
+  // stats
 
   getStatsDashboard() {
     return this.http.get('/api/stats/dashboard/');
   }
 
-  //package
+  // package
 
   getPackages() {
     return this.http.get('/api/package/');
@@ -127,11 +130,11 @@ export class APIService {
   abortPackage(packageId) {
     return this.http.post('/api/package/' + packageId + '/abort/', {});
   }
-  
-  //files
 
-  getFiles(path, specific="") {
-    return this.http.get(path + "?path=" + specific);
+  // files
+
+  getFiles(path, specific= '') {
+    return this.http.get(path + '?path=' + specific);
   }
 
   renameFile(path, body) {
@@ -139,32 +142,34 @@ export class APIService {
   }
 
   deleteFile(path, specific) {
-    return this.http.delete(path + "?path=" + specific);
+    return this.http.delete(path + '?path=' + specific);
   }
 
   uploadFile(path, formData) {
     const req = new HttpRequest('POST', path, formData, {
     });
+
     return this.http.request(req);
   }
 
   createFolder(path, specific) {
-    return this.http.put(path, {'path': specific});
+    return this.http.put(path, {path: specific});
   }
 
-  //docker
-  getDockerImages() {
-    return this.http.get('/api/image/');
+  // docker
+  getDockerImages(): Observable<[DockerImage]> {
+    return this.http.get<[DockerImage]>('/api/image/');
   }
 
   saveDockerImage(image_id, data) {
     return this.http.post('/api/image/' + image_id + '/', data);
   }
 
-  importDockerImage(formData) {
+  importDockerImage(formData): Observable<HttpEvent<any>> {
     const req = new HttpRequest('POST', '/api/image/import/', formData, {
       reportProgress: true
     });
+
     return this.http.request(req);
   }
 

@@ -1,31 +1,30 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 // JWT authentication
 import { JwtModule } from '@auth0/angular-jwt';
-export function tokenGetter() {
-  // console.log('getting access token')
-  return localStorage.getItem('access_token');
-}
+export const tokenGetter = () => (
+  localStorage.getItem('access_token')
+);
 
 import { AppComponent } from './app.component';
+import { ComboChartComponent } from './Dashboard/combo-chart.component';
 import { DashboardComponent } from './Dashboard/Dashboard.component';
 import { LoginComponent } from './login/login.component';
-import { ComboChartComponent } from './Dashboard/combo-chart.component';
 import { NotFoundComponent } from './NotFound.component';
 
 import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { AdminModule } from './Admin/admin.module';
 import { AppRoutingModule } from './app-routing.module';
-import { PackagesModule } from './Packages/Packages.module';
-import { AdminModule } from './Admin/Admin.module';
-import { TooltipModule } from './Components/Tooltip/Tooltip.module';
-import { NavbarModule } from './Components/Navbar/Navbar.module';
 import { MessageModule } from './Components/Message/Message.module';
+import { NavbarModule } from './Components/Navbar/Navbar.module';
+import { TooltipModule } from './Components/Tooltip/Tooltip.module';
+import { PackagesModule } from './Packages/Packages.module';
 
-import { ErrorInterceptor, AuthenticationService } from './Services/authentication.service';
+import { AuthenticationService, ErrorInterceptor } from './Services/authentication.service';
 
 @NgModule({
   declarations: [
@@ -33,14 +32,14 @@ import { ErrorInterceptor, AuthenticationService } from './Services/authenticati
     DashboardComponent,
     ComboChartComponent,
     NotFoundComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {
-        tokenGetter: tokenGetter,
+        tokenGetter,
         whitelistedDomains: ['localhost'],
         blacklistedRoutes: ['localhost/auth/'],
         authScheme: 'JWT '

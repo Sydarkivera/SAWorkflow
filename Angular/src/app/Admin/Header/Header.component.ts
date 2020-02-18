@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'adminHeader',
-  templateUrl: './Header.component.html',
-  styleUrls: ['./Header.component.sass']
+  selector: 'app-admin-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.sass']
 })
 export class AdminHeaderComponent {
-
-  constructor() {
-
-  }
 }

@@ -52,6 +52,7 @@ logger = getLogger('django')
 @permission_classes((AllowAny, ))
 def result(request):
     if request.method == 'PUT':
+        logger.info("start_result_from_worker")
         # check and validate result
         if 'file_id' not in request.data:
             logger.warn("file_id missing in request.data")
@@ -64,6 +65,8 @@ def result(request):
         # logger.info(job)
         # process = job.process
         # allFiles = process.allFiles
+
+        logger.info(request.data)
 
         # save the results to the database
         if 'stderr' in request.data and request.data['stderr'] != "":
@@ -112,7 +115,7 @@ def result(request):
 
         # test if done or should abort
 
-        if process.status == process.PROCESS_STATUS_ABORTED:
+        if process.status == process.PROCESS_STATUS_ABORTED or process.package.status == Package.PACKAGE_STATUS_ABORTED:
             logger.info('Package is aborted')
             close_container(container_id)
             return JsonResponse({"done": True, "aborted": True}, status=200)
@@ -165,81 +168,9 @@ def result(request):
         data['file_name'] = nextFile.name
         data['file_id'] = nextFile.id
         data['container_id'] = container_id
-        # data['container_name'] = container_name
-        # figure out name of new container in network
-        # url = "http://" + container_name + "/start/"
-        # logger.info(data)
-        # logger.info(url)
-        # logger.info(job)
-        # send_request(url, data)
 
-
-
-        #find next filename... TODO
-
-        # prepare next task.
-        # job.file_index = job.file_index + 1
-        # if job.file_index >= len(allFiles):
-        #     # logger.info(process.errors)
-        #     # logger.info(len(process.errors))
-        #     process.status = Process.PROCESS_STATUS_DONE
-        #     if len(process.errors) > 0:
-        #         process.status = Process.PROCESS_STATUS_ERROR
-        #     process.progress = 100
-        #     process.save()
-        #     close_container(process, job)
-        #     logger.info("job is done")
-        #     # continue workflow if there are multiple tasks:
-        #     executeProcessFlow(process.package.package_id, True)
-        #     return JsonResponse({"done": True}, status=200)
-
-        # logger.info(allFiles[job.file_index]['file'])
-        # logger.info(smart_str(allFiles[job.file_index]['file']))
-        # # logger.debug(str(allFiles[job.file_index]['file'], 'utf-8'))
-        # logger.info(bytes(allFiles[job.file_index]['file'], 'utf-8'))
-        # logger.info(''.join([i if ord(i) < 128 else ' ' for i in allFiles[job.file_index]['file']]))
-
-        # job.file_name = ''.join([i if ord(i) < 128 else ' ' for i in '字'])
-        # job.save()
-
-        # job.file_name = ''.join([i if ord(i) < 128 else ' ' for i in allFiles[job.file_index]['file']])
-        # job.save()
-
-        # reply with next task, if there are any, else end it.
-        # values = get_values(process, process.package)
-        # relative = os.path.relpath(allFiles[job.file_index]['file'], process.package.workdir)
-        # values['file'] = os.path.join(
-        #     process.module.dockerImage.mountpoint, relative)
-        # if 'workdir' in values:
-        #     p = values['workdir']
-        #     relative = os.path.relpath(p, process.package.workdir)
-        #     values['workdir'] = os.path.join(
-        #         process.module.dockerImage.mountpoint, relative)
-
-        # command = fixCommand(process, values)
-
-        # command_string = ' '.join(command)
-        # data = {}
-        # data['command'] = command_string
-        # data['process_id'] = process.process_id
-        # data['file'] = job.file_name
-        # data['job_id'] = job.id
-        # logger.info(data)
-        # container_name = process.module.dockerImage.name + "-2"
-        # container_name = container_name.replace('_', '-')
-        # figure out name of new container in network
-        # url = "http://" + job.container_name + "-" + str(job.container_iteration) + "/start/"
-        # logger.info(url)
-        # send_request(url, data)
-
-        # logger.info("Recieved data.\nThe response: %s was returned" % (data))
-        # logger.info('Proccess.status = %s' % str(process.status))
-
-        # if process.status == process.PROCESS_STATUS_ABORTED:
-        #     logger.info('Package is aborted')
-        #     return JsonResponse({"done": True, "aborted": True}, status=200)
-
-
+        logger.info("return_result_from_worker")
+        
         return JsonResponse(data, status=200)
 
 def close_container(container_id):

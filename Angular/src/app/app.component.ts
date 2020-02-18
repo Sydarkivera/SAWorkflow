@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from './Services/authentication.service';
@@ -8,20 +8,21 @@ import { AuthenticationService } from './Services/authentication.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.sass']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
-  authClass = 'none'
+  authClass = 'none';
 
-  constructor(private authService: AuthenticationService, private router: Router) {
+  constructor(private readonly authService: AuthenticationService, private readonly router: Router) {
     this.authClass = 'none';
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.router.events
-      .subscribe((event) => {
-        this.authService.getRequestPermissions().subscribe((res) => {
+      .subscribe(event => {
+        this.authService.getRequestPermissions()
+        .subscribe(res => {
           this.authClass = this.authService.permissionClass;
-        })
+        });
       });
   }
 
