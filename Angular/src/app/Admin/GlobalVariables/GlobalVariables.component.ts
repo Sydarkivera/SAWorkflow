@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from "@angular/router";
 
-import { APIService } from '../Services/api.service';
+import { APIService } from '../../Services/api.service';
 
 
 @Component({
   selector: 'admin',
-  templateUrl: './AdminGlobal.component.html',
-  styleUrls: ['./AdminGlobal.component.sass']
+  templateUrl: './GlobalVariables.component.html',
+  styleUrls: ['./GlobalVariables.component.sass']
 })
 export class AdminGlobalComponent {
   work_dir_path = "";

@@ -84,40 +84,13 @@ def executeProcessFlow(package_id, skip_failed_tasks=False):
                     obj.setupLogging(process, package)
                     res = obj.run(process, package)
                     obj.teardownLogging()
-                except Exception as e:
+                except Exception:
                     moduleFailed(process.module.name, process, package)
                     break
 
                 if res == 1:
-                    process.status = Process.PROCESS_STATUS_DONE
-                    process.progress = 100
-                    process.end_time = datetime.datetime.now()
-                    process.save()
-                    # save to premis log
-
-                    data = {
-                        "package_uuid": package.file_name.split('.')[0],
-                        "package_file": package.file_name,
-                        "outcome": "0",
-                        "label": process.module.name,
-                        "detail": process.module.description,
-                        "user": "Admin"
-                    }
-
-                    relLogPath = Variable.objects.get(name="premis_file_name").data
-                    templatePath = Variable.objects.get(
-                        name="premis_event_template_path").data
-
-                    files = [
-                        {
-                            "xmlFileName": os.path.join(package.workdir, relLogPath),
-                            "templateFileName": templatePath
-                        }
-                    ]
-                    c = xmlGenerator(data, files)
-                    c.addExtension(inlineUUIDModule())
-                    c.addExtension(inlineDatetimeModule())
-                    c.appendToXML('/premis:premis/premis:event')
+                    # the process finished successfully. Save the progress
+                    finishSuccessfulRun(process)
                 elif res == 2:
                     #status ongoing, used for smart docker container
                     return
@@ -132,6 +105,52 @@ def executeProcessFlow(package_id, skip_failed_tasks=False):
 
     package.save()
 
+def finishSuccessfulRun(process):
+    package = process.package
+    process.status = Process.PROCESS_STATUS_DONE
+    process.progress = 100
+    process.end_time = datetime.datetime.now()
+    process.save()
+
+    # recalcu;ate number of files
+    recalculatePackageStats(package)
+
+    # save to premis log
+    data = {
+        "package_uuid": package.file_name.split('.')[0],
+        "package_file": package.file_name,
+        "outcome": "0",
+        "label": process.module.name,
+        "detail": process.module.description,
+        "user": "Admin"
+    }
+
+    relLogPath = Variable.objects.get(name="premis_file_name").data
+    templatePath = Variable.objects.get(
+        name="premis_event_template_path").data
+
+    files = [
+        {
+            "xmlFileName": os.path.join(package.workdir, relLogPath),
+            "templateFileName": templatePath
+        }
+    ]
+    c = xmlGenerator(data, files)
+    c.addExtension(inlineUUIDModule())
+    c.addExtension(inlineDatetimeModule())
+    c.appendToXML('/premis:premis/premis:event')
+
+def recalculatePackageStats(package):
+    stats = {}
+
+    filetypes, total_number_of_files, total_size = calculateFileType(package.workdir)
+
+    stats['fileTypes'] = filetypes
+    stats['total_number_of_files'] = total_number_of_files
+    stats['total_size'] = total_size
+
+    package.statistics = stats
+    package.save()
 
 def moduleFailed(name, process, package):
     log = 'Running module: %s failed. \n %s' % (name, traceback.format_exc())
@@ -351,12 +370,6 @@ def finishPackage(package_id):
     executeProcessFlow(package_id)
 
     # save the data to done.
-    try:
-        package = Package.objects.get(pk=package_id)
-    except ObjectDoesNotExist:
-        logger.error("The selected package does not exist")
-        return
-
     stats = package.statistics
     # for every filetype, add to processed files.
     fileTypes = stats['fileTypes']

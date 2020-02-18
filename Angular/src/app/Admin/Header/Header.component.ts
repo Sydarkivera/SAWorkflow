@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'adminHeader',
-  templateUrl: './AdminHeader.component.html',
-  styleUrls: ['./AdminHeader.component.sass']
+  templateUrl: './Header.component.html',
+  styleUrls: ['./Header.component.sass']
 })
 export class AdminHeaderComponent {
 

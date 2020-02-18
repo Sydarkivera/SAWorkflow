@@ -77,7 +77,7 @@ module11 = Module(name="Unoconv",
                  form=[],
                 command="UNOPATH=/usr/lib/Libreoffice /usr/bin/python3 /usr/bin/unoconv -f pdf -e SelectPdfVersion=1 \"#file\"",
                 # command="seq -s= 100000|tr -d '[:digit:]'",
-                filter='.*(\.(doc|docx))$',
+                filter='.*(\\.(doc|docx))$',
                 tool_folder_name="SMART_UNOCONV",
                 docker_mount_point="/workdir",
                 parallell_jobs=6
@@ -86,11 +86,12 @@ module11.save()
 module12 = Module(name="Verapdf",
                  type='3',
                  form=[],
-                command="verapdf -f 1a #file",
-                filter='.*(\.pdf)',
+                command="verapdf -f 1a \"#file\"",
+                filter='.*(\\.pdf)',
                 tool_folder_name="SMART_VERAPDF",
                 docker_mount_point="/workdir",
-                resultFilter=[{"type":"Containing", "value": "[\\\w\\\W]*compliant=\"1\"[\\\w\\\W]*"}]
+                resultFilter=[{"type":"Containing", "value": "[\\w\\W]*compliant=\"1\"[\\w\\W]*"}],
+                parallell_jobs=6
                  )
 module12.save()
 
@@ -113,16 +114,16 @@ template2.save()
 template3 = Template(name="Empty template")
 template3.save()
 
-# template4 = Template(name="Convert pdf")
-# template4.save()
-# process = Process(order=1,
-#                    template=template4,
-#                    module=module6)
-# process.save()
-# process = Process(order=2,
-#                    template=template4,
-#                    module=module12)
-# process.save()
+template4 = Template(name="Convert pdf")
+template4.save()
+process = Process(order=0,
+                   template=template4,
+                   module=module11) # unoconv
+process.save()
+process = Process(order=1,
+                   template=template4,
+                   module=module12) # verapdf
+process.save()
 
 
 # create default variables
@@ -197,7 +198,7 @@ image.save()
 module11.dockerImage = image
 module11.save()
 
-image = DockerImage(name="vera_pdf", mountpoint="/workdir", label="VeraPDF")
+image = DockerImage(name="verapdf_worker", mountpoint="/workdir", label="VeraPDF")
 image.save()
 module12.dockerImage = image
 module12.save()

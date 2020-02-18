@@ -5,11 +5,11 @@ import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
 
 // Components
-import { AdminHeaderComponent } from './AdminHeader.component';
-import { AdminModulesComponent } from './AdminModules.component';
-import { AdminGlobalComponent } from './AdminGlobal.component';
-import { AdminTemplatesComponent } from './AdminTemplates.component';
-import { AdminImagesComponent } from './AdminImages.component';
+import { AdminHeaderComponent } from './Header/Header.component';
+import { AdminModulesComponent } from './Modules/Modules.component';
+import { AdminGlobalComponent } from './GlobalVariables/GlobalVariables.component';
+import { AdminTemplatesComponent } from './Templates/Templates.component';
+import { AdminImagesComponent } from './DockerImages/DockerImages.component';
 
 
 export const adminRoutes: Routes = [

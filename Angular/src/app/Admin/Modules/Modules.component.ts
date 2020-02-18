@@ -2,12 +2,12 @@ import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 
-import { APIService } from "../Services/api.service";
+import { APIService } from "../../Services/api.service";
 
 @Component({
   selector: "admin",
-  templateUrl: "./AdminModules.component.html",
-  styleUrls: ["./AdminModules.component.sass"]
+  templateUrl: "./Modules.component.html",
+  styleUrls: ["./Modules.component.sass"]
 })
 export class AdminModulesComponent {
   modules: any[];
@@ -169,6 +169,9 @@ export class AdminModulesComponent {
     if (this.selected_module.description != undefined) {
       data["description"] = this.selected_module.description;
     }
+    if (this.selected_module.parallell_jobs != undefined) {
+      data["parallell_jobs"] = this.selected_module.parallell_jobs;
+    }
 
     //verfiy that the tools action is implemented
     if (this.selected_module.type == "Command") {
@@ -179,8 +182,6 @@ export class AdminModulesComponent {
         this.commandJsonError =
           "to save a new tool, the command needs to be configured";
         return false;
-      } else {
-        this.commandJsonError = "";
       }
     } else if (this.selected_module.type == "Python module") {
       if (
@@ -190,10 +191,15 @@ export class AdminModulesComponent {
         this.commandJsonError =
           "to save a new tool, the python file needs to be specified";
         return false;
-      } else {
-        this.commandJsonError = "";
+      }
+    } else if (this.selected_module.type === "Smart docker") {
+      if (this.selected_module.parallell_jobs <= 0 && this.selected_module.parallell_jobs >= 100) {
+        this.commandJsonError =
+          "The value for number of parallell jobs must be between 1 and 100";
+        return false;
       }
     }
+    this.commandJsonError = "";
 
     console.log(data);
 

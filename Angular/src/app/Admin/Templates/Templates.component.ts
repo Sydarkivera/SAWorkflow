@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 
-import { APIService } from "../Services/api.service";
+import { APIService } from "@app/Services/api.service";
 
 interface Placeholder {
   type: string;
@@ -12,8 +12,8 @@ interface Placeholder {
 
 @Component({
   selector: "adminTemplates",
-  templateUrl: "./AdminTemplates.component.html",
-  styleUrls: ["./AdminTemplates.component.sass"]
+  templateUrl: "./Templates.component.html",
+  styleUrls: ["./Templates.component.sass"]
 })
 export class AdminTemplatesComponent {
   templates: any[];

@@ -38,11 +38,13 @@ export class PackageStatusComponent {
        this.id = +params['id'];
         this.updateData();
     });
-
-    clearInterval(this.interval);
-    // this.interval = setInterval(() => {
-    //   this.updateData();
-    // }, 3000);
+    
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+    this.interval = setInterval(() => {
+      this.updateData();
+    }, 3000);
   }
 
   showModal(process, type) {

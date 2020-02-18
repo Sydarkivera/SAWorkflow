@@ -13,15 +13,15 @@ import { MessageModule } from '../Components/Message/Message.module';
 import { FileBrowserModule } from '../Components/FileBrowser/FileBrowser.module';
 
 //declarations
-import { AdminHeaderComponent }    from './AdminHeader.component';
-import { AdminModulesComponent }    from './AdminModules.component';
-import { AdminGlobalComponent }    from './AdminGlobal.component';
-import { AdminTemplatesComponent } from './AdminTemplates.component';
-import { AdminImagesComponent } from './AdminImages.component';
+import { AdminHeaderComponent }    from './Header/Header.component';
+import { AdminModulesComponent }    from './Modules/Modules.component';
+import { AdminGlobalComponent }    from './GlobalVariables/GlobalVariables.component';
+import { AdminTemplatesComponent } from './Templates/Templates.component';
+import { AdminImagesComponent } from './DockerImages/DockerImages.component';
 
 //providers
 // import { ModuleService } from './Module.service';
-import { APIService } from '../Services/api.service';
+import { APIService } from '@services/api.service';
 
 @NgModule({
   imports: [

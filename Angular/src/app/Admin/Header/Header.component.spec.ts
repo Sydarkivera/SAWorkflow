@@ -1,8 +1,8 @@
 import { TestBed, async } from '@angular/core/testing';
-import { AdminHeaderComponent } from './AdminHeader.component';
+import { AdminHeaderComponent } from './Header.component';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { NavbarModule } from '../Components/Navbar/Navbar.module';
+import { NavbarModule } from '@app/Components/Navbar/Navbar.module';
 
 
 describe('AdminHeader', () => {

@@ -2,16 +2,16 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { defer } from 'rxjs'
 
-import { AdminGlobalComponent } from './AdminGlobal.component';
+import { AdminGlobalComponent } from './GlobalVariables.component';
 
-import { NavbarModule } from '../Components/Navbar/Navbar.module';
-import { ModalModule } from '../Components/Modal/Modal.module';
-import { MessageModule } from '../Components/Message/Message.module';
+import { NavbarModule } from '../../Components/Navbar/Navbar.module';
+import { ModalModule } from '../../Components/Modal/Modal.module';
+import { MessageModule } from '../../Components/Message/Message.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { APIService } from '../Services/api.service';
+import { APIService } from '../../Services/api.service';
 
 function asyncData<T>(data: T) {
   return defer(() => Promise.resolve(data));

@@ -2,12 +2,12 @@ import { Component } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Router } from "@angular/router";
 
-import { APIService } from "../Services/api.service";
+import { APIService } from "@app/Services/api.service";
 
 @Component({
   selector: "admin-images",
-  templateUrl: "./AdminImages.component.html",
-  styleUrls: ["./AdminImages.component.sass"]
+  templateUrl: "./DockerImages.component.html",
+  styleUrls: ["./DockerImages.component.sass"]
 })
 export class AdminImagesComponent {
   images: any[];

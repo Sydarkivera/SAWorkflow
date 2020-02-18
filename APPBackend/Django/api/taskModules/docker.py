@@ -84,6 +84,8 @@ class DockerModule(BaseModule):
                 container_found = True
                 pass
 
+        logger.info('starting container: ' + container_name)
+
         container = client.containers.run(
             process.module.dockerImage.name, detach=True, volumes=volumes, hostname=container_name, name=container_name)
 
@@ -189,16 +191,17 @@ class DockerModule(BaseModule):
 
 
         # create the containers
+        numberStarted = 0
         for fileModel in files:
             logger.info(fileModel.name)
 
             fileModel.status = FileModel.FILEMODEL_STATUS_STARTED
             fileModel.save()
 
+            logger.info('starting container with iteration: ' + str(iteration) + ' as number: ' + str(numberStarted))
             (iteration, container) = self.start_container(container_name, iteration, package, process)
-            iteration = iteration + 1
 
-            # get the command fot this file
+            # get the command for this file
             relative = os.path.relpath(fileModel.name, package.workdir)
             values['file'] = os.path.join(
                 process.module.dockerImage.mountpoint, relative)
@@ -218,11 +221,17 @@ class DockerModule(BaseModule):
             # data['job_id'] = job_id#...
             # figure out name of new container in network
             # container_name = name + "-" + str(iteration)
-            url = "http://" + container_name + "-" + str(iteration-1) + "/start/"
+            url = "http://" + container_name + "-" + str(iteration) + "/start/"
             # logger.info(data)
             # logger.info(url)
             # logger.info(job)
             send_request(url, data)
+
+            numberStarted += 1
+            iteration = iteration + 2
+
+            if numberStarted > process.module.parallell_jobs:
+                break
 
             pass
 

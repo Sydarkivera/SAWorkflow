@@ -2,16 +2,16 @@ import { TestBed, async, fakeAsync, ComponentFixture, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { defer } from 'rxjs'
 
-import { AdminTemplatesComponent } from './AdminTemplates.component';
+import { AdminTemplatesComponent } from './Templates.component';
 
-import { NavbarModule } from '../Components/Navbar/Navbar.module';
-import { ModalModule } from '../Components/Modal/Modal.module';
-import { MessageModule } from '../Components/Message/Message.module';
+import { NavbarModule } from '@app/Components/Navbar/Navbar.module';
+import { ModalModule } from '@app/Components/Modal/Modal.module';
+import { MessageModule } from '@app/Components/Message/Message.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { APIService } from '../Services/api.service';
+import { APIService } from '@services/api.service';
 
 function asyncData<T>(data: T) {
   return defer(() => Promise.resolve(data));
@@ -20,9 +20,9 @@ function asyncData<T>(data: T) {
 describe('Admin Templates', () => {
   let fixture: ComponentFixture<AdminTemplatesComponent>;
 
-  const getTemplatesData = require('../Services/mock/getTemplates.json');
-  const getModulesData = require('../Services/mock/getModules.json');
-  const getTemplateData = require('../Services/mock/getTemplate.json');
+  const getTemplatesData = require('@services/mock/getTemplates.json');
+  const getModulesData = require('@services/mock/getModules.json');
+  const getTemplateData = require('@services/mock/getTemplate.json');
   const apiService = jasmine.createSpyObj('APIService', ['getTemplates', 'getModules', 'getTemplate']);
 
   let getTemplatesSpy = apiService.getTemplates.and.returnValue(asyncData(getTemplatesData));

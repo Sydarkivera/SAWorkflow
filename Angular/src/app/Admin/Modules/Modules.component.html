@@ -185,6 +185,10 @@
             </select>
           </label>
           <div class="form-group">
+            <label for="inputName">Number of parallell processes</label>
+            <input type="text" class="form-control" id="inputName" placeholder="1" [(ngModel)]="selected_module.parallell_jobs">
+          </div>
+          <div class="form-group">
             <label for="commandForm">Command<i class="material-icons icon-button my-auto icon-small" (click)="openModalCommandDocs()">help</i></label>
             <textarea class="form-control" id="commandForm" rows="7" [(ngModel)]="selected_module.command"></textarea>
           </div>

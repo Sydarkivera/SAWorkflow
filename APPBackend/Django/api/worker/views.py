@@ -41,6 +41,7 @@ import time
 import tarfile
 from api.worker.helper import send_request
 from api.helper import fixCommand, get_values, AnalyseLog, errorHappend
+from api.tasks import finishSuccessfulRun, executeProcessFlow
 import docker
 
 from logging import getLogger
@@ -74,6 +75,7 @@ def result(request):
             errorDict['file'] = fileModel.name
             errorDict['log'] = request.data['stderr']
             process.errors.append(errorDict)
+            process.save()
             errorHappend(fileModel.name)
         else:
             if 'stdout' in request.data:
@@ -87,6 +89,7 @@ def result(request):
                     errorDict['file'] = fileModel.name
                     errorDict['log'] = request.data['stdout']
                     process.errors.append(errorDict)
+                    process.save()
                     errorHappend(fileModel.name)
                     # status_ok = False
 
@@ -107,7 +110,6 @@ def result(request):
         process.progress = (numCompleted) / numTotal * 100
         process.save()
 
-
         # test if done or should abort
 
         if process.status == process.PROCESS_STATUS_ABORTED:
@@ -118,11 +120,18 @@ def result(request):
         if FileModel.objects.filter(process=process).filter(status=FileModel.FILEMODEL_STATUS_NOT_STARTED).count() == 0:
             logger.info('Package is completed')
             close_container(container_id)
-            process.status = Process.PROCESS_STATUS_DONE
-            process.end_time = datetime.datetime.now()
-            process.save()
-            process.package.status = Package.PACKAGE_STATUS_DONE
-            process.package.save()
+
+            # if all containers are closed, mark process as finished and continue:
+            remainingContainers = Container.objects.filter(process=process).count()
+            if remainingContainers == 0:
+                finishSuccessfulRun(process)
+                # start next process:
+                executeProcessFlow.delay(process.package.package_id)
+            # process.status = Process.PROCESS_STATUS_DONE
+            # process.end_time = datetime.datetime.now()
+            # process.save()
+            # process.package.status = Package.PACKAGE_STATUS_DONE
+            # process.package.save()
             return JsonResponse({"done": True, "aborted": True}, status=200)
 
 
@@ -253,6 +262,6 @@ def close_container(container_id):
     except docker.errors.NotFound:
         # container does not exist, run it
         logger.error("trying to delete a docker container that does not exist")
-
+    containerObject.delete()
     # delete job.
     # job.delete()
