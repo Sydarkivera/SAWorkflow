@@ -5,3 +5,7 @@
 [submodule "app_unoconv_worker"]
   path = worker_containers/app-unoconv-worker
   url = https://github.com/Sydarkivera/app-worker-unoconv
+
+[submodule "app_verapdf_worker"]
+  path = worker_containers/app-verapdf-worker
+  url = https://github.com/Sydarkivera/app-worker-verapdf
