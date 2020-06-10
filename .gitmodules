@@ -1,15 +1,19 @@
 [submodule "app_worker_base"]
 	path = worker_containers/app-worker-base
 	url = https://github.com/Sydarkivera/APP-worker-base
+  ignore = dirty
 
 [submodule "app_unoconv_worker"]
   path = worker_containers/app-unoconv-worker
   url = https://github.com/Sydarkivera/app-worker-unoconv
+  ignore = dirty
 
 [submodule "app_verapdf_worker"]
   path = worker_containers/app-verapdf-worker
   url = https://github.com/Sydarkivera/app-worker-verapdf
+  ignore = dirty
 
 [submodule "app_droidd_worker"]
   path = worker_containers/app-worker-droid
   url = https://github.com/Sydarkivera/app-worker-droid
+  ignore = dirty
