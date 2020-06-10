@@ -25,53 +25,34 @@ class BashModule(BaseModule):
         """
         args = fixCommand(process, values)
         logger.info('Running bash command in app_worker: ' + str(args))
-        # try:
-        #     stdout = subprocess.check_output(' '.join(args), shell=True)
-        # except subprocess.CalledProcessError as e:
-        #     self.logger.error('Command returned error: ' + str(e.output.decode('utf-8')))
-        #     return (-1, e.output.decode('utf-8'))
-
-        # log = ''
-        # if stdout:
-        #     log = stdout.decode('utf-8')
-        #     self.logger.debug('Command finished with output: ' + str(log))
-        #     self.AnalyseLog(process, log)
-        # return (1, log)
 
         try:
             tempLOG = tempfile.TemporaryFile()
             tempERR = tempfile.TemporaryFile()
             p = subprocess.Popen(' '.join(args), stdout=tempLOG, stderr=tempERR, shell=True)
-            
-            # p = subprocess.check_output(command, shell=True)
 
             stdout, stderr = p.communicate()
-            # logger.info(stdout)
-            # logger.info(stderr)
             p.wait()
 
             tempLOG.seek(0)
-            # print(tempLOG.read())
             stdout = tempLOG.read()
 
             tempERR.seek(0)
-            # print(tempERR.read())
             stderr = tempERR.read()
 
             tempLOG.close()
             tempERR.close()
             logger.info("Command finished")
-            # logger.info(p.returncode)
             logger.info('stdout' + stdout.decode('utf-8'))
             logger.info('stderr' + stderr.decode('utf-8'))
             p.kill()
             if stdout and stdout != None:
                 log = stdout.decode('utf-8')
+                self.logger.info(log)
             if stderr and stderr != None:
                 error = stderr.decode('utf-8')
+                self.logger.error(error)
                 return (-1, log + error)
-                # logger.error(error)
-                # retval = (-1, stderr.decode('utf-8'))
         except:
             logger.error(traceback.format_exc())
             error = traceback.format_exc()

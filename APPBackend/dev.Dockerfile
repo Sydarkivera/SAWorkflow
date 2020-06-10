@@ -37,6 +37,8 @@ RUN apk update
 RUN apk add docker
 #RUN service docker enable
 
+RUN freshclam
+
 
 ADD ./Django/requirements.txt /requirements.txt
 ADD ./Django/viewtar.c /viewtar.c
@@ -61,9 +63,6 @@ WORKDIR /code/
 ADD ./Django/ /code/
 RUN mkdir /code/log && mkdir /code/internal && mv /a.out /code/internal/
 # RUN mkdir /code/log/
-
-# RUN curl -L https://database.clamav.net/daily.cvd -o ./daily.cvd
-RUN freshclam
 
 # uWSGI will listen on this port
 EXPOSE 80
