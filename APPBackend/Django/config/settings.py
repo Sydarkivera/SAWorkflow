@@ -20,10 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-2uhrhoxl(n)w3d0jp$ng9-pdesn63m8yyf&5pcky-vro+on!j'
+# SECRET_KEY = '-2uhrhoxl(n)w3d0jp$ng9-pdesn63m8yyf&5pcky-vro+on!j'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '-2uhrhoxl(n)w3d0jp$ng9-pdesn63m8yyf&5pcky-vro+on!j')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DJANGO_DEBUG', True)
 
 ALLOWED_HOSTS = ['*']
 
@@ -132,11 +133,11 @@ else:
         # }
         'default':{
            'ENGINE':'django.db.backends.postgresql_psycopg2',
-           'USER':'saw',
-           'PASSWORD':'pass',
-           'HOST':'db',
-           'NAME':'saw_db',
-           'PORT':5432,
+            'NAME': os.environ.get('DB_ENV_DB', 'postgres'),
+            'USER': os.environ.get('DB_ENV_POSTGRES_USER', 'postgres'),
+            'PASSWORD': os.environ.get('DB_ENV_POSTGRES_PASSWORD', 'postgres'),
+            'HOST': os.environ.get('DB_PORT_5432_TCP_ADDR', 'db'),
+            'PORT': os.environ.get('DB_PORT_5432_TCP_PORT', ''),
         }
     }
 
