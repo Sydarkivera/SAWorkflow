@@ -1,34 +1,34 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["main"],{
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/DockerImages/DockerImages.component.html":
-/*!******************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/DockerImages/DockerImages.component.html ***!
-  \******************************************************************************************************/
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/DockerImages/docker-images.component.html":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/DockerImages/docker-images.component.html ***!
+  \*******************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selected_image.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selected_image.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selected_image.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selected_image.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selected_image.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selected_image.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of workdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selected_image.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"alert alert-warning\" *ngIf=\"modalOther.length > 0\">\n      {{modalOther}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Path to workdir inside image</label>\n      <input type=\"text\" class=\"form-control\" id=\"pathLabel\" placeholder=\"i.e. /code/workdir\" [(ngModel)]=\"newPath\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> The tool could not be removed since it is in use by one or more packages or templates.\n</message>\n\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-6\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let image of images\" class=\"list-group-item list-group-item-action\" (click)=\"selectImage(image)\" [class.active]=\"image.id == selectedImage.id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{image.label}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteImage(image)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"openNewImageModal()\">Add new docker image</button>\n    <a *ngIf=\"selectedImage.id != -1\" class=\"btn btn-secondary\" href=\"/api/image/{{selectedImage.id}}/export/\">Export image</a>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-6\" *ngIf=\"selectedImage.id != -1\">\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"saveSuccess\">All changes have been saved!</message>\n        <div class=\"form-group\">\n          <label for=\"inputLabel\">Name of the image (display name)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"DROID\" [(ngModel)]=\"selectedImage.label\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputname\">Image tag (This is the docker-name of the image, added with --tag when an image is created)</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputname\" placeholder=\"droid\" [(ngModel)]=\"selectedImage.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputMount\">Mount point of workdir inside image.</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputMount\" placeholder=\"/workdir/\" [(ngModel)]=\"selectedImage.mountpoint\">\n        </div>\n        <button class=\"btn btn-success\" (click)=\"save()\">\n          Save\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n    </div>\n  </div>\n</div>\n\n\n<modal [(active)]=\"modalactive\" title=\"Upload new docker image\">\n  <div modal-body>\n    <div class=\"alert alert-info\" *ngIf=\"modalMessage\">\n      Uploading image, {{uploadDone}}/{{uploadTotal}}\n    </div>\n    <div class=\"alert alert-warning\" *ngIf=\"modalOther.length > 0\">\n      {{modalOther}}\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Name of the image (display name)</label>\n      <input type=\"text\" class=\"form-control\" id=\"inputLabel\" placeholder=\"i.e. DROID\" [(ngModel)]=\"newLabel\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputLabel\">Path to workdir inside image</label>\n      <input type=\"text\" class=\"form-control\" id=\"pathLabel\" placeholder=\"i.e. /code/workdir\" [(ngModel)]=\"newPath\">\n    </div>\n\n    <label for=\"inputLabel\">Docker image. (generated with docker save)</label>\n    <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n      <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n      <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n        {{fileName}}\n      </label>\n\n    </div>\n    <button class=\"btn btn-success\" type=\"submit\" (click)=\"importImage()\">Save</button>\n  </div>\n\n\n</modal>\n");
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/GlobalVariables/GlobalVariables.component.html":
-/*!************************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/GlobalVariables/GlobalVariables.component.html ***!
-  \************************************************************************************************************/
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/GlobalVariables/global-variables.component.html":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/GlobalVariables/global-variables.component.html ***!
+  \*************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n\n<div class=\"card\">\n  <div class=\"card-header\">\n    <h5 style=\"float:left\">Paths</h5>\n    <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n      Save changes\n      <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n    </button>\n  </div>\n  <div class=\"card-body\">\n    <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Working directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path\" tooltip=\"A directory for temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/workdir\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Packages directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"packages_path\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"bottom\" placeholder=\"/ESSArch/data/epp/workarea\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">APP log file (premis)</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_file_name\" tooltip=\"The name of the premis log file generated by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"app_log.xml\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Directory for all tool files</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"tools_path\" tooltip=\"The absolute path of the directory where the tools are saved in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/tools\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">The absolute path of the workdir on docker host</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"work_dir_path_host\" tooltip=\"This is necessary since it is this folder that will be mounted into containers created by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/Docker/APP/Django/workdir\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for app log file</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_template_path\" tooltip=\"The json document used as a template for app log.\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premis.json\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for log additions</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premis_event_template_path\" tooltip=\"This should be a template for the part of the logfile that is repeated for every event\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premisEvent.json\">\n    </div>\n\n    <button class=\"btn btn-success\" (click)=\"save()\">\n      Save changes\n      <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n    </button>\n  </div>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n\n<div class=\"card\">\n  <div class=\"card-header\">\n    <h5 style=\"float:left\">Paths</h5>\n    <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n      Save changes\n      <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n    </button>\n  </div>\n  <div class=\"card-body\">\n    <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Working directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"workdirPath\" tooltip=\"A directory for temporary project files to be stored while they are in use in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/workdir\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Packages directory</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"packagesPath\" tooltip=\"The location of packages to be included in A.P.P. i.e. Workarea in EPP\" tooltipPlacement=\"bottom\" placeholder=\"/ESSArch/data/epp/workarea\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">APP log file (premis)</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premisFileName\" tooltip=\"The name of the premis log file generated by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"app_log.xml\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Directory for all tool files</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"toolsPath\" tooltip=\"The absolute path of the directory where the tools are saved in A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/code/tools\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">The absolute path of the workdir on docker host</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"workdirPathHost\" tooltip=\"This is necessary since it is this folder that will be mounted into containers created by A.P.P\" tooltipPlacement=\"bottom\" placeholder=\"/Docker/APP/Django/workdir\">\n    </div>\n\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for app log file</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premisTemplatePath\" tooltip=\"The json document used as a template for app log.\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premis.json\">\n    </div>\n    <div class=\"form-group\">\n      <label for=\"inputName\">Json template for log additions</label>\n      <input type=\"text\" class=\"form-control\"  [(ngModel)]=\"premisEventTemplatePath\" tooltip=\"This should be a template for the part of the logfile that is repeated for every event\" tooltipPlacement=\"bottom\" placeholder=\"/code/templates/premisEvent.json\">\n    </div>\n\n    <button class=\"btn btn-success\" (click)=\"save()\">\n      Save changes\n      <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n    </button>\n  </div>\n</div>\n");
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Header/Header.component.html":
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Header/header.component.html":
 /*!******************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Header/Header.component.html ***!
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Header/header.component.html ***!
   \******************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -39,16 +39,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Modules/Modules.component.html":
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Modules/modules.component.html":
 /*!********************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Modules/Modules.component.html ***!
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Modules/modules.component.html ***!
   \********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<!-- Error message displayed if the module could not be removed -->\n<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> {{errorMessage}}\n</message>\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\" [class.active]=\"module.module_id == selected_module.module_id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">\n      Add new tool\n      <i class=\"material-icons my-auto align-middle\">add</i>\n    </button>\n    <button class=\"btn\" (click)=\"importModule()\">\n      Import tool\n    </button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selected_module.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selected_module.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selected_module.form\">\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" />\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selected_module.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputDescription\">Description - for log file</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputDescription\" [(ngModel)]=\"selected_module.description\" placeholder=\"Sentence describing what the tool does\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selected_module.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selected_module.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">\n            Form json\n            <i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openFormJsonDocs()\">help</i>\n          </label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selected_module.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <div class=\"form-group my-auto\">\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <div class=\"form-group my-auto\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n            <option value=\"Docker Container\">Docker Container</option>\n            <option value=\"Smart docker module\">Smart docker module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Command'\">\n          <label for=\"commandForm\">\n            Command\n            <i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openModalCommandDocs()\">help</i>\n          </label>\n          <textarea class=\"form-control\" id=\"commandForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selected_module.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selected_module.python_module\">\n        </div>\n        <!-- If command type is docker -->\n        <ng-template [ngIf]=\"selected_module.type == 'Docker Container'\">\n          <label class=\"input-label\">\n            Docker image:\n            <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.dockerImage\">\n              <option *ngFor=\"let image of images\" value=\"{{image.id}}\">{{image.label}}</option>\n            </select>\n          </label>\n          <div class=\"form-group\">\n            <label for=\"commandForm\">Command<i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openModalCommandDocs()\">help</i></label>\n            <textarea class=\"form-control\" id=\"commandForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n          </div>\n          <!-- <button class=\"btn btn-success\" (click)=\"uploadDockerImage\">Upload Docker Image</button> -->\n          <!-- <div class=\"form-group\">\n            <label for=\"inputName\">Mount point for files/folder</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\">\n          </div> -->\n        </ng-template>\n        <ng-template [ngIf]=\"selected_module.type == 'Smart docker module'\">\n          <label class=\"input-label\">\n            Docker image:\n            <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selected_module.dockerImage\">\n              <option *ngFor=\"let image of images\" value=\"{{image.id}}\">{{image.label}}</option>\n            </select>\n          </label>\n          <div class=\"form-group\">\n            <label for=\"inputName\">Number of parallell processes</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"1\" [(ngModel)]=\"selected_module.parallell_jobs\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"commandForm\">Command<i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openModalCommandDocs()\">help</i></label>\n            <textarea class=\"form-control\" id=\"commandForm\" rows=\"7\" [(ngModel)]=\"selected_module.command\"></textarea>\n          </div>\n          <!-- <button class=\"btn btn-success\" (click)=\"uploadDockerImage\">Upload Docker Image</button> -->\n          <!-- <div class=\"form-group\">\n            <label for=\"inputName\">Mount point for files/folder</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\">\n          </div> -->\n        </ng-template>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <button class=\"btn btn-success\" (click)=\"openFileBrowser()\">\n          Browse files\n          <i class=\"material-icons my-auto align-middle icon-small\">folder_open</i>\n        </button>\n        <!-- <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button> -->\n        <!-- <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p> -->\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selected_module.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selected_module)\">\n      Delete\n      <i class=\"material-icons my-auto align-middle icon-small\">delete</i>\n    </button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n          {{fileName}}\n        </label>\n      </div>\n      <button class=\"btn btn-success\" type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\" [canCreateFolder]=\"false\"></filebrowser>\n\n<modal [(active)]=\"docsActive\" title=\"Form documentation\">\n  <div modal-body>\n    <p>\n      The form is specified as a json document. The structure must be an array of dictionaries. i.e. [ {{ '{' }}...{{ '}' }}, {{ '{' }}...{{ '}' }}, ...]\n    </p>\n    <p>\n      Each dictionay specifies one field in the form.\n    </p>\n\n    <ul>\n      <li>\n        <h5>type: [string] (required)</h5>\n        <p>\n          The type specifies which kind of form element is supposed to render. Options are: 'text' or 'checkbox'\n        </p>\n      </li>\n      <li>\n        <h5>identifier: [string] (required)</h5>\n        <p>\n          Identifer is the id that will be used in a command to select the value of this field. regex for possibilities: [a-Z0-9-_]\n        </p>\n      </li>\n      <li>\n        <h5>label: [string] (required)</h5>\n        <p>\n          A label which will be displayed in the final form. This can be any string.\n        </p>\n      </li>\n      <li>\n        <h5>default: [string] (optional)</h5>\n        <p>\n          An optional default state for the form. For a checkbox it must be true or false and for a textfield it must be a string.\n        </p>\n      </li>\n    </ul>\n  </div>\n</modal>\n\n<modal [(active)]=\"commandDocsActive\" title=\"Command documentation\">\n  <div modal-body>\n    <p>\n      The command field lets you specify the unix command that will be executed.<br/>\n      It is executed once for every file in the package.\n    </p>\n    <p>\n      Variables can be added to allow for more dynamic commands.\n      For example can the name of the file be used in the command. A variable is prefixed with hashtag (#). In the example below the variable \"file\" is used.\n    </p>\n    <p>\n      The variables can be defined in the form json field above.\n      There are also som predefined variables built-in listed below.\n    </p>\n    <p>\n      Example: <span class=\"code_example\">unoconv -f pdf -e SelectPdfVersion=1 #file</span>\n    </p>\n    <ul>\n      <li>\n        <h5>tar_path</h5>\n        <p>\n          The absolute location of the tar file containing the package.\n        </p>\n      </li>\n      <li>\n        <h5>workdir</h5>\n        <p>\n          The absolute path for the package's workdir.\n        </p>\n      </li>\n      <li>\n        <h5>tar_name</h5>\n        <p>\n          The name of the tar archive file containing the package.\n        </p>\n      </li>\n      <li>\n        <h5>file</h5>\n        <p>\n          The absolute path of the current file beeing executed.\n        </p>\n      </li>\n    </ul>\n  </div>\n</modal>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- Error message displayed if the module could not be removed -->\n<message duration=\"10000\" [(active)]=\"errorVisible\" type=\"alert-danger\">\n  <i class=\"material-icons align-middle\">warning</i> {{errorMessage}}\n</message>\n<div class=\"row\">\n\n  <!-- Existing tools, left side -->\n  <div class=\"col-lg-4\">\n    <h4>Existing Tools</h4>\n    <div class=\"card\">\n      <div class=\"card-header company-table-head\">\n        Name\n      </div>\n      <div class=\"list-group list-group-flush\">\n        <div *ngFor=\"let module of modules\" class=\"list-group-item list-group-item-action\" (click)=\"selectModule(module)\" [class.active]=\"module.module_id == selectedModule.module_id\">\n          <div class=\"d-flex w-100 justify-content-between\">\n            <p style=\"margin-bottom:0;\" class=\"d-flex w-100 noselect\">{{module.name}}</p>\n            <i class=\"material-icons icon-button\" (click)=\"deleteModule(module)\">delete</i>\n          </div>\n        </div>\n      </div>\n    </div>\n    <button class=\"btn btn-success\" (click)=\"addNewModule()\">\n      Add new tool\n      <i class=\"material-icons my-auto align-middle\">add</i>\n    </button>\n    <button class=\"btn\" (click)=\"importModule()\">\n      Import tool\n    </button>\n  </div>\n\n  <!-- Detail view of tool -->\n\n  <div class=\"col-lg-8\" *ngIf=\"selectedModule.module_id != -1\">\n    <h4>{{title}}</h4>\n\n    <!-- display the form if there is one -->\n    <div class=\"card\" *ngIf=\"selectedModule.form.length > 0\">\n      <div class=\"card-header\">\n        <h5>Form preview</h5>\n      </div>\n      <div class=\"card-body\">\n        <div class=\"form-group\" *ngFor=\"let input of selectedModule.form\">\n          <div class=\"form-check\" *ngIf=\"input.type=='checkbox'\">\n            <input class=\"form-check-input\" type=\"checkbox\" *ngIf=\"input.type=='checkbox'\" [id]=\"input.identifier\" [checked]=\"input.default\" />\n            <label class=\"form-check-label\" for=\"{{input.identifier}}\">\n              {{input.label}}\n            </label>\n          </div>\n          <ng-template [ngIf]=\"input.type=='text'\">\n            <label for=\"{{input.identifier}}\">{{input.label}}</label>\n            <input type=\"text\" class=\"form-control\" [id]=\"input.identifier\" placeholder=\"{{input.identifier}}\" [value]=\"input.default ? input.default : ''\">\n          </ng-template>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the general settings -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Settings</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <div class=\"form-group\">\n          <label for=\"inputName\">Name</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Virus scan ClamAV\" [(ngModel)]=\"selectedModule.name\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputDescription\">Description - for log file</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputDescription\" [(ngModel)]=\"selectedModule.description\" placeholder=\"Sentence describing what the tool does\">\n        </div>\n        <div class=\"form-group\">\n          <div class=\"form-check\">\n            <input type=\"checkbox\" class=\"form-check-input\" id=\"inputHidden\" [(ngModel)]=\"selectedModule.hidden\">\n            <label class=\"form-check-label\" for=\"inputHidden\">Hidden</label>\n          </div>\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputFileFilter\">File filter</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputFileFilter\" [(ngModel)]=\"selectedModule.filter\" placeholder=\".*(\\.pdf)\">\n        </div>\n        <div class=\"form-group\">\n          <label for=\"inputForm\">\n            Form json\n            <i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openFormJsonDocs()\">help</i>\n          </label>\n          <textarea class=\"form-control\" id=\"inputForm\" rows=\"7\" [(ngModel)]=\"formJson\"></textarea>\n        </div>\n\n        <p class=\"Error-text\">{{formJsonError}}</p>\n        <p>Avaliable types: checkbox, text (Should I create a ui for configuring the form or should I write documentation?)</p>\n\n        <!-- Display logfile checks -->\n        <h5 class=\"input-label\">\n          What qualifies succes in the log files:\n        </h5>\n        <div *ngFor=\"let filter of selectedModule.resultFilter\">\n          <div class=\"form-row\">\n            <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"filter.type\">\n              <option value=\"Containing\">Containing</option>\n              <option value=\"Not containing\">Not containing</option>\n            </select>\n            <div class=\"form-group my-auto\">\n              <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"filter.value\">\n            </div>\n            <i class=\"material-icons icon-button my-auto\" (click)=\"removeResultFilter(filter)\">delete</i>\n          </div>\n        </div>\n        <hr>\n        <p>Add a new filter</p>\n        <div class=\"form-row\">\n          <select class=\"custom-select col-sm-3 my-1 my-auto\" [(ngModel)]=\"newResultFilter.type\">\n            <option value=\"Containing\">Containing</option>\n            <option value=\"Not containing\">Not containing</option>\n          </select>\n          <div class=\"form-group my-auto\">\n            <input type=\"text\" class=\"form-control\" placeholder=\"[\\w\\W]*pattern[\\w\\W]*\" [(ngModel)]=\"newResultFilter.value\">\n          </div>\n          <i class=\"material-icons icon-button my-auto\" (click)=\"addResultFilter(filter)\">add</i>\n        </div>\n      </div>\n    </div>\n\n    <!-- Display the actual command to be run -->\n    <div class=\"card\">\n      <div class=\"card-header\">\n        <h5 style=\"float:left\">Command</h5>\n        <button class=\"btn btn-success\" (click)=\"save()\" style=\"float:right\">\n          Save changes\n          <i class=\"material-icons my-auto align-middle icon-small\">save</i>\n        </button>\n      </div>\n      <div class=\"card-body\">\n\n        <message duration=\"3000\" [(active)]=\"messageVisible\">All changes have been saved!</message>\n        <label class=\"input-label\">\n          Type:\n          <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selectedModule.type\">\n            <option value=\"Command\">Command</option>\n            <option value=\"Python module\">Python module</option>\n            <option value=\"Docker Container\">Docker Container</option>\n            <option value=\"Smart docker module\">Smart docker module</option>\n          </select>\n        </label>\n        <div class=\"form-group\" *ngIf=\"selectedModule.type == 'Command'\">\n          <label for=\"commandForm\">\n            Command\n            <i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openModalCommandDocs()\">help</i>\n          </label>\n          <textarea class=\"form-control\" id=\"commandForm\" rows=\"7\" [(ngModel)]=\"selectedModule.command\"></textarea>\n        </div>\n        <div class=\"form-group\" *ngIf=\"selectedModule.type == 'Python module'\">\n          <label for=\"inputName\">Python Module</label>\n          <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Path to python file\" [(ngModel)]=\"selectedModule.python_module\">\n        </div>\n        <!-- If command type is docker -->\n        <ng-template [ngIf]=\"selectedModule.type == 'Docker Container'\">\n          <label class=\"input-label\">\n            Docker image:\n            <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selectedModule.dockerImage\">\n              <option *ngFor=\"let image of images\" value=\"{{image.id}}\">{{image.label}}</option>\n            </select>\n          </label>\n          <div class=\"form-group\">\n            <label for=\"commandForm\">Command<i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openModalCommandDocs()\">help</i></label>\n            <textarea class=\"form-control\" id=\"commandForm\" rows=\"7\" [(ngModel)]=\"selectedModule.command\"></textarea>\n          </div>\n          <!-- <button class=\"btn btn-success\" (click)=\"uploadDockerImage\">Upload Docker Image</button> -->\n          <!-- <div class=\"form-group\">\n            <label for=\"inputName\">Mount point for files/folder</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\">\n          </div> -->\n        </ng-template>\n        <ng-template [ngIf]=\"selectedModule.type == 'Smart docker module'\">\n          <label class=\"input-label\">\n            Docker image:\n            <select class=\"custom-select my-1 my-auto\" [(ngModel)]=\"selectedModule.dockerImage\">\n              <option *ngFor=\"let image of images\" value=\"{{image.id}}\">{{image.label}}</option>\n            </select>\n          </label>\n          <div class=\"form-group\">\n            <label for=\"inputName\">Number of parallell processes</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"1\" [(ngModel)]=\"selectedModule.parallell_jobs\">\n          </div>\n          <div class=\"form-group\">\n            <label for=\"commandForm\">Command<i class=\"material-icons icon-button my-auto icon-small\" (click)=\"openModalCommandDocs()\">help</i></label>\n            <textarea class=\"form-control\" id=\"commandForm\" rows=\"7\" [(ngModel)]=\"selectedModule.command\"></textarea>\n          </div>\n          <!-- <button class=\"btn btn-success\" (click)=\"uploadDockerImage\">Upload Docker Image</button> -->\n          <!-- <div class=\"form-group\">\n            <label for=\"inputName\">Mount point for files/folder</label>\n            <input type=\"text\" class=\"form-control\" id=\"inputName\">\n          </div> -->\n        </ng-template>\n        <p class=\"Error-text\">{{commandJsonError}}</p>\n        <button class=\"btn btn-success\" (click)=\"openFileBrowser()\">\n          Browse files\n          <i class=\"material-icons my-auto align-middle icon-small\">folder_open</i>\n        </button>\n        <!-- <button class=\"btn btn-success\" (click)=\"save()\">Save changes</button> -->\n        <!-- <p>Export will export a tar file containing the json strucutre and the python file, if it exists</p> -->\n      </div>\n    </div>\n    <a class=\"btn btn-secondary\" href=\"/api/module/{{selectedModule.module_id}}/export/\">Export tool</a>\n    <button class=\"btn btn-danger\" (click)=\"deleteModule(selectedModule)\">\n      Delete\n      <i class=\"material-icons my-auto align-middle icon-small\">delete</i>\n    </button>\n    <div class=\"allow-scroll-beneath-page-end\"></div>\n  </div>\n</div>\n\n<modal [(active)]=\"modalactive\">\n  <div modal-body>\n    <form method=\"post\" enctype=\"multipart/form-data\">\n      <div class=\"custom-file\" id=\"customFile\" lang=\"en\">\n        <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"fileSelected($event)\" name=\"import.tar\">\n        <label class=\"custom-file-label\" for=\"exampleInputFile\" [class.border-success]=\"fileStatus==2\" [class.border-danger]=\"fileStatus==1\">\n          {{fileName}}\n        </label>\n      </div>\n      <button class=\"btn btn-success\" type=\"submit\" (click)=\"uploadFile()\">Upload</button>\n    </form>\n  </div>\n</modal>\n\n<app-filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\" [canCreateFolder]=\"false\"></app-filebrowser>\n\n<modal [(active)]=\"docsActive\" title=\"Form documentation\">\n  <div modal-body>\n    <p>\n      The form is specified as a json document. The structure must be an array of dictionaries. i.e. [ {{ '{' }}...{{ '}' }}, {{ '{' }}...{{ '}' }}, ...]\n    </p>\n    <p>\n      Each dictionay specifies one field in the form.\n    </p>\n\n    <ul>\n      <li>\n        <h5>type: [string] (required)</h5>\n        <p>\n          The type specifies which kind of form element is supposed to render. Options are: 'text' or 'checkbox'\n        </p>\n      </li>\n      <li>\n        <h5>identifier: [string] (required)</h5>\n        <p>\n          Identifer is the id that will be used in a command to select the value of this field. regex for possibilities: [a-Z0-9-_]\n        </p>\n      </li>\n      <li>\n        <h5>label: [string] (required)</h5>\n        <p>\n          A label which will be displayed in the final form. This can be any string.\n        </p>\n      </li>\n      <li>\n        <h5>default: [string] (optional)</h5>\n        <p>\n          An optional default state for the form. For a checkbox it must be true or false and for a textfield it must be a string.\n        </p>\n      </li>\n    </ul>\n  </div>\n</modal>\n\n<modal [(active)]=\"commandDocsActive\" title=\"Command documentation\">\n  <div modal-body>\n    <p>\n      The command field lets you specify the unix command that will be executed.<br/>\n      It is executed once for every file in the package.\n    </p>\n    <p>\n      Variables can be added to allow for more dynamic commands.\n      For example can the name of the file be used in the command. A variable is prefixed with hashtag (#). In the example below the variable \"file\" is used.\n    </p>\n    <p>\n      The variables can be defined in the form json field above.\n      There are also som predefined variables built-in listed below.\n    </p>\n    <p>\n      Example: <span class=\"code_example\">unoconv -f pdf -e SelectPdfVersion=1 #file</span>\n    </p>\n    <ul>\n      <li>\n        <h5>tar_path</h5>\n        <p>\n          The absolute location of the tar file containing the package.\n        </p>\n      </li>\n      <li>\n        <h5>workdir</h5>\n        <p>\n          The absolute path for the package's workdir.\n        </p>\n      </li>\n      <li>\n        <h5>tar_name</h5>\n        <p>\n          The name of the tar archive file containing the package.\n        </p>\n      </li>\n      <li>\n        <h5>file</h5>\n        <p>\n          The absolute path of the current file beeing executed.\n        </p>\n      </li>\n    </ul>\n  </div>\n</modal>\n");
 
 /***/ }),
 
@@ -74,20 +74,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div [class.modal]=\"isModal\" [class.active]=\"active\" id=\"modal\">\n  <div [class.main-modal]=\"isModal\" [class.modal-dialog]=\"isModal\" [class.modal-lg]=\"isModal\" role=\"document\">\n    <div [class.modal-content]=\"isModal\" [class.content]=\"!isModal\">\n      <div [class.modal-header]=\"isModal\">\n        <h5 [class.modal-title]=\"isModal\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\" *ngIf=\"isModal\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\" style=\"overflow:scroll\">\n        <div *ngFor=\"let level of levels; let i = index\" class=\"level\">\n          <div\n            *ngFor=\"let file of level\"\n            class=\"file\"\n            [class.selected]=\"file.name == selected[i]\"\n            (contextmenu)=\"openContextMenu($event, i, file)\"\n            (click)=\"openNewLevel(i, file)\"\n            >\n            <!-- <file [file]=\"file\" [path]=\"path\" [specific_path]=\"file.name + '/'\"></file> -->\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'folder'\">folder</i>\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'file'\">insert_drive_file</i>\n            <p class=\"align-middle\">\n              {{file.name}}\n            </p>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"openUploadModal()\">Upload file</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-warning\" (click)=\"openRenameModal()\">Rename</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-danger\" (click)=\"openDeleteModal()\">Delete</button>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\"  *ngIf=\"isModal\">Close</button>\n      </div>\n    </div>\n\n    <!-- Popup window inside modal -->\n    <div class=\"popUpQuestion modal\" *ngIf=\"innerModalVisible\">\n      <div class=\"modal-dialog modal-dialog-centered\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h5 *ngIf=\"innerModalType == 'delete'\" class=\"modal-title\">Delete</h5>\n            <h5 *ngIf=\"innerModalType == 'rename'\" class=\"modal-title\">Rename</h5>\n            <h5 *ngIf=\"innerModalType == 'create'\" class=\"modal-title\">Create new folder</h5>\n            <h5 *ngIf=\"innerModalType == 'upload'\" class=\"modal-title\">Upload a file</h5>\n            <button type=\"button\" class=\"close\" (click)=\"closeInnerModal()\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            <p *ngIf=\"innerModalType == 'delete'\">\n              Are you sure you want to delete \"{{selectedFile.name}}\"? All it's content will permanently be deleted.\n            </p>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'rename'\">\n              <label for=\"inputName\">New name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"New file name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'create'\">\n              <label for=\"inputName\">Folder name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Folder name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div *ngIf=\"innerModalType == 'upload'\" class=\"custom-file\" id=\"customFile\" lang=\"en\">\n              <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"onFileSelected($event)\" name=\"import\">\n              <label class=\"custom-file-label\" for=\"exampleInputFile\" >\n                {{innerModalValue}}\n              </label>\n            </div>\n          </div>\n          <div class=\"modal-footer justify-content-between\">\n            <button *ngIf=\"innerModalType == 'delete'\" type=\"button\" class=\"btn btn-danger\" (click)=\"delete()\">Delete</button>\n            <button *ngIf=\"innerModalType == 'rename'\" type=\"button\" class=\"btn btn-success\" (click)=\"rename()\">Rename</button>\n            <button *ngIf=\"innerModalType == 'create'\" type=\"button\" class=\"btn btn-success\" (click)=\"create()\">Create</button>\n            <button *ngIf=\"innerModalType == 'upload'\" type=\"button\" class=\"btn btn-success\" (click)=\"uploadFile()\">Upload</button>\n            <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeInnerModal()\">Cancel</button>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-background\" (click)=\"closeInnerModal()\"></div>\n    </div>\n  </div>\n  <div [class.modal-background]=\"isModal\" (click)=\"closeModal()\"></div>\n</div>\n\n<div class=\"contextMenu\" *ngIf=\"contextMenuPos.x != -1\" [ngStyle]=\"{'left.px': contextMenuPos.x, 'top.px': contextMenuPos.y}\">\n  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n    <div class=\"dropdown-header\">\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'folder'\">folder</i>\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'file'\">insert_drive_file</i>\n      <p class=\"float-left\">{{selectedFile.name}}</p>\n    </div>\n    <div class=\"dropdown-divider\"></div>\n    <a class=\"dropdown-item\" (click)=\"openRenameModal()\">Rename</a>\n    <a class=\"dropdown-item\" [href]=\"getDownloadPath()\" target=\"_blank\">Download</a>\n    <a class=\"dropdown-item\" (click)=\"openDeleteModal()\">Delete</a>\n    <a class=\"dropdown-item\" (click)=\"openUploadModal()\">upload file</a>\n    <a class=\"dropdown-item\" (click)=\"openCreateFolderModal()\" *ngIf=\"canCreateFolder\">Create folder</a>\n  </div>\n</div>\n");
-
-/***/ }),
-
-/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/Components/FileBrowser/file.component.html":
-/*!**************************************************************************************************!*\
-  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/Components/FileBrowser/file.component.html ***!
-  \**************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"file-header noselect d-flex\" (click)=\"expand()\">\n  <ng-template [ngIf]=\"file.type == 'folder'\">\n    <i *ngIf=\"!expanded\" class=\"material-icons file-float\">arrow_right</i>\n    <i *ngIf=\"expanded\" class=\"material-icons file-float\">arrow_drop_down</i>\n  </ng-template>\n  <p class=\"file-float\">{{file.name}}</p>\n  <!-- <i class=\"material-icons file-float\">indeterminate_check_box</i> -->\n</div>\n<!-- <i *ngIf=\"file.selected == true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Deselect this file\" tooltipPlacement=\"right\">check_box</i> -->\n<!-- <i *ngIf=\"file.selected != true && file.type == 'file'\" class=\"material-icons file-float\" (click)=\"select()\" tooltip=\"Select this file\" tooltipPlacement=\"right\">check_box_outline_blank</i> -->\n<!-- <i *ngIf=\"file.type == 'folder'\" class=\"material-icons file-float\" tooltip=\"Set a filter for items in folder\" tooltipPlacement=\"right\">filter_list</i> -->\n<div *ngIf=\"expanded\" class=\"file-children\">\n  <!-- <div *ngFor=\"let file of file.children\"> -->\n    <file *ngFor=\"let f of children\" [file]=\"f\" [specific_path]=\"specific_path + f.name + '/'\" [path]=\"path\"></file>\n  <!-- </div> -->\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div [class.modal]=\"isModal\" [class.active]=\"active\" id=\"modal\">\n  <div [class.main-modal]=\"isModal\" [class.modal-dialog]=\"isModal\" [class.modal-lg]=\"isModal\" role=\"document\">\n    <div [class.modal-content]=\"isModal\" [class.content]=\"!isModal\">\n      <div [class.modal-header]=\"isModal\">\n        <h5 [class.modal-title]=\"isModal\" id=\"exampleModalLabel\">FileBrowser</h5>\n        <button type=\"button\" class=\"close\" (click)=\"closeModal()\" *ngIf=\"isModal\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n      <div class=\"modal-body\" style=\"overflow:scroll\">\n        <div *ngFor=\"let level of levels; let i = index\" class=\"level\">\n          <div\n            *ngFor=\"let file of level\"\n            class=\"file\"\n            [class.selected]=\"file.name == selected[i]\"\n            (contextmenu)=\"openContextMenu($event, i, file)\"\n            (click)=\"openNewLevel(i, file)\"\n            >\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'folder'\">folder</i>\n            <i class=\"material-icons align-middle\" *ngIf=\"file.type == 'file'\">insert_drive_file</i>\n            <p class=\"align-middle\">\n              {{file.name}}\n            </p>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-footer\">\n        <button type=\"button\" class=\"btn btn-success\" (click)=\"openUploadModal()\">Upload file</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-warning\" (click)=\"openRenameModal()\">Rename</button>\n        <button *ngIf=\"selectedFile != undefined\" type=\"button\" class=\"btn btn-danger\" (click)=\"openDeleteModal()\">Delete</button>\n        <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeModal()\"  *ngIf=\"isModal\">Close</button>\n      </div>\n    </div>\n\n    <!-- Popup window inside modal -->\n    <div class=\"popUpQuestion modal\" *ngIf=\"innerModalVisible\">\n      <div class=\"modal-dialog modal-dialog-centered\">\n        <div class=\"modal-content\">\n          <div class=\"modal-header\">\n            <h5 *ngIf=\"innerModalType == 'delete'\" class=\"modal-title\">Delete</h5>\n            <h5 *ngIf=\"innerModalType == 'rename'\" class=\"modal-title\">Rename</h5>\n            <h5 *ngIf=\"innerModalType == 'create'\" class=\"modal-title\">Create new folder</h5>\n            <h5 *ngIf=\"innerModalType == 'upload'\" class=\"modal-title\">Upload a file</h5>\n            <button type=\"button\" class=\"close\" (click)=\"closeInnerModal()\">\n              <span aria-hidden=\"true\">&times;</span>\n            </button>\n          </div>\n          <div class=\"modal-body\">\n            <p *ngIf=\"innerModalType == 'delete'\">\n              Are you sure you want to delete \"{{selectedFile.name}}\"? All it's content will permanently be deleted.\n            </p>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'rename'\">\n              <label for=\"inputName\">New name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"New file name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div class=\"form-group\" *ngIf=\"innerModalType == 'create'\">\n              <label for=\"inputName\">Folder name</label>\n              <input type=\"text\" class=\"form-control\" id=\"inputName\" placeholder=\"Folder name\" [(ngModel)]=\"innerModalValue\">\n            </div>\n            <div *ngIf=\"innerModalType == 'upload'\" class=\"custom-file\" id=\"customFile\" lang=\"en\">\n              <input type=\"file\" class=\"custom-file-input\" id=\"exampleInputFile\" (change)=\"onFileSelected($event)\" name=\"import\">\n              <label class=\"custom-file-label\" for=\"exampleInputFile\" >\n                {{innerModalValue}}\n              </label>\n            </div>\n          </div>\n          <div class=\"modal-footer justify-content-between\">\n            <button *ngIf=\"innerModalType == 'delete'\" type=\"button\" class=\"btn btn-danger\" (click)=\"delete()\">Delete</button>\n            <button *ngIf=\"innerModalType == 'rename'\" type=\"button\" class=\"btn btn-success\" (click)=\"rename()\">Rename</button>\n            <button *ngIf=\"innerModalType == 'create'\" type=\"button\" class=\"btn btn-success\" (click)=\"create()\">Create</button>\n            <button *ngIf=\"innerModalType == 'upload'\" type=\"button\" class=\"btn btn-success\" (click)=\"uploadFile()\">Upload</button>\n            <button type=\"button\" class=\"btn btn-secondary\" (click)=\"closeInnerModal()\">Cancel</button>\n          </div>\n        </div>\n      </div>\n      <div class=\"modal-background\" (click)=\"closeInnerModal()\"></div>\n    </div>\n  </div>\n  <div [class.modal-background]=\"isModal\" (click)=\"closeModal()\"></div>\n</div>\n\n<div class=\"contextMenu\" *ngIf=\"contextMenuPos.x != -1\" [ngStyle]=\"{'left.px': contextMenuPos.x, 'top.px': contextMenuPos.y}\">\n  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">\n    <div class=\"dropdown-header\">\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'folder'\">folder</i>\n      <i class=\"material-icons align-middle float-left\" *ngIf=\"selectedFile.type == 'file'\">insert_drive_file</i>\n      <p class=\"float-left\">{{selectedFile.name}}</p>\n    </div>\n    <div class=\"dropdown-divider\"></div>\n    <a class=\"dropdown-item\" (click)=\"openRenameModal()\">Rename</a>\n    <a class=\"dropdown-item\" [href]=\"getDownloadPath()\" target=\"_blank\">Download</a>\n    <a class=\"dropdown-item\" (click)=\"openDeleteModal()\">Delete</a>\n    <a class=\"dropdown-item\" (click)=\"openUploadModal()\">upload file</a>\n    <a class=\"dropdown-item\" (click)=\"openCreateFolderModal()\" *ngIf=\"canCreateFolder\">Create folder</a>\n  </div>\n</div>\n");
 
 /***/ }),
 
@@ -165,7 +152,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <button class=\"btn btn-success browse\" (click)=\"openFileBrowser()\">\n      Browse package\n      <i class=\"material-icons my-auto align-middle\">folder_open</i>\n    </button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div\n    *ngFor=\"let process of package.processes\"\n    class=\"progress-bar text-dark text-center\"\n    [style.width]=\"process.progress/package.processes.length + '%'\"\n    [class.bg-success]=\"process.status == 'Done'\"\n    [class.bg-danger]=\"process.status == 'Error'\"\n    [class.progress-bar-animated]=\"process.status == 'Running'\"\n    [class.progress-bar-striped]=\"process.status == 'Running'\"\n    >\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    label=\"Files\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\"></filebrowser>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<div class=\"row numberRow\">\n  <div class=\"col-md-4 col-sm-4 col-xs-6\">\n    <p class=\"numberTitle\">\n      Total Files:\n    </p>\n    <p class=\"number\">\n      {{total_number_of_files}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <p class=\"numberTitle\">\n      Total Filesize:\n    </p>\n    <p class=\"number\">\n      {{total_size}}\n    </p>\n  </div>\n  <div class=\"col-md-4 col-sm-4 col-xs-6 divider\">\n    <button class=\"btn btn-success browse\" (click)=\"openFileBrowser()\">\n      Browse package\n      <i class=\"material-icons my-auto align-middle\">folder_open</i>\n    </button>\n  </div>\n</div>\n\n<div class=\"progress border border-primary\">\n  <div\n    *ngFor=\"let process of package.processes\"\n    class=\"progress-bar text-dark text-center\"\n    [style.width]=\"process.progress/package.processes.length + '%'\"\n    [class.bg-success]=\"process.status == 'Done'\"\n    [class.bg-danger]=\"process.status == 'Error'\"\n    [class.progress-bar-animated]=\"process.status == 'Running'\"\n    [class.progress-bar-striped]=\"process.status == 'Running'\"\n    >\n  </div>\n</div>\n\n<div class=\"card filetypes\">\n  <ngx-charts-advanced-pie-chart\n    [scheme]=\"colorScheme\"\n    [results]=\"fileTypes\"\n    [gradient]=\"gradient\"\n    label=\"Files\">\n  </ngx-charts-advanced-pie-chart>\n</div>\n\n<app-filebrowser [(active)]=\"browserActive\" [path]=\"browserPath\"></app-filebrowser>\n");
 
 /***/ }),
 
@@ -178,7 +165,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<filebrowser active=\"true\" [path]=\"browserPath\" [isModal]=\"false\"></filebrowser>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<app-filebrowser active=\"true\" [path]=\"browserPath\" [isModal]=\"false\"></app-filebrowser>\n");
 
 /***/ }),
 
@@ -296,154 +283,23 @@ webpackEmptyAsyncContext.id = "./src/$$_lazy_route_resource lazy recursive";
 
 /***/ }),
 
-/***/ "./src/app/Admin/Admin-routing.routes.ts":
-/*!***********************************************!*\
-  !*** ./src/app/Admin/Admin-routing.routes.ts ***!
-  \***********************************************/
-/*! exports provided: adminRoutes */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "adminRoutes", function() { return adminRoutes; });
-/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
-/* harmony import */ var _guards_admin_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../guards/admin.guard */ "./src/app/guards/admin.guard.ts");
-/* harmony import */ var _Header_Header_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Header/Header.component */ "./src/app/Admin/Header/Header.component.ts");
-/* harmony import */ var _Modules_Modules_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Modules/Modules.component */ "./src/app/Admin/Modules/Modules.component.ts");
-/* harmony import */ var _GlobalVariables_GlobalVariables_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./GlobalVariables/GlobalVariables.component */ "./src/app/Admin/GlobalVariables/GlobalVariables.component.ts");
-/* harmony import */ var _Templates_Templates_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Templates/Templates.component */ "./src/app/Admin/Templates/Templates.component.ts");
-/* harmony import */ var _DockerImages_DockerImages_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./DockerImages/DockerImages.component */ "./src/app/Admin/DockerImages/DockerImages.component.ts");
-var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
-  return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-
-
-// Components
-
-
-
-
-
-var adminRoutes = [
-    { path: 'admin', component: _Header_Header_component__WEBPACK_IMPORTED_MODULE_2__["AdminHeaderComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_0__["AuthGuard"], _guards_admin_guard__WEBPACK_IMPORTED_MODULE_1__["AdminGuard"]], children: [
-            { path: '', redirectTo: 'modules', pathMatch: 'full' },
-            { path: 'modules', component: _Modules_Modules_component__WEBPACK_IMPORTED_MODULE_3__["AdminModulesComponent"] },
-            { path: 'global', component: _GlobalVariables_GlobalVariables_component__WEBPACK_IMPORTED_MODULE_4__["AdminGlobalComponent"] },
-            { path: 'templates', component: _Templates_Templates_component__WEBPACK_IMPORTED_MODULE_5__["AdminTemplatesComponent"] },
-            { path: 'images', component: _DockerImages_DockerImages_component__WEBPACK_IMPORTED_MODULE_6__["AdminImagesComponent"] },
-        ] }
-];
-
-
-/***/ }),
-
-/***/ "./src/app/Admin/Admin.module.ts":
-/*!***************************************!*\
-  !*** ./src/app/Admin/Admin.module.ts ***!
-  \***************************************/
-/*! exports provided: AdminModule */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModule", function() { return AdminModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/esm.js");
-/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
-/* harmony import */ var _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Components/Modal/Modal.module */ "./src/app/Components/Modal/Modal.module.ts");
-/* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
-/* harmony import */ var _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Components/FileBrowser/FileBrowser.module */ "./src/app/Components/FileBrowser/FileBrowser.module.ts");
-/* harmony import */ var _Header_Header_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./Header/Header.component */ "./src/app/Admin/Header/Header.component.ts");
-/* harmony import */ var _Modules_Modules_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./Modules/Modules.component */ "./src/app/Admin/Modules/Modules.component.ts");
-/* harmony import */ var _GlobalVariables_GlobalVariables_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./GlobalVariables/GlobalVariables.component */ "./src/app/Admin/GlobalVariables/GlobalVariables.component.ts");
-/* harmony import */ var _Templates_Templates_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Templates/Templates.component */ "./src/app/Admin/Templates/Templates.component.ts");
-/* harmony import */ var _DockerImages_DockerImages_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./DockerImages/DockerImages.component */ "./src/app/Admin/DockerImages/DockerImages.component.ts");
-/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @services/api.service */ "./src/app/Services/api.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
-  return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-
-
-
-
-
-//imports
-
-
-
-
-
-//declarations
-
-
-
-
-
-//providers
-// import { ModuleService } from './Module.service';
-
-var AdminModule = /** @class */ (function () {
-    function AdminModule() {
-    }
-    AdminModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormsModule"],
-                _angular_router__WEBPACK_IMPORTED_MODULE_2__["RouterModule"],
-                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_5__["TooltipModule"],
-                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_6__["NavbarModule"],
-                _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"],
-                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_8__["MessageModule"],
-                _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_9__["FileBrowserModule"]
-            ],
-            declarations: [
-                _Header_Header_component__WEBPACK_IMPORTED_MODULE_10__["AdminHeaderComponent"],
-                _Modules_Modules_component__WEBPACK_IMPORTED_MODULE_11__["AdminModulesComponent"],
-                _GlobalVariables_GlobalVariables_component__WEBPACK_IMPORTED_MODULE_12__["AdminGlobalComponent"],
-                _Templates_Templates_component__WEBPACK_IMPORTED_MODULE_13__["AdminTemplatesComponent"],
-                _DockerImages_DockerImages_component__WEBPACK_IMPORTED_MODULE_14__["AdminImagesComponent"]
-            ],
-            providers: [
-                _services_api_service__WEBPACK_IMPORTED_MODULE_15__["APIService"]
-            ],
-        })
-    ], AdminModule);
-    return AdminModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/Admin/DockerImages/DockerImages.component.sass":
-/*!****************************************************************!*\
-  !*** ./src/app/Admin/DockerImages/DockerImages.component.sass ***!
-  \****************************************************************/
+/***/ "./src/app/Admin/DockerImages/docker-images.component.sass":
+/*!*****************************************************************!*\
+  !*** ./src/app/Admin/DockerImages/docker-images.component.sass ***!
+  \*****************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("html {\n  height: 100%;\n}\n\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee;\n}\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n}\n\nbutton.btn {\n  margin: 2px;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px;\n}\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white;\n}\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab;\n}\n\n.card {\n  margin-bottom: 10px;\n}\n\n.icon-small {\n  font-size: 1em;\n}\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e;\n}\n\n.active label, .active p, .active i, .active small {\n  color: #333;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvc3R5bGVzLnNhc3MiLCJzcmMvYXBwL0FkbWluL0RvY2tlckltYWdlcy9Eb2NrZXJJbWFnZXMuY29tcG9uZW50LnNhc3MiLCIvVXNlcnMvYXhlbnUvUHJvamVjdHMvU3lkYXJraXZlcmEvQVBQL0FuZ3VsYXIvc3JjL2FwcC9BZG1pbi9Eb2NrZXJJbWFnZXMvRG9ja2VySW1hZ2VzLmNvbXBvbmVudC5zYXNzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUlBO0VBQ0UsWUFBQTtBQ0hGOztBREtBO0VBQ0UsMkJBQUE7RUFDQSx5QkFBQTtFQUVBLHNCQUFBO0VBQ0EscUJBQUE7RUFDQSxpQkFBQTtBQ0ZGOztBREtBO0VBQ0ksWUFBQTtFQUNBLHlCQWhCb0I7RUFrQnBCLG1CQUFBO0VBQ0EsV0FBQTtBQ0hKOztBREtBO0VBQ0ksMENBQUE7QUNGSjs7QURLRTtFQUNFLFdBQUE7QUNGSjs7QURJQTtFQUNFLDZCQUFBO0VBQ0EsU0FBQTtFQUNBLFlBQUE7RUFDQSxzQkFBQTtFQUNBLFlBQUE7RUFDQSxjQUFBO0VBQ0Esb0JBQUE7QUNERjs7QURHQTtFQUNFLHlCQUFBO0VBQ0Esa0JBQUE7RUFDQSxZQUFBO0FDQUY7O0FERUE7RUFDRSxvQkFBQTtFQUFBLFlBQUE7QUNDRjs7QURFQTtFQUNFLG1CQUFBO0FDQ0Y7O0FEQ0E7RUFDRSxjQUFBO0FDRUY7O0FDcERBO0VBQ0Usc0JBQUE7RUFDQSxxQkZGc0I7QUN5RHhCOztBQ3RERTtFQUNFLFdBQUE7QUR3REoiLCJmaWxlIjoic3JjL2FwcC9BZG1pbi9Eb2NrZXJJbWFnZXMvRG9ja2VySW1hZ2VzLmNvbXBvbmVudC5zYXNzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gcFxuLy8gICBjb2xvcjogcmVkXG4kY29tcGFueS1jb2xvci1wcmltYXJ5OiAjYmMwNDRlXG5cbmh0bWxcbiAgaGVpZ2h0OiAxMDAlXG5cbi5ub3NlbGVjdFxuICAtd2Via2l0LXRvdWNoLWNhbGxvdXQ6IG5vbmVcbiAgLXdlYmtpdC11c2VyLXNlbGVjdDogbm9uZVxuICAta2h0bWwtdXNlci1zZWxlY3Q6IG5vbmVcbiAgLW1vei11c2VyLXNlbGVjdDogbm9uZVxuICAtbXMtdXNlci1zZWxlY3Q6IG5vbmVcbiAgdXNlci1zZWxlY3Q6IG5vbmVcblxuXG4uY29tcGFueS10YWJsZS1oZWFkXG4gICAgYm9yZGVyOiBub25lXG4gICAgYmFja2dyb3VuZC1jb2xvcjogJGNvbXBhbnktY29sb3ItcHJpbWFyeVxuICAgIC8vIGJhY2tncm91bmQtY29sb3I6ICM5OTlcbiAgICAvKiBjb2xvcjogI2JjMDQ0ZSAqL1xuICAgIGNvbG9yOiAjZWVlXG5cbi50YWJsZVxuICAgIGJveC1zaGFkb3c6IDAgMXB4IDVweCAwIHJnYmEoMCwgMCwgMCwgMC4yKVxuXG5idXR0b25cbiAgJi5idG5cbiAgICBtYXJnaW46IDJweFxuXG4ucmVmcmVzaFxuICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudFxuICBib3JkZXI6IDBcbiAgY29sb3I6IHdoaXRlXG4gIC8qIG1hcmdpbi1sZWZ0OiA4MHB4ICovXG4gIGZsb2F0OiByaWdodFxuICBjb2xvcjogaW5oZXJpdFxuICBtYXJnaW4tYm90dG9tOiAtMTBweFxuXG4uaWNvbi1idXR0b246aG92ZXJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2I1YjViNVxuICBib3JkZXItcmFkaXVzOiAycHhcbiAgY29sb3I6IHdoaXRlXG5cbi5kcmFnLWhhbmRsZVxuICBjdXJzb3I6IGdyYWJcblxuXG4uY2FyZFxuICBtYXJnaW4tYm90dG9tOiAxMHB4XG5cbi5pY29uLXNtYWxsXG4gIGZvbnQtc2l6ZTogMWVtXG4iLCJodG1sIHtcbiAgaGVpZ2h0OiAxMDAlO1xufVxuXG4ubm9zZWxlY3Qge1xuICAtd2Via2l0LXRvdWNoLWNhbGxvdXQ6IG5vbmU7XG4gIC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC1raHRtbC11c2VyLXNlbGVjdDogbm9uZTtcbiAgLW1vei11c2VyLXNlbGVjdDogbm9uZTtcbiAgLW1zLXVzZXItc2VsZWN0OiBub25lO1xuICB1c2VyLXNlbGVjdDogbm9uZTtcbn1cblxuLmNvbXBhbnktdGFibGUtaGVhZCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2JjMDQ0ZTtcbiAgLyogY29sb3I6ICNiYzA0NGUgKi9cbiAgY29sb3I6ICNlZWU7XG59XG5cbi50YWJsZSB7XG4gIGJveC1zaGFkb3c6IDAgMXB4IDVweCAwIHJnYmEoMCwgMCwgMCwgMC4yKTtcbn1cblxuYnV0dG9uLmJ0biB7XG4gIG1hcmdpbjogMnB4O1xufVxuXG4ucmVmcmVzaCB7XG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuICBib3JkZXI6IDA7XG4gIGNvbG9yOiB3aGl0ZTtcbiAgLyogbWFyZ2luLWxlZnQ6IDgwcHggKi9cbiAgZmxvYXQ6IHJpZ2h0O1xuICBjb2xvcjogaW5oZXJpdDtcbiAgbWFyZ2luLWJvdHRvbTogLTEwcHg7XG59XG5cbi5pY29uLWJ1dHRvbjpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNiNWI1YjU7XG4gIGJvcmRlci1yYWRpdXM6IDJweDtcbiAgY29sb3I6IHdoaXRlO1xufVxuXG4uZHJhZy1oYW5kbGUge1xuICBjdXJzb3I6IGdyYWI7XG59XG5cbi5jYXJkIHtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbn1cblxuLmljb24tc21hbGwge1xuICBmb250LXNpemU6IDFlbTtcbn1cblxuLmFjdGl2ZSB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNkZGQ7XG4gIGJvcmRlci1jb2xvcjogI2JjMDQ0ZTtcbn1cbi5hY3RpdmUgbGFiZWwsIC5hY3RpdmUgcCwgLmFjdGl2ZSBpLCAuYWN0aXZlIHNtYWxsIHtcbiAgY29sb3I6ICMzMzM7XG59IiwiQGltcG9ydCBzdHlsZXNcblxuLmFjdGl2ZVxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZGRkXG4gIGJvcmRlci1jb2xvcjogJGNvbXBhbnktY29sb3ItcHJpbWFyeVxuICBsYWJlbCwgcCwgaSwgc21hbGxcbiAgICBjb2xvcjogIzMzM1xuIl19 */");
+/* harmony default export */ __webpack_exports__["default"] = ("html {\n  height: 100%;\n}\n\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee;\n}\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n}\n\nbutton.btn {\n  margin: 2px;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px;\n}\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white;\n}\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab;\n}\n\n.card {\n  margin-bottom: 10px;\n}\n\n.icon-small {\n  font-size: 1em;\n}\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e;\n}\n\n.active label, .active p, .active i, .active small {\n  color: #333;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvc3R5bGVzLnNhc3MiLCJzcmMvYXBwL0FkbWluL0RvY2tlckltYWdlcy9kb2NrZXItaW1hZ2VzLmNvbXBvbmVudC5zYXNzIiwiL1VzZXJzL2F4ZW51L1Byb2plY3RzL1N5ZGFya2l2ZXJhL0FQUC9Bbmd1bGFyL3NyYy9hcHAvQWRtaW4vRG9ja2VySW1hZ2VzL2RvY2tlci1pbWFnZXMuY29tcG9uZW50LnNhc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUE7RUFDRSxZQUFBO0FDSEY7O0FES0E7RUFDRSwyQkFBQTtFQUNBLHlCQUFBO0VBRUEsc0JBQUE7RUFDQSxxQkFBQTtFQUNBLGlCQUFBO0FDRkY7O0FES0E7RUFDSSxZQUFBO0VBQ0EseUJBaEJvQjtFQWtCcEIsbUJBQUE7RUFDQSxXQUFBO0FDSEo7O0FES0E7RUFDSSwwQ0FBQTtBQ0ZKOztBREtFO0VBQ0UsV0FBQTtBQ0ZKOztBRElBO0VBQ0UsNkJBQUE7RUFDQSxTQUFBO0VBQ0EsWUFBQTtFQUNBLHNCQUFBO0VBQ0EsWUFBQTtFQUNBLGNBQUE7RUFDQSxvQkFBQTtBQ0RGOztBREdBO0VBQ0UseUJBQUE7RUFDQSxrQkFBQTtFQUNBLFlBQUE7QUNBRjs7QURFQTtFQUNFLG9CQUFBO0VBQUEsWUFBQTtBQ0NGOztBREVBO0VBQ0UsbUJBQUE7QUNDRjs7QURDQTtFQUNFLGNBQUE7QUNFRjs7QUNwREE7RUFDRSxzQkFBQTtFQUNBLHFCRkZzQjtBQ3lEeEI7O0FDdERFO0VBQ0UsV0FBQTtBRHdESiIsImZpbGUiOiJzcmMvYXBwL0FkbWluL0RvY2tlckltYWdlcy9kb2NrZXItaW1hZ2VzLmNvbXBvbmVudC5zYXNzIiwic291cmNlc0NvbnRlbnQiOlsiLy8gcFxuLy8gICBjb2xvcjogcmVkXG4kY29tcGFueS1jb2xvci1wcmltYXJ5OiAjYmMwNDRlXG5cbmh0bWxcbiAgaGVpZ2h0OiAxMDAlXG5cbi5ub3NlbGVjdFxuICAtd2Via2l0LXRvdWNoLWNhbGxvdXQ6IG5vbmVcbiAgLXdlYmtpdC11c2VyLXNlbGVjdDogbm9uZVxuICAta2h0bWwtdXNlci1zZWxlY3Q6IG5vbmVcbiAgLW1vei11c2VyLXNlbGVjdDogbm9uZVxuICAtbXMtdXNlci1zZWxlY3Q6IG5vbmVcbiAgdXNlci1zZWxlY3Q6IG5vbmVcblxuXG4uY29tcGFueS10YWJsZS1oZWFkXG4gICAgYm9yZGVyOiBub25lXG4gICAgYmFja2dyb3VuZC1jb2xvcjogJGNvbXBhbnktY29sb3ItcHJpbWFyeVxuICAgIC8vIGJhY2tncm91bmQtY29sb3I6ICM5OTlcbiAgICAvKiBjb2xvcjogI2JjMDQ0ZSAqL1xuICAgIGNvbG9yOiAjZWVlXG5cbi50YWJsZVxuICAgIGJveC1zaGFkb3c6IDAgMXB4IDVweCAwIHJnYmEoMCwgMCwgMCwgMC4yKVxuXG5idXR0b25cbiAgJi5idG5cbiAgICBtYXJnaW46IDJweFxuXG4ucmVmcmVzaFxuICBiYWNrZ3JvdW5kLWNvbG9yOiB0cmFuc3BhcmVudFxuICBib3JkZXI6IDBcbiAgY29sb3I6IHdoaXRlXG4gIC8qIG1hcmdpbi1sZWZ0OiA4MHB4ICovXG4gIGZsb2F0OiByaWdodFxuICBjb2xvcjogaW5oZXJpdFxuICBtYXJnaW4tYm90dG9tOiAtMTBweFxuXG4uaWNvbi1idXR0b246aG92ZXJcbiAgYmFja2dyb3VuZC1jb2xvcjogI2I1YjViNVxuICBib3JkZXItcmFkaXVzOiAycHhcbiAgY29sb3I6IHdoaXRlXG5cbi5kcmFnLWhhbmRsZVxuICBjdXJzb3I6IGdyYWJcblxuXG4uY2FyZFxuICBtYXJnaW4tYm90dG9tOiAxMHB4XG5cbi5pY29uLXNtYWxsXG4gIGZvbnQtc2l6ZTogMWVtXG4iLCJodG1sIHtcbiAgaGVpZ2h0OiAxMDAlO1xufVxuXG4ubm9zZWxlY3Qge1xuICAtd2Via2l0LXRvdWNoLWNhbGxvdXQ6IG5vbmU7XG4gIC13ZWJraXQtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIC1raHRtbC11c2VyLXNlbGVjdDogbm9uZTtcbiAgLW1vei11c2VyLXNlbGVjdDogbm9uZTtcbiAgLW1zLXVzZXItc2VsZWN0OiBub25lO1xuICB1c2VyLXNlbGVjdDogbm9uZTtcbn1cblxuLmNvbXBhbnktdGFibGUtaGVhZCB7XG4gIGJvcmRlcjogbm9uZTtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2JjMDQ0ZTtcbiAgLyogY29sb3I6ICNiYzA0NGUgKi9cbiAgY29sb3I6ICNlZWU7XG59XG5cbi50YWJsZSB7XG4gIGJveC1zaGFkb3c6IDAgMXB4IDVweCAwIHJnYmEoMCwgMCwgMCwgMC4yKTtcbn1cblxuYnV0dG9uLmJ0biB7XG4gIG1hcmdpbjogMnB4O1xufVxuXG4ucmVmcmVzaCB7XG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50O1xuICBib3JkZXI6IDA7XG4gIGNvbG9yOiB3aGl0ZTtcbiAgLyogbWFyZ2luLWxlZnQ6IDgwcHggKi9cbiAgZmxvYXQ6IHJpZ2h0O1xuICBjb2xvcjogaW5oZXJpdDtcbiAgbWFyZ2luLWJvdHRvbTogLTEwcHg7XG59XG5cbi5pY29uLWJ1dHRvbjpob3ZlciB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNiNWI1YjU7XG4gIGJvcmRlci1yYWRpdXM6IDJweDtcbiAgY29sb3I6IHdoaXRlO1xufVxuXG4uZHJhZy1oYW5kbGUge1xuICBjdXJzb3I6IGdyYWI7XG59XG5cbi5jYXJkIHtcbiAgbWFyZ2luLWJvdHRvbTogMTBweDtcbn1cblxuLmljb24tc21hbGwge1xuICBmb250LXNpemU6IDFlbTtcbn1cblxuLmFjdGl2ZSB7XG4gIGJhY2tncm91bmQtY29sb3I6ICNkZGQ7XG4gIGJvcmRlci1jb2xvcjogI2JjMDQ0ZTtcbn1cbi5hY3RpdmUgbGFiZWwsIC5hY3RpdmUgcCwgLmFjdGl2ZSBpLCAuYWN0aXZlIHNtYWxsIHtcbiAgY29sb3I6ICMzMzM7XG59IiwiQGltcG9ydCBzdHlsZXNcblxuLmFjdGl2ZVxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjZGRkXG4gIGJvcmRlci1jb2xvcjogJGNvbXBhbnktY29sb3ItcHJpbWFyeVxuICBsYWJlbCwgcCwgaSwgc21hbGxcbiAgICBjb2xvcjogIzMzM1xuIl19 */");
 
 /***/ }),
 
-/***/ "./src/app/Admin/DockerImages/DockerImages.component.ts":
-/*!**************************************************************!*\
-  !*** ./src/app/Admin/DockerImages/DockerImages.component.ts ***!
-  \**************************************************************/
+/***/ "./src/app/Admin/DockerImages/docker-images.component.ts":
+/*!***************************************************************!*\
+  !*** ./src/app/Admin/DockerImages/docker-images.component.ts ***!
+  \***************************************************************/
 /*! exports provided: AdminImagesComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -451,7 +307,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminImagesComponent", function() { return AdminImagesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @app/Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _app_Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -466,59 +323,55 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 };
 
 
+
 var AdminImagesComponent = /** @class */ (function () {
     function AdminImagesComponent(apiService) {
         var _this = this;
         this.apiService = apiService;
-        this.selected_image = { id: -1 };
-        this.label = "";
-        this.name = "";
-        this.mountpoint = "";
+        this.selectedImage = { id: -1 };
+        this.label = '';
+        this.name = '';
+        this.mountpoint = '';
         this.saveSuccess = false;
-        this.fileName = "Select file...";
+        this.fileName = 'Select file...';
         this.fileStatus = 0;
         this.modalactive = false;
-        this.newLabel = "";
-        this.newPath = "";
+        this.newLabel = '';
+        this.newPath = '';
         this.modalMessage = false;
         this.uploadDone = 0;
         this.uploadTotal = 0;
-        this.modalOther = "";
+        this.modalOther = '';
         this.errorVisible = false;
-        this.apiService.getDockerImages().subscribe(function (data) {
+        this.apiService.getDockerImages()
+            .subscribe(function (data) {
             _this.images = data;
         });
     }
-    AdminImagesComponent.prototype.ngOnInit = function () { };
     AdminImagesComponent.prototype.selectImage = function (image) {
-        if (image == this.selected_image) {
-            this.selected_image = { id: -1 };
-        }
-        else {
-            this.selected_image = image;
-        }
+        this.selectedImage = (image === this.selectedImage) ? { id: -1 } : image;
     };
     AdminImagesComponent.prototype.save = function () {
         var _this = this;
         this.apiService
-            .saveDockerImage(this.selected_image.id, this.selected_image)
+            .saveDockerImage(this.selectedImage.id, this.selectedImage)
             .subscribe(function (data) {
             _this.saveSuccess = true;
         });
     };
     AdminImagesComponent.prototype.openNewImageModal = function () {
         this.modalactive = true;
-        this.fileName = "Select file...";
-        this.newLabel = "";
-        this.newPath = "";
+        this.fileName = 'Select file...';
+        this.newLabel = '';
+        this.newPath = '';
     };
-    //validate the selected file, if it's a tar accept it, else return error.
+    // validate the selected file, if it's a tar accept it, else return error.
     AdminImagesComponent.prototype.fileSelected = function (e) {
         if (e.target.files.length > 0) {
-            //check fileFormat
-            if (!e.target.files[0].name.endsWith(".tar")) {
-                console.error("error, wrong fileType");
-                this.fileName = "Select file...";
+            // check fileFormat
+            if (!e.target.files[0].name.endsWith('.tar')) {
+                console.error('error, wrong fileType');
+                this.fileName = 'Select file...';
                 this.fileStatus = 1;
             }
             else {
@@ -531,43 +384,44 @@ var AdminImagesComponent = /** @class */ (function () {
     AdminImagesComponent.prototype.importImage = function () {
         var _this = this;
         // a file is selectd, and the user has pressed upload. Submit the data to the backend.
-        if (!this.file.name.endsWith(".tar")) {
-            console.error("error, wrong fileType");
+        if (!this.file.name.endsWith('.tar')) {
+            console.error('error, wrong fileType');
             return;
         }
-        if (this.newLabel == "") {
-            console.error("error, no name specified");
+        if (this.newLabel === '') {
+            console.error('error, no name specified');
             return;
         }
         this.modalMessage = true;
         var formData = new FormData();
-        formData.append("file", this.file, "import.tar");
-        formData.append("label", this.newLabel);
-        formData.append("workdir", this.newPath);
-        this.apiService.importDockerImage(formData).subscribe(function (data) {
+        formData.append('file', this.file, 'import.tar');
+        formData.append('label', this.newLabel);
+        formData.append('workdir', this.newPath);
+        this.apiService.importDockerImage(formData)
+            .subscribe(function (data) {
             // if (data.type == 4) {
             //   this.modules = data['body'] as [any];
             // }
             // console.log(data);
-            if (data.type == 4) {
-                _this.images.push(data["body"]);
+            if (data.type === _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpEventType"].Response) {
+                _this.images.push(data.body);
                 _this.modalactive = false;
-                _this.fileName = "Select file...";
-                _this.label = "";
+                _this.fileName = 'Select file...';
+                _this.label = '';
                 _this.modalMessage = false;
-                _this.selected_image = _this.images[_this.images.length - 1];
+                _this.selectedImage = _this.images[_this.images.length - 1];
             }
-            else if (data.type == 1) {
-                _this.uploadDone = data["loaded"];
-                _this.uploadTotal = data["total"];
+            else if (data.type === _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpEventType"].UploadProgress) {
+                _this.uploadDone = data.loaded;
+                _this.uploadTotal = data.total;
             }
             else {
                 // this.modalOther = data["body"];
                 // console.log(data);
-                if ("status" in data) {
-                    if (data["status"] != 200) {
+                if ('status' in data) {
+                    if (data.status !== 200) {
                         _this.modalOther =
-                            "unknown error occured, status: " + data["status"];
+                            "unknown error occured, status: " + data.status;
                     }
                 }
             }
@@ -575,35 +429,33 @@ var AdminImagesComponent = /** @class */ (function () {
     };
     AdminImagesComponent.prototype.deleteImage = function (image) {
         var _this = this;
-        if (confirm("Are you sure to delete " +
-            image.label +
-            "\n This action is irreversible")) {
-            this.apiService.deleteDockerImage(image.id).subscribe(function (data) {
-                console.log(data);
+        if (confirm("Are you sure to delete " + image.label + "\n This action is irreversible")) {
+            this.apiService.deleteDockerImage(image.id)
+                .subscribe(function (data) {
                 _this.images = _this.images.filter(function (item) {
-                    if (item.id == image.id) {
+                    if (item.id === image.id) {
                         return false;
                     }
                     return true;
                 });
-                _this.selected_image = { id: -1 };
+                _this.selectedImage = { id: -1 };
             }, function (error) {
-                if (error.status == 409) {
+                if (error.status === 409) {
                     _this.errorVisible = true;
                 }
             });
         }
     };
     AdminImagesComponent.ctorParameters = function () { return [
-        { type: _app_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"] }
+        { type: _app_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"] }
     ]; };
     AdminImagesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: "admin-images",
-            template: __importDefault(__webpack_require__(/*! raw-loader!./DockerImages.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/DockerImages/DockerImages.component.html")).default,
-            styles: [__importDefault(__webpack_require__(/*! ./DockerImages.component.sass */ "./src/app/Admin/DockerImages/DockerImages.component.sass")).default]
+            selector: 'app-admin-images',
+            template: __importDefault(__webpack_require__(/*! raw-loader!./docker-images.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/DockerImages/docker-images.component.html")).default,
+            styles: [__importDefault(__webpack_require__(/*! ./docker-images.component.sass */ "./src/app/Admin/DockerImages/docker-images.component.sass")).default]
         }),
-        __metadata("design:paramtypes", [_app_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
+        __metadata("design:paramtypes", [_app_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"]])
     ], AdminImagesComponent);
     return AdminImagesComponent;
 }());
@@ -612,23 +464,23 @@ var AdminImagesComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Admin/GlobalVariables/GlobalVariables.component.sass":
-/*!**********************************************************************!*\
-  !*** ./src/app/Admin/GlobalVariables/GlobalVariables.component.sass ***!
-  \**********************************************************************/
+/***/ "./src/app/Admin/GlobalVariables/global-variables.component.sass":
+/*!***********************************************************************!*\
+  !*** ./src/app/Admin/GlobalVariables/global-variables.component.sass ***!
+  \***********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".input-label {\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0FkbWluL0dsb2JhbFZhcmlhYmxlcy9HbG9iYWxWYXJpYWJsZXMuY29tcG9uZW50LnNhc3MiLCJzcmMvYXBwL0FkbWluL0dsb2JhbFZhcmlhYmxlcy9HbG9iYWxWYXJpYWJsZXMuY29tcG9uZW50LnNhc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxXQUFBO0FDQ0YiLCJmaWxlIjoic3JjL2FwcC9BZG1pbi9HbG9iYWxWYXJpYWJsZXMvR2xvYmFsVmFyaWFibGVzLmNvbXBvbmVudC5zYXNzIiwic291cmNlc0NvbnRlbnQiOlsiLmlucHV0LWxhYmVsXG4gIHdpZHRoOiAxMDAlXG4iLCIuaW5wdXQtbGFiZWwge1xuICB3aWR0aDogMTAwJTtcbn0iXX0= */");
+/* harmony default export */ __webpack_exports__["default"] = (".input-label {\n  width: 100%;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0FkbWluL0dsb2JhbFZhcmlhYmxlcy9nbG9iYWwtdmFyaWFibGVzLmNvbXBvbmVudC5zYXNzIiwic3JjL2FwcC9BZG1pbi9HbG9iYWxWYXJpYWJsZXMvZ2xvYmFsLXZhcmlhYmxlcy5jb21wb25lbnQuc2FzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQTtFQUNFLFdBQUE7QUNDRiIsImZpbGUiOiJzcmMvYXBwL0FkbWluL0dsb2JhbFZhcmlhYmxlcy9nbG9iYWwtdmFyaWFibGVzLmNvbXBvbmVudC5zYXNzIiwic291cmNlc0NvbnRlbnQiOlsiLmlucHV0LWxhYmVsXG4gIHdpZHRoOiAxMDAlXG4iLCIuaW5wdXQtbGFiZWwge1xuICB3aWR0aDogMTAwJTtcbn0iXX0= */");
 
 /***/ }),
 
-/***/ "./src/app/Admin/GlobalVariables/GlobalVariables.component.ts":
-/*!********************************************************************!*\
-  !*** ./src/app/Admin/GlobalVariables/GlobalVariables.component.ts ***!
-  \********************************************************************/
+/***/ "./src/app/Admin/GlobalVariables/global-variables.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/Admin/GlobalVariables/global-variables.component.ts ***!
+  \*********************************************************************/
 /*! exports provided: AdminGlobalComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -654,42 +506,45 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 var AdminGlobalComponent = /** @class */ (function () {
     function AdminGlobalComponent(apiService) {
         this.apiService = apiService;
-        this.work_dir_path = "";
-        this.packages_path = "";
-        this.premis_file_name = "";
-        this.tools_path = "";
-        this.work_dir_path_host = "";
-        this.premis_template_path = "";
-        this.premis_event_template_path = "";
+        this.workdirPath = '';
+        this.packagesPath = '';
+        this.premisFileName = '';
+        this.toolsPath = '';
+        this.workdirPathHost = '';
+        this.premisTemplatePath = '';
+        this.premisEventTemplatePath = '';
         this.messageVisible = false;
     }
     AdminGlobalComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.apiService.getVariables().subscribe(function (data) {
+        this.apiService
+            .getVariables()
+            .subscribe(function (data) {
             // console.log(data)
-            //load and set the variables loaded from the backend
-            _this.work_dir_path = data['work_dir_path'];
-            _this.packages_path = data['packages_path'];
-            _this.premis_file_name = data['premis_file_name'];
-            _this.tools_path = data['tools_path'];
-            _this.work_dir_path_host = data['work_dir_path_host'];
-            _this.premis_template_path = data['premis_template_path'];
-            _this.premis_event_template_path = data['premis_event_template_path'];
+            // load and set the variables loaded from the backend
+            _this.workdirPath = data.work_dir_path;
+            _this.packagesPath = data.packages_path;
+            _this.premisFileName = data.premis_file_name;
+            _this.toolsPath = data.tools_path;
+            _this.workdirPathHost = data.work_dir_path_host;
+            _this.premisTemplatePath = data.premis_template_path;
+            _this.premisEventTemplatePath = data.premis_event_template_path;
         });
     };
     AdminGlobalComponent.prototype.save = function () {
         var _this = this;
         // save the values loaded from the backend with their updates
         var data = {
-            work_dir_path: this.work_dir_path,
-            packages_path: this.packages_path,
-            premis_file_name: this.premis_file_name,
-            tools_path: this.tools_path,
-            work_dir_path_host: this.work_dir_path_host,
-            premis_template_path: this.premis_template_path,
-            premis_event_template_path: this.premis_event_template_path
+            work_dir_path: this.workdirPath,
+            packages_path: this.packagesPath,
+            premis_file_name: this.premisFileName,
+            tools_path: this.toolsPath,
+            work_dir_path_host: this.workdirPathHost,
+            premis_template_path: this.premisTemplatePath,
+            premis_event_template_path: this.premisEventTemplatePath
         };
-        this.apiService.setVariables(data).subscribe(function (response) {
+        this.apiService.setVariables(data)
+            .subscribe(function (response) {
             // display success message
             _this.messageVisible = true;
         });
@@ -699,9 +554,9 @@ var AdminGlobalComponent = /** @class */ (function () {
     ]; };
     AdminGlobalComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'admin',
-            template: __importDefault(__webpack_require__(/*! raw-loader!./GlobalVariables.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/GlobalVariables/GlobalVariables.component.html")).default,
-            styles: [__importDefault(__webpack_require__(/*! ./GlobalVariables.component.sass */ "./src/app/Admin/GlobalVariables/GlobalVariables.component.sass")).default]
+            selector: 'app-admin-variables',
+            template: __importDefault(__webpack_require__(/*! raw-loader!./global-variables.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/GlobalVariables/global-variables.component.html")).default,
+            styles: [__importDefault(__webpack_require__(/*! ./global-variables.component.sass */ "./src/app/Admin/GlobalVariables/global-variables.component.sass")).default]
         }),
         __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
     ], AdminGlobalComponent);
@@ -712,22 +567,22 @@ var AdminGlobalComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Admin/Header/Header.component.sass":
+/***/ "./src/app/Admin/Header/header.component.sass":
 /*!****************************************************!*\
-  !*** ./src/app/Admin/Header/Header.component.sass ***!
+  !*** ./src/app/Admin/Header/header.component.sass ***!
   \****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL0FkbWluL0hlYWRlci9IZWFkZXIuY29tcG9uZW50LnNhc3MifQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL0FkbWluL0hlYWRlci9oZWFkZXIuY29tcG9uZW50LnNhc3MifQ== */");
 
 /***/ }),
 
-/***/ "./src/app/Admin/Header/Header.component.ts":
+/***/ "./src/app/Admin/Header/header.component.ts":
 /*!**************************************************!*\
-  !*** ./src/app/Admin/Header/Header.component.ts ***!
+  !*** ./src/app/Admin/Header/header.component.ts ***!
   \**************************************************/
 /*! exports provided: AdminHeaderComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -742,9 +597,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
   return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -754,11 +606,10 @@ var AdminHeaderComponent = /** @class */ (function () {
     }
     AdminHeaderComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'adminHeader',
-            template: __importDefault(__webpack_require__(/*! raw-loader!./Header.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Header/Header.component.html")).default,
-            styles: [__importDefault(__webpack_require__(/*! ./Header.component.sass */ "./src/app/Admin/Header/Header.component.sass")).default]
-        }),
-        __metadata("design:paramtypes", [])
+            selector: 'app-admin-header',
+            template: __importDefault(__webpack_require__(/*! raw-loader!./header.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Header/header.component.html")).default,
+            styles: [__importDefault(__webpack_require__(/*! ./header.component.sass */ "./src/app/Admin/Header/header.component.sass")).default]
+        })
     ], AdminHeaderComponent);
     return AdminHeaderComponent;
 }());
@@ -767,22 +618,22 @@ var AdminHeaderComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Admin/Modules/Modules.component.sass":
+/***/ "./src/app/Admin/Modules/modules.component.sass":
 /*!******************************************************!*\
-  !*** ./src/app/Admin/Modules/Modules.component.sass ***!
+  !*** ./src/app/Admin/Modules/modules.component.sass ***!
   \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("html {\n  height: 100%;\n}\n\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee;\n}\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n}\n\nbutton.btn {\n  margin: 2px;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px;\n}\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white;\n}\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab;\n}\n\n.card {\n  margin-bottom: 10px;\n}\n\n.icon-small {\n  font-size: 1em;\n}\n\n.input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: red;\n}\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e;\n}\n\n.active label, .active p, .active i, .active small {\n  color: #333;\n}\n\ntextarea {\n  width: 100%;\n}\n\n.allow-scroll-beneath-page-end {\n  height: 300px;\n}\n\n.form-row div, .form-row select {\n  margin-right: 5px;\n}\n\n.code_example {\n  background-color: lightgray;\n  padding: 7px;\n  border-radius: 5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvc3R5bGVzLnNhc3MiLCJzcmMvYXBwL0FkbWluL01vZHVsZXMvTW9kdWxlcy5jb21wb25lbnQuc2FzcyIsIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0FkbWluL01vZHVsZXMvTW9kdWxlcy5jb21wb25lbnQuc2FzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFJQTtFQUNFLFlBQUE7QUNIRjs7QURLQTtFQUNFLDJCQUFBO0VBQ0EseUJBQUE7RUFFQSxzQkFBQTtFQUNBLHFCQUFBO0VBQ0EsaUJBQUE7QUNGRjs7QURLQTtFQUNJLFlBQUE7RUFDQSx5QkFoQm9CO0VBa0JwQixtQkFBQTtFQUNBLFdBQUE7QUNISjs7QURLQTtFQUNJLDBDQUFBO0FDRko7O0FES0U7RUFDRSxXQUFBO0FDRko7O0FESUE7RUFDRSw2QkFBQTtFQUNBLFNBQUE7RUFDQSxZQUFBO0VBQ0Esc0JBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtFQUNBLG9CQUFBO0FDREY7O0FER0E7RUFDRSx5QkFBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtBQ0FGOztBREVBO0VBQ0Usb0JBQUE7RUFBQSxZQUFBO0FDQ0Y7O0FERUE7RUFDRSxtQkFBQTtBQ0NGOztBRENBO0VBQ0UsY0FBQTtBQ0VGOztBQ3BEQTtFQUNFLFdBQUE7QUR1REY7O0FDckRBO0VBQ0UsVUFBQTtBRHdERjs7QUN0REE7RUFDRSxzQkFBQTtFQUNBLHFCRlJzQjtBQ2lFeEI7O0FDeERFO0VBQ0UsV0FBQTtBRDBESjs7QUN4REE7RUFDRSxXQUFBO0FEMkRGOztBQ3pEQTtFQUNFLGFBQUE7QUQ0REY7O0FDekRFO0VBQ0UsaUJBQUE7QUQ0REo7O0FDMURBO0VBQ0UsMkJBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7QUQ2REYiLCJmaWxlIjoic3JjL2FwcC9BZG1pbi9Nb2R1bGVzL01vZHVsZXMuY29tcG9uZW50LnNhc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBwXG4vLyAgIGNvbG9yOiByZWRcbiRjb21wYW55LWNvbG9yLXByaW1hcnk6ICNiYzA0NGVcblxuaHRtbFxuICBoZWlnaHQ6IDEwMCVcblxuLm5vc2VsZWN0XG4gIC13ZWJraXQtdG91Y2gtY2FsbG91dDogbm9uZVxuICAtd2Via2l0LXVzZXItc2VsZWN0OiBub25lXG4gIC1raHRtbC11c2VyLXNlbGVjdDogbm9uZVxuICAtbW96LXVzZXItc2VsZWN0OiBub25lXG4gIC1tcy11c2VyLXNlbGVjdDogbm9uZVxuICB1c2VyLXNlbGVjdDogbm9uZVxuXG5cbi5jb21wYW55LXRhYmxlLWhlYWRcbiAgICBib3JkZXI6IG5vbmVcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkY29tcGFueS1jb2xvci1wcmltYXJ5XG4gICAgLy8gYmFja2dyb3VuZC1jb2xvcjogIzk5OVxuICAgIC8qIGNvbG9yOiAjYmMwNDRlICovXG4gICAgY29sb3I6ICNlZWVcblxuLnRhYmxlXG4gICAgYm94LXNoYWRvdzogMCAxcHggNXB4IDAgcmdiYSgwLCAwLCAwLCAwLjIpXG5cbmJ1dHRvblxuICAmLmJ0blxuICAgIG1hcmdpbjogMnB4XG5cbi5yZWZyZXNoXG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50XG4gIGJvcmRlcjogMFxuICBjb2xvcjogd2hpdGVcbiAgLyogbWFyZ2luLWxlZnQ6IDgwcHggKi9cbiAgZmxvYXQ6IHJpZ2h0XG4gIGNvbG9yOiBpbmhlcml0XG4gIG1hcmdpbi1ib3R0b206IC0xMHB4XG5cbi5pY29uLWJ1dHRvbjpob3ZlclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjYjViNWI1XG4gIGJvcmRlci1yYWRpdXM6IDJweFxuICBjb2xvcjogd2hpdGVcblxuLmRyYWctaGFuZGxlXG4gIGN1cnNvcjogZ3JhYlxuXG5cbi5jYXJkXG4gIG1hcmdpbi1ib3R0b206IDEwcHhcblxuLmljb24tc21hbGxcbiAgZm9udC1zaXplOiAxZW1cbiIsImh0bWwge1xuICBoZWlnaHQ6IDEwMCU7XG59XG5cbi5ub3NlbGVjdCB7XG4gIC13ZWJraXQtdG91Y2gtY2FsbG91dDogbm9uZTtcbiAgLXdlYmtpdC11c2VyLXNlbGVjdDogbm9uZTtcbiAgLWtodG1sLXVzZXItc2VsZWN0OiBub25lO1xuICAtbW96LXVzZXItc2VsZWN0OiBub25lO1xuICAtbXMtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxuXG4uY29tcGFueS10YWJsZS1oZWFkIHtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjYmMwNDRlO1xuICAvKiBjb2xvcjogI2JjMDQ0ZSAqL1xuICBjb2xvcjogI2VlZTtcbn1cblxuLnRhYmxlIHtcbiAgYm94LXNoYWRvdzogMCAxcHggNXB4IDAgcmdiYSgwLCAwLCAwLCAwLjIpO1xufVxuXG5idXR0b24uYnRuIHtcbiAgbWFyZ2luOiAycHg7XG59XG5cbi5yZWZyZXNoIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gIGJvcmRlcjogMDtcbiAgY29sb3I6IHdoaXRlO1xuICAvKiBtYXJnaW4tbGVmdDogODBweCAqL1xuICBmbG9hdDogcmlnaHQ7XG4gIGNvbG9yOiBpbmhlcml0O1xuICBtYXJnaW4tYm90dG9tOiAtMTBweDtcbn1cblxuLmljb24tYnV0dG9uOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2I1YjViNTtcbiAgYm9yZGVyLXJhZGl1czogMnB4O1xuICBjb2xvcjogd2hpdGU7XG59XG5cbi5kcmFnLWhhbmRsZSB7XG4gIGN1cnNvcjogZ3JhYjtcbn1cblxuLmNhcmQge1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xufVxuXG4uaWNvbi1zbWFsbCB7XG4gIGZvbnQtc2l6ZTogMWVtO1xufVxuXG4uaW5wdXQtbGFiZWwge1xuICB3aWR0aDogMTAwJTtcbn1cblxuLkVycm9yLXRleHQge1xuICBjb2xvcjogcmVkO1xufVxuXG4uYWN0aXZlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2RkZDtcbiAgYm9yZGVyLWNvbG9yOiAjYmMwNDRlO1xufVxuLmFjdGl2ZSBsYWJlbCwgLmFjdGl2ZSBwLCAuYWN0aXZlIGksIC5hY3RpdmUgc21hbGwge1xuICBjb2xvcjogIzMzMztcbn1cblxudGV4dGFyZWEge1xuICB3aWR0aDogMTAwJTtcbn1cblxuLmFsbG93LXNjcm9sbC1iZW5lYXRoLXBhZ2UtZW5kIHtcbiAgaGVpZ2h0OiAzMDBweDtcbn1cblxuLmZvcm0tcm93IGRpdiwgLmZvcm0tcm93IHNlbGVjdCB7XG4gIG1hcmdpbi1yaWdodDogNXB4O1xufVxuXG4uY29kZV9leGFtcGxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5O1xuICBwYWRkaW5nOiA3cHg7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbn0iLCJAaW1wb3J0IHN0eWxlc1xuXG4uaW5wdXQtbGFiZWxcbiAgd2lkdGg6IDEwMCVcblxuLkVycm9yLXRleHRcbiAgY29sb3I6IHJlZFxuXG4uYWN0aXZlXG4gIGJhY2tncm91bmQtY29sb3I6ICNkZGRcbiAgYm9yZGVyLWNvbG9yOiAkY29tcGFueS1jb2xvci1wcmltYXJ5XG4gIGxhYmVsLCBwLCBpLCBzbWFsbFxuICAgIGNvbG9yOiAjMzMzXG5cbnRleHRhcmVhXG4gIHdpZHRoOiAxMDAlXG5cbi5hbGxvdy1zY3JvbGwtYmVuZWF0aC1wYWdlLWVuZFxuICBoZWlnaHQ6IDMwMHB4XG5cbi5mb3JtLXJvd1xuICBkaXYsIHNlbGVjdFxuICAgIG1hcmdpbi1yaWdodDogNXB4XG5cbi5jb2RlX2V4YW1wbGVcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5XG4gIHBhZGRpbmc6IDdweFxuICBib3JkZXItcmFkaXVzOiA1cHhcbiJdfQ== */");
+/* harmony default export */ __webpack_exports__["default"] = ("html {\n  height: 100%;\n}\n\n.noselect {\n  -webkit-touch-callout: none;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  user-select: none;\n}\n\n.company-table-head {\n  border: none;\n  background-color: #bc044e;\n  /* color: #bc044e */\n  color: #eee;\n}\n\n.table {\n  box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.2);\n}\n\nbutton.btn {\n  margin: 2px;\n}\n\n.refresh {\n  background-color: transparent;\n  border: 0;\n  color: white;\n  /* margin-left: 80px */\n  float: right;\n  color: inherit;\n  margin-bottom: -10px;\n}\n\n.icon-button:hover {\n  background-color: #b5b5b5;\n  border-radius: 2px;\n  color: white;\n}\n\n.drag-handle {\n  cursor: -webkit-grab;\n  cursor: grab;\n}\n\n.card {\n  margin-bottom: 10px;\n}\n\n.icon-small {\n  font-size: 1em;\n}\n\n.input-label {\n  width: 100%;\n}\n\n.Error-text {\n  color: red;\n}\n\n.active {\n  background-color: #ddd;\n  border-color: #bc044e;\n}\n\n.active label, .active p, .active i, .active small {\n  color: #333;\n}\n\ntextarea {\n  width: 100%;\n}\n\n.allow-scroll-beneath-page-end {\n  height: 300px;\n}\n\n.form-row div, .form-row select {\n  margin-right: 5px;\n}\n\n.code_example {\n  background-color: lightgray;\n  padding: 7px;\n  border-radius: 5px;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvc3R5bGVzLnNhc3MiLCJzcmMvYXBwL0FkbWluL01vZHVsZXMvbW9kdWxlcy5jb21wb25lbnQuc2FzcyIsIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0FkbWluL01vZHVsZXMvbW9kdWxlcy5jb21wb25lbnQuc2FzcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFJQTtFQUNFLFlBQUE7QUNIRjs7QURLQTtFQUNFLDJCQUFBO0VBQ0EseUJBQUE7RUFFQSxzQkFBQTtFQUNBLHFCQUFBO0VBQ0EsaUJBQUE7QUNGRjs7QURLQTtFQUNJLFlBQUE7RUFDQSx5QkFoQm9CO0VBa0JwQixtQkFBQTtFQUNBLFdBQUE7QUNISjs7QURLQTtFQUNJLDBDQUFBO0FDRko7O0FES0U7RUFDRSxXQUFBO0FDRko7O0FESUE7RUFDRSw2QkFBQTtFQUNBLFNBQUE7RUFDQSxZQUFBO0VBQ0Esc0JBQUE7RUFDQSxZQUFBO0VBQ0EsY0FBQTtFQUNBLG9CQUFBO0FDREY7O0FER0E7RUFDRSx5QkFBQTtFQUNBLGtCQUFBO0VBQ0EsWUFBQTtBQ0FGOztBREVBO0VBQ0Usb0JBQUE7RUFBQSxZQUFBO0FDQ0Y7O0FERUE7RUFDRSxtQkFBQTtBQ0NGOztBRENBO0VBQ0UsY0FBQTtBQ0VGOztBQ3BEQTtFQUNFLFdBQUE7QUR1REY7O0FDckRBO0VBQ0UsVUFBQTtBRHdERjs7QUN0REE7RUFDRSxzQkFBQTtFQUNBLHFCRlJzQjtBQ2lFeEI7O0FDeERFO0VBQ0UsV0FBQTtBRDBESjs7QUN4REE7RUFDRSxXQUFBO0FEMkRGOztBQ3pEQTtFQUNFLGFBQUE7QUQ0REY7O0FDekRFO0VBQ0UsaUJBQUE7QUQ0REo7O0FDMURBO0VBQ0UsMkJBQUE7RUFDQSxZQUFBO0VBQ0Esa0JBQUE7QUQ2REYiLCJmaWxlIjoic3JjL2FwcC9BZG1pbi9Nb2R1bGVzL21vZHVsZXMuY29tcG9uZW50LnNhc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvLyBwXG4vLyAgIGNvbG9yOiByZWRcbiRjb21wYW55LWNvbG9yLXByaW1hcnk6ICNiYzA0NGVcblxuaHRtbFxuICBoZWlnaHQ6IDEwMCVcblxuLm5vc2VsZWN0XG4gIC13ZWJraXQtdG91Y2gtY2FsbG91dDogbm9uZVxuICAtd2Via2l0LXVzZXItc2VsZWN0OiBub25lXG4gIC1raHRtbC11c2VyLXNlbGVjdDogbm9uZVxuICAtbW96LXVzZXItc2VsZWN0OiBub25lXG4gIC1tcy11c2VyLXNlbGVjdDogbm9uZVxuICB1c2VyLXNlbGVjdDogbm9uZVxuXG5cbi5jb21wYW55LXRhYmxlLWhlYWRcbiAgICBib3JkZXI6IG5vbmVcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAkY29tcGFueS1jb2xvci1wcmltYXJ5XG4gICAgLy8gYmFja2dyb3VuZC1jb2xvcjogIzk5OVxuICAgIC8qIGNvbG9yOiAjYmMwNDRlICovXG4gICAgY29sb3I6ICNlZWVcblxuLnRhYmxlXG4gICAgYm94LXNoYWRvdzogMCAxcHggNXB4IDAgcmdiYSgwLCAwLCAwLCAwLjIpXG5cbmJ1dHRvblxuICAmLmJ0blxuICAgIG1hcmdpbjogMnB4XG5cbi5yZWZyZXNoXG4gIGJhY2tncm91bmQtY29sb3I6IHRyYW5zcGFyZW50XG4gIGJvcmRlcjogMFxuICBjb2xvcjogd2hpdGVcbiAgLyogbWFyZ2luLWxlZnQ6IDgwcHggKi9cbiAgZmxvYXQ6IHJpZ2h0XG4gIGNvbG9yOiBpbmhlcml0XG4gIG1hcmdpbi1ib3R0b206IC0xMHB4XG5cbi5pY29uLWJ1dHRvbjpob3ZlclxuICBiYWNrZ3JvdW5kLWNvbG9yOiAjYjViNWI1XG4gIGJvcmRlci1yYWRpdXM6IDJweFxuICBjb2xvcjogd2hpdGVcblxuLmRyYWctaGFuZGxlXG4gIGN1cnNvcjogZ3JhYlxuXG5cbi5jYXJkXG4gIG1hcmdpbi1ib3R0b206IDEwcHhcblxuLmljb24tc21hbGxcbiAgZm9udC1zaXplOiAxZW1cbiIsImh0bWwge1xuICBoZWlnaHQ6IDEwMCU7XG59XG5cbi5ub3NlbGVjdCB7XG4gIC13ZWJraXQtdG91Y2gtY2FsbG91dDogbm9uZTtcbiAgLXdlYmtpdC11c2VyLXNlbGVjdDogbm9uZTtcbiAgLWtodG1sLXVzZXItc2VsZWN0OiBub25lO1xuICAtbW96LXVzZXItc2VsZWN0OiBub25lO1xuICAtbXMtdXNlci1zZWxlY3Q6IG5vbmU7XG4gIHVzZXItc2VsZWN0OiBub25lO1xufVxuXG4uY29tcGFueS10YWJsZS1oZWFkIHtcbiAgYm9yZGVyOiBub25lO1xuICBiYWNrZ3JvdW5kLWNvbG9yOiAjYmMwNDRlO1xuICAvKiBjb2xvcjogI2JjMDQ0ZSAqL1xuICBjb2xvcjogI2VlZTtcbn1cblxuLnRhYmxlIHtcbiAgYm94LXNoYWRvdzogMCAxcHggNXB4IDAgcmdiYSgwLCAwLCAwLCAwLjIpO1xufVxuXG5idXR0b24uYnRuIHtcbiAgbWFyZ2luOiAycHg7XG59XG5cbi5yZWZyZXNoIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogdHJhbnNwYXJlbnQ7XG4gIGJvcmRlcjogMDtcbiAgY29sb3I6IHdoaXRlO1xuICAvKiBtYXJnaW4tbGVmdDogODBweCAqL1xuICBmbG9hdDogcmlnaHQ7XG4gIGNvbG9yOiBpbmhlcml0O1xuICBtYXJnaW4tYm90dG9tOiAtMTBweDtcbn1cblxuLmljb24tYnV0dG9uOmhvdmVyIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2I1YjViNTtcbiAgYm9yZGVyLXJhZGl1czogMnB4O1xuICBjb2xvcjogd2hpdGU7XG59XG5cbi5kcmFnLWhhbmRsZSB7XG4gIGN1cnNvcjogZ3JhYjtcbn1cblxuLmNhcmQge1xuICBtYXJnaW4tYm90dG9tOiAxMHB4O1xufVxuXG4uaWNvbi1zbWFsbCB7XG4gIGZvbnQtc2l6ZTogMWVtO1xufVxuXG4uaW5wdXQtbGFiZWwge1xuICB3aWR0aDogMTAwJTtcbn1cblxuLkVycm9yLXRleHQge1xuICBjb2xvcjogcmVkO1xufVxuXG4uYWN0aXZlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogI2RkZDtcbiAgYm9yZGVyLWNvbG9yOiAjYmMwNDRlO1xufVxuLmFjdGl2ZSBsYWJlbCwgLmFjdGl2ZSBwLCAuYWN0aXZlIGksIC5hY3RpdmUgc21hbGwge1xuICBjb2xvcjogIzMzMztcbn1cblxudGV4dGFyZWEge1xuICB3aWR0aDogMTAwJTtcbn1cblxuLmFsbG93LXNjcm9sbC1iZW5lYXRoLXBhZ2UtZW5kIHtcbiAgaGVpZ2h0OiAzMDBweDtcbn1cblxuLmZvcm0tcm93IGRpdiwgLmZvcm0tcm93IHNlbGVjdCB7XG4gIG1hcmdpbi1yaWdodDogNXB4O1xufVxuXG4uY29kZV9leGFtcGxlIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5O1xuICBwYWRkaW5nOiA3cHg7XG4gIGJvcmRlci1yYWRpdXM6IDVweDtcbn0iLCJAaW1wb3J0IHN0eWxlc1xuXG4uaW5wdXQtbGFiZWxcbiAgd2lkdGg6IDEwMCVcblxuLkVycm9yLXRleHRcbiAgY29sb3I6IHJlZFxuXG4uYWN0aXZlXG4gIGJhY2tncm91bmQtY29sb3I6ICNkZGRcbiAgYm9yZGVyLWNvbG9yOiAkY29tcGFueS1jb2xvci1wcmltYXJ5XG4gIGxhYmVsLCBwLCBpLCBzbWFsbFxuICAgIGNvbG9yOiAjMzMzXG5cbnRleHRhcmVhXG4gIHdpZHRoOiAxMDAlXG5cbi5hbGxvdy1zY3JvbGwtYmVuZWF0aC1wYWdlLWVuZFxuICBoZWlnaHQ6IDMwMHB4XG5cbi5mb3JtLXJvd1xuICBkaXYsIHNlbGVjdFxuICAgIG1hcmdpbi1yaWdodDogNXB4XG5cbi5jb2RlX2V4YW1wbGVcbiAgYmFja2dyb3VuZC1jb2xvcjogbGlnaHRncmF5XG4gIHBhZGRpbmc6IDdweFxuICBib3JkZXItcmFkaXVzOiA1cHhcbiJdfQ== */");
 
 /***/ }),
 
-/***/ "./src/app/Admin/Modules/Modules.component.ts":
+/***/ "./src/app/Admin/Modules/modules.component.ts":
 /*!****************************************************!*\
-  !*** ./src/app/Admin/Modules/Modules.component.ts ***!
+  !*** ./src/app/Admin/Modules/modules.component.ts ***!
   \****************************************************/
 /*! exports provided: AdminModulesComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -791,7 +642,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModulesComponent", function() { return AdminModulesComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _app_Services_models__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @app/Services/models */ "./src/app/Services/models.ts");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
 var __assign = (undefined && undefined.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -817,30 +670,32 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 };
 
 
+
+
 var AdminModulesComponent = /** @class */ (function () {
     function AdminModulesComponent(apiService) {
         this.apiService = apiService;
-        this.selected_module = { module_id: -1 };
-        this.title = "";
-        this.formJson = "";
-        this.formJsonError = "";
-        this.commandJsonError = "";
+        this.selectedModule = { module_id: -1 };
+        this.title = '';
+        this.formJson = '';
+        this.formJsonError = '';
+        this.commandJsonError = '';
         this.resultFilters = [];
-        this.newResultFilter = { type: "Containing", value: "" };
+        this.newResultFilter = { type: 'Containing', value: '' };
         this.modalactive = false;
-        this.fileName = "Select file...";
+        this.fileName = 'Select file...';
         this.fileStatus = 0;
         this.messageVisible = false;
         this.errorVisible = false;
-        this.errorMessage = "Error";
+        this.errorMessage = 'Error';
         this.browserActive = false;
-        this.browserPath = "";
+        this.browserPath = '';
         this.docsActive = false;
         this.commandDocsActive = false;
     }
     AdminModulesComponent.prototype.ngOnInit = function () {
         var _this = this;
-        //load initial data from server, module list
+        // load initial data from server, module list
         this.apiService.getModules().subscribe(function (data) {
             _this.modules = data;
             console.log(_this.modules);
@@ -852,23 +707,23 @@ var AdminModulesComponent = /** @class */ (function () {
     };
     AdminModulesComponent.prototype.setModule = function (mod) {
         // sets the data needed for a module change
-        this.selected_module = JSON.parse(JSON.stringify(mod));
-        this.title = this.selected_module.name;
+        this.selectedModule = JSON.parse(JSON.stringify(mod));
+        this.title = this.selectedModule.name;
         // store the jsonfields as string temporarily to allow for
-        this.formJson = this.getJson(this.selected_module.form);
+        this.formJson = this.getJson(this.selectedModule.form);
     };
     AdminModulesComponent.prototype.addNewModule = function () {
         // Adding a new module only resets the data in all forms, saving the changes then creates a new module.
-        this.selected_module = { module_id: -2, form: [], type: "Command", resultFilter: [] };
-        this.title = "New module";
-        this.formJson = "[]";
+        this.selectedModule = { module_id: -2, form: [], type: 'Command', resultFilter: [] };
+        this.title = 'New module';
+        this.formJson = '[]';
     };
     AdminModulesComponent.prototype.deleteModule = function (dmodule) {
         var _this = this;
         // Before a module can be deleted a confirmation is displayed, warning the user of the risks.
-        if (confirm("Are you sure to delete " +
+        if (confirm('Are you sure to delete ' +
             dmodule.name +
-            "\n This action is irreversible")) {
+            '\n This action is irreversible')) {
             this.apiService.deleteModule(dmodule.module_id).subscribe(function (data) {
                 _this.modules = _this.modules.filter(function (item) {
                     if (item.module_id == dmodule.module_id) {
@@ -876,7 +731,7 @@ var AdminModulesComponent = /** @class */ (function () {
                     }
                     return true;
                 });
-                _this.selected_module = { module_id: -1 };
+                _this.selectedModule = { module_id: -1 };
             }, function (error) {
                 console.log(error);
                 if (error.status == 409) {
@@ -889,12 +744,12 @@ var AdminModulesComponent = /** @class */ (function () {
     };
     AdminModulesComponent.prototype.selectModule = function (mod) {
         // if this module isn't selected already, select it. Else deselect.
-        if (!this.selected_module ||
-            this.selected_module.module_id != mod.module_id) {
+        if (!this.selectedModule ||
+            this.selectedModule.module_id != mod.module_id) {
             this.setModule(mod);
         }
         else {
-            this.selected_module = { module_id: -1 };
+            this.selectedModule = { module_id: -1 };
         }
     };
     AdminModulesComponent.prototype.getJson = function (data) {
@@ -903,104 +758,105 @@ var AdminModulesComponent = /** @class */ (function () {
     AdminModulesComponent.prototype.save = function () {
         // Save the changes from the huge form.
         var _this = this;
-        //validate form json input
+        // validate form json input
         try {
-            this.selected_module.form = JSON.parse(this.formJson);
-            this.formJsonError = "";
+            this.selectedModule.form = JSON.parse(this.formJson);
+            this.formJsonError = '';
         }
         catch (e) {
-            console.log("Error", e.message);
+            console.log('Error', e.message);
             this.formJsonError = e.message;
             return false;
         }
-        //only pass the values that are defined to the server.
-        var data = {};
-        if (this.selected_module.name != undefined) {
-            data["name"] = this.selected_module.name;
-            if (data["name"] === "") {
-                this.commandJsonError = "Name must be filled in";
+        // only pass the values that are defined to the server.
+        var data = new _app_Services_models__WEBPACK_IMPORTED_MODULE_2__["Module"]();
+        if (this.selectedModule.name) {
+            console.log(data.name, this.selectedModule.name);
+            data.name = this.selectedModule.name;
+            if (data.name === '') {
+                this.commandJsonError = 'Name must be filled in';
                 return false;
             }
             else {
-                this.commandJsonError = "";
+                this.commandJsonError = '';
             }
         }
         else {
-            this.commandJsonError = "Name must be filled in";
+            this.commandJsonError = 'Name must be filled in';
             return false;
         }
-        if (this.selected_module.hidden != undefined) {
-            data["hidden"] = this.selected_module.hidden;
+        if (this.selectedModule.hidden != undefined) {
+            data.hidden = this.selectedModule.hidden;
         }
-        if (this.selected_module.form != undefined) {
-            data["form"] = this.selected_module.form;
+        if (this.selectedModule.form != undefined) {
+            data.form = this.selectedModule.form;
         }
-        if (this.selected_module.type != undefined) {
-            data["type"] = this.selected_module.type;
+        if (this.selectedModule.type != undefined) {
+            data.type = this.selectedModule.type;
         }
-        if (this.selected_module.command != undefined) {
-            data["command"] = this.selected_module.command;
+        if (this.selectedModule.command != undefined) {
+            data.command = this.selectedModule.command;
         }
-        if (this.selected_module.python_module != undefined) {
-            data["python_module"] = this.selected_module.python_module;
+        if (this.selectedModule.python_module != undefined) {
+            data.python_module = this.selectedModule.python_module;
         }
-        if (this.selected_module.multifile != undefined) {
-            data["multifile"] = this.selected_module.multifile;
+        if (this.selectedModule.multifile != undefined) {
+            data.multifile = this.selectedModule.multifile;
         }
-        if (this.selected_module.filter != undefined) {
-            data["filter"] = this.selected_module.filter;
+        if (this.selectedModule.filter != undefined) {
+            data.filter = this.selectedModule.filter;
         }
-        if (this.selected_module.resultFilter != undefined) {
-            data["resultFilter"] = this.selected_module.resultFilter;
+        if (this.selectedModule.resultFilter != undefined) {
+            data.resultFilter = this.selectedModule.resultFilter;
         }
         else {
-            data["resultFilter"] = "[]";
+            data.resultFilter = '[]';
         }
-        if (this.selected_module.dockerImage != undefined) {
-            data["dockerImage"] = this.selected_module.dockerImage;
+        if (this.selectedModule.dockerImage != undefined) {
+            data.dockerImage = this.selectedModule.dockerImage;
         }
-        if (this.selected_module.description != undefined) {
-            data["description"] = this.selected_module.description;
+        if (this.selectedModule.description != undefined) {
+            data.description = this.selectedModule.description;
         }
-        if (this.selected_module.parallell_jobs != undefined) {
-            data["parallell_jobs"] = this.selected_module.parallell_jobs;
+        if (this.selectedModule.parallell_jobs != undefined) {
+            data.parallell_jobs = this.selectedModule.parallell_jobs;
         }
-        //verfiy that the tools action is implemented
-        if (this.selected_module.type == "Command") {
-            if (!this.selected_module.command ||
-                this.selected_module.command.length <= 0) {
+        // verfiy that the tools action is implemented
+        if (this.selectedModule.type == 'Command') {
+            if (!this.selectedModule.command ||
+                this.selectedModule.command.length <= 0) {
                 this.commandJsonError =
-                    "to save a new tool, the command needs to be configured";
+                    'to save a new tool, the command needs to be configured';
                 return false;
             }
         }
-        else if (this.selected_module.type == "Python module") {
-            if (!this.selected_module.python_module ||
-                this.selected_module.python_module == "") {
+        else if (this.selectedModule.type == 'Python module') {
+            if (!this.selectedModule.python_module ||
+                this.selectedModule.python_module == '') {
                 this.commandJsonError =
-                    "to save a new tool, the python file needs to be specified";
+                    'to save a new tool, the python file needs to be specified';
                 return false;
             }
         }
-        else if (this.selected_module.type === "Smart docker") {
-            if (this.selected_module.parallell_jobs <= 0 && this.selected_module.parallell_jobs >= 100) {
+        else if (this.selectedModule.type === 'Smart docker') {
+            if (this.selectedModule.parallell_jobs <= 0 && this.selectedModule.parallell_jobs >= 100) {
                 this.commandJsonError =
-                    "The value for number of parallell jobs must be between 1 and 100";
+                    'The value for number of parallell jobs must be between 1 and 100';
                 return false;
             }
         }
-        this.commandJsonError = "";
+        this.commandJsonError = '';
         console.log(data);
         // if the id isn't -2, this is an existing module which should be updated
-        if (this.selected_module.module_id != -2 &&
-            this.selected_module.module_id) {
+        if (this.selectedModule.module_id != -2 &&
+            this.selectedModule.module_id) {
             this.apiService
-                .saveData(this.selected_module.module_id, data)
+                .saveData(this.selectedModule.module_id, data)
                 .subscribe(function (data) {
                 _this.messageVisible = true;
                 for (var i in _this.modules) {
                     var m = _this.modules[i];
-                    if (m.module_id == data["module_id"]) {
+                    if (m.module_id == data.module_id) {
                         _this.modules[i] = data;
                         _this.setModule(data);
                     }
@@ -1009,7 +865,7 @@ var AdminModulesComponent = /** @class */ (function () {
         }
         else {
             // else this is a new module which has not been saved before.
-            delete this.selected_module.module_id;
+            delete this.selectedModule.module_id;
             this.apiService.createModule(data).subscribe(function (data) {
                 _this.messageVisible = true;
                 _this.setModule(data);
@@ -1023,17 +879,17 @@ var AdminModulesComponent = /** @class */ (function () {
             });
         }
     };
-    //activate modal for selecting a file to import
+    // activate modal for selecting a file to import
     AdminModulesComponent.prototype.importModule = function () {
         this.modalactive = true;
     };
-    //validate the selected file, if it's a tar accept it, else return error.
+    // validate the selected file, if it's a tar accept it, else return error.
     AdminModulesComponent.prototype.fileSelected = function (e) {
         if (e.target.files.length > 0) {
-            //check fileFormat
-            if (!e.target.files[0].name.endsWith(".tar")) {
-                console.error("error, wrong fileType");
-                this.fileName = "Select file...";
+            // check fileFormat
+            if (!e.target.files[0].name.endsWith('.tar')) {
+                console.error('error, wrong fileType');
+                this.fileName = 'Select file...';
                 this.fileStatus = 1;
             }
             else {
@@ -1046,35 +902,35 @@ var AdminModulesComponent = /** @class */ (function () {
     AdminModulesComponent.prototype.uploadFile = function () {
         var _this = this;
         // a file is selectd, and the user has pressed upload. Submit the data to the backend.
-        if (!this.file.name.endsWith(".tar")) {
-            console.error("error, wrong fileType");
+        if (!this.file.name.endsWith('.tar')) {
+            console.error('error, wrong fileType');
             return;
         }
         this.modalactive = false;
-        this.fileName = "Select file...";
+        this.fileName = 'Select file...';
         var formData = new FormData();
-        formData.append("file", this.file, "import.tar");
+        formData.append('file', this.file, 'import.tar');
         this.apiService.importModule(formData).subscribe(function (data) {
-            if (data.type == 4) {
-                _this.modules = data["body"];
+            if (data.type == _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpEventType"].Response) {
+                _this.modules = data.body;
             }
         });
     };
     AdminModulesComponent.prototype.addResultFilter = function () {
         // add another filter for scanning the log files
-        this.selected_module.resultFilter.push(__assign({}, this.newResultFilter));
-        this.newResultFilter = { type: "Containing", value: "" };
+        this.selectedModule.resultFilter.push(__assign({}, this.newResultFilter));
+        this.newResultFilter = { type: 'Containing', value: '' };
     };
     AdminModulesComponent.prototype.removeResultFilter = function (filter) {
         // remove a filter for scanning the log files
-        var index = this.selected_module.resultFilter.indexOf(filter);
+        var index = this.selectedModule.resultFilter.indexOf(filter);
         if (index > -1) {
-            this.selected_module.resultFilter.splice(index, 1);
+            this.selectedModule.resultFilter.splice(index, 1);
         }
     };
     AdminModulesComponent.prototype.openFileBrowser = function () {
         this.browserPath =
-            "/api/module/" + this.selected_module.module_id + "/files/";
+            '/api/module/' + this.selectedModule.module_id + '/files/';
         this.browserActive = true;
     };
     AdminModulesComponent.prototype.openFormJsonDocs = function () {
@@ -1084,15 +940,15 @@ var AdminModulesComponent = /** @class */ (function () {
         this.commandDocsActive = true;
     };
     AdminModulesComponent.ctorParameters = function () { return [
-        { type: _Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"] }
+        { type: _Services_api_service__WEBPACK_IMPORTED_MODULE_3__["APIService"] }
     ]; };
     AdminModulesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: "admin",
-            template: __importDefault(__webpack_require__(/*! raw-loader!./Modules.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Modules/Modules.component.html")).default,
-            styles: [__importDefault(__webpack_require__(/*! ./Modules.component.sass */ "./src/app/Admin/Modules/Modules.component.sass")).default]
+            template: __importDefault(__webpack_require__(/*! raw-loader!./modules.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Modules/modules.component.html")).default,
+            styles: [__importDefault(__webpack_require__(/*! ./modules.component.sass */ "./src/app/Admin/Modules/modules.component.sass")).default]
         }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_3__["APIService"]])
     ], AdminModulesComponent);
     return AdminModulesComponent;
 }());
@@ -1114,9 +970,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/app/Admin/Templates/Templates.component.ts":
+/***/ "./src/app/Admin/Templates/templates.component.ts":
 /*!********************************************************!*\
-  !*** ./src/app/Admin/Templates/Templates.component.ts ***!
+  !*** ./src/app/Admin/Templates/templates.component.ts ***!
   \********************************************************/
 /*! exports provided: AdminTemplatesComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -1147,9 +1003,9 @@ var AdminTemplatesComponent = /** @class */ (function () {
         this.selected_template = undefined;
         this.selected_process_id = -1;
         this.selected_process = undefined;
-        this.placeholderName = "";
+        this.placeholderName = '';
         this.createModalActive = false;
-        this.newTemplateName = "";
+        this.newTemplateName = '';
         this.messageVisible = false;
         this.errorVisible = false;
     }
@@ -1164,24 +1020,24 @@ var AdminTemplatesComponent = /** @class */ (function () {
         });
     };
     AdminTemplatesComponent.prototype.createTemplateModal = function () {
-        //Activate modal for creation of a new template
+        // Activate modal for creation of a new template
         this.createModalActive = true;
-        this.newTemplateName = "";
+        this.newTemplateName = '';
     };
     AdminTemplatesComponent.prototype.createNewTemplate = function () {
         var _this = this;
-        //actuall creation of new template
+        // actuall creation of new template
         var data = { templateName: this.newTemplateName };
         this.apiService.postTemplate(data).subscribe(function (data) {
             // console.log(data);
             _this.templates.push(data);
-            _this.newTemplateName = "";
+            _this.newTemplateName = '';
             _this.createModalActive = false;
         });
     };
     AdminTemplatesComponent.prototype.save = function () {
         var _this = this;
-        //save the changes made in a template to the server
+        // save the changes made in a template to the server
         var data = {
             templateName: this.selected_template.name,
             template_id: this.selected_template_id
@@ -1215,7 +1071,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
             }, function (error) {
                 console.log(error);
                 if (error.status == 409) {
-                    console.log("409 error, display error message");
+                    console.log('409 error, display error message');
                     _this.errorVisible = true;
                 }
             });
@@ -1227,7 +1083,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
         if (this.selected_template_id != template.template_id) {
             this.selected_template_id = template.template_id;
             this.selected_template = template;
-            //Download template data
+            // Download template data
             this.apiService.getTemplate(this.selected_template_id).subscribe(function (data) {
                 _this.selected_template = data;
                 console.log(data);
@@ -1270,12 +1126,12 @@ var AdminTemplatesComponent = /** @class */ (function () {
         var form = this.selected_process.form;
         for (var i in form) {
             if (form[i].identifier == id) {
-                if ("default" in form[i]) {
+                if ('default' in form[i]) {
                     return form[i].default;
                 }
             }
         }
-        return "";
+        return '';
     };
     // Delete a process
     AdminTemplatesComponent.prototype.deleteProcess = function (process) {
@@ -1287,7 +1143,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
         var data = [];
         for (var index in this.selected_template.processes) {
             var item = this.selected_template.processes[index];
-            if (item.type != "placeholder" && item.order > process.order) {
+            if (item.type != 'placeholder' && item.order > process.order) {
                 item.order -= 1;
                 data.push({ order: item.order, process_id: item.process_id });
             }
@@ -1377,9 +1233,9 @@ var AdminTemplatesComponent = /** @class */ (function () {
     };
     // store the data of the dragged object in the event
     AdminTemplatesComponent.prototype.dragStart = function (e, id, type, name) {
-        e.dataTransfer.setData("id", id);
-        e.dataTransfer.setData("type", type);
-        e.dataTransfer.setData("name", name);
+        e.dataTransfer.setData('id', id);
+        e.dataTransfer.setData('type', type);
+        e.dataTransfer.setData('name', name);
         this.placeholderName = name;
     };
     AdminTemplatesComponent.prototype.onDrop = function (e) {
@@ -1390,35 +1246,35 @@ var AdminTemplatesComponent = /** @class */ (function () {
             dropOrder = 0;
         }
         // if the dropped element is a module, add it
-        if (e.dataTransfer.getData("type") == "module") {
+        if (e.dataTransfer.getData('type') == 'module') {
             var data = [];
             // move down all items under existingIndex
             for (var index in this.selected_template.processes) {
                 var item = this.selected_template.processes[index];
                 // console.log(this.package.processes[index]);
-                if (item.type != "placeholder" && item.order >= dropOrder) {
+                if (item.type != 'placeholder' && item.order >= dropOrder) {
                     item.order += 1;
                     data.push({ order: item.order, process_id: item.process_id }); // updates to push to backend
                 }
             }
-            //submit reorder:
+            // submit reorder:
             this.apiService
                 .reorderTemplateProcesses(data, this.selected_template_id)
                 .subscribe(function (data) {
                 // console.log(data);
             });
-            //add process temporarily until the request is completed
+            // add process temporarily until the request is completed
             var newProcess = {
                 order: dropOrder,
                 process_id: 100,
-                module: e.dataTransfer.getData("id"),
-                name: e.dataTransfer.getData("name")
+                module: e.dataTransfer.getData('id'),
+                name: e.dataTransfer.getData('name')
             };
             this.selected_template.processes.splice(dropOrder, 0, newProcess);
             this.apiService
                 .addProcess({
                 order: dropOrder,
-                module: e.dataTransfer.getData("id"),
+                module: e.dataTransfer.getData('id'),
                 template: this.selected_template_id
             })
                 .subscribe(function (data) {
@@ -1430,11 +1286,11 @@ var AdminTemplatesComponent = /** @class */ (function () {
         else {
             // else if the dropped element is a process, reorder the elements in the list
             var startOrder = -1;
-            var movedProcessIndex;
+            var movedProcessIndex = void 0;
             var data = [];
             for (var index in this.selected_template.processes) {
                 var item = this.selected_template.processes[index];
-                if (item.process_id == e.dataTransfer.getData("id")) {
+                if (item.process_id == e.dataTransfer.getData('id')) {
                     startOrder = item.order;
                     movedProcessIndex = index;
                 }
@@ -1443,7 +1299,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 // the item was dragged up. items from dropOrder to startOrder should be moved down.
                 for (var index in this.selected_template.processes) {
                     var item = this.selected_template.processes[index];
-                    if (item.type != "placeholder" &&
+                    if (item.type != 'placeholder' &&
                         item.order < startOrder &&
                         item.order >= dropOrder) {
                         item.order += 1;
@@ -1461,7 +1317,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 // the item was dragged down. items smaller than startOrder and larger than dropOrder shall be moved up.
                 for (var index in this.selected_template.processes) {
                     var item = this.selected_template.processes[index];
-                    if (item.type != "placeholder" &&
+                    if (item.type != 'placeholder' &&
                         item.order > startOrder &&
                         item.order < dropOrder) {
                         item.order -= 1;
@@ -1494,11 +1350,11 @@ var AdminTemplatesComponent = /** @class */ (function () {
     AdminTemplatesComponent.prototype.onRelease = function (e) {
         // remove the placeholder
         this.selected_template.processes = this.selected_template.processes.filter(function (item) {
-            return item["type"] != "placeholder";
+            return item.type != 'placeholder';
         });
     };
     AdminTemplatesComponent.prototype.allowDrop = function (e, index) {
-        //set ghost image to show where you will drop.
+        // set ghost image to show where you will drop.
         e.preventDefault();
         var element = e.target;
         if (Math.abs(index % 1) > 0.4 && Math.abs(index % 1) < 0.6) {
@@ -1512,7 +1368,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
                 this.placeholderLocation = ind;
                 this.onRelease(undefined);
                 var temp = {
-                    type: "placeholder",
+                    type: 'placeholder',
                     order: ind,
                     name: this.placeholderName
                 };
@@ -1520,14 +1376,14 @@ var AdminTemplatesComponent = /** @class */ (function () {
             }
         }
         else {
-            //drop above element.
+            // drop above element.
             var ind = index - 0.5;
             if (ind != this.placeholderLocation) {
                 this.placeholderLocation = ind;
                 this.onRelease(undefined);
-                console.log(e.dataTransfer.getData("name"));
+                console.log(e.dataTransfer.getData('name'));
                 var temp = {
-                    type: "placeholder",
+                    type: 'placeholder',
                     order: ind,
                     name: this.placeholderName
                 };
@@ -1539,13 +1395,13 @@ var AdminTemplatesComponent = /** @class */ (function () {
     AdminTemplatesComponent.prototype.allowDropTop = function (e) {
         // create a placeholder at the correct place
         e.preventDefault();
-        //calculate order. Order will be 0.5 lower than first visible.
+        // calculate order. Order will be 0.5 lower than first visible.
         var order = -0.5;
         this.placeholderLocation = order;
         this.placeholderTemplate = this.selected_template_id;
         this.onRelease(undefined);
         var temp = {
-            type: "placeholder",
+            type: 'placeholder',
             order: order,
             name: this.placeholderName
         };
@@ -1562,7 +1418,7 @@ var AdminTemplatesComponent = /** @class */ (function () {
     ]; };
     AdminTemplatesComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: "adminTemplates",
+            selector: 'app-admin-templates',
             template: __importDefault(__webpack_require__(/*! raw-loader!./Templates.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Admin/Templates/Templates.component.html")).default,
             styles: [__importDefault(__webpack_require__(/*! ./Templates.component.sass */ "./src/app/Admin/Templates/Templates.component.sass")).default]
         }),
@@ -1575,82 +1431,131 @@ var AdminTemplatesComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/Components/FileBrowser/File.component.ts":
-/*!**********************************************************!*\
-  !*** ./src/app/Components/FileBrowser/File.component.ts ***!
-  \**********************************************************/
-/*! exports provided: FileComponent */
+/***/ "./src/app/Admin/admin-routing.routes.ts":
+/*!***********************************************!*\
+  !*** ./src/app/Admin/admin-routing.routes.ts ***!
+  \***********************************************/
+/*! exports provided: adminRoutes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileComponent", function() { return FileComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "adminRoutes", function() { return adminRoutes; });
+/* harmony import */ var _guards_admin_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../guards/admin.guard */ "./src/app/guards/admin.guard.ts");
+/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
+/* harmony import */ var _DockerImages_docker_images_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./DockerImages/docker-images.component */ "./src/app/Admin/DockerImages/docker-images.component.ts");
+/* harmony import */ var _GlobalVariables_global_variables_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./GlobalVariables/global-variables.component */ "./src/app/Admin/GlobalVariables/global-variables.component.ts");
+/* harmony import */ var _Header_header_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./Header/header.component */ "./src/app/Admin/Header/header.component.ts");
+/* harmony import */ var _Modules_modules_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Modules/modules.component */ "./src/app/Admin/Modules/modules.component.ts");
+/* harmony import */ var _Templates_templates_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Templates/templates.component */ "./src/app/Admin/Templates/templates.component.ts");
+var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
+  return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+
+
+// Components
+
+
+
+
+
+var adminRoutes = [
+    { path: 'admin', component: _Header_header_component__WEBPACK_IMPORTED_MODULE_4__["AdminHeaderComponent"], canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_1__["AuthGuard"], _guards_admin_guard__WEBPACK_IMPORTED_MODULE_0__["AdminGuard"]], children: [
+            { path: '', redirectTo: 'modules', pathMatch: 'full' },
+            { path: 'modules', component: _Modules_modules_component__WEBPACK_IMPORTED_MODULE_5__["AdminModulesComponent"] },
+            { path: 'global', component: _GlobalVariables_global_variables_component__WEBPACK_IMPORTED_MODULE_3__["AdminGlobalComponent"] },
+            { path: 'templates', component: _Templates_templates_component__WEBPACK_IMPORTED_MODULE_6__["AdminTemplatesComponent"] },
+            { path: 'images', component: _DockerImages_docker_images_component__WEBPACK_IMPORTED_MODULE_2__["AdminImagesComponent"] }
+        ] }
+];
+
+
+/***/ }),
+
+/***/ "./src/app/Admin/admin.module.ts":
+/*!***************************************!*\
+  !*** ./src/app/Admin/admin.module.ts ***!
+  \***************************************/
+/*! exports provided: AdminModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AdminModule", function() { return AdminModule; });
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/esm.js");
+/* harmony import */ var _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Components/FileBrowser/FileBrowser.module */ "./src/app/Components/FileBrowser/FileBrowser.module.ts");
+/* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
+/* harmony import */ var _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../Components/Modal/Modal.module */ "./src/app/Components/Modal/Modal.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _DockerImages_docker_images_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./DockerImages/docker-images.component */ "./src/app/Admin/DockerImages/docker-images.component.ts");
+/* harmony import */ var _GlobalVariables_global_variables_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./GlobalVariables/global-variables.component */ "./src/app/Admin/GlobalVariables/global-variables.component.ts");
+/* harmony import */ var _Header_header_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Header/header.component */ "./src/app/Admin/Header/header.component.ts");
+/* harmony import */ var _Modules_modules_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Modules/modules.component */ "./src/app/Admin/Modules/modules.component.ts");
+/* harmony import */ var _Templates_templates_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Templates/templates.component */ "./src/app/Admin/Templates/templates.component.ts");
+/* harmony import */ var _services_api_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
   return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 
 
-var FileComponent = /** @class */ (function () {
-    function FileComponent(apiService) {
-        this.apiService = apiService;
-        this.expanded = false;
+
+
+
+// imports
+
+
+
+
+
+// declarations
+
+
+
+
+
+// providers
+// import { ModuleService } from './Module.service';
+
+var AdminModule = /** @class */ (function () {
+    function AdminModule() {
     }
-    FileComponent.prototype.ngOnInit = function () {
-    };
-    FileComponent.prototype.expand = function () {
-        if (this.expanded) {
-            this.expanded = false;
-        }
-        else {
-            this.expanded = true;
-            if (this.file.type == "folder") {
-                this.fetchFiles();
-            }
-        }
-    };
-    FileComponent.prototype.fetchFiles = function () {
-        var _this = this;
-        console.log(this.specific_path);
-        this.apiService.getFiles(this.path, this.specific_path).subscribe(function (data) {
-            console.log(data);
-            _this.children = data;
-        });
-    };
-    FileComponent.ctorParameters = function () { return [
-        { type: _Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"] }
-    ]; };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], FileComponent.prototype, "file", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], FileComponent.prototype, "path", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], FileComponent.prototype, "specific_path", void 0);
-    FileComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'file',
-            template: __importDefault(__webpack_require__(/*! raw-loader!./file.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Components/FileBrowser/file.component.html")).default,
-            styles: [__importDefault(__webpack_require__(/*! ./file.component.sass */ "./src/app/Components/FileBrowser/file.component.sass")).default]
-        }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
-    ], FileComponent);
-    return FileComponent;
+    AdminModule = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+            imports: [
+                _angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
+                _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_4__["NgxChartsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
+                _angular_router__WEBPACK_IMPORTED_MODULE_3__["RouterModule"],
+                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_9__["TooltipModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_8__["NavbarModule"],
+                _Components_Modal_Modal_module__WEBPACK_IMPORTED_MODULE_7__["ModalModule"],
+                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_6__["MessageModule"],
+                _Components_FileBrowser_FileBrowser_module__WEBPACK_IMPORTED_MODULE_5__["FileBrowserModule"]
+            ],
+            declarations: [
+                _Header_header_component__WEBPACK_IMPORTED_MODULE_12__["AdminHeaderComponent"],
+                _Modules_modules_component__WEBPACK_IMPORTED_MODULE_13__["AdminModulesComponent"],
+                _GlobalVariables_global_variables_component__WEBPACK_IMPORTED_MODULE_11__["AdminGlobalComponent"],
+                _Templates_templates_component__WEBPACK_IMPORTED_MODULE_14__["AdminTemplatesComponent"],
+                _DockerImages_docker_images_component__WEBPACK_IMPORTED_MODULE_10__["AdminImagesComponent"]
+            ],
+            providers: [
+                _services_api_service__WEBPACK_IMPORTED_MODULE_15__["APIService"]
+            ]
+        })
+    ], AdminModule);
+    return AdminModule;
 }());
 
 
@@ -1681,7 +1586,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileBrowserComponent", function() { return FileBrowserComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _Services_api_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../Services/api.service */ "./src/app/Services/api.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1696,10 +1602,10 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 };
 
 
+
 var FileBrowserComponent = /** @class */ (function () {
     function FileBrowserComponent(apiService) {
         this.apiService = apiService;
-        this._active = false;
         this.canCreateFolder = true;
         this.isModal = true;
         this.activeChange = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
@@ -1711,8 +1617,9 @@ var FileBrowserComponent = /** @class */ (function () {
         this.selected = [];
         this.contextMenuPos = { x: -1, y: -1 };
         this.innerModalVisible = false;
-        this.innerModalValue = "";
-        this.innerModalType = "";
+        this.innerModalValue = '';
+        this.innerModalType = '';
+        this._active = false;
     }
     Object.defineProperty(FileBrowserComponent.prototype, "active", {
         get: function () {
@@ -1729,9 +1636,9 @@ var FileBrowserComponent = /** @class */ (function () {
     });
     FileBrowserComponent.prototype.clickedOutside = function ($event) {
         // here you can hide your menu
-        if ($event.button == 0) {
-            this.contextMenuPos["x"] = -1;
-            this.contextMenuPos["y"] = -1;
+        if ($event.button === 0) {
+            this.contextMenuPos.x = -1;
+            this.contextMenuPos.y = -1;
         }
     };
     FileBrowserComponent.prototype.closeModal = function () {
@@ -1751,12 +1658,13 @@ var FileBrowserComponent = /** @class */ (function () {
         this.selectedLevel = -1;
         this.selectedFile = undefined;
         this.selected = [];
-        this.apiService.getFiles(this.path).subscribe(function (data) {
+        this.apiService.getFiles(this.path)
+            .subscribe(function (data) {
             _this.levels[0] = data;
         });
     };
     FileBrowserComponent.prototype.calculatePath = function (index, file) {
-        var path = "";
+        var path = '';
         if (file) {
             for (var i = 0; i < index; i++) {
                 path += this.fullPath[i] + "/";
@@ -1778,9 +1686,10 @@ var FileBrowserComponent = /** @class */ (function () {
         while (this.selected.length > index) {
             this.selected.pop();
         }
-        if (file.type == "folder") {
+        if (file.type === 'folder') {
             var path = this.calculatePath(index, file);
-            this.apiService.getFiles(this.path, path).subscribe(function (data) {
+            this.apiService.getFiles(this.path, path)
+                .subscribe(function (data) {
                 _this.levels.push(data);
                 _this.fullPath.push(file.name);
             });
@@ -1790,28 +1699,30 @@ var FileBrowserComponent = /** @class */ (function () {
     FileBrowserComponent.prototype.openContextMenu = function (event, index, file) {
         event.preventDefault();
         event.stopPropagation();
-        this.contextMenuPos["x"] = event.clientX;
-        this.contextMenuPos["y"] = event.clientY;
+        this.contextMenuPos.x = event.clientX;
+        this.contextMenuPos.y = event.clientY;
         if (event.clientY > window.innerHeight - 200) {
-            this.contextMenuPos["y"] = event.clientY - 200;
+            this.contextMenuPos.y = event.clientY - 200;
         }
-        //select the rightclicked item:
+        // select the rightclicked item:
         this.openNewLevel(index, file);
     };
     FileBrowserComponent.prototype.openRenameModal = function () {
         this.innerModalValue = this.selectedFile.name;
-        this.innerModalType = "rename";
+        this.innerModalType = 'rename';
         this.innerModalVisible = true;
     };
     FileBrowserComponent.prototype.rename = function () {
         var _this = this;
-        var body = {};
-        body["path"] = this.calculatePath(this.selectedLevel, this.selectedFile);
-        body["name"] = this.innerModalValue;
-        this.apiService.renameFile(this.path, body).subscribe(function (data) {
+        var body = {
+            path: this.calculatePath(this.selectedLevel, this.selectedFile),
+            name: this.innerModalValue
+        };
+        this.apiService.renameFile(this.path, body)
+            .subscribe(function (data) {
             _this.selectedFile.name = _this.innerModalValue;
             _this.levels.pop();
-            if (_this.selectedFile.type == "folder") {
+            if (_this.selectedFile.type === 'folder') {
                 _this.levels.pop();
                 _this.fullPath[_this.fullPath.length - 1] = _this.innerModalValue;
                 _this.selectedFile = undefined;
@@ -1827,7 +1738,7 @@ var FileBrowserComponent = /** @class */ (function () {
     };
     FileBrowserComponent.prototype.openDeleteModal = function () {
         this.innerModalVisible = true;
-        this.innerModalType = "delete";
+        this.innerModalType = 'delete';
     };
     FileBrowserComponent.prototype.delete = function () {
         var _this = this;
@@ -1835,32 +1746,33 @@ var FileBrowserComponent = /** @class */ (function () {
             return;
         }
         var path = this.calculatePath(this.selectedLevel, this.selectedFile);
-        this.apiService.deleteFile(this.path, path).subscribe(function (data) {
-            if (_this.selectedFile.type == "folder") {
+        this.apiService.deleteFile(this.path, path)
+            .subscribe(function (data) {
+            if (_this.selectedFile.type === 'folder') {
                 _this.fullPath.pop();
                 _this.levels.pop();
             }
             _this.levels.pop();
             _this.levels.push(data);
             _this.selectedFile.name = _this.fullPath[_this.fullPath.length - 1];
-            _this.selectedFile.type = "folder";
+            _this.selectedFile.type = 'folder';
             _this.selectedLevel -= 1;
             _this.closeInnerModal();
         });
     };
     FileBrowserComponent.prototype.openUploadModal = function () {
         this.innerModalVisible = true;
-        this.innerModalType = "upload";
-        this.innerModalValue = "";
+        this.innerModalType = 'upload';
+        this.innerModalValue = '';
     };
     FileBrowserComponent.prototype.openCreateFolderModal = function () {
         this.innerModalVisible = true;
-        this.innerModalType = "create";
-        this.innerModalValue = "";
+        this.innerModalType = 'create';
+        this.innerModalValue = '';
     };
     FileBrowserComponent.prototype.onFileSelected = function (e) {
         if (e.target.files.length > 0) {
-            //check fileFormat
+            // check fileFormat
             // if (!e.target.files[0].name.endsWith('.tar')) {
             //   console.error('error, wrong fileType');
             //   this.innerModalValue = "Select file...";
@@ -1874,28 +1786,28 @@ var FileBrowserComponent = /** @class */ (function () {
     };
     FileBrowserComponent.prototype.uploadFile = function () {
         var _this = this;
-        console.log("upload");
+        // console.log('upload');
         if (!this.innerModalFile) {
-            console.error("no file selected");
+            console.error('no file selected');
             return;
         }
         // this.modalactive = false;
         // this.fileName = "Select file...";
         var formData = new FormData();
-        formData.append("file", this.innerModalFile, this.innerModalValue);
-        //calculate the final path:
-        var newPath = "";
+        formData.append('file', this.innerModalFile, this.innerModalValue);
+        // calculate the final path:
+        var newPath = '';
         if (this.selectedFile) {
             var path = this.calculatePath(this.selectedLevel, this.selectedFile);
-            if (this.selectedFile.type == "folder") {
-                //create the new folder inside this.
+            if (this.selectedFile.type === 'folder') {
+                // create the new folder inside this.
                 newPath = path + "/" + this.innerModalValue;
             }
             else {
                 // create the new folder in this folder.
-                var prev = path.substr(0, path.lastIndexOf("/"));
-                if (prev != "") {
-                    prev += "/";
+                var prev = path.substr(0, path.lastIndexOf('/'));
+                if (prev !== '') {
+                    prev += '/';
                 }
                 newPath = prev + this.innerModalValue;
             }
@@ -1903,12 +1815,13 @@ var FileBrowserComponent = /** @class */ (function () {
         else {
             newPath = this.innerModalValue;
         }
-        formData.append("path", newPath);
+        formData.append('path', newPath);
         // console.log(this.innerModalValue)
-        this.apiService.uploadFile(this.path, formData).subscribe(function (data) {
-            if (data.type == 4) {
+        this.apiService.uploadFile(this.path, formData)
+            .subscribe(function (data) {
+            if (data.type === _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpEventType"].Response) {
                 _this.levels.pop();
-                _this.levels.push(data["body"]);
+                _this.levels.push(data.body);
                 _this.closeInnerModal();
             }
         });
@@ -1919,35 +1832,41 @@ var FileBrowserComponent = /** @class */ (function () {
             return;
         }
         var path = this.calculatePath(this.selectedLevel, this.selectedFile);
-        var newPath = "";
-        if (this.selectedFile.type == "folder") {
-            //create the new folder inside this.
+        var newPath = '';
+        if (this.selectedFile.type === 'folder') {
+            // create the new folder inside this.
             newPath = path + "/" + this.innerModalValue;
         }
         else {
             // create the new folder in this folder.
-            var prev = path.substr(0, path.lastIndexOf("/"));
-            if (prev != "") {
-                prev += "/";
+            var prev = path.substr(0, path.lastIndexOf('/'));
+            if (prev !== '') {
+                prev += '/';
             }
             newPath = prev + this.innerModalValue;
         }
-        this.apiService.createFolder(this.path, newPath).subscribe(function (data) {
+        this.apiService.createFolder(this.path, newPath)
+            .subscribe(function (data) {
             _this.levels.pop();
             _this.levels.push(data);
             _this.closeInnerModal();
         });
     };
     FileBrowserComponent.prototype.closeInnerModal = function () {
-        console.log("close inner modeal");
+        // console.log('close inner modeal');
         this.innerModalVisible = false;
     };
     FileBrowserComponent.ctorParameters = function () { return [
-        { type: _Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"] }
+        { type: _Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"] }
     ]; };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
+        __metadata("design:type", Boolean),
+        __metadata("design:paramtypes", [Boolean])
+    ], FileBrowserComponent.prototype, "active", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
     ], FileBrowserComponent.prototype, "canCreateFolder", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -1959,13 +1878,8 @@ var FileBrowserComponent = /** @class */ (function () {
     ], FileBrowserComponent.prototype, "path", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean)
+        __metadata("design:type", Object)
     ], FileBrowserComponent.prototype, "isModal", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Boolean),
-        __metadata("design:paramtypes", [Boolean])
-    ], FileBrowserComponent.prototype, "active", null);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
@@ -1975,18 +1889,18 @@ var FileBrowserComponent = /** @class */ (function () {
         __metadata("design:type", Object)
     ], FileBrowserComponent.prototype, "selectedFiles", void 0);
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])("document:click", ["$event"]),
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('document:click', ['$event']),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object]),
         __metadata("design:returntype", void 0)
     ], FileBrowserComponent.prototype, "clickedOutside", null);
     FileBrowserComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: "filebrowser",
+            selector: 'app-filebrowser',
             template: __importDefault(__webpack_require__(/*! raw-loader!./FileBrowser.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/Components/FileBrowser/FileBrowser.component.html")).default,
             styles: [__importDefault(__webpack_require__(/*! ./FileBrowser.component.sass */ "./src/app/Components/FileBrowser/FileBrowser.component.sass")).default]
         }),
-        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_1__["APIService"]])
+        __metadata("design:paramtypes", [_Services_api_service__WEBPACK_IMPORTED_MODULE_2__["APIService"]])
     ], FileBrowserComponent);
     return FileBrowserComponent;
 }());
@@ -2005,11 +1919,10 @@ var FileBrowserComponent = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FileBrowserModule", function() { return FileBrowserModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _FileBrowser_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FileBrowser.component */ "./src/app/Components/FileBrowser/FileBrowser.component.ts");
-/* harmony import */ var _File_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./File.component */ "./src/app/Components/FileBrowser/File.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2019,25 +1932,24 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
   return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-//angular modules
+// angular modules
 
 
 
-//declarations
-
+// declarations
+// import { FileComponent } from './file.component';
 
 var FileBrowserModule = /** @class */ (function () {
     function FileBrowserModule() {
     }
     FileBrowserModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
+                _angular_common__WEBPACK_IMPORTED_MODULE_0__["CommonModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"]
             ],
             declarations: [
                 _FileBrowser_component__WEBPACK_IMPORTED_MODULE_3__["FileBrowserComponent"],
-                _File_component__WEBPACK_IMPORTED_MODULE_4__["FileComponent"]
             ],
             providers: [],
             exports: [_FileBrowser_component__WEBPACK_IMPORTED_MODULE_3__["FileBrowserComponent"]]
@@ -2047,19 +1959,6 @@ var FileBrowserModule = /** @class */ (function () {
 }());
 
 
-
-/***/ }),
-
-/***/ "./src/app/Components/FileBrowser/file.component.sass":
-/*!************************************************************!*\
-  !*** ./src/app/Components/FileBrowser/file.component.sass ***!
-  \************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".file-header {\n  cursor: pointer;\n}\n\n.file-children {\n  margin-left: 15px;\n  clear: both;\n}\n\n.tooltip {\n  background-color: red;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0NvbXBvbmVudHMvRmlsZUJyb3dzZXIvZmlsZS5jb21wb25lbnQuc2FzcyIsInNyYy9hcHAvQ29tcG9uZW50cy9GaWxlQnJvd3Nlci9maWxlLmNvbXBvbmVudC5zYXNzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0VBQ0UsZUFBQTtBQ0NGOztBRENBO0VBQ0UsaUJBQUE7RUFDQSxXQUFBO0FDRUY7O0FER0E7RUFDRSxxQkFBQTtBQ0FGIiwiZmlsZSI6InNyYy9hcHAvQ29tcG9uZW50cy9GaWxlQnJvd3Nlci9maWxlLmNvbXBvbmVudC5zYXNzIiwic291cmNlc0NvbnRlbnQiOlsiLmZpbGUtaGVhZGVyXG4gIGN1cnNvcjogcG9pbnRlclxuXG4uZmlsZS1jaGlsZHJlblxuICBtYXJnaW4tbGVmdDogMTVweFxuICBjbGVhcjogYm90aFxuXG4uZmlsZS1mbG9hdFxuICAvLyBmbG9hdDogbGVmdFxuXG4udG9vbHRpcFxuICBiYWNrZ3JvdW5kLWNvbG9yOiByZWRcbiIsIi5maWxlLWhlYWRlciB7XG4gIGN1cnNvcjogcG9pbnRlcjtcbn1cblxuLmZpbGUtY2hpbGRyZW4ge1xuICBtYXJnaW4tbGVmdDogMTVweDtcbiAgY2xlYXI6IGJvdGg7XG59XG5cbi50b29sdGlwIHtcbiAgYmFja2dyb3VuZC1jb2xvcjogcmVkO1xufSJdfQ== */");
 
 /***/ }),
 
@@ -2236,7 +2135,7 @@ var MessageModule = /** @class */ (function () {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = (".modal {\n  max-height: 95%;\n  display: block !important;\n}\n\n.modal-dialog {\n  height: 100%;\n  max-width: 90%;\n}\n\n.modal-content {\n  max-height: 95%;\n}\n\n.modal-body {\n  margin-top: 5px;\n  overflow-y: scroll;\n}\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1;\n}\n\n.modal-footer, .modal-header {\n  flex-shrink: 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0NvbXBvbmVudHMvTW9kYWwvTW9kYWwuY29tcG9uZW50LnNhc3MiLCJzcmMvYXBwL0NvbXBvbmVudHMvTW9kYWwvTW9kYWwuY29tcG9uZW50LnNhc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFDRSxlQUFBO0VBQ0EseUJBQUE7QUNDRjs7QURDQTtFQUNFLFlBQUE7RUFDQSxjQUFBO0FDRUY7O0FEQUE7RUFDRSxlQUFBO0FDR0Y7O0FEREE7RUFDRSxlQUFBO0VBQ0Esa0JBQUE7QUNJRjs7QURGQTtFQUNFLCtDQUFBO0VBQ0EsZUFBQTtFQUNBLE1BQUE7RUFDQSxRQUFBO0VBQ0EsU0FBQTtFQUNBLE9BQUE7RUFDQSxzQkFBQTtFQUNBLGFBQUE7RUFDQSxXQUFBO0FDS0Y7O0FESEE7RUFDRSxjQUFBO0FDTUYiLCJmaWxlIjoic3JjL2FwcC9Db21wb25lbnRzL01vZGFsL01vZGFsLmNvbXBvbmVudC5zYXNzIiwic291cmNlc0NvbnRlbnQiOlsiLm1vZGFsXG4gIG1heC1oZWlnaHQ6IDk1JVxuICBkaXNwbGF5OiBibG9jayAhaW1wb3J0YW50XG5cbi5tb2RhbC1kaWFsb2dcbiAgaGVpZ2h0OiAxMDAlXG4gIG1heC13aWR0aDogOTAlXG5cbi5tb2RhbC1jb250ZW50XG4gIG1heC1oZWlnaHQ6IDk1JVxuXG4ubW9kYWwtYm9keVxuICBtYXJnaW4tdG9wOiA1cHhcbiAgb3ZlcmZsb3cteTogc2Nyb2xsXG5cbi5tb2RhbC1iYWNrZ3JvdW5kXG4gIC8qIG1vZGFsIGJhY2tncm91bmQgZml4ZWQgYWNyb3NzIHdob2xlIHNjcmVlbiAqL1xuICBwb3NpdGlvbjogZml4ZWRcbiAgdG9wOiAwXG4gIHJpZ2h0OiAwXG4gIGJvdHRvbTogMFxuICBsZWZ0OiAwXG4gIGJhY2tncm91bmQtY29sb3I6ICMwMDBcbiAgb3BhY2l0eTogMC43NVxuICB6LWluZGV4OiAtMVxuXG4ubW9kYWwtZm9vdGVyLCAubW9kYWwtaGVhZGVyXG4gIGZsZXgtc2hyaW5rOiAwXG4iLCIubW9kYWwge1xuICBtYXgtaGVpZ2h0OiA5NSU7XG4gIGRpc3BsYXk6IGJsb2NrICFpbXBvcnRhbnQ7XG59XG5cbi5tb2RhbC1kaWFsb2cge1xuICBoZWlnaHQ6IDEwMCU7XG4gIG1heC13aWR0aDogOTAlO1xufVxuXG4ubW9kYWwtY29udGVudCB7XG4gIG1heC1oZWlnaHQ6IDk1JTtcbn1cblxuLm1vZGFsLWJvZHkge1xuICBtYXJnaW4tdG9wOiA1cHg7XG4gIG92ZXJmbG93LXk6IHNjcm9sbDtcbn1cblxuLm1vZGFsLWJhY2tncm91bmQge1xuICAvKiBtb2RhbCBiYWNrZ3JvdW5kIGZpeGVkIGFjcm9zcyB3aG9sZSBzY3JlZW4gKi9cbiAgcG9zaXRpb246IGZpeGVkO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7XG4gIGxlZnQ6IDA7XG4gIGJhY2tncm91bmQtY29sb3I6ICMwMDA7XG4gIG9wYWNpdHk6IDAuNzU7XG4gIHotaW5kZXg6IC0xO1xufVxuXG4ubW9kYWwtZm9vdGVyLCAubW9kYWwtaGVhZGVyIHtcbiAgZmxleC1zaHJpbms6IDA7XG59Il19 */");
+/* harmony default export */ __webpack_exports__["default"] = (".modal {\n  display: block !important;\n}\n\n.modal-dialog {\n  height: 100%;\n  max-width: 90%;\n}\n\n.modal-content {\n  max-height: 95%;\n}\n\n.modal-body {\n  margin-top: 5px;\n  overflow-y: scroll;\n}\n\n.modal-background {\n  /* modal background fixed across whole screen */\n  position: fixed;\n  top: 0;\n  right: 0;\n  bottom: 0;\n  left: 0;\n  background-color: #000;\n  opacity: 0.75;\n  z-index: -1;\n}\n\n.modal-footer, .modal-header {\n  flex-shrink: 0;\n}\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi9Vc2Vycy9heGVudS9Qcm9qZWN0cy9TeWRhcmtpdmVyYS9BUFAvQW5ndWxhci9zcmMvYXBwL0NvbXBvbmVudHMvTW9kYWwvTW9kYWwuY29tcG9uZW50LnNhc3MiLCJzcmMvYXBwL0NvbXBvbmVudHMvTW9kYWwvTW9kYWwuY29tcG9uZW50LnNhc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7RUFFRSx5QkFBQTtBQ0FGOztBREVBO0VBQ0UsWUFBQTtFQUNBLGNBQUE7QUNDRjs7QURDQTtFQUNFLGVBQUE7QUNFRjs7QURBQTtFQUNFLGVBQUE7RUFDQSxrQkFBQTtBQ0dGOztBRERBO0VBQ0UsK0NBQUE7RUFDQSxlQUFBO0VBQ0EsTUFBQTtFQUNBLFFBQUE7RUFDQSxTQUFBO0VBQ0EsT0FBQTtFQUNBLHNCQUFBO0VBQ0EsYUFBQTtFQUNBLFdBQUE7QUNJRjs7QURGQTtFQUNFLGNBQUE7QUNLRiIsImZpbGUiOiJzcmMvYXBwL0NvbXBvbmVudHMvTW9kYWwvTW9kYWwuY29tcG9uZW50LnNhc3MiLCJzb3VyY2VzQ29udGVudCI6WyIubW9kYWxcbiAgLy8gbWF4LWhlaWdodDogOTUlXG4gIGRpc3BsYXk6IGJsb2NrICFpbXBvcnRhbnRcblxuLm1vZGFsLWRpYWxvZ1xuICBoZWlnaHQ6IDEwMCVcbiAgbWF4LXdpZHRoOiA5MCVcblxuLm1vZGFsLWNvbnRlbnRcbiAgbWF4LWhlaWdodDogOTUlXG5cbi5tb2RhbC1ib2R5XG4gIG1hcmdpbi10b3A6IDVweFxuICBvdmVyZmxvdy15OiBzY3JvbGxcblxuLm1vZGFsLWJhY2tncm91bmRcbiAgLyogbW9kYWwgYmFja2dyb3VuZCBmaXhlZCBhY3Jvc3Mgd2hvbGUgc2NyZWVuICovXG4gIHBvc2l0aW9uOiBmaXhlZFxuICB0b3A6IDBcbiAgcmlnaHQ6IDBcbiAgYm90dG9tOiAwXG4gIGxlZnQ6IDBcbiAgYmFja2dyb3VuZC1jb2xvcjogIzAwMFxuICBvcGFjaXR5OiAwLjc1XG4gIHotaW5kZXg6IC0xXG5cbi5tb2RhbC1mb290ZXIsIC5tb2RhbC1oZWFkZXJcbiAgZmxleC1zaHJpbms6IDBcbiIsIi5tb2RhbCB7XG4gIGRpc3BsYXk6IGJsb2NrICFpbXBvcnRhbnQ7XG59XG5cbi5tb2RhbC1kaWFsb2cge1xuICBoZWlnaHQ6IDEwMCU7XG4gIG1heC13aWR0aDogOTAlO1xufVxuXG4ubW9kYWwtY29udGVudCB7XG4gIG1heC1oZWlnaHQ6IDk1JTtcbn1cblxuLm1vZGFsLWJvZHkge1xuICBtYXJnaW4tdG9wOiA1cHg7XG4gIG92ZXJmbG93LXk6IHNjcm9sbDtcbn1cblxuLm1vZGFsLWJhY2tncm91bmQge1xuICAvKiBtb2RhbCBiYWNrZ3JvdW5kIGZpeGVkIGFjcm9zcyB3aG9sZSBzY3JlZW4gKi9cbiAgcG9zaXRpb246IGZpeGVkO1xuICB0b3A6IDA7XG4gIHJpZ2h0OiAwO1xuICBib3R0b206IDA7XG4gIGxlZnQ6IDA7XG4gIGJhY2tncm91bmQtY29sb3I6ICMwMDA7XG4gIG9wYWNpdHk6IDAuNzU7XG4gIHotaW5kZXg6IC0xO1xufVxuXG4ubW9kYWwtZm9vdGVyLCAubW9kYWwtaGVhZGVyIHtcbiAgZmxleC1zaHJpbms6IDA7XG59Il19 */");
 
 /***/ }),
 
@@ -4515,9 +4414,9 @@ var PackageStatusComponent = /** @class */ (function () {
         this.modalType = 'info';
         this.modalProcess = undefined;
         this.messageActive = false;
-        this.messageText = "";
+        this.messageText = '';
         this.package = {
-            name: "Name"
+            name: 'Name'
         };
         router.events.subscribe(function (val) {
             clearInterval(_this.interval);
@@ -4526,7 +4425,7 @@ var PackageStatusComponent = /** @class */ (function () {
     PackageStatusComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.parent.params.subscribe(function (params) {
-            _this.id = +params['id'];
+            _this.id = +params.id;
             _this.updateData();
         });
         if (this.interval) {
@@ -4538,10 +4437,10 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.showModal = function (process, type) {
         var _this = this;
-        //load data fromserver...
+        // load data fromserver...
         this.modalactive = true;
         this.modalLoading = true;
-        this.modalData = "";
+        this.modalData = '';
         this.modalProcess = undefined;
         if (type == 'info_log') {
             // fetch info log
@@ -4560,7 +4459,7 @@ var PackageStatusComponent = /** @class */ (function () {
         else {
             this.modalLoading = false;
             this.modalProcess = process;
-            // console.log(process.errors)
+            console.log(process.errors);
             // this.modalType = 'error';
             // this.modalProcess = process;
             this.modalData = process.errors;
@@ -4569,12 +4468,12 @@ var PackageStatusComponent = /** @class */ (function () {
     PackageStatusComponent.prototype.startWorkflow = function () {
         this.apiService.startWorkflow(this.package.package_id);
         this.messageActive = true;
-        this.messageText = "Workflow is now started";
+        this.messageText = 'Workflow is now started';
         this.updateData();
     };
     PackageStatusComponent.prototype.finishPackage = function () {
         this.messageActive = true;
-        this.messageText = "Package is now marked as finished. Depending on your configuration is is now safe to delete it";
+        this.messageText = 'Package is now marked as finished. Depending on your configuration is is now safe to delete it';
         this.apiService.finishPackage(this.package.package_id);
         this.updateData();
     };
@@ -4587,10 +4486,10 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.removePackage = function () {
         var _this = this;
-        if (confirm("Are you sure to delete \"" + this.package.name + "\"\n This action is irreversible")) {
+        if (confirm('Are you sure to delete "' + this.package.name + '"\n This action is irreversible')) {
             this.apiService.removePackage(this.id).subscribe(function (data) {
                 _this.messageActive = true;
-                _this.messageText = "Package was successfully deleted. You will now be redirected to packagelist";
+                _this.messageText = 'Package was successfully deleted. You will now be redirected to packagelist';
             });
             setTimeout(function () {
                 _this.router.navigate(['packages']);
@@ -4599,7 +4498,7 @@ var PackageStatusComponent = /** @class */ (function () {
     };
     PackageStatusComponent.prototype.abortProcess = function () {
         var _this = this;
-        if (confirm("Are you sure to abort the process? You can restart it later.")) {
+        if (confirm('Are you sure to abort the process? You can restart it later.')) {
             // find running process
             // let processId = null;
             // for (let p of this.package.processes) {
@@ -4609,7 +4508,7 @@ var PackageStatusComponent = /** @class */ (function () {
             // }
             this.apiService.abortPackage(this.id).subscribe(function (data) {
                 _this.messageActive = true;
-                _this.messageText = "Package was successfully aborted.";
+                _this.messageText = 'Package was successfully aborted.';
             });
             // setTimeout(() => {
             //   this.router.navigate(['packages']);
@@ -4619,21 +4518,22 @@ var PackageStatusComponent = /** @class */ (function () {
     PackageStatusComponent.prototype.sanitizeLog = function (data) {
         // convert the file to html friendly text
         if (data) {
-            return data.split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;").split("\n").join("<br>");
+            return data.split('&').join('&amp;').split('<').join('&lt;').split('>').join('&gt;').split('\n').join('<br>');
         }
-        return "Log is empty";
+        return 'Log is empty';
     };
     PackageStatusComponent.prototype.getFilePath = function (filePath) {
         var pParts = this.modalProcess.log_path.split('/');
         var fParts = filePath.split('/');
-        for (var i = 0; i < pParts.length; i++) {
+        var i = 0;
+        for (i; i < pParts.length; i++) {
             if (pParts[i] !== fParts[i]) {
                 break;
             }
         }
-        var res = "";
+        var res = '';
         for (var j = i; j < fParts.length; j++) {
-            res += '/' + fParts[j];
+            res += "/" + fParts[j];
         }
         return res;
     };
@@ -5056,8 +4956,8 @@ var PackagesModule = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "APIService", function() { return APIService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5076,7 +4976,7 @@ var APIService = /** @class */ (function () {
     function APIService(http) {
         this.http = http;
     }
-    //Modules
+    // Modules
     APIService.prototype.getModules = function () {
         return this.http.get('/api/module/');
     };
@@ -5087,15 +4987,15 @@ var APIService = /** @class */ (function () {
         return this.http.delete('/api/module/' + module_id + '/');
     };
     APIService.prototype.saveData = function (id, data) {
-        return this.http.post('/api/module/' + id + '/', data);
+        return this.http.post("/api/module/" + id + "/", data);
     };
     APIService.prototype.importModule = function (formData) {
-        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/module/import/', formData, {
+        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpRequest"]('POST', '/api/module/import/', formData, {
             reportProgress: true
         });
         return this.http.request(req);
     };
-    //templates
+    // templates
     APIService.prototype.getTemplates = function () {
         return this.http.get('/api/template/');
     };
@@ -5111,7 +5011,7 @@ var APIService = /** @class */ (function () {
     APIService.prototype.setActiveTemplate = function (template_id, package_id, data) {
         return this.http.put('/api/template/' + template_id + '/package/' + package_id + '/', data);
     };
-    //processes
+    // processes
     APIService.prototype.addProcess = function (process) {
         return this.http.post('/api/process/', process);
     };
@@ -5133,18 +5033,18 @@ var APIService = /** @class */ (function () {
     APIService.prototype.getProcessLogs = function (id) {
         return this.http.get('/api/process/' + id + '/logs/');
     };
-    //variables
+    // variables
     APIService.prototype.getVariables = function () {
         return this.http.get('/api/variables/global/');
     };
     APIService.prototype.setVariables = function (data) {
         return this.http.post('/api/variables/global/', data);
     };
-    //stats
+    // stats
     APIService.prototype.getStatsDashboard = function () {
         return this.http.get('/api/stats/dashboard/');
     };
-    //package
+    // package
     APIService.prototype.getPackages = function () {
         return this.http.get('/api/package/');
     };
@@ -5165,25 +5065,25 @@ var APIService = /** @class */ (function () {
     APIService.prototype.abortPackage = function (packageId) {
         return this.http.post('/api/package/' + packageId + '/abort/', {});
     };
-    //files
+    // files
     APIService.prototype.getFiles = function (path, specific) {
-        if (specific === void 0) { specific = ""; }
-        return this.http.get(path + "?path=" + specific);
+        if (specific === void 0) { specific = ''; }
+        return this.http.get(path + '?path=' + specific);
     };
     APIService.prototype.renameFile = function (path, body) {
         return this.http.put(path, body);
     };
     APIService.prototype.deleteFile = function (path, specific) {
-        return this.http.delete(path + "?path=" + specific);
+        return this.http.delete(path + '?path=' + specific);
     };
     APIService.prototype.uploadFile = function (path, formData) {
-        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', path, formData, {});
+        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpRequest"]('POST', path, formData, {});
         return this.http.request(req);
     };
     APIService.prototype.createFolder = function (path, specific) {
-        return this.http.put(path, { 'path': specific });
+        return this.http.put(path, { path: specific });
     };
-    //docker
+    // docker
     APIService.prototype.getDockerImages = function () {
         return this.http.get('/api/image/');
     };
@@ -5191,7 +5091,7 @@ var APIService = /** @class */ (function () {
         return this.http.post('/api/image/' + image_id + '/', data);
     };
     APIService.prototype.importDockerImage = function (formData) {
-        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpRequest"]('POST', '/api/image/import/', formData, {
+        var req = new _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpRequest"]('POST', '/api/image/import/', formData, {
             reportProgress: true
         });
         return this.http.request(req);
@@ -5200,11 +5100,11 @@ var APIService = /** @class */ (function () {
         return this.http.delete('/api/image/' + image_id + '/');
     };
     APIService.ctorParameters = function () { return [
-        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] }
+        { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"] }
     ]; };
     APIService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])(),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClient"]])
     ], APIService);
     return APIService;
 }());
@@ -5408,6 +5308,29 @@ var ErrorInterceptor = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/Services/models.ts":
+/*!************************************!*\
+  !*** ./src/app/Services/models.ts ***!
+  \************************************/
+/*! exports provided: Module */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Module", function() { return Module; });
+var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
+  return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+var Module = /** @class */ (function () {
+    function Module() {
+    }
+    return Module;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/Services/package.service.ts":
 /*!*********************************************!*\
   !*** ./src/app/Services/package.service.ts ***!
@@ -5422,7 +5345,6 @@ __webpack_require__.r(__webpack_exports__);
 var __importDefault = (undefined && undefined.__importDefault) || function (mod) {
   return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-//music.service.ts
 
 var PackageService = /** @class */ (function () {
     function PackageService() {
@@ -5489,10 +5411,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppRoutingModule", function() { return AppRoutingModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
+/* harmony import */ var _Admin_admin_routing_routes__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Admin/admin-routing.routes */ "./src/app/Admin/admin-routing.routes.ts");
+/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
 /* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
-/* harmony import */ var _Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./Admin/Admin-routing.routes */ "./src/app/Admin/Admin-routing.routes.ts");
+/* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -5510,10 +5432,10 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 
 var appRoutes = [
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
-    { path: 'dashboard', component: _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"] },
+    { path: 'dashboard', component: _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"] },
     { path: 'login', component: _login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"] }
-].concat(_Admin_Admin_routing_routes__WEBPACK_IMPORTED_MODULE_5__["adminRoutes"], [
-    { path: '**', component: _NotFound_component__WEBPACK_IMPORTED_MODULE_3__["NotFoundComponent"] },
+].concat(_Admin_admin_routing_routes__WEBPACK_IMPORTED_MODULE_2__["adminRoutes"], [
+    { path: '**', component: _NotFound_component__WEBPACK_IMPORTED_MODULE_5__["NotFoundComponent"] }
 ]);
 var AppRoutingModule = /** @class */ (function () {
     function AppRoutingModule() {
@@ -5521,7 +5443,9 @@ var AppRoutingModule = /** @class */ (function () {
     AppRoutingModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(appRoutes)
+                _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(appRoutes
+                // { enableTracing: true } // <-- Enable for navigation debugging
+                )
             ],
             exports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]
@@ -5587,7 +5511,8 @@ var AppComponent = /** @class */ (function () {
         var _this = this;
         this.router.events
             .subscribe(function (event) {
-            _this.authService.getRequestPermissions().subscribe(function (res) {
+            _this.authService.getRequestPermissions()
+                .subscribe(function (res) {
                 _this.authClass = _this.authService.permissionClass;
             });
         });
@@ -5622,24 +5547,24 @@ var AppComponent = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tokenGetter", function() { return tokenGetter; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
 /* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/fesm5/animations.js");
 /* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
-/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
-/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
-/* harmony import */ var _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./Dashboard/combo-chart.component */ "./src/app/Dashboard/combo-chart.component.ts");
+/* harmony import */ var _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./Dashboard/combo-chart.component */ "./src/app/Dashboard/combo-chart.component.ts");
+/* harmony import */ var _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./Dashboard/Dashboard.component */ "./src/app/Dashboard/Dashboard.component.ts");
+/* harmony import */ var _login_login_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./login/login.component */ "./src/app/login/login.component.ts");
 /* harmony import */ var _NotFound_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./NotFound.component */ "./src/app/NotFound.component.ts");
 /* harmony import */ var _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @swimlane/ngx-charts */ "./node_modules/@swimlane/ngx-charts/release/esm.js");
-/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
-/* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
-/* harmony import */ var _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Admin/Admin.module */ "./src/app/Admin/Admin.module.ts");
-/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
-/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
-/* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
+/* harmony import */ var _Admin_admin_module__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./Admin/admin.module */ "./src/app/Admin/admin.module.ts");
+/* harmony import */ var _app_routing_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./app-routing.module */ "./src/app/app-routing.module.ts");
+/* harmony import */ var _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./Components/Message/Message.module */ "./src/app/Components/Message/Message.module.ts");
+/* harmony import */ var _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./Components/Navbar/Navbar.module */ "./src/app/Components/Navbar/Navbar.module.ts");
+/* harmony import */ var _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./Components/Tooltip/Tooltip.module */ "./src/app/Components/Tooltip/Tooltip.module.ts");
+/* harmony import */ var _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./Packages/Packages.module */ "./src/app/Packages/Packages.module.ts");
 /* harmony import */ var _Services_authentication_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./Services/authentication.service */ "./src/app/Services/authentication.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -5657,10 +5582,7 @@ var __importDefault = (undefined && undefined.__importDefault) || function (mod)
 
 // JWT authentication
 
-function tokenGetter() {
-    // console.log('getting access token')
-    return localStorage.getItem('access_token');
-}
+var tokenGetter = function () { return (localStorage.getItem('access_token')); };
 
 
 
@@ -5681,14 +5603,14 @@ var AppModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_6__["AppComponent"],
-                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_7__["DashboardComponent"],
-                _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_9__["ComboChartComponent"],
+                _Dashboard_Dashboard_component__WEBPACK_IMPORTED_MODULE_8__["DashboardComponent"],
+                _Dashboard_combo_chart_component__WEBPACK_IMPORTED_MODULE_7__["ComboChartComponent"],
                 _NotFound_component__WEBPACK_IMPORTED_MODULE_10__["NotFoundComponent"],
-                _login_login_component__WEBPACK_IMPORTED_MODULE_8__["LoginComponent"],
+                _login_login_component__WEBPACK_IMPORTED_MODULE_9__["LoginComponent"]
             ],
             imports: [
-                _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
-                _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HttpClientModule"],
+                _angular_platform_browser__WEBPACK_IMPORTED_MODULE_3__["BrowserModule"],
+                _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HttpClientModule"],
                 _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_5__["JwtModule"].forRoot({
                     config: {
                         tokenGetter: tokenGetter,
@@ -5700,16 +5622,16 @@ var AppModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormsModule"],
                 _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_4__["BrowserAnimationsModule"],
                 _swimlane_ngx_charts__WEBPACK_IMPORTED_MODULE_11__["NgxChartsModule"],
-                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_15__["TooltipModule"],
-                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_16__["NavbarModule"],
-                _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_13__["PackagesModule"],
-                _Admin_Admin_module__WEBPACK_IMPORTED_MODULE_14__["AdminModule"],
-                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_17__["MessageModule"],
-                _app_routing_module__WEBPACK_IMPORTED_MODULE_12__["AppRoutingModule"]
+                _Components_Tooltip_Tooltip_module__WEBPACK_IMPORTED_MODULE_16__["TooltipModule"],
+                _Components_Navbar_Navbar_module__WEBPACK_IMPORTED_MODULE_15__["NavbarModule"],
+                _Packages_Packages_module__WEBPACK_IMPORTED_MODULE_17__["PackagesModule"],
+                _Admin_admin_module__WEBPACK_IMPORTED_MODULE_12__["AdminModule"],
+                _Components_Message_Message_module__WEBPACK_IMPORTED_MODULE_14__["MessageModule"],
+                _app_routing_module__WEBPACK_IMPORTED_MODULE_13__["AppRoutingModule"]
             ],
             providers: [
                 {
-                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__["HTTP_INTERCEPTORS"],
+                    provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_0__["HTTP_INTERCEPTORS"],
                     useClass: _Services_authentication_service__WEBPACK_IMPORTED_MODULE_18__["ErrorInterceptor"],
                     multi: true
                 },

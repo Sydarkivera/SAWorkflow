@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 
-import { APIService } from '../../Services/api.service';
-import { Module } from '@app/Services/models';
 import { HttpEventType } from '@angular/common/http';
+import { Module } from '@app/Services/models';
+import { APIService } from '../../Services/api.service';
 
 @Component({
   selector: "admin",
@@ -126,8 +126,10 @@ export class AdminModulesComponent {
     }
 
     // only pass the values that are defined to the server.
-    let data: Module;
-    if (this.selectedModule.name != undefined) {
+    const data: Module = new Module();
+    if (this.selectedModule.name) {
+      console.log(data.name,  this.selectedModule.name);
+
       data.name = this.selectedModule.name;
       if (data.name === '') {
         this.commandJsonError = 'Name must be filled in';

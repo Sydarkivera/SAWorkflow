@@ -8,7 +8,7 @@ ENV PYTHONUNBUFFERED 1
 # Install some necessary things.
 # RUN apt-get update
 # RUN apt-get install -y swig libssl-dev dpkg-dev netcat
-RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre py3-psycopg2
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav clamav-libunrar postgresql-dev curl openjdk8-jre py3-psycopg2
 # RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
 #RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
 RUN apk update

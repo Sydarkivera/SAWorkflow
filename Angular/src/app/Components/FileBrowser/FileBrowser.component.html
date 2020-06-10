@@ -16,7 +16,6 @@
             (contextmenu)="openContextMenu($event, i, file)"
             (click)="openNewLevel(i, file)"
             >
-            <!-- <file [file]="file" [path]="path" [specific_path]="file.name + '/'"></file> -->
             <i class="material-icons align-middle" *ngIf="file.type == 'folder'">folder</i>
             <i class="material-icons align-middle" *ngIf="file.type == 'file'">insert_drive_file</i>
             <p class="align-middle">

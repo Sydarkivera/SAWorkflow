@@ -9,3 +9,7 @@
 [submodule "app_verapdf_worker"]
   path = worker_containers/app-verapdf-worker
   url = https://github.com/Sydarkivera/app-worker-verapdf
+
+[submodule "app_droidd_worker"]
+  path = worker_containers/app-worker-droid
+  url = https://github.com/Sydarkivera/app-worker-droid

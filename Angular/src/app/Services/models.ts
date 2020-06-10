@@ -17,7 +17,7 @@ export interface Variables {
   premis_event_template_path: string;
 }
 
-export interface Module {
+export class Module {
   name: string;
   hidden: boolean;
   form: string;

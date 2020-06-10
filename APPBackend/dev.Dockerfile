@@ -30,7 +30,7 @@ FROM python:3.7-alpine
 #     && apk add --virtual .python-rundeps $runDeps \
 #     && apk del .build-deps
 
-RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav postgresql-dev curl openjdk8-jre py3-psycopg2
+RUN apk --no-cache --virtual .build-deps add gcc linux-headers libc-dev clamav clamav-libunrar postgresql-dev curl openjdk8-jre py3-psycopg2
 # RUN apk add --repository http://dl-cdn.alpinelinux.org/alpine/edge/main --no-cache py3-psycopg2
 # RUN echo "http://dl-cdn.alpinelinux.org/alpine/latest-stable/community" >> /etc/apk/repositories
 RUN apk update
@@ -51,7 +51,6 @@ ADD ./Django/viewtar.c /viewtar.c
 
 RUN gcc /viewtar.c
 
-RUN freshclam
 
 RUN pip install -r requirements.txt
 
@@ -62,6 +61,9 @@ WORKDIR /code/
 ADD ./Django/ /code/
 RUN mkdir /code/log && mkdir /code/internal && mv /a.out /code/internal/
 # RUN mkdir /code/log/
+
+# RUN curl -L https://database.clamav.net/daily.cvd -o ./daily.cvd
+RUN freshclam
 
 # uWSGI will listen on this port
 EXPOSE 80

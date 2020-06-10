@@ -56,7 +56,7 @@ module3 = Module(name="ClamAV",
                  type='0',
                  form=[{"type":"checkbox", "label":"Only show infected files", "identifier":"only_found", "value":"-i"},{"type":"checkbox", "label":"Remove infected files", "identifier":"remove", "value":"--remove"}],
                  # command='[{"value":"clamscan","type":"text"},{"type":"text","value":"-r"},{"value":"-i","type":"var","name":"only_found"},{"value":"--remove","type":"var","name":"remove"},{"type":"var","name":"workdir"}]',
-                 command="clamscan #only_found #remove #file",
+                 command="clamscan #only_found #remove #workdir",
                  tool_folder_name="ClamAV"
                  )
 module3.save()

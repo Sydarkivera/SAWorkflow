@@ -1,4 +1,3 @@
-// music.service.ts
 import { EventEmitter } from '@angular/core';
 
 export class PackageService {

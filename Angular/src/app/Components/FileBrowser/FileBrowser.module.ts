@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 // declarations
-import { FileComponent } from './file.component';
+// import { FileComponent } from './file.component';
 import { FileBrowserComponent } from './FileBrowser.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import { FileBrowserComponent } from './FileBrowser.component';
   ],
   declarations: [
     FileBrowserComponent,
-    FileComponent
+    // FileComponent
   ],
   providers: [],
   exports: [ FileBrowserComponent ]
