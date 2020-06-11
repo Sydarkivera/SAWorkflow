@@ -141,6 +141,7 @@ class DockerModule(BaseModule):
         # get container name
         container_name = process.module.dockerImage.name
         container_name = container_name.replace('_', '-')
+        container_name = container_name.replace('/', '-')
 
         if ':' in container_name: # remvoe tag from container_name
             container_name = container_name.split(':')[0]

@@ -138,7 +138,7 @@ var.save()
 # system variables
 var = Variable(name="work_dir_path", data="/code/workdir")
 var.save()
-var = Variable(name="packages_path", data="/code/test_packages")
+var = Variable(name="packages_path", data="/code/packages")
 var.save()
 var = Variable(name="tools_path", data="/code/tools")
 var.save()
@@ -188,17 +188,17 @@ var.save()
 # module12.dockerImage = image
 # module12.save()
 
-image = DockerImage(name="droid_worker", mountpoint="/workdir", label="Droid")
+image = DockerImage(name="axenu/app-worker-droid", mountpoint="/workdir", label="Droid")
 image.save()
 module8.dockerImage = image
 module8.save()
 
-image = DockerImage(name="unoconv_worker", mountpoint="/workdir", label="Unoconv")
+image = DockerImage(name="axenu/app-worker-unoconv", mountpoint="/workdir", label="Unoconv")
 image.save()
 module11.dockerImage = image
 module11.save()
 
-image = DockerImage(name="verapdf_worker", mountpoint="/workdir", label="VeraPDF")
+image = DockerImage(name="axenu/app-worker-verapdf", mountpoint="/workdir", label="VeraPDF")
 image.save()
 module12.dockerImage = image
 module12.save()

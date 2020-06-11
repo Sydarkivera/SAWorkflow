@@ -54,7 +54,7 @@ services:
     volumes:
       - "./workdir:/code/workdir"
       - "./tools:/code/tools"
-      - "./test_packages:/code/test_packages"
+      - "./packages:/code/packages"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "static_files:/code/static_root"
     command: ./run_django.sh #gunicorn config.wsgi:application -w 2 -b :8000
@@ -65,7 +65,7 @@ services:
     command: ./run_celery.sh
     volumes:
       - "./workdir:/code/workdir"
-      - "./test_packages:/code/test_packages"
+      - "./packages:/code/packages"
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "./tools:/code/tools"
     links:

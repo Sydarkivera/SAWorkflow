@@ -21,6 +21,6 @@ node_modules/
 
 static_files/
 ./packages/
-test_packages/
+packages/
 workdir/
 # APPBackend/static/
