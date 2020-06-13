@@ -68,12 +68,19 @@ def result(request):
 
         logger.info(request.data)
 
+        # get logger for file in package
+        processLogger = getLogger('background_task.' + 
+        process.module.name + str(process.package.package_id))
+
         # save the results to the database
         if 'stderr' in request.data and request.data['stderr'] != "":
             # allFiles[job.file_index]['status'] = False
 
             fileModel.status = FileModel.FILEMODEL_STATUS_ERROR
             fileModel.save()
+            processLogger.error(request.data['stderr'])
+            with open(process.err_path, 'a+') as f:
+                f.write(request.data['stderr'])
             errorDict = {}
             errorDict['file'] = fileModel.name
             errorDict['log'] = request.data['stderr']
@@ -86,6 +93,9 @@ def result(request):
                 res, log = AnalyseLog(process.module.resultFilter, request.data['stdout'])
                 if res == -1:
                     # allFiles[job.file_index]['status'] = False
+                    processLogger.error(request.data['stdout'])
+                    with open(process.err_path, 'a+') as f:
+                        f.write(request.data['stdout'])
                     fileModel.status = FileModel.FILEMODEL_STATUS_ERROR
                     fileModel.save()
                     errorDict = {}
@@ -97,6 +107,9 @@ def result(request):
                     # status_ok = False
 
                 else:
+                    with open(process.log_path, 'a+') as f:
+                        f.write(request.data['stdout'])
+                    processLogger.info(request.data['stdout'])
                     fileModel.status = FileModel.FILEMODEL_STATUS_COMPLETE
                     fileModel.save()
                     # allFiles[job.file_index]['status'] = True
