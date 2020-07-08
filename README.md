@@ -13,6 +13,18 @@ A.P.P is designed to be run in a docker environment. As such the whole system ca
 
 $ docker-compose -f docker-compose.prod.yml up --build
 
+### The first time you also need to:
+
+Setup the database. This is done by fisrt starting the server and ignoring the errors then running:
+
+$ docker exec -it <container_name>_django_1 python manage.py migrate # example docker exec -it app-master_django_1 python manage.py migrate
+$ docker exec -it <container_name>_django_1 python populate_database.py
+
+You can find your container name by running "docker ps" and use the one that ends with "_django_1"
+When this is done you can open the ui on localhost:80 by default. Sign in with admin:admin and go to "Global settings".
+You need to change the packages directory to "/code/packages" and you need to set the path to your workdir on your host (The absolute path of the workdir on docker host).
+
+### Images
 The folder /worker_container/images contains a set of images that can be run used to process files in the system as examples. Each docker instance should be based on worker_base to allow for per file status with low overhead. More details can be found under "Tool types"
 
 ## Running - Development
